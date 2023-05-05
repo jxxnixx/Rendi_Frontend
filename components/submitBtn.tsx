@@ -1,13 +1,9 @@
-interface submitButtonProps {
+interface submitBtnProps {
   text: string;
   [key: string]: any;
 }
 
-export default function SubmitButton({
-  onClick,
-  text,
-  ...rest
-}: submitButtonProps) {
+export default function SubmitBtn({ onClick, text, ...rest }: submitBtnProps) {
   return (
     <button
       {...rest}
