@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function ProfileBtn() {
   return (
-    <div className="w-6 h-6">
+    <button className="w-6 h-6">
       <Link href="/profile" legacyBehavior>
         <a className="text-[#666]">
           <svg
@@ -33,6 +33,6 @@ export default function ProfileBtn() {
           </svg>
         </a>
       </Link>
-    </div>
+    </button>
   );
 }
