@@ -1,8 +1,8 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import SubmitButton from "@/components/submitBtn";
-import Input from "@/components/input";
+import SubmitButton from "@/components/function/submitBtn";
+import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/structure/NavBar";
 import Head from "next/head";
 
 interface IsignUpForm {

@@ -6,7 +6,7 @@ export default function NavBar() {
 
   return (
     <nav>
-      <div className=" bg-white py-3 text-base text-black flex shadow-md space-x-5 items-center justify-center">
+      <div className=" h-[28px] bg-white py-3 text-base text-black flex shadow-md space-x-[60px] items-center justify-center">
         <Link href="/" legacyBehavior>
           <a className={router.pathname === "/" ? "active" : ""}>Today</a>
         </Link>

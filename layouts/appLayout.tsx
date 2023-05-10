@@ -1,5 +1,4 @@
-import Header from "@/components/header";
-import NavBar from "@/components/NavBar";
+import Header from "@/components/structure/header";
 
 interface IProps {
   children: React.ReactNode;
@@ -7,9 +6,8 @@ interface IProps {
 
 export default function AppLayout({ children }: IProps) {
   return (
-    <div className="flex flex-col">
+    <div className="relative flex flex-col">
       <Header />
-
       {children}
     </div>
   );

@@ -1,4 +1,7 @@
-import NavBar from "@/components/NavBar";
+import Circle from "@/components/category/circle";
+import HoriCategory from "@/components/category/horiCategory";
+import NavBar from "@/components/structure/NavBar";
+import Banner from "@/components/structure/banner";
 import Layout from "@/layouts/layout";
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -13,13 +16,15 @@ const Home: NextPage = () => {
       <Head>
         <title>Home</title>
       </Head>
-      <div className="mt-14 flex w-full flex-col bg-slate-200 text-lg font-medium ">
+      <div className="relative mt-[104px] flex w-full flex-col bg-slate-200 text-lg font-medium ">
         <NavBar />
-        <Link href="/signUp" legacyBehavior>
+        <Banner />
+        {/* <Link href="/signUp" legacyBehavior>
           <a className={router.pathname === "/signUp" ? "active" : ""}>
             Sign Up
           </a>
-        </Link>
+        </Link> */}
+        <HoriCategory />
       </div>
     </Layout>
   );

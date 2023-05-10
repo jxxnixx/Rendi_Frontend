@@ -1,5 +1,3 @@
-import NavBar from "@/components/NavBar";
-
 export interface IProps {
   canGoBack?: boolean;
   children: React.ReactNode;
