@@ -1,3 +1,4 @@
+import Footer from "@/components/structure/footer";
 import Header from "@/components/structure/header";
 
 interface IProps {
@@ -9,6 +10,7 @@ export default function AppLayout({ children }: IProps) {
     <div className="relative flex flex-col">
       <Header />
       {children}
+      <Footer />
     </div>
   );
 }

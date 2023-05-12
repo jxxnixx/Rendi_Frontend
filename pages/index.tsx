@@ -7,6 +7,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Items from "@/components/product/items";
+import React from "react";
+import Footer from "@/components/structure/footer";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -25,6 +28,7 @@ const Home: NextPage = () => {
           </a>
         </Link> */}
         <HoriCategory />
+        <Items />
       </div>
     </Layout>
   );
