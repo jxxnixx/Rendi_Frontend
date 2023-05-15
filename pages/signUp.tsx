@@ -4,15 +4,17 @@ import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import NavBar from "@/components/structure/NavBar";
 import Head from "next/head";
+import Link from "next/link";
 
 interface IsignUpForm {
   id: string;
   password: string;
   cPassword: string;
   username: string;
-  birth: string;
+  userBirth: string;
   phone: string;
   email: string;
+  authCode: string;
   checknum: number;
   extraError?: string;
 }
@@ -36,20 +38,29 @@ function SignUp() {
   // };
 
   return (
-    <Layout>
-      <Head>
-        <title>SignUp</title>
-      </Head>
+    <>
+      <Layout>
+        <NavBar />
+        <Head>
+          <title>SignUp</title>
+        </Head>
+      </Layout>
+      <p className="top-[109px] text-4xl font-semibold text-center text-black">
+        회원가입
+      </p>
+      ;
       <div className="flex justify-center items-center h-screen">
         {/* <form className="mt-40 flex flex-col" onSubmit={handleSubmit(submitForm)}> */}
-        <NavBar />
+
         <form
-          className="flex flex-col items-start gap-6 p-0 w-448 h-1017"
+          className="flex flex-col items-center gap-6 p-0 w-448 h-1017"
           onSubmit={handleSubmit(submitForm)}
         >
           <Input
+            className=""
             name="id"
             label="아이디"
+            checkLabel="확인"
             type="id"
             register={register("id", {
               required: {
@@ -66,6 +77,7 @@ function SignUp() {
             kind="check"
             error={errors?.id?.message}
           />
+
           <Input
             name="password"
             label="비밀번호"
@@ -122,6 +134,21 @@ function SignUp() {
             placeholder="이름"
             error={errors?.username?.message}
           />
+          <Input
+            name="userBirth"
+            label="생년월일"
+            type="userBirth"
+            kind="birth"
+            register={register("userBirth", {
+              required: "UserBirth is required",
+              pattern: {
+                value: /^[ㄱ-ㅎ|가-힣|A-z][ㄱ-ㅎ|가-힣|A-z0-9-_]{3,23}$/,
+                message: "UserBirth regex",
+              },
+            })}
+            placeholder="YYMMDD"
+            error={errors?.userBirth?.message}
+          />
 
           <Input
             name="phone"
@@ -138,13 +165,59 @@ function SignUp() {
             placeholder="-를 제외하고 입력하세요."
             error={errors?.phone?.message}
           />
+          <Input
+            name="email"
+            label="이메일"
+            checkLabel="인증"
+            type="email"
+            kind="check"
+            register={register("email", {
+              required: "이메일을 입력하세요",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "유효한 이메일 주소를 입력하세요.",
+              },
+            })}
+            placeholder="유효한 이메일 주소를 입력하세요."
+            error={errors?.email?.message}
+          />
+          <Input
+            name="authCode"
+            label="인증번호"
+            checkLabel="확인"
+            type="authCode"
+            kind="check"
+            register={register("authCode", {
+              required: "인증번호를 입력하세요",
+              // pattern: {
+              //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              //   message: "유효한 이메일 주소를 입력하세요.",
+              // },
+            })}
+            placeholder="인증번호를 입력하세요."
+            error={errors?.authCode?.message}
+          />
 
           <div className="mb-5" />
 
-          <SubmitButton type="submit" text="회원가입" />
+          <div className="flex text-center justify-center">
+            <SubmitButton
+              type="submit"
+              text="다음"
+              classname="flex justify-center items-center h-screen"
+            />
+          </div>
+          <div>
+            <Link href="/logIn" legacyBehavior>
+              <button className="bg-white text-gray-600 text-lg">
+                계정이 이미 있으신가요?
+              </button>
+            </Link>
+          </div>
         </form>
       </div>
-    </Layout>
+      {/* </Layout> */}
+    </>
   );
 }
 

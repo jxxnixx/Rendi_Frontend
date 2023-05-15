@@ -1,6 +1,12 @@
 import React from "react";
 
 export default function SearchBar() {
+  // 검색창
+  // css 통째로 바꿔도 되니까 figma 보고 css 바꾸기.
+  // 단, figma css는 진짜 div만 가득한 이미지 형태라서
+  // 검색창 형식은 지켜주기
+  // icon 추가하기
+
   return (
     <form>
       <label

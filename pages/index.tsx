@@ -22,13 +22,13 @@ const Home: NextPage = () => {
       <div className="relative mt-[104px] flex w-full flex-col bg-slate-200 text-lg font-medium ">
         <NavBar />
         <Banner />
-        {/* <Link href="/signUp" legacyBehavior>
+        <HoriCategory />
+        <Items />
+        <Link href="/signUp" legacyBehavior>
           <a className={router.pathname === "/signUp" ? "active" : ""}>
             Sign Up
           </a>
-        </Link> */}
-        <HoriCategory />
-        <Items />
+        </Link>
       </div>
     </Layout>
   );
