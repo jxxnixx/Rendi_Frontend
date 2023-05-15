@@ -1,4 +1,3 @@
-import Circle from "@/components/category/circle";
 import HoriCategory from "@/components/category/horiCategory";
 import NavBar from "@/components/structure/NavBar";
 import Banner from "@/components/structure/banner";
@@ -9,7 +8,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Items from "@/components/product/items";
 import React from "react";
-import Footer from "@/components/structure/footer";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -24,8 +22,8 @@ const Home: NextPage = () => {
         <Banner />
         <HoriCategory />
         <Items />
-        <Link href="/signUp" legacyBehavior>
-          <a className={router.pathname === "/signUp" ? "active" : ""}>
+        <Link href="/auth/signUp" legacyBehavior>
+          <a className={router.pathname === "/auth/signUp" ? "active" : ""}>
             Sign Up
           </a>
         </Link>
