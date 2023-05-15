@@ -10,19 +10,25 @@ export default function NavBar() {
         <Link href="/" legacyBehavior>
           <a className={router.pathname === "/" ? "active" : ""}>Today</a>
         </Link>
-        <Link href="/best" legacyBehavior>
-          <a className={router.pathname === "/best" ? "active" : ""}>Best</a>
+        <Link href="/menus/best" legacyBehavior>
+          <a className={router.pathname === "/menus/best" ? "active" : ""}>
+            Best
+          </a>
         </Link>
-        <Link href="/new" legacyBehavior>
-          <a className={router.pathname === "/new" ? "active" : ""}>New</a>
+        <Link href="/menus/new" legacyBehavior>
+          <a className={router.pathname === "/menus/new" ? "active" : ""}>
+            New
+          </a>
         </Link>
-        <Link href="/market" legacyBehavior>
-          <a className={router.pathname === "/market" ? "active" : ""}>
+        <Link href="/menus/market" legacyBehavior>
+          <a className={router.pathname === "/menus/market" ? "active" : ""}>
             Market
           </a>
         </Link>
-        <Link href="/trend" legacyBehavior>
-          <a className={router.pathname === "/trend" ? "active" : ""}>Trend</a>
+        <Link href="/menus/trend" legacyBehavior>
+          <a className={router.pathname === "/menus/trend" ? "active" : ""}>
+            Trend
+          </a>
         </Link>
       </div>
     </nav>

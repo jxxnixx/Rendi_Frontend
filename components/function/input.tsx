@@ -25,7 +25,8 @@ export default function Input({
   let inputComponent;
   if (kind === "text") {
     inputComponent = (
-      <div className="w-[448px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0]">
+      <div className="w-[448px] h-[55px] rounded-[50px] bg-white ">
+        {/* py-[20px] */}
         <input
           {...inputProps}
           {...rest}
@@ -98,7 +99,7 @@ export default function Input({
             ref={ref}
             onChange={onChange}
             className={cls(
-              "w-full h-full rounded-[50px] bg-white border-none px-[20px] py-[19.25px] placeholder-white placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
+              "w-full h-full rounded-[50px] bg-white border-none px-[20px] py-[19.25px] placeholder-white focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
               error
                 ? "w-full h-full rounded-[50px] bg-white border border-[#f00]"
                 : "w-full h-full rounded-[50px] bg-white border border-[#4caf50]"
@@ -115,7 +116,7 @@ export default function Input({
   }
 
   return (
-    <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 relative gap-1.5">
+    <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 relative gap-1.5 py-[10px]">
       <label
         className="flex-grow-0 flex-shrink-0 text-lg font-bold text-left text-[#666]"
         htmlFor={name}
