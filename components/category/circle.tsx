@@ -19,6 +19,7 @@ interface cProps {
 }
 
 export default function Circle({ icon }: cProps) {
+  // category pink circle + icon 조건문
   const getComponent = () => {
     switch (icon) {
       case "Top":
@@ -47,6 +48,8 @@ export default function Circle({ icon }: cProps) {
         return null;
     }
   };
+
+  // 매개변수 icon에 맞게 label 추가해서 아래 circle css에 추가하기
 
   return (
     <button className="w-[50px] h-[50px] rounded-full bg-[#FAD5D5] bg-opacity-80 hover:bg-[#FAD5D5]">

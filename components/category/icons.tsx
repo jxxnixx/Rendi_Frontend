@@ -4,6 +4,9 @@
 
 // ${props.class}
 
+// icon svg
+// viewBox, className의 w,h 수정해서 간격 맞추기
+
 export function Top() {
   return (
     <svg
