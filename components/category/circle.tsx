@@ -81,8 +81,8 @@ export default function Circle({ icon }: cProps) {
 
   return (
     <>
-      <div className="flex flex-col items-center m-[10px]">
-        <button className="w-[50px] h-[50px] m-[10px] rounded-full bg-[#FAD5D5] bg-opacity-80 hover:bg-[#FAD5D5]">
+      <div className="flex flex-col items-center m-[15px]">
+        <button className="w-[50px] h-[50px] mb-[10px] rounded-full bg-[#FAD5D5] bg-opacity-80 hover:bg-[#FAD5D5]">
           <Link href={`/categories/${icon}`} legacyBehavior>
             <a className="text-[#666]">{getComponent()}</a>
           </Link>
