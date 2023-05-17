@@ -7,6 +7,7 @@ export default function HoriCategory() {
     "Dress",
     "Pants",
     "Skirt",
+    "Training",
     "Inner",
     "Swimsuit",
     "Shoes",
