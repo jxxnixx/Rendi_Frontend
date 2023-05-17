@@ -49,13 +49,48 @@ export default function Circle({ icon }: cProps) {
     }
   };
 
-  // 매개변수 icon에 맞게 label 추가해서 아래 circle css에 추가하기
+  // 키워드 추가
+  const getKeyword = () => {
+    switch (icon) {
+      case "Top":
+        return "상의";
+      case "Outer":
+        return "아우터";
+      case "Dress":
+        return "원피스";
+      case "Pants":
+        return "팬츠";
+      case "Skirt":
+        return "스커트";
+      case "Inner":
+        return "이너웨어";
+      case "Swimsuit":
+        return "수영복";
+      case "Shoes":
+        return "슈즈";
+      case "Bag":
+        return "가방";
+      case "Mgoods":
+        return "패션잡화";
+      case "ETC":
+        return "기타";
+      default:
+        return null;
+    }
+  };
 
   return (
-    <button className="w-[50px] h-[50px] rounded-full bg-[#FAD5D5] bg-opacity-80 hover:bg-[#FAD5D5]">
-      <Link href={`/categories/${icon}`} legacyBehavior>
-        <a className="text-[#666]">{getComponent()}</a>
-      </Link>
-    </button>
+    <>
+      <div className="flex flex-col items-center m-[15px]">
+        <button className="w-[50px] h-[50px] mb-[10px] rounded-full bg-[#FAD5D5] bg-opacity-80 hover:bg-[#FAD5D5]">
+          <Link href={`/categories/${icon}`} legacyBehavior>
+            <a className="text-[#666]">{getComponent()}</a>
+          </Link>
+        </button>
+        <Link href={`/categories/${icon}`} legacyBehavior>
+          <a className="text-xs">{getKeyword()}</a>
+        </Link>
+      </div>
+    </>
   );
 }
