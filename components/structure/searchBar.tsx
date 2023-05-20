@@ -39,6 +39,7 @@ export default function SearchBar() {
     setShowSquare(true);
   };
 
+  // 클릭된 button 구별, 관리
   const handleRecentClick = () => {
     setShowRecentContent(true);
     setShowPopularContent(false);
@@ -47,6 +48,11 @@ export default function SearchBar() {
   const handlePopularClick = () => {
     setShowRecentContent(false);
     setShowPopularContent(true);
+  };
+
+  // 닫기 button
+  const handleCloseClick = () => {
+    setShowSquare(false);
   };
 
   return (
@@ -144,6 +150,15 @@ export default function SearchBar() {
                   {showPopularContent && "인기 검색어 내용"}
                 </div>
               </div>
+            </div>
+            <div className="w-[679px] h-12 absolute left-0 top-[408px] overflow-hidden">
+              <button
+                id="close"
+                className="w-[463px] h-[37px] absolute left-[108px] top-1.5 text-sm font-medium text-center text-[#666]"
+                onClick={handleCloseClick}
+              >
+                닫기
+              </button>
             </div>
           </div>
         )}
