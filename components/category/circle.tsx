@@ -11,7 +11,8 @@ import {
   Bag,
   Mgoods,
   ETC,
-} from "./icons";
+} from "../icons";
+
 import React from "react";
 
 interface cProps {
