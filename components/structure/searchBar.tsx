@@ -56,7 +56,7 @@ export default function SearchBar() {
   };
 
   return (
-    <form>
+    <form action="/searchResult" method="post">
       <label
         htmlFor="default-search"
         className="text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -126,6 +126,7 @@ export default function SearchBar() {
 
                 <div className=" w-[679px] h-12 flex flex-row text-sm font-medium text-center text-black content-center">
                   <button
+                    type="button"
                     id="recent"
                     className="w-1/2 h-12 items-center justify-center content-center"
                     onClick={handleRecentClick}
@@ -133,6 +134,7 @@ export default function SearchBar() {
                     최근 검색어
                   </button>
                   <button
+                    type="button"
                     id="popular"
                     className="w-1/2 h-12 items-center justify-center"
                     onClick={handlePopularClick}
