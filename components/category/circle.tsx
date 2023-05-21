@@ -5,6 +5,7 @@ import {
   Dress,
   Pants,
   Skirt,
+  Training,
   Inner,
   Swimsuit,
   Shoes,
@@ -33,6 +34,8 @@ export default function Circle({ icon }: cProps) {
         return <Pants />;
       case "Skirt":
         return <Skirt />;
+      case "Training":
+        return <Training />;
       case "Inner":
         return <Inner />;
       case "Swimsuit":
@@ -63,6 +66,8 @@ export default function Circle({ icon }: cProps) {
         return "팬츠";
       case "Skirt":
         return "스커트";
+      case "Training":
+        return "트레이닝";
       case "Inner":
         return "이너웨어";
       case "Swimsuit":
