@@ -45,8 +45,6 @@ function SignUp() {
         </Head>
 
         <div className=" mt-[104px] flex w-full flex-col bg-white text-lg font-medium ">
-          <NavBar />
-
           <div className="flex justify-center items-center">
             <form
               className=" items-center gap-[6px] p-0 w-[448px] h-[1017px]"
@@ -207,11 +205,14 @@ function SignUp() {
                 </div>
 
                 <div className="flex text-center justify-center">
-                  <SubmitBtn
-                    type="submit"
-                    text="다음"
-                    className="flex justify-center items-center h-screen"
-                  />
+                  <Link href="/auth/taste" legacyBehavior>
+                    <SubmitBtn
+                      type="submit"
+                      text="다음"
+                      className="flex justify-center items-center h-screen"
+                    />
+                  </Link>
+
                 </div>
               </div>
             </form>

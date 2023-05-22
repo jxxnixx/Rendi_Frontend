@@ -168,7 +168,6 @@ function LogIn() {
   return (
     <>
       <Layout>
-        <NavBar />
         <Head>
           <title>LogIn</title>
         </Head>

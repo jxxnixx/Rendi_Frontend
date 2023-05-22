@@ -38,10 +38,9 @@ const Item = ({ item }: ItemProps) => {
             />
           </svg>
         </button>
-        {/* </div> */}
-        <div className="w-[222px] h-[60px] relative ">
-          <p className="relative h-[20px] text-[15px] font-bold text-left text-[#000]">
-            {/* 상품명: {item.productId} */}
+
+        <div className="w-[222px] h-[60px] relative mt-[5px]">
+          <p className="relative h-[20px] text-[16px] font-bold text-left text-[#000]">
             {item} 56,500
           </p>
           <p className="relative h-[20px] text-[13px] text-left text-[#666]">

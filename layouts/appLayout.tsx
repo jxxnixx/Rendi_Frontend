@@ -1,3 +1,4 @@
+import NavBar from "@/components/structure/NavBar";
 import Footer from "@/components/structure/footer";
 import Header from "@/components/structure/header";
 import NavBar from "@/components/structure/NavBar";
