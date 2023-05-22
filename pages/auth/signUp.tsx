@@ -212,6 +212,7 @@ function SignUp() {
                       className="flex justify-center items-center h-screen"
                     />
                   </Link>
+
                 </div>
               </div>
             </form>

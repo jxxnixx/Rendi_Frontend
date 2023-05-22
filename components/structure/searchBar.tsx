@@ -80,7 +80,7 @@ export default function SearchBar() {
             ref={inputRef}
             type="search"
             id="default-search"
-            className="block w-[679px] h-[46px] px-[20px] rounded-t-[23px] bg-white border-2 border-[#FC435A] focus:outline-none focus:ring-0"
+            className="block w-[679px] h-[46px] px-[20px] rounded-t-[23px] bg-white border-2 border-[#FC435A] focus:outline-none focus:ring-0 "
             placeholder="검색어를 입력하세요"
             onClick={handleInputClick}
           />
@@ -108,7 +108,7 @@ export default function SearchBar() {
                   viewBox="0 0 338 2"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="absolute top-[46px]"
+                  className="absolute top-[46px] "
                   preserveAspectRatio="none"
                 >
                   <path d="M0 2L338 2" stroke="#FC435A" strokeWidth={3} />
