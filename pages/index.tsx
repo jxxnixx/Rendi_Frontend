@@ -15,11 +15,10 @@ const Home: NextPage = () => {
       <Head>
         <title>Home</title>
       </Head>
-      <div className="relative mt-[131px] bg-slate-200">
+      <div className="relative mt-[135px] bg-slate-200">
         <div className="bg-white">
           <Banner />
           <HoriCategory />
-
           <div className="flex justify-center py-8">
             <Items />
           </div>

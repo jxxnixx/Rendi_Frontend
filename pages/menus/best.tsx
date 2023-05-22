@@ -11,9 +11,11 @@ export default function Best() {
       <Head>
         <title>Best</title>
       </Head>
-      <div className="relative mt-[131px] flex w-full flex-col bg-slate-200 text-lg font-medium ">
+      <div className="relative mt-[135px] flex w-full flex-col text-lg font-medium bg-white ">
         <ProdBar />
-        <Items />
+        <div className="flex justify-center py-8">
+          <Items />
+        </div>
         <Pagination />
       </div>
     </Layout>

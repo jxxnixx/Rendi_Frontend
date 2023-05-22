@@ -11,9 +11,11 @@ export default function New() {
       <Head>
         <title>New</title>
       </Head>
-      <div className="relative mt-[131px] flex w-full flex-col bg-slate-200 text-lg font-medium ">
+      <div className="relative mt-[135px] flex w-full flex-col bg-white text-lg font-medium ">
         <ProdBar />
-        <Items />
+        <div className="flex justify-center py-8">
+          <Items />
+        </div>
         <Pagination />
       </div>
     </Layout>

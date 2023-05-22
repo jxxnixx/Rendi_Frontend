@@ -9,9 +9,8 @@ export default function Taste() {
       <Head>
         <title>Taste</title>
       </Head>
-      <div className="relative mt-[104px] flex w-full flex-col bg-slate-200 text-lg font-medium ">
+      <div className="relative mt-[131px] flex w-full flex-col bg-slate-200 text-lg font-medium ">
         <Items />
-        <Pagination />
       </div>
     </Layout>
   );
