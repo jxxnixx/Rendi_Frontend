@@ -9,7 +9,7 @@ export default function searchResult() {
   return (
     <Layout>
       <Head>
-        <title>Best</title>
+        <title>SearchResult</title>
       </Head>
       <div className="relative mt-[104px] flex w-full flex-col bg-slate-200 text-lg font-medium">
         <div className="w-[1040px] h-[60px] relative overflow-hidden bg-white">

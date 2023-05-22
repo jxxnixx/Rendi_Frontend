@@ -87,7 +87,7 @@ export default function SearchBar() {
         )}
 
         {showSquare && (
-          <div ref={squareRef} className="w-[679px] h-[456px] relative">
+          <div ref={squareRef} className="w-[679px] h-[456px] relative z-0">
             <div className="flex justify-start items-start w-[679px] h-[456px] absolute left-0 top-0 rounded-b-[23px] bg-white border-x-2 border-b-2 border-[#fc435a]">
               <div className="w-[676px] h-12 absolute left-[3px] overflow-hidden">
                 <svg

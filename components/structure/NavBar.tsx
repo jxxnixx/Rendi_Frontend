@@ -5,8 +5,8 @@ export default function NavBar() {
   const router = useRouter();
 
   return (
-    <nav>
-      <div className=" h-[28px] bg-white py-3 text-base text-black flex shadow-md space-x-[60px] items-center justify-center">
+    <nav className='fixed flex items-center justify-center top-[100px] z-10 h-[31px] w-full bg-white mx-auto">'>
+      <div className=" bg-white text-base text-black space-x-[60px]">
         <Link href="/" legacyBehavior>
           <a className={router.pathname === "/" ? "active" : ""}>Today</a>
         </Link>

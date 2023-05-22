@@ -1,18 +1,15 @@
-import ProdBar from "@/components/menu/prodBar";
 import Items from "@/components/product/items";
 import Pagination from "@/components/structure/pagination";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
-import React from "react";
 
-export default function New() {
+export default function Taste() {
   return (
     <Layout>
       <Head>
-        <title>New</title>
+        <title>Taste</title>
       </Head>
-      <div className="relative mt-[131px] flex w-full flex-col bg-slate-200 text-lg font-medium ">
-        <ProdBar />
+      <div className="relative mt-[104px] flex w-full flex-col bg-slate-200 text-lg font-medium ">
         <Items />
         <Pagination />
       </div>

@@ -1,3 +1,4 @@
+import NavBar from "@/components/structure/NavBar";
 import Footer from "@/components/structure/footer";
 import Header from "@/components/structure/header";
 
@@ -12,6 +13,7 @@ export default function AppLayout({ children }: IProps) {
   return (
     <div className="relative flex flex-col items-center justify-center">
       <Header />
+      <NavBar />
       {children}
       <Footer />
     </div>
