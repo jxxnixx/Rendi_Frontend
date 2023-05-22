@@ -17,11 +17,16 @@ const Home: NextPage = () => {
       <Head>
         <title>Home</title>
       </Head>
-      <div className="relative mt-[104px] flex w-full flex-col bg-slate-200 text-lg font-medium ">
-        <NavBar />
-        <Banner />
-        <HoriCategory />
-        <Items />
+      <div className="relative mt-[104px] bg-slate-200">
+        <div className="bg-white">
+          <NavBar />
+          <Banner />
+          <HoriCategory />
+
+          <div className="flex justify-center py-8">
+            <Items />
+          </div>
+        </div>
         <Link href="/auth/signUp" legacyBehavior>
           <a className={router.pathname === "/auth/signUp" ? "active" : ""}>
             Sign Up
