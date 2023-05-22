@@ -44,10 +44,10 @@ function SignUp() {
           <title>SignUp</title>
         </Head>
 
-        <div className=" mt-[104px] flex w-full flex-col bg-white text-lg font-medium ">
+        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium ">
           <div className="flex justify-center items-center">
             <form
-              className=" items-center gap-[6px] p-0 w-[448px] h-[1017px]"
+              className=" items-center gap-[6px] p-0 w-[448px] h-[1500px]"
               onSubmit={handleSubmit(submitForm)}
             >
               <p className="relative top-[109px] text-4xl font-semibold text-center text-black">
@@ -207,12 +207,12 @@ function SignUp() {
                 <div className="flex text-center justify-center">
                   <Link href="/auth/taste" legacyBehavior>
                     <SubmitBtn
+                      large={true}
                       type="submit"
                       text="다음"
                       className="flex justify-center items-center h-screen"
                     />
                   </Link>
-
                 </div>
               </div>
             </form>
