@@ -205,14 +205,14 @@ function SignUp() {
                     </button>
                   </Link>
                 </div>
-              </div>
 
-              <div className="flex text-center justify-center">
-                <SubmitBtn
-                  type="submit"
-                  text="다음"
-                  classname="flex justify-center items-center h-screen"
-                />
+                <div className="flex text-center justify-center">
+                  <SubmitBtn
+                    type="submit"
+                    text="다음"
+                    className="flex justify-center items-center h-screen"
+                  />
+                </div>
               </div>
             </form>
           </div>
