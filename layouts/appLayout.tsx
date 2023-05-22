@@ -1,5 +1,6 @@
 import Footer from "@/components/structure/footer";
 import Header from "@/components/structure/header";
+import NavBar from "@/components/structure/NavBar";
 
 interface IProps {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ export default function AppLayout({ children }: IProps) {
   return (
     <div className="relative flex flex-col items-center justify-center">
       <Header />
+      <NavBar />
       {children}
       <Footer />
     </div>

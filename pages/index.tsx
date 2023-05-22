@@ -19,7 +19,6 @@ const Home: NextPage = () => {
       </Head>
       <div className="relative mt-[104px] bg-slate-200">
         <div className="bg-white">
-          <NavBar />
           <Banner />
           <HoriCategory />
 
