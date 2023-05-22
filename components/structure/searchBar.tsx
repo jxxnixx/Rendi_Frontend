@@ -110,7 +110,7 @@ export default function SearchBar() {
                   className="absolute top-[46px]"
                   preserveAspectRatio="none"
                 >
-                  <path d="M0 2L338 2" stroke="#FC435A" stroke-width={3} />
+                  <path d="M0 2L338 2" stroke="#FC435A" strokeWidth={3} />
                 </svg>
 
                 <svg
