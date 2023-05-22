@@ -1,3 +1,4 @@
+//지우세욤 연쥬밥오ㅜ
 import React, { useState, useRef, useEffect } from "react";
 import { Camera, Search } from "../icons";
 
