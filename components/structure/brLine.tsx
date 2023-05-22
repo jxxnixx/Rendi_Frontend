@@ -27,14 +27,14 @@ export default function BrLine() {
       viewBox={`0 0 ${screenWidth} 1`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="absolute  top-[131px]"
+      className="absolute top-[135px]"
       preserveAspectRatio="none"
     >
       <line
         y1="0.5"
         x2={screenWidth}
         y2="0.5"
-        stroke="black"
+        stroke="gray"
         strokeOpacity="0.5"
       />
     </svg>
