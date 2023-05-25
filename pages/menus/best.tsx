@@ -16,7 +16,9 @@ export default function Best() {
         <div className="flex justify-center py-8">
           <Items />
         </div>
-        <Pagination />
+        <div className="flex justify-center py-1">
+          <Pagination />
+        </div>
       </div>
     </Layout>
   );
