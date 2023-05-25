@@ -23,10 +23,7 @@ const Item = ({ item }: ItemProps) => {
   return (
     <>
       <div className="relative mb-[80px] w-[222px] h-[280px] bg-white ">
-        <button
-          className="flex items-center justify-center"
-          onClick={handleLike}
-        >
+        <button className="flex items-center justify-center">
           {/* 링크 목적지 변경 필수 */}
           <Link href="/login" legacyBehavior>
             <img
@@ -35,6 +32,7 @@ const Item = ({ item }: ItemProps) => {
             />
           </Link>
           <svg // heart icon
+            onClick={handleLike}
             width={30}
             height={30}
             viewBox="0 0 30 30"
