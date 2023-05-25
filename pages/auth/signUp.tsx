@@ -2,7 +2,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import SubmitBtn from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
-import NavBar from "@/components/structure/NavBar";
 import Head from "next/head";
 import Link from "next/link";
 

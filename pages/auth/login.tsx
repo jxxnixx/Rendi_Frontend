@@ -2,7 +2,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import SubmitButton from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
-import NavBar from "@/components/structure/NavBar";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -34,7 +33,6 @@ function LogIn() {
   return (
     <>
       <Layout>
-        <NavBar />
         <Head>
           <title>LogIn</title>
         </Head>
@@ -48,7 +46,7 @@ function LogIn() {
             </p>
           </div>
         </div>
-        ;
+
         <div className="flex justify-center items-center top-[400px] h-screen">
           <form
             className=" flex flex-col items-center mt-[-60px] gap-1 p-0 w-448 h-1017"
@@ -92,7 +90,7 @@ function LogIn() {
                 </Link>
               </div>
             </div>
-            <div className="flex text-center text-xs  justify-center">
+            <div className="flex text-center text-xs justify-center">
               <SubmitButton
                 type="submit"
                 text="로그인"
