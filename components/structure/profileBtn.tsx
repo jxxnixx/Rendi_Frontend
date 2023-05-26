@@ -7,7 +7,7 @@ export default function ProfileBtn() {
       <button className="w-[18px] h-[18px] absolute left-[870px] top-[5px] opacity-75 text-xs font-medium text-left text-[#666666]">
         <Link href="/auth/profile" legacyBehavior>
           <a className="text-[#666]">
-            <MyPage />
+            <MyPage size={13} />
           </a>
         </Link>
       </button>

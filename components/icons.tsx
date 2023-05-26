@@ -309,15 +309,36 @@ export function Clear() {
   );
 }
 
-export function MyPage() {
+export function Next() {
   return (
     <svg
-      width={28}
-      height={28}
+      width={20}
+      height={20}
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-5 h-5 relative"
+      preserveAspectRatio="none"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M7.05806 3.30806C7.30214 3.06398 7.69786 3.06398 7.94194 3.30806L14.1919 9.55806C14.436 9.80214 14.436 10.1979 14.1919 10.4419L7.94194 16.6919C7.69786 16.936 7.30214 16.936 7.05806 16.6919C6.81398 16.4479 6.81398 16.0521 7.05806 15.8081L12.8661 10L7.05806 4.19194C6.81398 3.94786 6.81398 3.55214 7.05806 3.30806Z"
+        fill="#666666"
+      />
+    </svg>
+  );
+}
+
+export function MyPage({ size }: { size: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
       viewBox="0 0 28 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-3.5 h-3.5 relative"
+      className="w-${size} h-${size} relative"
       preserveAspectRatio="none"
     >
       <path
