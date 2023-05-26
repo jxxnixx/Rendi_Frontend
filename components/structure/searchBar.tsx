@@ -45,15 +45,6 @@ export default function SearchBar() {
   const handleTabClick = (tab: string) => {
     setShowContent(tab);
   };
-  // const handleRecentClick = () => {
-  //   setShowRecentContent(true);
-  //   setShowPopularContent(false);
-  // };
-
-  // const handlePopularClick = () => {
-  //   setShowRecentContent(false);
-  //   setShowPopularContent(true);
-  // };
 
   // 닫기 button
   const handleCloseClick = () => {
