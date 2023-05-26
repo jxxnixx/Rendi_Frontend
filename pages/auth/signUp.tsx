@@ -124,7 +124,7 @@ function SignUp() {
                   register={register("username", {
                     required: "Username is required",
                     pattern: {
-                      value: /^[ㄱ-ㅎ|가-힣|A-z][ㄱ-ㅎ|가-힣|A-z0-9-_]{3,23}$/,
+                      value: /^[ㄱ-ㅎ|가-힣|A-z][ㄱ-ㅎ|가-힣|A-z0-9-_]{2,23}$/,
                       message: "Username regex",
                     },
                   })}
@@ -139,7 +139,7 @@ function SignUp() {
                   register={register("userBirth", {
                     required: "UserBirth is required",
                     pattern: {
-                      value: /^[ㄱ-ㅎ|가-힣|A-z][ㄱ-ㅎ|가-힣|A-z0-9-_]{3,23}$/,
+                      value: /^[0-9]{6}}$/,
                       message: "UserBirth regex",
                     },
                   })}
