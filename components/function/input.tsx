@@ -11,6 +11,7 @@ interface InputProps {
   error?: string;
   [key: string]: any;
 }
+
 export default function Input({
   label,
   checkLabel,
@@ -26,7 +27,6 @@ export default function Input({
   if (kind === "text") {
     inputComponent = (
       <div className="w-[448px] h-[55px] rounded-[50px] bg-white ">
-        {/* py-[20px] */}
         <input
           {...inputProps}
           {...rest}
@@ -40,7 +40,7 @@ export default function Input({
           )}
           id={name}
           name={name}
-        />{" "}
+        />
       </div>
     );
   } else if (kind === "check") {
@@ -62,7 +62,6 @@ export default function Input({
         />
         <button
           {...rest}
-          ref={ref}
           className="absolute top-[10px] right-[20px] w-[67px] h-[35px] bg-[#FC435A] rounded-[50px] text-white flex justify-center items-center"
         >
           {checkLabel}
@@ -70,14 +69,25 @@ export default function Input({
       </div>
     );
   } else if (kind === "birth") {
+    const {
+      ref: birthRef,
+      onChange: birthOnChange,
+      ...birthInputProps
+    } = register;
+
+    const {
+      ref: confirmRef,
+      onChange: confirmOnChange,
+      ...confirmInputProps
+    } = birthInputProps;
     inputComponent = (
       <div className="flex gap-2">
         <div className="w-[200px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0]">
-          <input // 생년월일 input
-            {...inputProps}
+          <input
+            {...birthInputProps}
             {...rest}
-            ref={ref}
-            onChange={onChange}
+            ref={birthRef}
+            onChange={birthOnChange}
             className={cls(
               "w-full h-full rounded-[50px] bg-white border-none px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
               error
@@ -86,19 +96,17 @@ export default function Input({
             )}
             id={name}
             name={name}
-          />{" "}
+          />
         </div>
-        {/* - */}
         <p className="flex-grow-0 flex-shrink-0 w-[34px] h-[55px] text-lg text-center flex items-center justify-center text-[#666]">
           -
         </p>
-
         <div className="w-[50px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0]">
-          <input // 주민번호 앞자리 input. placeholder 아직 남아있어 추후해결 필요
-            {...inputProps}
+          <input
+            {...confirmInputProps}
             {...rest}
-            ref={ref}
-            onChange={onChange}
+            ref={confirmRef}
+            onChange={confirmOnChange}
             className={cls(
               "w-full h-full rounded-[50px] bg-white border-none px-[20px] py-[19.25px] placeholder-white focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
               error
@@ -107,7 +115,7 @@ export default function Input({
             )}
             id={name + "_confirm"}
             name={name + "_confirm"}
-          />{" "}
+          />
         </div>
         <div className="w-[150px] text-center flex items-center text-5xl">
           ••••••
