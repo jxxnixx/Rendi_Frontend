@@ -74,6 +74,7 @@ export default function Input({
       onChange: birthOnChange,
       ...birthInputProps
     } = register;
+
     const {
       ref: confirmRef,
       onChange: confirmOnChange,
