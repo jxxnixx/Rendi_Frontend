@@ -1,6 +1,9 @@
+import { Line } from "../icons";
+
 export default function Footer() {
   return (
     <>
+      <Line />
       <footer className="relative flex items-center justify-center bottom-0 left-0 right-0 z-10 w-[1040px] h-[420px] relative overflow-hidden bg-white">
         <div className="w-[1040px] h-[989.52px] flex items-center justify-center">
           <div className="w-[1040px] h-[420px] absolute left-0 top-0 overflow-hidden bg-white">
