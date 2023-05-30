@@ -4,7 +4,9 @@ import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
-import { MyPage, Next } from "@/components/icons";
+import { Line, MyPage, Next, ShoppingBag } from "@/components/icons";
+import Items from "@/components/product/items";
+import Items8 from "@/components/product/items8";
 
 interface ProfileForm {
   id: string;
@@ -27,7 +29,7 @@ function Profile() {
             </p>
           </div>
         </div>
-
+        {/* 버튼 */}
         <div className="flex justify-center items-center mt-[0px] opacity-90 gap-[100px] bg-white">
           <Link href="/auth/profile/liked" legacyBehavior>
             <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
@@ -53,9 +55,9 @@ function Profile() {
             </button>
           </Link>
         </div>
-
+        {/* 회원정보수정 */}
         <div className="flex justify-center items-center  ">
-          <div className="flex justify-center items-center  w-[1040px] h-[105px] mt-[10px]  border-t border-b border-black">
+          <div className="flex justify-center items-center  w-[1040px] h-[85px] mt-[10px]  border-t border-b border-black">
             <div className="flex items-center h-[50px] w-[50px] ">
               <MyPage size={30} />
             </div>
@@ -65,7 +67,7 @@ function Profile() {
               </div>
               <Link href="/auth/profile/update">
                 <button className="flex items-top h-[50px] h-[30px] ">
-                  <p className="text-lg text-center text-[#666]">
+                  <p className="text-m text-center text-[#666]">
                     회원정보 수정
                   </p>
                   <div className="flex items-top mt-[4.5px]">
@@ -73,6 +75,20 @@ function Profile() {
                   </div>
                 </button>
               </Link>
+            </div>
+          </div>
+        </div>
+        {/* 최근본상품 */}
+        <div className="flex justify-center">
+          <div className="flex-row  w-[1040px] h-[784px]">
+            <div className="flex text-[12pt] font-medium  text-black">
+              <div className="flex ml-[10px] mr-[5px] items-center h-[40px]">
+                <ShoppingBag />
+              </div>
+              <p className="flex items-center h-[40px] ">최근 본 상품</p>
+            </div>
+            <div className="flex items-end justify-center">
+              <Items8 />
             </div>
           </div>
         </div>
