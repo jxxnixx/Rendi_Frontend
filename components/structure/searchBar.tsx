@@ -66,7 +66,7 @@ export default function SearchBar() {
             ref={inputRef}
             type="search"
             id="default-search"
-            className="block w-[679px] h-[46px] px-[20px] rounded-[50px] bg-white border-2 border-[#FC435A] focus:outline-none focus:ring-0"
+            className="block w-[679px] h-[46px] px-[20px] rounded-[50px] bg-white border-2 border-mc focus:outline-none focus:ring-0"
             placeholder="검색어를 입력하세요"
             onClick={handleInputClick}
           />
@@ -75,7 +75,7 @@ export default function SearchBar() {
             ref={inputRef}
             type="search"
             id="default-search"
-            className="block w-[679px] h-[46px] px-[20px] rounded-t-[23px] bg-white border-2 border-[#FC435A] focus:outline-none focus:ring-0 "
+            className="block w-[679px] h-[46px] px-[20px] rounded-t-[23px] bg-white border-2 border-mc focus:outline-none focus:ring-0 "
             placeholder="검색어를 입력하세요"
             onClick={handleInputClick}
           />
@@ -83,7 +83,7 @@ export default function SearchBar() {
 
         {showSquare && (
           <div ref={squareRef} className="w-[679px] h-[456px] relative z-0">
-            <div className="flex justify-start items-start w-[679px] h-[456px] absolute left-0 top-0 rounded-b-[23px] bg-white border-x-2 border-b-2 border-[#fc435a]">
+            <div className="flex justify-start items-start w-[679px] h-[456px] absolute left-0 top-0 rounded-b-[23px] bg-white border-x-2 border-b-2 border-mc">
               <div
                 className={`w-[676px] h-12 absolute ${
                   showContent === "recent" ? "left-[0px]" : "right-[0px]"
@@ -133,7 +133,7 @@ export default function SearchBar() {
                     id="recent"
                     className={`w-1/2 h-12 items-center justify-center content-center ${
                       showContent === "recent"
-                        ? "text-[#FC435A] border-b-2 border-[#FC435A]"
+                        ? "text-mc border-b-2 border-mc"
                         : ""
                     }`}
                     onClick={() => handleTabClick("recent")}
@@ -145,7 +145,7 @@ export default function SearchBar() {
                     id="popular"
                     className={`w-1/2 h-12 items-center justify-center ${
                       showContent === "popular"
-                        ? "text-[#FC435A] border-b-2 border-[#FC435A]"
+                        ? "text-mc border-b-2 border-mc"
                         : ""
                     }`}
                     onClick={() => handleTabClick("popular")}
