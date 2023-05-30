@@ -57,7 +57,7 @@ function Profile() {
         </div>
         {/* 회원정보수정 */}
         <div className="flex justify-center items-center  ">
-          <div className="flex justify-center items-center  w-[1040px] h-[105px] mt-[10px]  border-t border-b border-black">
+          <div className="flex justify-center items-center  w-[1040px] h-[85px] mt-[10px]  border-t border-b border-black">
             <div className="flex items-center h-[50px] w-[50px] ">
               <MyPage size={30} />
             </div>
@@ -67,7 +67,7 @@ function Profile() {
               </div>
               <Link href="/auth/profile/update">
                 <button className="flex items-top h-[50px] h-[30px] ">
-                  <p className="text-lg text-center text-[#666]">
+                  <p className="text-m text-center text-[#666]">
                     회원정보 수정
                   </p>
                   <div className="flex items-top mt-[4.5px]">
