@@ -4,6 +4,7 @@ import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
+import { LoginLine } from "@/components/icons";
 
 interface LogInForm {
   id: string;
@@ -38,9 +39,11 @@ function LogIn() {
         </Head>
         <div className=" flex flex-col items-center">
           <div className="relative top-[241px] text-center">
-            <p className="text-4xl font-semibold text-black">로그인</p>
+            <p className="text-4xl mb-[70px] font-semibold text-black">
+              로그인
+            </p>
           </div>
-          <div className="absolute top-[305px] text-center">
+          <div className="absolute  top-[305px] text-center">
             <p className="text-lg text-[#666]">
               Rendi만의 지능형 AI 검색을 경험해보세요!
             </p>
@@ -49,7 +52,7 @@ function LogIn() {
 
         <div className="flex justify-center items-center top-[400px] h-screen">
           <form
-            className=" flex flex-col items-center mt-[-60px] gap-1 p-0 w-448 h-1017"
+            className=" flex flex-col items-center gap-1 p-0 w-448 h-1017"
             onSubmit={handleSubmit(submitForm)}
           >
             <Input
@@ -90,12 +93,27 @@ function LogIn() {
                 </Link>
               </div>
             </div>
-            <div className="flex text-center text-xs justify-center">
+            <div className="flex mt-[10px] text-center text-xs justify-center">
               <SubmitButton
                 type="submit"
                 text="로그인"
                 className="flex justify-center items-center h-screen"
               />
+            </div>
+            <div className="mt-[60px]">
+              <LoginLine />
+            </div>
+
+            <div className="flex-row items-center justify-center">
+              <button className=" w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#fee500]">
+                카카오로그인
+              </button>
+              <button className=" w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a]">
+                네이버로그인
+              </button>
+              <button className=" w-[186px] h-[46px] p-5 rounded-[15px] bg-white border border-[#666]/30">
+                구글로그인
+              </button>
             </div>
 
             <Link href="/auth/signUp" legacyBehavior>

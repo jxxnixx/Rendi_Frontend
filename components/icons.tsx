@@ -404,3 +404,36 @@ export function Line() {
     </svg>
   );
 }
+
+export function LoginLine() {
+  return (
+    <div className="flex items-center w-[592px] h-[15px]">
+      <svg
+        width={190}
+        height={2}
+        viewBox="0 0 190 2"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="flex"
+        preserveAspectRatio="none"
+      >
+        <path d="M0 1H190" stroke="#DBDBDB" />
+      </svg>
+      <p className="flex ml-[56px] mr-[56px] text-[13px] text-left text-black">
+        {" "}
+        Or continue with
+      </p>
+      <svg
+        width={190}
+        height={2}
+        viewBox="0 0 190 2"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="flex"
+        preserveAspectRatio="none"
+      >
+        <path d="M0 1H190" stroke="#DBDBDB" />
+      </svg>
+    </div>
+  );
+}
