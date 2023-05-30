@@ -4,7 +4,7 @@ import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
-import { LoginLine } from "@/components/icons";
+import { Google, KakaoTalk, LoginLine, Naver } from "@/components/icons";
 
 interface LogInForm {
   id: string;
@@ -50,7 +50,7 @@ function LogIn() {
           </div>
         </div>
 
-        <div className="flex justify-center items-center top-[400px] h-screen">
+        <div className="flex justify-center items-center mt-[70px] h-screen">
           <form
             className=" flex flex-col items-center gap-1 p-0 w-448 h-1017"
             onSubmit={handleSubmit(submitForm)}
@@ -104,21 +104,34 @@ function LogIn() {
               <LoginLine />
             </div>
 
-            <div className="flex-row items-center justify-center">
-              <button className=" w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#fee500]">
-                카카오로그인
+            <div className="flex mt-[20px] text-center text-[10pt]">
+              {/* link 연결해야함. */}
+              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#fee500]">
+                <div className="mr-[10px]">
+                  <KakaoTalk />
+                </div>
+                카카오 로그인
               </button>
-              <button className=" w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a]">
-                네이버로그인
+              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a]">
+                <div className="mr-[10px]">
+                  <Naver />
+                </div>
+                네이버 로그인
               </button>
-              <button className=" w-[186px] h-[46px] p-5 rounded-[15px] bg-white border border-[#666]/30">
-                구글로그인
+              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] p-5 rounded-[15px] bg-white border border-[#666]/30">
+                <div className="mr-[10px]">
+                  <Google />
+                </div>
+                구글 로그인
               </button>
             </div>
 
+            <div className="mt-[40px] bg-white text-gray-600 text-[11pt] text-base">
+              Rendi가 처음이신가요?
+            </div>
             <Link href="/auth/signUp" legacyBehavior>
-              <button className="mt-[100px] bg-white text-gray-600 text-base">
-                Rendi가 처음이신가요?
+              <button className="mt-[3px] bg-white text-black text-[12pt] text-base">
+                회원가입
               </button>
             </Link>
           </form>
