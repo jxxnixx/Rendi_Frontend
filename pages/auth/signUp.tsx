@@ -1,4 +1,4 @@
-import { API_URL, usersApi } from "@/libs/api";
+import { usersApi } from "@/libs/api";
 import { SubmitHandler, useForm } from "react-hook-form";
 import SubmitBtn from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
@@ -30,6 +30,9 @@ function SignUp() {
     mode: "onChange",
   });
 
+  // const [birth, setBirth] = useState({ year: "", month: "", day: "" });
+  // const [sex, setSex] = useState("");
+
   const submitForm: SubmitHandler<IsignUpForm> = async (data: IsignUpForm) => {
     console.log(data);
     try {
@@ -44,6 +47,15 @@ function SignUp() {
       console.error("회원가입 오류:", error);
     }
   };
+
+  // const handleChange = (e: ChangeEvent<HTMLInputElement>, type: string) => {
+  //   const value = e.target.value;
+  //   if (type === "sex") {
+  //     setSex(value === "1" ? "1" : "2");
+  //   } else {
+  //     setBirth((prev) => ({ ...prev, [type]: value }));
+  //   }
+  // };
 
   return (
     <>
@@ -140,7 +152,7 @@ function SignUp() {
                   placeholder="이름"
                   error={errors?.nickname?.message}
                 />
-                {/* <Input
+                <Input
                   name="birth"
                   label="생년월일"
                   type="birth"
@@ -154,6 +166,52 @@ function SignUp() {
                   })}
                   placeholder="YYMMDD"
                   error={errors?.birth?.message}
+                />
+
+                {/* <Input
+                  name="birth_year"
+                  label="생년월일"
+                  type="birth"
+                  kind="birth"
+                  register={register("birth_year", {
+                    //... 기타 validation
+                  })}
+                  placeholder="YY"
+                  error={errors?.birth_year?.message}
+                  onChange={(e) => handleChange(e, "year")}
+                />
+                <Input
+                  name="birth_month"
+                  type="birth"
+                  kind="birth"
+                  register={register("birth_month", {
+                    //... 기타 validation
+                  })}
+                  placeholder="MM"
+                  error={errors?.birth_month?.message}
+                  onChange={(e) => handleChange(e, "month")}
+                />
+                <Input
+                  name="birth_day"
+                  type="birth"
+                  kind="birth"
+                  register={register("birth_day", {
+                    //... 기타 validation
+                  })}
+                  placeholder="DD"
+                  error={errors?.birth_day?.message}
+                  onChange={(e) => handleChange(e, "day")}
+                />
+                <Input
+                  name="sex"
+                  type="birth"
+                  kind="birth"
+                  register={register("sex", {
+                    //... 기타 validation
+                  })}
+                  placeholder="1 or 2"
+                  error={errors?.sex?.message}
+                  onChange={(e) => handleChange(e, "sex")}
                 /> */}
 
                 <Input
@@ -171,7 +229,7 @@ function SignUp() {
                   placeholder="-를 제외하고 입력하세요."
                   error={errors?.phone?.message}
                 />
-                {/* <Input
+                <Input
                   name="email"
                   label="이메일"
                   checkLabel="인증"
@@ -202,7 +260,7 @@ function SignUp() {
                   })}
                   placeholder="인증번호를 입력하세요."
                   error={errors?.authCode?.message}
-                /> */}
+                />
 
                 <div>
                   <Link href="/auth/login" legacyBehavior>

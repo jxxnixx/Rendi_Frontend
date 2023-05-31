@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export const API_URL = "http://121.166.191.129:9876";
+// export const API_URL = "http://121.166.191.129:9876";
 
-const api = axios.create({
-  baseURL: API_URL,
-});
+// const api = axios.create({
+//   baseURL: API_URL,
+// });
 
 interface IProps {
   [key: string]: any;
@@ -17,7 +17,6 @@ interface IProps {
 // });
 
 export const usersApi = {
-  // 회원가입
   signup: async ({
     username, // id
     password,
@@ -34,7 +33,7 @@ export const usersApi = {
     phoneAYN,
   }: IProps) => {
     try {
-      const response = await api.post("/member/local/", {
+      const response = await axios.post("/member/local/", {
         username,
         password,
         cPassword,
@@ -70,15 +69,15 @@ export const usersApi = {
       throw error;
     }
   },
-  //AgreeYn 에 Y한 상태로 넘기기
+  // AgreeYN Y로 넘기기
 
   // ID 중복체크 확인
   checkID: (username: IProps) =>
-    api.get(`/member/id_check?username=${username}`),
+    axios.get(`/member/id_check?username=${username}`),
 
   // 회원가입 인증번호 발급
   getSignupCode: ({ nickname, email }: IProps) =>
-    api.post("/member/email/", {
+    axios.post("/member/email/", {
       name: nickname,
       email,
     }),
@@ -98,7 +97,7 @@ export const usersApi = {
     emailAYN,
     phoneAYN,
   }: IProps) =>
-    api.post("/member/social-profile/", {
+    axios.post("/member/social-profile/", {
       provider: type,
       profile: {
         sns_user: username,
@@ -115,7 +114,7 @@ export const usersApi = {
 
   // 일반 로그인
   login: ({ username, password }: IProps) =>
-    api.post("/member/login/", {
+    axios.post("member/login/", {
       // login_method: "normal",
       username,
       password,
@@ -123,15 +122,15 @@ export const usersApi = {
 
   // SNS 로그인
   snsLogin: ({ type, email }: IProps) =>
-    api.post("/member/social-token/", {
+    axios.post("/member/social-token/", {
       provider: type,
       email,
     }),
 
   // ID 찾기
-  findID: (email: string) => api.get(`/member/find-id/?email=${email}`),
+  findID: (email: string) => axios.get(`/member/find-id/?email=${email}`),
 
   // PW 변경
   changePW: (email: string, password: string) =>
-    api.post("/member/find-pw/", { email, password }),
+    axios.post("/member/find-pw/", { email, password }),
 };

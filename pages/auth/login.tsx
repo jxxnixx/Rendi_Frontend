@@ -1,4 +1,4 @@
-import { API_URL, usersApi } from "@/libs/api";
+import { usersApi } from "@/libs/api";
 import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
 import SubmitButton from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
