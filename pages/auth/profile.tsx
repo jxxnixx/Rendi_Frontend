@@ -23,8 +23,8 @@ function Profile() {
           <title>Profile</title>
         </Head>
         <div className="flex justify-center items-center">
-          <div className="flex justify-center w-[1040px] h-[128px] mt-[135px] bg-blue">
-            <p className="flex justify-center  left-[441px] mt-[45px] text-4xl font-semibold text-left text-black">
+          <div className="flex justify-center w-[1040px] h-[98px] mt-[135px] bg-blue">
+            <p className="flex justify-center  left-[441px] mt-[35px] text-[21pt] font-semibold text-left text-black">
               마이페이지
             </p>
           </div>
