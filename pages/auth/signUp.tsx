@@ -1,3 +1,4 @@
+import { API_URL, usersApi } from "@/libs/api";
 import { SubmitHandler, useForm } from "react-hook-form";
 import SubmitBtn from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
@@ -6,15 +7,17 @@ import Head from "next/head";
 import Link from "next/link";
 
 interface IsignUpForm {
-  id: string;
+  username: string;
   password: string;
   cPassword: string;
-  username: string;
-  userBirth: string;
-  phone: string;
+  nickname: string;
   email: string;
+  phone: string;
+  birth: string;
   authCode: string;
   checknum: number;
+  emailAgreeYn: string;
+  phoneAgreeYn: string;
   extraError?: string;
 }
 
@@ -22,19 +25,25 @@ function SignUp() {
   const {
     register,
     handleSubmit,
-    //watch,
     formState: { errors },
-    //setError,
   } = useForm<IsignUpForm>({
     mode: "onChange",
   });
 
-  const submitForm: SubmitHandler<IsignUpForm> = (data: any) => {
+  const submitForm: SubmitHandler<IsignUpForm> = async (data: IsignUpForm) => {
     console.log(data);
+    try {
+      const result = await usersApi.signup(data); // api.ts의 signup 함수 호출
+
+      if (result.success) {
+        console.log("회원가입 성공:", result.response);
+      } else {
+        console.error("회원 가입 실패:", result.error?.errorMessage);
+      }
+    } catch (error) {
+      console.error("회원가입 오류:", error);
+    }
   };
-  // const submitForm: SubmitHandler<IsignUpForm> = (data: any) => {
-  //   console.log(data);
-  // };
 
   return (
     <>
@@ -55,24 +64,24 @@ function SignUp() {
 
               <div className="relative top-[133px]">
                 <Input
-                  name="id"
+                  name="username"
                   label="아이디"
                   checkLabel="확인"
-                  type="id"
-                  register={register("id", {
+                  type="username"
+                  register={register("username", {
                     required: {
                       value: true,
                       message: "영어와 숫자로만 구성해주세요.",
                     },
                     pattern: {
                       value: /^[a-zA-Z0-9]+$/,
-                      message: "이미 존재하는 id 입니다.",
+                      message: "이미 존재하는 username 입니다.",
                     },
                   })}
                   placeholder="아이디"
-                  // error={errors?.id?.message}
+                  // error={errors?.username?.message}
                   kind="check"
-                  error={errors?.id?.message}
+                  error={errors?.username?.message}
                 />
 
                 <Input
@@ -117,35 +126,35 @@ function SignUp() {
                   autoComplete="off"
                 />
                 <Input
-                  name="username"
+                  name="nickname"
                   label="이름"
-                  type="username"
+                  type="nickname"
                   kind="text"
-                  register={register("username", {
-                    required: "Username is required",
+                  register={register("nickname", {
+                    required: "nickname is required",
                     pattern: {
                       value: /^[ㄱ-ㅎ|가-힣|A-z][ㄱ-ㅎ|가-힣|A-z0-9-_]{2,23}$/,
-                      message: "Username regex",
+                      message: "nickname regex",
                     },
                   })}
                   placeholder="이름"
-                  error={errors?.username?.message}
+                  error={errors?.nickname?.message}
                 />
-                <Input
-                  name="userBirth"
+                {/* <Input
+                  name="birth"
                   label="생년월일"
-                  type="userBirth"
+                  type="birth"
                   kind="birth"
-                  register={register("userBirth", {
-                    required: "UserBirth is required",
+                  register={register("birth", {
+                    required: "birth is required",
                     pattern: {
                       value: /^[0-9]{6}}$/,
-                      message: "UserBirth regex",
+                      message: "birth regex",
                     },
                   })}
                   placeholder="YYMMDD"
-                  error={errors?.userBirth?.message}
-                />
+                  error={errors?.birth?.message}
+                /> */}
 
                 <Input
                   name="phone"
@@ -162,7 +171,7 @@ function SignUp() {
                   placeholder="-를 제외하고 입력하세요."
                   error={errors?.phone?.message}
                 />
-                <Input
+                {/* <Input
                   name="email"
                   label="이메일"
                   checkLabel="인증"
@@ -193,7 +202,7 @@ function SignUp() {
                   })}
                   placeholder="인증번호를 입력하세요."
                   error={errors?.authCode?.message}
-                />
+                /> */}
 
                 <div>
                   <Link href="/auth/login" legacyBehavior>
