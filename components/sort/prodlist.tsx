@@ -110,7 +110,18 @@ export default function Prodlist({ products }: ProdlistProps) {
   const filteredAndSortedProducts = sortProducts(filterProducts());
 
   return (
-    <div>
+    <div className="gap-[30px]">
+      {/* Sort Order Dropdown */}
+      <SDropdown<SortOrder>
+        options={[
+          { label: "추천순", value: SortOrder.Recommended },
+          { label: "인기순", value: SortOrder.Popularity },
+          { label: "낮은 가격순", value: SortOrder.PriceLowToHigh },
+        ]}
+        onSelect={handleSortOrderSelect}
+        defaultValue={SortOrder.Recommended}
+      />
+
       {/* Categories Dropdown */}
       <SDropdown<Categories>
         options={[
@@ -139,17 +150,6 @@ export default function Prodlist({ products }: ProdlistProps) {
         ]}
         onSelect={handleColorSelect}
         // multiSelect
-      />
-
-      {/* Sort Order Dropdown */}
-      <SDropdown<SortOrder>
-        options={[
-          { label: "추천순", value: SortOrder.Recommended },
-          { label: "인기순", value: SortOrder.Popularity },
-          { label: "낮은 가격순", value: SortOrder.PriceLowToHigh },
-        ]}
-        onSelect={handleSortOrderSelect}
-        defaultValue={SortOrder.Recommended}
       />
 
       <div>
