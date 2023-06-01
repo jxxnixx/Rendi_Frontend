@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { NextIcon, PreviousIcon } from "../icons";
 
 export default function Pagination() {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 5;
+  const totalPages = 10;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -20,9 +21,11 @@ export default function Pagination() {
             href="#"
             className={`px-3 py-2 leading-tight ${
               isActive
-                ? "text-blue-600 bg-blue-50 border-blue-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                : "text-gray-500 bg-white border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-            } ${isActive ? "pointer-events-none" : ""}`}
+                ? "text-[#FC435A]" // 클릭된 페이지의 글씨체를 빨간색으로 변경
+                : "text-gray-500 hover:text-gray-700" // hover 효과 추가
+            } bg-white  ${
+              isActive ? "pointer-events-none" : "hover:bg-gray-100" // 클릭된 페이지에서는 배경색 변경 없음
+            }`}
             onClick={() => handlePageChange(i)}
           >
             {i}
@@ -36,54 +39,30 @@ export default function Pagination() {
 
   return (
     <nav aria-label="Page navigation example">
-      <ul className="inline-flex items-center -space-x-px">
+      <ul className="flex justify-center items-center -space-x-px">
         <li>
           <a
             href="#"
-            className={`block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+            className={`block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700   ${
               currentPage === 1 ? "pointer-events-none" : ""
             }`}
             onClick={() => handlePageChange(currentPage - 1)}
           >
             <span className="sr-only">Previous</span>
-            <svg
-              aria-hidden="true"
-              className="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <PreviousIcon />
           </a>
         </li>
         {renderPageNumbers()}
         <li>
           <a
             href="#"
-            className={`block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+            className={`block px-3 py-2 leading-tight text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700  ${
               currentPage === totalPages ? "pointer-events-none" : ""
             }`}
             onClick={() => handlePageChange(currentPage + 1)}
           >
             <span className="sr-only">Next</span>
-            <svg
-              aria-hidden="true"
-              className="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <NextIcon />
           </a>
         </li>
       </ul>

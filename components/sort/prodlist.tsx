@@ -1,46 +1,70 @@
 import React, { useState } from "react";
-import Dropdown from "./dropdown";
 import SDropdown from "./sdropdown";
 
 interface Product {
   id: number;
   name: string;
-  category: string;
-  color: string;
+  category: Categories;
+  color: Colors;
   price: number;
   popularity: number;
 }
-
 interface ProdlistProps {
   products: Product[]; // 상품 목록 배열
 }
 
 enum SortOrder {
-  Recommended = "recommended", // 추천순
-  Popularity = "popularity", // 인기순
-  PriceLowToHigh = "priceLowToHigh", // 낮은 가격순
+  Recommended = "recommended",
+  Popularity = "popularity",
+  PriceLowToHigh = "priceLowToHigh",
+}
+
+enum Categories {
+  Top = "Top",
+  Outer = "Outer",
+  Dress = "Dress",
+  Pants = "Pants",
+  Skirt = "Skirt",
+  Training = "Training",
+  Inner = "Inner",
+  Swimsuit = "Swimsuit",
+  Shoes = "Shoes",
+  Bag = "Bag",
+  ETC = "ETC",
+}
+
+enum Colors {
+  Red = "Red",
+  Blue = "Blue",
+  Black = "Black",
 }
 
 export default function Prodlist({ products }: ProdlistProps) {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]); // 선택된 카테고리 배열 상태
-  const [selectedColors, setSelectedColors] = useState<string[]>([]); // 선택된 색상 배열 상태
-  const [selectedSortOrder, setSelectedSortOrder] = useState(
+  const [selectedCategories, setSelectedCategories] = useState<Categories[]>(
+    []
+  );
+  const [selectedColors, setSelectedColors] = useState<Colors[]>([]);
+  const [selectedSortOrder, setSelectedSortOrder] = useState<SortOrder>(
     SortOrder.Recommended
   ); // 선택된 정렬 순서 상태
 
   // 카테고리 선택 콜백 함수
-  const handleCategorySelect = (selectedItems: string[]) => {
-    setSelectedCategories(selectedItems);
+  const handleCategorySelect = (selectedItems: Categories | Categories[]) => {
+    setSelectedCategories(selectedItems as Categories[]);
   };
 
   // 색상 선택 콜백 함수
-  const handleColorSelect = (selectedItems: string[]) => {
-    setSelectedColors(selectedItems);
+  const handleColorSelect = (selectedItems: Colors | Colors[]) => {
+    setSelectedColors(selectedItems as Colors[]);
   };
 
   // 정렬 순서 선택 콜백 함수
-  const handleSortOrderSelect = (selectedOrder: SortOrder) => {
-    setSelectedSortOrder(selectedOrder);
+  const handleSortOrderSelect = (selectedOrder: SortOrder | SortOrder[]) => {
+    if (Array.isArray(selectedOrder)) {
+      setSelectedSortOrder(selectedOrder[0]);
+    } else {
+      setSelectedSortOrder(selectedOrder);
+    }
   };
 
   // 카테고리와 색상으로 상품 필터링 함수
@@ -86,36 +110,49 @@ export default function Prodlist({ products }: ProdlistProps) {
   const filteredAndSortedProducts = sortProducts(filterProducts());
 
   return (
-    <div>
-      <h2>Product List</h2>
+    <div className="gap-[30px]">
+      {/* Sort Order Dropdown */}
+      <SDropdown<SortOrder>
+        options={[
+          { label: "추천순", value: SortOrder.Recommended },
+          { label: "인기순", value: SortOrder.Popularity },
+          { label: "낮은 가격순", value: SortOrder.PriceLowToHigh },
+        ]}
+        onSelect={handleSortOrderSelect}
+        defaultValue={SortOrder.Recommended}
+      />
+
+      {/* Categories Dropdown */}
+      <SDropdown<Categories>
+        options={[
+          { label: "상의", value: Categories.Top },
+          { label: "아우터", value: Categories.Outer },
+          { label: "원피스", value: Categories.Dress },
+          { label: "바지", value: Categories.Pants },
+          { label: "스커트", value: Categories.Skirt },
+          { label: "트레이닝", value: Categories.Training },
+          { label: "이너웨어", value: Categories.Inner },
+          { label: "수영복", value: Categories.Swimsuit },
+          { label: "슈즈", value: Categories.Shoes },
+          { label: "가방", value: Categories.Bag },
+          { label: "기타", value: Categories.ETC },
+        ]}
+        onSelect={handleCategorySelect}
+        // multiSelect
+      />
+
+      {/* Colors Dropdown */}
+      <SDropdown<Colors>
+        options={[
+          { label: "Red", value: Colors.Red },
+          { label: "Blue", value: Colors.Blue },
+          { label: "Black", value: Colors.Black },
+        ]}
+        onSelect={handleColorSelect}
+        // multiSelect
+      />
+
       <div>
-        <h3>Categories:</h3>
-        <Dropdown
-          options={["Dress", "Top", "Bottom", "Outer"]}
-          onSelect={handleCategorySelect}
-        />
-      </div>
-      <div>
-        <h3>Colors:</h3>
-        <Dropdown
-          options={["Red", "Blue", "Black"]}
-          onSelect={handleColorSelect}
-        />
-      </div>
-      <div>
-        <h3>Sort Order:</h3>
-        <SDropdown
-          options={[
-            { label: "Recommended", value: SortOrder.Recommended },
-            { label: "Popularity", value: SortOrder.Popularity },
-            { label: "Price Low to High", value: SortOrder.PriceLowToHigh },
-          ]}
-          onSelect={handleSortOrderSelect}
-          defaultValue={SortOrder.Recommended}
-        />
-      </div>
-      <div>
-        <h3>Filtered and Sorted Products:</h3>
         <ul>
           {filteredAndSortedProducts.map((product) => (
             <li key={product.id}>
