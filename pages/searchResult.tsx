@@ -1,5 +1,6 @@
 import { Line } from "@/components/icons";
 import Items from "@/components/product/items";
+import Items8 from "@/components/product/items8";
 import Prodlist from "@/components/sort/prodlist";
 import BrLine from "@/components/structure/brLine";
 import Pagination from "@/components/structure/pagination";
@@ -30,7 +31,8 @@ export default function searchResult() {
       </div>
 
       <div className=" flex flex-col items-center justify-center">
-        <Items />
+        <Items8 />
+        <Items8 />
         <Pagination />
       </div>
     </Layout>

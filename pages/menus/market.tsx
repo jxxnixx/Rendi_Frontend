@@ -8,9 +8,7 @@ export default function Market() {
       <Head>
         <title>Market</title>
       </Head>
-      <div className="relative mt-[104px] flex w-full flex-col bg-slate-200 text-lg font-medium ">
-        //
-      </div>
+      <div className="relative mt-[136px] h-[800px] flex w-full flex-col bg-slate-200 text-lg font-medium "></div>
     </Layout>
   );
 }
