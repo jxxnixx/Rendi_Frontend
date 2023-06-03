@@ -6,6 +6,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Items from "@/components/product/items";
 import React from "react";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -19,8 +20,23 @@ const Home: NextPage = () => {
         <div className="bg-white">
           <Banner />
           <HoriCategory />
-          <div className="flex justify-center py-8">
-            <Items />
+
+          <div className="flex justify-center">
+            <div className="flex-row w-[1040px]">
+              <div className="flex justify-between text-[12pt] font-medium text-black">
+                <p className="ml-[30px] mt-[10px]">이번주 신제품</p>
+
+                <Link href="/menus/new">
+                  <button className="h-[34px] flex items-end">
+                    <p className="">More</p>
+                    <span className="text-[18px] ml-[2px] mr-[30px]"> +</span>
+                  </button>
+                </Link>
+              </div>
+              <div className="flex justify-center ">
+                <Items />
+              </div>
+            </div>
           </div>
         </div>
       </div>
