@@ -18,7 +18,6 @@ export default function Header() {
             className="w-[181px] h-[132px] absolute left-[-0.5px] top-[-1.5px] bg-white"
           >
             <img
-              // 로고 확인. src
               src="logo.png"
               className="relative w-[147px] h-[83px] absolute left-[16.5px] top-[38px] object-cover"
             />
