@@ -80,7 +80,7 @@ function Profile() {
         </div>
         {/* 최근본상품 */}
         <div className="flex justify-center">
-          <div className="flex-row  w-[1040px] h-[784px]">
+          <div className="flex-row  w-[1040px] h-[834px]">
             <div className="flex text-[12pt] font-medium  text-black">
               <div className="flex ml-[10px] mr-[5px] items-center h-[40px]">
                 <ShoppingBag />
