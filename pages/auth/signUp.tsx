@@ -195,15 +195,7 @@ function SignUp() {
                   error={errors?.authCode?.message}
                 />
 
-                <div>
-                  <Link href="/auth/login" legacyBehavior>
-                    <button className="relative py-[30px] bg-white text-gray-600 text-lg">
-                      계정이 이미 있으신가요?
-                    </button>
-                  </Link>
-                </div>
-
-                <div className="flex text-center justify-center">
+                <div className="flex mt-[40px] text-center justify-center">
                   <Link href="/auth/taste" legacyBehavior>
                     <SubmitBtn
                       large={true}
@@ -211,6 +203,14 @@ function SignUp() {
                       text="다음"
                       className="flex justify-center items-center h-screen"
                     />
+                  </Link>
+                </div>
+
+                <div className="flex justify-center">
+                  <Link href="/auth/login" legacyBehavior>
+                    <button className=" py-[30px] bg-white text-gray-600 text-lg">
+                      계정이 이미 있으신가요?
+                    </button>
                   </Link>
                 </div>
               </div>
