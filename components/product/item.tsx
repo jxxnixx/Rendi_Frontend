@@ -140,9 +140,9 @@ const Item = ({ item }: ItemProps) => {
   };
 
   return (
-    <div className="relative mb-20 w-56 h-70 bg-white">
+    <div className="relative mb-[10px] w-[222px] h-[361px]">
       {/* 상품 이미지 */}
-      <a href="/login" className="relative w-56 h-69 inline-block">
+      <a href="/login" className="relative  w-[222px] h-[278px] inline-block">
         <img
           className="w-56 h-69 rounded-lg border-2 border-gray-100 shadow-md"
           src="https://img1.shopcider.com/product/1679737221000-h2RfX5.jpg?x-oss-process=image/resize,w_700,m_lfit/quality,Q_80/format,webp"
@@ -171,15 +171,15 @@ const Item = ({ item }: ItemProps) => {
         fill="#FC435A"
       />
 
-      <div className="w-56 h-15 relative">
-        <p className="relative h-5 text-lg font-bold text-left text-black">
-          {item} 56,500
+      <div className="mt-[22px] w-[222px] h-5 relative">
+        <p className="w-[222px] h-5  left-[25px] top-[321px] text-[15px] text-left text-black">
+          브라운 항공점퍼
         </p>
-        <p className="relative h-5 text-base text-left text-gray-600">
-          {item} 히니크
+        <p className="w-[222px] h-5  left-[25px] top-[304px] text-[13px] text-left text-[#666]">
+          히니크
         </p>
-        <p className="relative h-5 text-lg text-left text-black">
-          {item} 브라운 항공점퍼
+        <p className="w-[222px] h-5  left-[25px] top-[284px] text-[15px] font-bold text-left text-black">
+          56,500
         </p>
       </div>
     </div>
