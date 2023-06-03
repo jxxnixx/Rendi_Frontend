@@ -7,7 +7,7 @@ export default function Footer() {
       <footer className="relative flex items-center justify-center bottom-0 left-0 right-0 z-10 w-[1040px] h-[420px] relative overflow-hidden bg-white">
         <div className="w-[1040px] h-[989.52px] flex items-center justify-center">
           <div className="w-[1040px] h-[420px] absolute left-0 top-0 overflow-hidden bg-white">
-            <p className="w-[328px] absolute left-[60px] bottom-[49px] text-base font-semibold text-left text-[#1a202c]">
+            <p className="w-[328px] absolute left-[29px] bottom-[49px] text-base font-semibold text-left text-[#1a202c]">
               ©2023 Rendi. All rights reserved
             </p>
             <p className="w-36 absolute right-[60px] bottom-[23px] text-base font-semibold text-right text-[#1a202c]">
@@ -17,7 +17,7 @@ export default function Footer() {
               Privacy &amp; Policy
             </p>
             <div className="w-[152px] h-[244px]">
-              <p className="w-[152px] h-[188px] absolute left-[535px] top-[93px] text-base font-medium text-left text-[#1a202c]">
+              <p className="w-[152px] h-[188px] absolute left-[635px] top-[93px] text-base font-medium text-left text-[#1a202c]">
                 <span className="w-[152px] h-[188px] text-base font-medium text-left text-[#1a202c]">
                   Events
                 </span>
@@ -37,7 +37,7 @@ export default function Footer() {
                   Invite a friend
                 </span>
               </p>
-              <p className="w-[152px] h-8 absolute left-[535px] top-[37px] text-xl font-semibold text-left text-[#1a202c]">
+              <p className="w-[152px] h-8 absolute left-[635px] top-[37px] text-xl font-semibold text-left text-[#1a202c]">
                 Community
               </p>
             </div>
