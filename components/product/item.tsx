@@ -155,7 +155,7 @@ const Item = ({ item }: ItemProps) => {
         onClick={handleLike}
       >
         <HeartIcon
-          className={`w-7 h-7 transition duration-200 ${
+          className={`w-7 h-7 transition duration-200 z-10 ${
             isLiked ? "text-red-500" : ""
           }`}
           fill={isLiked ? "#FC435A" : "none"}
@@ -165,7 +165,7 @@ const Item = ({ item }: ItemProps) => {
 
       {/* 좋아요 클릭 시 */}
       <HeartIcon
-        className={`absolute left-1/2 top-[calc(50%-2.5rem)] ${
+        className={`absolute left-1/2 top-[calc(50%-2.5rem)] z-10 ${
           isCenterHeartShown ? "opacity-100 scale-100" : "opacity-0 scale-50"
         } w-[60px] h-[60px] text-red-500 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-in`}
         fill="#FC435A"

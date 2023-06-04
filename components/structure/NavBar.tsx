@@ -5,7 +5,7 @@ export default function NavBar() {
   const router = useRouter();
 
   return (
-    <nav className="fixed flex items-center justify-center top-[100px] z-10 h-[35px] w-full bg-white mx-auto shadow-sm">
+    <nav className="fixed flex items-center justify-center top-[100px] z-20 h-[35px] w-full bg-white mx-auto shadow-sm">
       <div className="bg-white text-base text-[#666666] space-x-[60px]">
         {[
           { href: "/", text: "Today" },
