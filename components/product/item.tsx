@@ -36,7 +36,7 @@ const Item = ({ item }: ItemProps) => {
             width={30}
             height={30}
             viewBox="0 0 30 30"
-            fill={isLiked[item] ? "mc" : "none"}
+            fill={isLiked[item] ? "#FC435A" : "none"}
             xmlns="http://www.w3.org/2000/svg"
             style={{ width: 30, height: 30 }}
             preserveAspectRatio="none"

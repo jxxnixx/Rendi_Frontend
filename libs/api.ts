@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "next-auth/jwt";
 
 // export const API_URL = "http://121.166.191.129:9876";
 
@@ -18,33 +19,31 @@ interface IProps {
 
 export const usersApi = {
   signup: async ({
-    username, // id
+    username,
     password,
-    cPassword,
-    nickname, // 본명
+    nickname,
     email,
-    phone,
-    year,
-    month,
-    day,
+    phonenum,
+    birth,
     sex,
     interests,
-    emailAYN,
-    phoneAYN,
+    emailAgreeYn,
+    phoneAgreeYn,
   }: IProps) => {
     try {
       const response = await axios.post("/member/local/", {
         username,
         password,
-        cPassword,
-        nickname,
-        email,
-        phone,
-        birth: `${year}-${month}-${day}`,
-        sex,
-        interests,
-        emailAgreeYn: emailAYN,
-        phoneAgreeYn: phoneAYN,
+        profile: {
+          nickname,
+          email,
+          phonenum,
+          birth,
+          sex,
+          interests,
+        },
+        emailAgreeYn,
+        phoneAgreeYn,
       });
 
       if (response.status === 200) {
@@ -69,7 +68,60 @@ export const usersApi = {
       throw error;
     }
   },
-  // AgreeYN Y로 넘기기
+  // export const usersApi = {
+  //   signup: async ({
+  //     username, // id
+  //     password,
+  //     cPassword,
+  //     nickname, // 본명
+  //     email,
+  //     phone,
+  //     year,
+  //     month,
+  //     day,
+  //     sex,
+  //     interests,
+  //     emailAYN,
+  //     phoneAYN,
+  //   }: IProps) => {
+  //     try {
+  //       const response = await axios.post("/member/local/", {
+  //         username,
+  //         password,
+  //         cPassword,
+  //         nickname,
+  //         email,
+  //         phone,
+  //         birth: `${year}${month}${day}`,
+  //         sex,
+  //         interests,
+  //         emailAgreeYn: emailAYN,
+  //         phoneAgreeYn: phoneAYN,
+  //       });
+
+  //       if (response.status === 200) {
+  //         return {
+  //           success: true,
+  //           response: response.data,
+  //           error: null,
+  //         };
+  //       } else {
+  //         return {
+  //           success: false,
+  //           response: null,
+  //           error: {
+  //             errorCode: "MEMBER_DUPLICATED",
+  //             errorMessage: "이미 가입된 회원입니다.",
+  //             errors: null,
+  //           },
+  //         };
+  //       }
+  //     } catch (error) {
+  //       console.error("회원가입 오류:", error);
+  //       throw error;
+  //     }
+  //   },
+  //   // AgreeYN Y로 넘기기
 
   // ID 중복체크 확인
   checkID: (username: IProps) =>
