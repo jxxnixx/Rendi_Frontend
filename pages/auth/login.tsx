@@ -50,7 +50,7 @@ function LogIn() {
           </div>
         </div>
 
-        <div className="flex justify-center items-center mt-[70px] h-screen">
+        <div className="flex justify-center items-center mt-[50px] h-screen">
           <form
             className=" flex flex-col items-center gap-1 p-0 w-448 h-1017"
             onSubmit={handleSubmit(submitForm)}

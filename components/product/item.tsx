@@ -142,7 +142,7 @@ const Item = ({ item }: ItemProps) => {
   return (
     <div className="relative mb-[10px] w-[222px] h-[361px]">
       {/* 상품 이미지 */}
-      <a href="/login" className="relative  w-[222px] h-[278px] inline-block">
+      <a href="/404" className="relative  w-[222px] h-[278px] inline-block">
         <img
           className="w-56 h-69 rounded-lg border-2 border-gray-100 shadow-md"
           src="https://img1.shopcider.com/product/1679737221000-h2RfX5.jpg?x-oss-process=image/resize,w_700,m_lfit/quality,Q_80/format,webp"
@@ -155,7 +155,7 @@ const Item = ({ item }: ItemProps) => {
         onClick={handleLike}
       >
         <HeartIcon
-          className={`w-7 h-7 transition duration-200 ${
+          className={`w-7 h-7 transition duration-200 z-10${
             isLiked ? "text-red-500" : ""
           }`}
           fill={isLiked ? "#FC435A" : "none"}

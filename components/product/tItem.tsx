@@ -22,7 +22,7 @@ export default function TItem({ item, onSelect }: TItemProps) {
         <img
           className={cls(
             "relative w-[170px] h-[250px] rounded-lg border-2 border-gray-100 shadow-md",
-            isClicked ? "border-purple-500" : ""
+            isClicked ? "border-mc" : ""
           )}
           src="https://img1.shopcider.com/product/1679737221000-h2RfX5.jpg?x-oss-process=image/resize,w_700,m_lfit/quality,Q_80/format,webp"
           onClick={handleClick}

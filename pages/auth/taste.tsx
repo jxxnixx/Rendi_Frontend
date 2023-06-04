@@ -32,7 +32,7 @@ export default function Taste() {
         </div>
 
         <div className="w-screen flex flex-col items-center mt-4">
-          <Link href="/auth/login" passHref>
+          <Link href="/" passHref>
             <SubmitBtn
               large={true}
               type="submit"
