@@ -5,14 +5,22 @@ import Layout from "@/layouts/layout";
 import Head from "next/head";
 import React from "react";
 
-export default function Best() {
+const categoriesDress = [
+  { cate: "전체" },
+  { cate: "미니원피스" },
+  { cate: "롱원피스" },
+  { cate: "투피스" },
+  { cate: "점프수트" },
+];
+
+export default function Dress() {
   return (
     <Layout>
       <Head>
-        <title>Best</title>
+        <title>Dress</title>
       </Head>
       <div className="relative mt-[135px] flex w-full flex-col text-lg font-medium bg-white ">
-        <ProdBar category={"default"} />
+        <ProdBar category={categoriesDress} />
         <div className="flex justify-center py-8">
           <Items />
         </div>

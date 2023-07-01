@@ -1,6 +1,5 @@
 import Layout from "@/layouts/layout";
-import { Head } from "next/document";
-
+import Head from "next/head";
 export default function selectedCategory() {
   return (
     <Layout>
