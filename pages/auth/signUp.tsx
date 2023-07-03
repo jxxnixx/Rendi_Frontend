@@ -4,6 +4,8 @@ import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
+import { Segmented } from "antd";
+import { useState } from "react";
 
 interface IsignUpForm {
   id: string;
@@ -34,7 +36,8 @@ function SignUp() {
   };
   // const submitForm: SubmitHandler<IsignUpForm> = (data: any) => {
   //   console.log(data);
-  // };
+  // }
+  const [value, setValue] = useState<string | number>("Map");
 
   return (
     <>
@@ -74,7 +77,6 @@ function SignUp() {
                   kind="check"
                   error={errors?.id?.message}
                 />
-
                 <Input
                   name="password"
                   label="비밀번호"
@@ -98,7 +100,6 @@ function SignUp() {
                   error={errors?.password?.message}
                   autoComplete="off"
                 />
-
                 <Input
                   name="cPassword"
                   label="비밀번호 확인"
@@ -131,23 +132,31 @@ function SignUp() {
                   placeholder="이름"
                   error={errors?.username?.message}
                 />
-                <Input
-                  name="userBirth"
-                  label="생년월일"
-                  type="userBirth"
-                  kind="birth"
-                  register={register("userBirth", {
-                    required: "UserBirth is required",
-                    pattern: {
-                      value:
-                        /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/,
-                      message: "생년월일 형식이 올바르지 않습니다.",
-                    },
-                  })}
-                  placeholder="YYMMDD"
-                  error={errors?.userBirth?.message}
-                />
-
+                <div className="flex flex-row">
+                  <Input
+                    name="userBirth"
+                    label="생년월일"
+                    type="userBirth"
+                    kind="num"
+                    register={register("userBirth", {
+                      required: "UserBirth is required",
+                      pattern: {
+                        value:
+                          /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/,
+                        message: "생년월일 형식이 올바르지 않습니다.",
+                      },
+                    })}
+                    placeholder="YYMMDD"
+                    error={errors?.userBirth?.message}
+                  />{" "}
+                  <Segmented
+                    name="userSex"
+                    className="h-full mt-[55px] ml-[55px]"
+                    options={["남성", "여성"]}
+                    value={value}
+                    onChange={setValue}
+                  />
+                </div>
                 <Input
                   name="phone"
                   label="휴대폰 번호"
@@ -191,7 +200,6 @@ function SignUp() {
                   placeholder="인증번호를 입력하세요."
                   error={errors?.authCode?.message}
                 />
-
                 <div className="flex mt-[40px] text-center justify-center">
                   <Link href="/auth/taste" passHref>
                     <SubmitBtn
@@ -202,10 +210,9 @@ function SignUp() {
                     />
                   </Link>
                 </div>
-
                 <div className="flex justify-center">
                   <Link href="/auth/login" legacyBehavior>
-                    <button className=" py-[30px] bg-white text-gray-600 text-lg">
+                    <button className=" py-[30px] bg-white text-gray-600 text-center">
                       계정이 이미 있으신가요?
                     </button>
                   </Link>
