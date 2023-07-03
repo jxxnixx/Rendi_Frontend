@@ -155,11 +155,7 @@ const Item = ({ item }: ItemProps) => {
         onClick={handleLike}
       >
         <HeartIcon
-<<<<<<< HEAD
-          className={`w-7 h-7 transition duration-200 z-10 ${
-=======
           className={`w-7 h-7 transition duration-200 z-10${
->>>>>>> main
             isLiked ? "text-red-500" : ""
           }`}
           fill={isLiked ? "#FC435A" : "none"}
