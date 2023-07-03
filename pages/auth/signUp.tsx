@@ -66,7 +66,7 @@ function SignUp() {
                     },
                     pattern: {
                       value: /^[a-zA-Z0-9]+$/,
-                      message: "이미 존재하는 id 입니다.",
+                      message: "아이디 형식이 올바르지 않습니다.",
                     },
                   })}
                   placeholder="아이디"
@@ -125,7 +125,7 @@ function SignUp() {
                     required: "Username is required",
                     pattern: {
                       value: /^[ㄱ-ㅎ|가-힣|A-z][ㄱ-ㅎ|가-힣|A-z0-9-_]{2,23}$/,
-                      message: "Username regex",
+                      message: "이름 형식이 올바르지 않습니다.",
                     },
                   })}
                   placeholder="이름"
@@ -139,8 +139,9 @@ function SignUp() {
                   register={register("userBirth", {
                     required: "UserBirth is required",
                     pattern: {
-                      value: /^[0-9]{6}}$/,
-                      message: "UserBirth regex",
+                      value:
+                        /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/,
+                      message: "생년월일 형식이 올바르지 않습니다.",
                     },
                   })}
                   placeholder="YYMMDD"
@@ -153,10 +154,10 @@ function SignUp() {
                   type="phone"
                   kind="text"
                   register={register("phone", {
-                    required: "-를 제외하고 입력하세요.",
+                    required: "phoneNum is required",
                     pattern: {
                       value: /^[0-9]{10,11}$/,
-                      message: "-를 제외하고 입력하세요.",
+                      message: "전화번호 형식이 올바르지 않습니다",
                     },
                   })}
                   placeholder="-를 제외하고 입력하세요."
@@ -172,7 +173,7 @@ function SignUp() {
                     required: "이메일을 입력하세요",
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "유효한 이메일 주소를 입력하세요.",
+                      message: "이메일 형식이 올바르지 않습니다",
                     },
                   })}
                   placeholder="유효한 이메일 주소를 입력하세요."
@@ -186,17 +187,13 @@ function SignUp() {
                   kind="check"
                   register={register("authCode", {
                     required: "인증번호를 입력하세요",
-                    // pattern: {
-                    //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    //   message: "유효한 이메일 주소를 입력하세요.",
-                    // },
                   })}
                   placeholder="인증번호를 입력하세요."
                   error={errors?.authCode?.message}
                 />
 
                 <div className="flex mt-[40px] text-center justify-center">
-                  <Link href="/auth/taste" legacyBehavior>
+                  <Link href="/auth/taste" passHref>
                     <SubmitBtn
                       large={true}
                       type="submit"
