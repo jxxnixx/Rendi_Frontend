@@ -19,7 +19,7 @@ export default function Header() {
           >
             <img
               // 로고 확인. src
-              src="logo.png"
+              src="https://www.notion.so/FRONT-d3c3ffd58da7467f8930a73d2ef142ee?pvs=4#025add1e73724b1696201e7eb3d6519f"
               className="relative w-[147px] h-[83px] absolute left-[16.5px] top-[38px] object-cover"
             />
           </Link>

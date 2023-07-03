@@ -7,8 +7,17 @@ import { getToken } from "next-auth/jwt";
 //   baseURL: API_URL,
 // });
 
-interface IProps {
-  [key: string]: any;
+interface APIProps {
+  username: "";
+  password: "";
+  nickname: "";
+  email: "";
+  phonenum: "";
+  birth: "";
+  sex: "";
+  interests: [""];
+  emailAgreeYn: "";
+  phoneAgreeYn: "";
 }
 
 // export const axiosPrivate = axios.create({
@@ -29,7 +38,7 @@ export const usersApi = {
     interests,
     emailAgreeYn,
     phoneAgreeYn,
-  }: IProps) => {
+  }: APIProps) => {
     try {
       const response = await axios.post("/member/local/", {
         username,
@@ -124,48 +133,48 @@ export const usersApi = {
   //   // AgreeYN Y로 넘기기
 
   // ID 중복체크 확인
-  checkID: (username: IProps) =>
+  checkID: (username: APIProps) =>
     axios.get(`/member/id_check?username=${username}`),
 
   // 회원가입 인증번호 발급
-  getSignupCode: ({ nickname, email }: IProps) =>
+  getSignupCode: ({ nickname, email }: APIProps) =>
     axios.post("/member/email/", {
       name: nickname,
       email,
     }),
 
-  // sns 회원가입
-  snsSignup: ({
-    type,
-    username,
-    nickname,
-    email,
-    phone,
-    year,
-    month,
-    day,
-    sex,
-    interests,
-    emailAYN,
-    phoneAYN,
-  }: IProps) =>
-    axios.post("/member/social-profile/", {
-      provider: type,
-      profile: {
-        sns_user: username,
-        nickname,
-        email,
-        phonenum: phone,
-        birth: `${year}-${month}-${day}`,
-        sex,
-        interests,
-      },
-      emailAgreeYn: emailAYN,
-      phoneAgreeYn: phoneAYN,
-    }),
+  // // sns 회원가입
+  // snsSignup: ({
+  //   type,
+  //   username,
+  //   nickname,
+  //   email,
+  //   phone,
+  //   year,
+  //   month,
+  //   day,
+  //   sex,
+  //   interests,
+  //   emailAYN,
+  //   phoneAYN,
+  // }: APIProps) =>
+  //   axios.post("/member/social-profile/", {
+  //     provider: type,
+  //     profile: {
+  //       sns_user: username,
+  //       nickname,
+  //       email,
+  //       phonenum: phone,
+  //       birth: `${year}-${month}-${day}`,
+  //       sex,
+  //       interests,
+  //     },
+  //     emailAgreeYn: emailAYN,
+  //     phoneAgreeYn: phoneAYN,
+  //   }),
 
   // 일반 로그인
-  login: ({ username, password }: IProps) =>
+  login: ({ username, password }: APIProps) =>
     axios.post("member/login/", {
       // login_method: "normal",
       username,
@@ -173,11 +182,11 @@ export const usersApi = {
     }),
 
   // SNS 로그인
-  snsLogin: ({ type, email }: IProps) =>
-    axios.post("/member/social-token/", {
-      provider: type,
-      email,
-    }),
+  // snsLogin: ({ type, email }: APIProps) =>
+  //   axios.post("/member/social-token/", {
+  //     provider: type,
+  //     email,
+  //   }),
 
   // ID 찾기
   findID: (email: string) => axios.get(`/member/find-id/?email=${email}`),
@@ -186,3 +195,20 @@ export const usersApi = {
   changePW: (email: string, password: string) =>
     axios.post("/member/find-pw/", { email, password }),
 };
+function async(
+  arg0: {
+    username: string;
+    password: string;
+    nickname: string;
+    email: string;
+    phonenum: string;
+    birth: string;
+    sex: string;
+    interests: string[];
+    emailAgree: any;
+    phoneAgree: any;
+  },
+  SignUpAPIProps: any
+) {
+  throw new Error("Function not implemented.");
+}

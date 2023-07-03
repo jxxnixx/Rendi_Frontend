@@ -5,16 +5,14 @@ import { SWRConfig } from "swr";
 import { SessionProvider } from "next-auth/react";
 import { RecoilRoot } from "recoil";
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
-      <SessionProvider session={pageProps.session}>
-        <SWRConfig>
-          <AppLayout>
-            <Component {...pageProps} />
-          </AppLayout>
-        </SWRConfig>
-      </SessionProvider>
+      <SWRConfig>
+        <AppLayout>
+          <Component {...pageProps} />
+        </AppLayout>
+      </SWRConfig>
     </RecoilRoot>
   );
 }

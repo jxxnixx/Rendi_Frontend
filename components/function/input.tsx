@@ -1,5 +1,5 @@
 import { cls } from "@/libs/client/utils";
-import React from "react";
+import React, { useState } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputProps {
@@ -23,6 +23,21 @@ export default function Input({
 }: InputProps) {
   const { ref, onChange, ...inputProps } = register;
 
+  const [isButtonClicked, setButtonClicked] = useState(false);
+  const [isEmailVerified, setEmailVerified] = useState(false);
+  const [isCodeVerified, setCodeVerified] = useState(false);
+
+  const handleButtonClick = () => {
+    setButtonClicked(true);
+
+    if (name === "username") {
+    }
+    if (name === "email") {
+    }
+    if (name === "authCode") {
+    }
+  };
+
   let inputComponent;
   if (kind === "text") {
     inputComponent = (
@@ -33,7 +48,7 @@ export default function Input({
           ref={ref}
           onChange={onChange}
           className={cls(
-            "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0] px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-mc",
+            "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0] px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
             error
               ? "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#f00]"
               : "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#4caf50]"
@@ -52,7 +67,7 @@ export default function Input({
           ref={ref}
           onChange={onChange}
           className={cls(
-            "w-full h-full rounded-[50px] bg-white border-none px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-mc",
+            "w-full h-full rounded-[50px] bg-white border-none px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
             error
               ? "w-full h-full rounded-[50px] bg-white border border-[#f00]"
               : "w-full h-full rounded-[50px] bg-white border border-[#4caf50]"
@@ -62,7 +77,9 @@ export default function Input({
         />
         <button
           {...rest}
-          className="absolute top-[10px] right-[20px] w-[67px] h-[35px] bg-mc rounded-[50px] text-white flex justify-center items-center"
+          type="button"
+          onClick={handleButtonClick}
+          className="absolute top-[10px] right-[20px] w-[67px] h-[35px] bg-[#FC435A] rounded-[50px] text-white flex justify-center items-center"
         >
           {checkLabel}
         </button>
@@ -75,11 +92,7 @@ export default function Input({
       ...birthInputProps
     } = register;
 
-    const {
-      ref: confirmRef,
-      onChange: confirmOnChange,
-      ...confirmInputProps
-    } = birthInputProps;
+    const { ...confirmInputProps } = birthInputProps;
     inputComponent = (
       <div className="flex gap-2">
         <div className="w-[200px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0]">
@@ -89,7 +102,7 @@ export default function Input({
             ref={birthRef}
             onChange={birthOnChange}
             className={cls(
-              "w-full h-full rounded-[50px] bg-white border-none px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-mc",
+              "w-full h-full rounded-[50px] bg-white border-none px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
               error
                 ? "w-full h-full rounded-[50px] bg-white border border-[#f00]"
                 : "w-full h-full rounded-[50px] bg-white border border-[#4caf50]"
@@ -105,16 +118,15 @@ export default function Input({
           <input
             {...confirmInputProps}
             {...rest}
-            ref={confirmRef}
-            onChange={confirmOnChange}
             className={cls(
-              "w-full h-full rounded-[50px] bg-white border-none px-[20px] py-[19.25px] placeholder-white focus:border-[#666] focus:outline-none focus:ring-mc",
+              "w-full h-full rounded-[50px] bg-white border-none px-[20px] py-[19.25px] placeholder-white focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
               error
                 ? "w-full h-full rounded-[50px] bg-white border border-[#f00]"
                 : "w-full h-full rounded-[50px] bg-white border border-[#4caf50]"
             )}
-            id={name + "_confirm"}
-            name={name + "_confirm"}
+            id={name + "_sex"}
+            name={name + "_sex"}
+            pattern="[1-4]{1}"
           />
         </div>
         <div className="w-[150px] text-center flex items-center text-5xl">
