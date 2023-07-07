@@ -12,7 +12,7 @@ export default function New() {
         <title>New</title>
       </Head>
       <div className="relative mt-[135px] flex w-full flex-col bg-white text-lg font-medium ">
-        <ProdBar />
+        <ProdBar category={"default"} />
         <div className="flex justify-center py-8">
           <Items />
         </div>

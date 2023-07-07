@@ -1,12 +1,14 @@
 import { SubmitHandler, useForm } from "react-hook-form";
+import SubmitBtn from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
+import { Segmented } from "antd";
+import { useState } from "react";
 import { SignUpState, signUpState } from "@/libs/client/atom";
-import { atom, useRecoilState, useRecoilValue } from "recoil";
-import SubmitBtn from "@/components/function/submitBtn";
 import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
 
 interface IsignUpForm extends SignUpState {
   extraError?: string;
@@ -36,7 +38,7 @@ function SignUp() {
     const email = watch("profile.email");
     const phonenum = watch("profile.phonenum");
     const birth = watch("profile.birth");
-    const sex = watch("profile.sex");
+    const sex = value.toString() as "1" | "2";
     const interests = watch("profile.interests");
 
     // signUpState 업데이트
@@ -55,7 +57,20 @@ function SignUp() {
       },
     };
     setSignUpData(updatedSignUpData);
+
+    console.log(updatedSignUpData);
+
+    router.push("/auth/taste");
   };
+
+  const [value, setValue] = useState<string | number>("Map");
+
+  const submitForm: SubmitHandler<IsignUpForm> = (data: IsignUpForm) => {
+    console.log(data);
+
+    handleClick();
+  };
+
   return (
     <>
       <Layout>
@@ -65,7 +80,10 @@ function SignUp() {
 
         <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium ">
           <div className="flex justify-center items-center">
-            <form className=" items-center gap-[6px] p-0 w-[448px] h-[1500px]">
+            <form
+              onSubmit={handleSubmit(submitForm)}
+              className=" items-center gap-[6px] p-0 w-[448px] h-[1500px]"
+            >
               <p className="relative top-[109px] text-4xl font-semibold text-center text-black">
                 회원가입
               </p>
@@ -132,6 +150,7 @@ function SignUp() {
                   error={errors?.cPassword?.message}
                   autoComplete="off"
                 />
+
                 <Input
                   name="profile.nickname"
                   label="이름"
@@ -147,22 +166,53 @@ function SignUp() {
                   placeholder="이름"
                   error={errors?.profile?.nickname?.message}
                 />
+
                 <Input
                   name="profile.birth"
                   label="생년월일"
                   type="birth"
-                  kind="birth"
                   register={register("profile.birth", {
                     required: "생년월일을 입력해주세요.",
                     pattern: {
                       value:
-                        /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/,
+                        /^(19|20)\d{2}-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])$/,
                       message: "올바르지 않은 형태의 생년월일입니다.",
                     },
                   })}
-                  placeholder="YYMMDD"
+                  placeholder="YYYY-MM-DD"
                   error={errors?.profile?.birth?.message}
                 />
+
+                <div className="font-bold text-[#666]">
+                  성별
+                  <div>
+                    <Segmented
+                      name="profile.sex"
+                      type="sex"
+                      className="w-[148px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0] p-[5px]s"
+                      options={[
+                        {
+                          label: (
+                            <div className="w-1/2 p-[10px]">
+                              <div>남성</div>
+                            </div>
+                          ),
+                          value: "1",
+                        },
+                        {
+                          label: (
+                            <div className="w-1/2 p-[10px]">
+                              <div>여성</div>
+                            </div>
+                          ),
+                          value: "2",
+                        },
+                      ]}
+                      value={value}
+                      onChange={setValue}
+                    />
+                  </div>
+                </div>
 
                 <Input
                   name="profile.phonenum"
@@ -179,6 +229,7 @@ function SignUp() {
                   placeholder="-를 제외하고 입력하세요."
                   error={errors?.profile?.phonenum?.message}
                 />
+
                 <Input
                   name="profile.email"
                   label="이메일"
@@ -195,6 +246,7 @@ function SignUp() {
                   placeholder="유효한 이메일 주소를 입력하세요."
                   error={errors.profile?.email?.message}
                 />
+
                 <Input
                   name="authCode"
                   label="인증번호"
@@ -208,22 +260,21 @@ function SignUp() {
                   error={errors?.authCode?.message}
                 />
 
-                <div>
-                  <Link href="/auth/login" legacyBehavior>
-                    <button className="relative py-[30px] bg-white text-gray-600 text-lg">
-                      계정이 이미 있으신가요?
-                    </button>
-                  </Link>
+                <div className="flex mt-[40px] text-center justify-center">
+                  <SubmitBtn
+                    type="submit"
+                    large={true}
+                    text="다음"
+                    className="flex justify-center items-center h-screen"
+                    onClick={handleClick} // handleClick 함수 추가
+                  />
                 </div>
 
-                <div className="flex text-center justify-center">
-                  <Link href="/auth/taste" legacyBehavior>
-                    <SubmitBtn
-                      text="확인"
-                      kind="button"
-                      className="flex justify-center items-center h-screen"
-                      onClick={handleClick}
-                    />
+                <div className="flex justify-center">
+                  <Link href="/auth/login" legacyBehavior>
+                    <button className=" py-[30px] bg-white text-gray-600 text-center">
+                      계정이 이미 있으신가요?
+                    </button>
                   </Link>
                 </div>
               </div>

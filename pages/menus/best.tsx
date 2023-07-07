@@ -12,7 +12,7 @@ export default function Best() {
         <title>Best</title>
       </Head>
       <div className="relative mt-[135px] flex w-full flex-col text-lg font-medium bg-white ">
-        <ProdBar />
+        <ProdBar category={"default"} />
         <div className="flex justify-center py-8">
           <Items />
         </div>

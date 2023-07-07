@@ -5,9 +5,8 @@ import SearchBar from "./searchBar";
 
 export default function Header() {
   return (
-    <header className="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 z-20  h-[100px] bg-white mx-auto">
-      <div className="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 z-20  h-[100px] w-[1040px] bg-white mx-auto">
-        {/* 헤더 손봐야함. 네비바 스크롤할때 같이올라가 */}
+    <header className="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 z-30  h-[100px] bg-white mx-auto">
+      <div className="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 z-30  h-[100px] w-[1040px] bg-white mx-auto">
         {/* 헤더 구분선선 */}
         <BrLine />
         {/* 로고 */}
@@ -18,9 +17,8 @@ export default function Header() {
             className="w-[181px] h-[132px] absolute left-[-0.5px] top-[-1.5px] bg-white"
           >
             <img
-              // 로고 확인. src
-              src="https://www.notion.so/FRONT-d3c3ffd58da7467f8930a73d2ef142ee?pvs=4#025add1e73724b1696201e7eb3d6519f"
-              className="relative w-[147px] h-[83px] absolute left-[16.5px] top-[38px] object-cover"
+              src="logo.png"
+              className="relative w-[147px] h-[83px] left-[16.5px] top-[38px] object-cover"
             />
           </Link>
         </div>

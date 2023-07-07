@@ -179,14 +179,14 @@ export default function SearchBar() {
         {/* 버튼 두개 위치 수정 */}
         <button
           type="submit"
-          className="absolute inset-y-0 right-[45px] top-[13px] flex items-center justify-center w-5 h-5 p-0 bg-transparent focus:ring-0 focus:outline-none text-gray-500 dark:text-gray-400"
+          className="absolute inset-y-0 right-[45px] top-[11px] flex items-center justify-center w-[25px] h-[25px] p-0 bg-transparent focus:ring-0 focus:outline-none text-gray-500 dark:text-gray-400"
         >
           <Camera />
         </button>
 
         <button
           type="submit"
-          className="absolute inset-y-0 right-[15px] top-[13px] flex items-center justify-center w-5 h-5 p-0 bg-transparent focus:ring-0 focus:outline-none text-gray-500 dark:text-gray-400"
+          className="absolute inset-y-0 right-[15px] top-[11px] flex items-center justify-center w-[25px] h-[24px] p-0 bg-transparent focus:ring-0 focus:outline-none text-gray-500 dark:text-gray-400"
         >
           <Search />
         </button>
