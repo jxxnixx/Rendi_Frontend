@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
 import {
   Top,
   Outer,
@@ -14,14 +16,13 @@ import {
   ETC,
 } from "../icons";
 
-import React from "react";
-
 interface cProps {
   icon: string;
 }
 
 export default function Circle({ icon }: cProps) {
-  // category pink circle + icon 조건문
+  const router = useRouter();
+
   const getComponent = () => {
     switch (icon) {
       case "Top":
@@ -53,7 +54,6 @@ export default function Circle({ icon }: cProps) {
     }
   };
 
-  // 키워드 추가
   const getKeyword = () => {
     switch (icon) {
       case "Top":
@@ -89,11 +89,23 @@ export default function Circle({ icon }: cProps) {
     <>
       <div className="flex flex-col items-center m-[15px]">
         <button className="w-[50px] h-[50px] mb-[10px] rounded-full bg-[#FAD5D5] bg-opacity-80 hover:bg-[#FAD5D5]">
-          <Link href={`/categories/${icon}`} legacyBehavior>
+          <Link
+            href={{
+              pathname: "/categories/[id]",
+              query: { id: icon.toLowerCase() },
+            }}
+            legacyBehavior
+          >
             <a className="text-[#666]">{getComponent()}</a>
           </Link>
         </button>
-        <Link href={`/categories/${icon}`} legacyBehavior>
+        <Link
+          href={{
+            pathname: "/categories/[id]",
+            query: { id: icon.toLowerCase() },
+          }}
+          legacyBehavior
+        >
           <a className="text-xs">{getKeyword()}</a>
         </Link>
       </div>
