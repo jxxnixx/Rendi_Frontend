@@ -32,25 +32,25 @@ function Profile() {
         {/* 버튼 */}
         <div className="flex justify-center items-center mt-[0px] opacity-90 gap-[100px] bg-white">
           <Link href="/auth/profile/liked" legacyBehavior>
-            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-[#FC435A]">
+            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
               찜한 상품
             </button>
           </Link>
 
           <Link href="/auth/profile/likedMarket" legacyBehavior>
-            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-[#FC435A]">
+            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
               즐겨찾기 마켓
             </button>
           </Link>
 
           <Link href="/auth/profile/contact" legacyBehavior>
-            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-[#FC435A]">
+            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
               고객센터
             </button>
           </Link>
 
           <Link href="/auth/profile/terms" legacyBehavior>
-            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-[#FC435A]">
+            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
               이용약관
             </button>
           </Link>

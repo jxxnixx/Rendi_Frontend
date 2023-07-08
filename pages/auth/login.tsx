@@ -1,35 +1,74 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { APIProps, usersApi } from "@/libs/api";
+import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
 import SubmitButton from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
 import { Google, KakaoTalk, LoginLine, Naver } from "@/components/icons";
+import { signIn, useSession } from "next-auth/react";
+import { useEffect } from "react";
+import router from "next/router";
 
-interface LogInForm {
-  id: string;
+interface LogInForm extends APIProps {
+  username: string;
   password: string;
-
-  extraError?: string;
 }
 
 function LogIn() {
   const {
     register,
     handleSubmit,
-    //watch,
     formState: { errors },
-    //setError,
   } = useForm<LogInForm>({
     mode: "onChange",
   });
 
-  const submitForm: SubmitHandler<LogInForm> = (data: any) => {
-    console.log(data);
+  const { data, status } = useSession();
+
+  const handleGoogleLogin = async () => {
+    await signIn("google");
   };
-  // const submitForm: SubmitHandler<ILogInForm> = (data: any) => {
-  //   console.log(data);
-  // };
+
+  const handleKakaoLogin = async () => {
+    await signIn("kakao");
+  };
+
+  const handleNaverLogin = async () => {
+    await signIn("naver");
+  };
+
+  const submitForm: SubmitHandler<LogInForm> = async (data: LogInForm) => {
+    try {
+      const response = await usersApi.login({
+        username: data.username,
+        password: data.password,
+      } as LogInForm);
+
+      if (response.success) {
+        const { accessToken } = response.response;
+        localStorage.setItem("token", accessToken);
+
+        await signIn("credentials", {
+          username: data.username,
+          password: data.password,
+          redirect: false,
+        });
+
+        router.push("/");
+      } else {
+        console.error("로그인 실패");
+      }
+    } catch (error) {
+      console.error("로그인 오류:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/");
+    }
+  }, [status]);
 
   return (
     <>
@@ -56,13 +95,13 @@ function LogIn() {
             onSubmit={handleSubmit(submitForm)}
           >
             <Input
-              name="id"
+              name="username"
               label=""
-              type="id"
-              register={register("id", {})}
+              type="username"
+              register={register("username", {})}
               placeholder="아이디"
               kind="text"
-              error={errors?.id?.message}
+              error={errors?.username?.message}
             />
             <Input
               name="password"
@@ -105,20 +144,28 @@ function LogIn() {
             </div>
 
             <div className="flex mt-[20px] text-center text-[10pt]">
-              {/* link 연결해야함. */}
-              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#fee500]">
+              <button
+                className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#fee500]"
+                onClick={handleKakaoLogin}
+              >
                 <div className="mr-[10px]">
                   <KakaoTalk />
                 </div>
                 카카오 로그인
               </button>
-              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a]">
+              <button
+                className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a]"
+                onClick={handleNaverLogin}
+              >
                 <div className="mr-[10px]">
                   <Naver />
                 </div>
                 네이버 로그인
               </button>
-              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] p-5 rounded-[15px] bg-white border border-[#666]/30">
+              <button
+                className="flex items-center justify-center flex-row w-[186px] h-[46px] p-5 rounded-[15px] bg-white border border-[#666]/30"
+                onClick={handleGoogleLogin}
+              >
                 <div className="mr-[10px]">
                   <Google />
                 </div>
@@ -143,3 +190,5 @@ function LogIn() {
 }
 
 export default LogIn;
+
+//https://velog.io/@taemin4u/Next-Auth%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-%EC%86%8C%EC%85%9C-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0v4

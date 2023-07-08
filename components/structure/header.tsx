@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <header className="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 z-30  h-[100px] bg-white mx-auto">
       <div className="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 z-30  h-[100px] w-[1040px] bg-white mx-auto">
-        {/* 헤더 구분선선 */}
+        {/* 헤더 구분선 */}
         <BrLine />
         {/* 로고 */}
         <div className="w-[181px] h-[132px]">
