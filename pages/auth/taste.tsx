@@ -61,11 +61,12 @@ function Taste() {
       console.log(loginResponse.data);
 
       // 토큰 저장
-      const token = loginResponse.data.token;
+      const token = loginResponse.data.response.accessToken;
       localStorage.setItem("token", token);
 
       // 페이지 이동
       router.push("/");
+      console.log("회원가입 완료!");
     } catch (error) {
       console.log(error);
     }

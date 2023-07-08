@@ -1,4 +1,4 @@
-import { usersApi } from "@/libs/api";
+import { APIProps, usersApi } from "@/libs/api";
 import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
 import SubmitButton from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
@@ -10,7 +10,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import router from "next/router";
 
-interface LogInForm {
+interface LogInForm extends APIProps {
   username: string;
   password: string;
 }
@@ -43,22 +43,19 @@ function LogIn() {
       const response = await usersApi.login({
         username: data.username,
         password: data.password,
-      });
+      } as LogInForm);
 
-      if (response.status === 200) {
-        // 로그인 성공 - NextAuth 로그인 처리
-        const result = await signIn("credentials", {
-          redirect: false,
+      if (response.success) {
+        const { accessToken } = response.response;
+        localStorage.setItem("token", accessToken);
+
+        await signIn("credentials", {
           username: data.username,
           password: data.password,
+          redirect: false,
         });
 
-        if (result?.error) {
-          console.error(result.error);
-        } else {
-          // 로그인 성공 - 필요한 작업을 수행
-          console.log("로그인 성공");
-        }
+        router.push("/");
       } else {
         console.error("로그인 실패");
       }
@@ -68,10 +65,11 @@ function LogIn() {
   };
 
   useEffect(() => {
-    if (data) {
+    if (status === "authenticated") {
       router.push("/");
     }
-  }, [data]);
+  }, [status]);
+
   return (
     <>
       <Layout>

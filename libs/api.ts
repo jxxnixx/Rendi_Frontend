@@ -7,17 +7,17 @@ import { getToken } from "next-auth/jwt";
 //   baseURL: API_URL,
 // });
 
-interface APIProps {
-  username: "";
-  password: "";
-  nickname: "";
-  email: "";
-  phonenum: "";
-  birth: "";
-  sex: "";
-  interests: [""];
-  emailAgreeYn: "";
-  phoneAgreeYn: "";
+export interface APIProps {
+  username: string;
+  password: string;
+  nickname: string;
+  email: string;
+  phonenum: string;
+  birth: string;
+  sex: string;
+  interests: string[];
+  emailAgreeYn: string;
+  phoneAgreeYn: string;
 }
 
 // export const axiosPrivate = axios.create({
@@ -77,60 +77,6 @@ export const usersApi = {
       throw error;
     }
   },
-  // export const usersApi = {
-  //   signup: async ({
-  //     username, // id
-  //     password,
-  //     cPassword,
-  //     nickname, // 본명
-  //     email,
-  //     phone,
-  //     year,
-  //     month,
-  //     day,
-  //     sex,
-  //     interests,
-  //     emailAYN,
-  //     phoneAYN,
-  //   }: IProps) => {
-  //     try {
-  //       const response = await axios.post("/member/local/", {
-  //         username,
-  //         password,
-  //         cPassword,
-  //         nickname,
-  //         email,
-  //         phone,
-  //         birth: `${year}${month}${day}`,
-  //         sex,
-  //         interests,
-  //         emailAgreeYn: emailAYN,
-  //         phoneAgreeYn: phoneAYN,
-  //       });
-
-  //       if (response.status === 200) {
-  //         return {
-  //           success: true,
-  //           response: response.data,
-  //           error: null,
-  //         };
-  //       } else {
-  //         return {
-  //           success: false,
-  //           response: null,
-  //           error: {
-  //             errorCode: "MEMBER_DUPLICATED",
-  //             errorMessage: "이미 가입된 회원입니다.",
-  //             errors: null,
-  //           },
-  //         };
-  //       }
-  //     } catch (error) {
-  //       console.error("회원가입 오류:", error);
-  //       throw error;
-  //     }
-  //   },
-  //   // AgreeYN Y로 넘기기
 
   // ID 중복체크 확인
   checkID: (username: APIProps) =>
@@ -195,20 +141,3 @@ export const usersApi = {
   changePW: (email: string, password: string) =>
     axios.post("/member/find-pw/", { email, password }),
 };
-function async(
-  arg0: {
-    username: string;
-    password: string;
-    nickname: string;
-    email: string;
-    phonenum: string;
-    birth: string;
-    sex: string;
-    interests: string[];
-    emailAgree: any;
-    phoneAgree: any;
-  },
-  SignUpAPIProps: any
-) {
-  throw new Error("Function not implemented.");
-}
