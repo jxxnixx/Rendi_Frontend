@@ -1,4 +1,4 @@
-import { APIProps, usersApi } from "@/libs/api";
+import { ALogInProps, usersApi } from "@/libs/api";
 import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
 import SubmitButton from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
@@ -6,69 +6,53 @@ import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
 import { Google, KakaoTalk, LoginLine, Naver } from "@/components/icons";
-import { signIn, useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import router from "next/router";
-
-interface LogInForm extends APIProps {
-  username: string;
-  password: string;
-}
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 
 function LogIn() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LogInForm>({
+  } = useForm<ALogInProps>({
     mode: "onChange",
   });
 
-  const { data, status } = useSession();
+  const [loginError, setLoginError] = useState<string>("");
 
-  const handleGoogleLogin = async () => {
-    await signIn("google");
-  };
+  const loginMutation = useMutation(
+    (data: ALogInProps) => usersApi.login(data) // usersApi.login 사용
+  );
 
-  const handleKakaoLogin = async () => {
-    await signIn("kakao");
-  };
-
-  const handleNaverLogin = async () => {
-    await signIn("naver");
-  };
-
-  const submitForm: SubmitHandler<LogInForm> = async (data: LogInForm) => {
+  const submitForm: SubmitHandler<ALogInProps> = async (data: ALogInProps) => {
     try {
-      const response = await usersApi.login({
-        username: data.username,
-        password: data.password,
-      } as LogInForm);
+      const response = await loginMutation.mutateAsync(data);
 
-      if (response.success) {
-        const { accessToken } = response.response;
-        localStorage.setItem("token", accessToken);
+      if (response.data.success) {
+        // 로그인 성공
+        const accessToken = response.data.response.accessToken;
+        const refreshToken = response.data.response.refreshToken;
 
-        await signIn("credentials", {
-          username: data.username,
-          password: data.password,
-          redirect: false,
-        });
+        // 토큰 저장
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
 
-        router.push("/");
+        // 페이지 이동
+        // 예시: 메인 페이지로 이동
+        window.location.href = "/";
       } else {
-        console.error("로그인 실패");
+        // 로그인 실패
+        setLoginError(
+          "로그인에 실패했습니다. 사용자 이름 또는 비밀번호를 확인해주세요."
+        );
       }
     } catch (error) {
       console.error("로그인 오류:", error);
+      setLoginError("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.push("/");
-    }
-  }, [status]);
 
   return (
     <>
@@ -144,28 +128,19 @@ function LogIn() {
             </div>
 
             <div className="flex mt-[20px] text-center text-[10pt]">
-              <button
-                className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#fee500]"
-                onClick={handleKakaoLogin}
-              >
+              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#fee500]">
                 <div className="mr-[10px]">
                   <KakaoTalk />
                 </div>
                 카카오 로그인
               </button>
-              <button
-                className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a]"
-                onClick={handleNaverLogin}
-              >
+              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a]">
                 <div className="mr-[10px]">
                   <Naver />
                 </div>
                 네이버 로그인
               </button>
-              <button
-                className="flex items-center justify-center flex-row w-[186px] h-[46px] p-5 rounded-[15px] bg-white border border-[#666]/30"
-                onClick={handleGoogleLogin}
-              >
+              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] p-5 rounded-[15px] bg-white border border-[#666]/30">
                 <div className="mr-[10px]">
                   <Google />
                 </div>

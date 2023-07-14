@@ -1,13 +1,11 @@
 import axios from "axios";
-import { getToken } from "next-auth/jwt";
-
 // export const API_URL = "http://121.166.191.129:9876";
 
 // const api = axios.create({
 //   baseURL: API_URL,
 // });
 
-export interface APIProps {
+export interface ASignUpProps {
   username: string;
   password: string;
   nickname: string;
@@ -18,6 +16,30 @@ export interface APIProps {
   interests: string[];
   emailAgreeYn: string;
   phoneAgreeYn: string;
+}
+
+export interface ASocialSignUpProps {
+  provider: string;
+  username: string;
+  password: string;
+  nickname: string;
+  email: string;
+  phonenum: string;
+  birth: string;
+  sex: string;
+  interests: string[];
+  emailAgreeYn: string;
+  phoneAgreeYn: string;
+}
+
+export interface ALogInProps {
+  username: string;
+  password: string;
+}
+
+export interface ASocialLoginProps {
+  provider: string;
+  email: string;
 }
 
 // export const axiosPrivate = axios.create({
@@ -38,7 +60,7 @@ export const usersApi = {
     interests,
     emailAgreeYn,
     phoneAgreeYn,
-  }: APIProps) => {
+  }: ASignUpProps) => {
     try {
       const response = await axios.post("/member/local/", {
         username,
@@ -79,60 +101,56 @@ export const usersApi = {
   },
 
   // ID 중복체크 확인
-  checkID: (username: APIProps) =>
+  checkID: (username: ASignUpProps) =>
     axios.get(`/member/id_check?username=${username}`),
 
   // 회원가입 인증번호 발급
-  getSignupCode: ({ nickname, email }: APIProps) =>
+  getSignupCode: ({ nickname, email }: ASignUpProps) =>
     axios.post("/member/email/", {
       name: nickname,
       email,
     }),
 
-  // // sns 회원가입
-  // snsSignup: ({
-  //   type,
-  //   username,
-  //   nickname,
-  //   email,
-  //   phone,
-  //   year,
-  //   month,
-  //   day,
-  //   sex,
-  //   interests,
-  //   emailAYN,
-  //   phoneAYN,
-  // }: APIProps) =>
-  //   axios.post("/member/social-profile/", {
-  //     provider: type,
-  //     profile: {
-  //       sns_user: username,
-  //       nickname,
-  //       email,
-  //       phonenum: phone,
-  //       birth: `${year}-${month}-${day}`,
-  //       sex,
-  //       interests,
-  //     },
-  //     emailAgreeYn: emailAYN,
-  //     phoneAgreeYn: phoneAYN,
-  //   }),
+  // 소셜 회원가입
+  socialSignup: ({
+    provider,
+    nickname,
+    email,
+    phonenum,
+    birth,
+    sex,
+    interests,
+    emailAgreeYn,
+    phoneAgreeYn,
+  }: ASocialSignUpProps) =>
+    axios.post("/member/social-profile/", {
+      provider,
+      profile: {
+        nickname,
+        email,
+        phonenum,
+        birth,
+        sex,
+        interests,
+      },
+      emailAgreeYn,
+      phoneAgreeYn,
+    }),
 
   // 일반 로그인
-  login: ({ username, password }: APIProps) =>
+  login: ({ username, password }: ALogInProps) =>
     axios.post("member/login/", {
       // login_method: "normal",
       username,
       password,
     }),
 
-  // SNS 로그인
-  // snsLogin: ({ type, email }: APIProps) =>
-  //   axios.post("/member/social-token/", {
-  //     provider: type,
-  //     email,
-  //   }),
+  //소셜 로그인
+  socialLogin: ({ provider, email }: ASocialLoginProps) =>
+    axios.post("/member/social-token/", {
+      provider,
+      email,
+    }),
 
   // ID 찾기
   findID: (email: string) => axios.get(`/member/find-id/?email=${email}`),

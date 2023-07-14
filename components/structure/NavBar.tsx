@@ -6,7 +6,7 @@ export default function NavBar() {
 
   return (
     <nav className="fixed flex items-center justify-center top-[100px] z-20 h-[35px] w-full bg-white mx-auto shadow-sm">
-      <div className="bg-white text-base text-[#666666] space-x-[60px]">
+      <div className="bg-white text-base text-[#666666] space-x-[60px] mobile:space-x-[23px]">
         {[
           { href: "/", text: "Today" },
           { href: "/menus/best", text: "Best" },

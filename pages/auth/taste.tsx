@@ -49,28 +49,49 @@ function Taste() {
 
     try {
       // 회원가입 요청
-      const response = await axios.post("/member/local", updatedSignUpData);
-      console.log(response.data);
+      const signupResponse = await axios.post(
+        "/member/local",
+        updatedSignUpData
+      );
+      console.log(signupResponse.data);
 
-      // 로그인 요청
-      const loginData = {
-        username: updatedSignUpData.username,
-        password: updatedSignUpData.password,
-      };
-      const loginResponse = await axios.post("/member/login", loginData);
-      console.log(loginResponse.data);
+      if (signupResponse.data.success) {
+        // 회원가입 성공
+        const accessToken = signupResponse.data.response.accessToken;
+        const refreshToken = signupResponse.data.response.refreshToken;
 
-      // 토큰 저장
-      const token = loginResponse.data.response.accessToken;
-      localStorage.setItem("token", token);
+        // 로그인 요청
+        const loginData = {
+          username: updatedSignUpData.username,
+          password: updatedSignUpData.password,
+        };
+        const loginResponse = await axios.post("/member/login", loginData);
+        console.log(loginResponse.data);
 
-      // 페이지 이동
-      router.push("/");
-      console.log("회원가입 완료!");
+        if (loginResponse.data.success) {
+          // 로그인 성공
+          const accessToken = loginResponse.data.response.accessToken;
+
+          // 토큰 저장
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+
+          // 페이지 이동
+          router.push("/");
+          console.log("회원가입 완료!");
+        } else {
+          // 로그인 실패
+          console.log("로그인 실패:", loginResponse.data.error);
+        }
+      } else {
+        // 회원가입 실패
+        console.log("회원가입 실패:", signupResponse.data.error);
+      }
     } catch (error) {
-      console.log(error);
+      console.log("회원가입 오류:", error);
     }
   };
+
   const submitForm: SubmitHandler<ITasteForm> = (data: ITasteForm) => {
     console.log(data);
 
