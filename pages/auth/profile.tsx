@@ -5,7 +5,6 @@ import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
 import { Line, MyPage, Next, ShoppingBag } from "@/components/icons";
-import Items from "@/components/product/items";
 import Items8 from "@/components/product/items8";
 
 interface ProfileForm {
