@@ -12,6 +12,8 @@ export default function SearchBar() {
     const searchValue = inputRef.current?.value;
     const imageValue = ""; // 이미지 값 가져오는 방법에 따라 추가
 
+    setShowUpload(false);
+
     router.push(`/searchResult?search=${searchValue}&image=${imageValue}`);
   };
   //Ref로 사각형, input dom요소 참조

@@ -13,7 +13,7 @@ export default function ProfileBtn() {
       </button>
 
       <Link href="/auth/login" legacyBehavior>
-        <button className="w-[40px] h-[30px]">
+        <button className="">
           <p className="w-[40px] h-[30px] absolute left-[890px] top-[4px] opacity-75 text-[9pt] font-medium text-left text-[#666666]">
             로그인
           </p>
@@ -25,7 +25,7 @@ export default function ProfileBtn() {
       </p>
 
       <Link href="/auth/signUp" legacyBehavior>
-        <button className="w-[50px] h-[30px]">
+        <button className="">
           <p className="w-[50px] h-[30px] absolute left-[944px] top-[4px] opacity-75 text-[9pt] font-medium text-left text-[#666666]">
             회원가입
           </p>
