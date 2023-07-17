@@ -1,8 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Camera, Search } from "../icons";
 import { Button, Upload } from "antd";
+import { useRouter } from "next/router";
 
 export default function SearchBar() {
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const searchValue = inputRef.current?.value;
+    const imageValue = ""; // 이미지 값 가져오는 방법에 따라 추가
+
+    router.push(`/searchResult?search=${searchValue}&image=${imageValue}`);
+  };
   //Ref로 사각형, input dom요소 참조
   // const squareRef = useRef<HTMLDivElement>(null);
   // const inputRef = useRef<HTMLInputElement>(null);
@@ -61,7 +72,7 @@ export default function SearchBar() {
   };
 
   return (
-    <form action="/searchResult" method="post">
+    <form onSubmit={handleSubmit}>
       <label
         htmlFor="default-search"
         className="text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -114,13 +125,20 @@ export default function SearchBar() {
                 </div>
               </div>
             </div>
-            <div className="w-[679px] h-12 absolute left-0 top-[408px] overflow-hidden">
+            <div className="flex w-[679px] h-12 absolute left-0 top-[408px] overflow-hidden">
               <button
                 id="close"
-                className="w-[463px] h-[37px] absolute left-[108px] top-1.5 text-sm font-medium text-center text-[#666]"
+                className="w-[463px] h-[37px]  top-1.5 text-sm font-medium text-center text-[#666]"
                 onClick={handleCameraCloseClick}
               >
                 닫기
+              </button>
+              <button
+                id="submit"
+                type="submit"
+                className="w-[463px] h-[37px]   top-1.5 text-sm font-medium text-center text-[#666]"
+              >
+                검색
               </button>
             </div>
           </div>

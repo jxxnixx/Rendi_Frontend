@@ -7,8 +7,19 @@ import Pagination from "@/components/structure/pagination";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import React from "react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-export default function searchResult() {
+export default function SearchResult() {
+  const router = useRouter();
+  const { search, image } = router.query;
+  useEffect(() => {
+    // 검색어와 이미지 값을 활용하여 필요한 작업을 수행합니다.
+
+    console.log("검색어:", search);
+    console.log("이미지:", image);
+  }, [router.query]);
+
   return (
     <Layout>
       <Head>
@@ -18,7 +29,7 @@ export default function searchResult() {
         <div className="flex-col w-[1040px] pb-[32px]">
           <div className="flex items-center w-[1040px] h-[60px] mt-[135px] text-lg font-medium ">
             <p className="flex justify-start text-lg text-left">
-              “<span className="text-[#fc435a]">검색어</span>” 검색결과 ( 전체
+              “<span className="text-[#fc435a]">{search}</span>” 검색결과 ( 전체
               <span className="text-[#fc435a]">234</span>
               개의 상품 )
             </p>
