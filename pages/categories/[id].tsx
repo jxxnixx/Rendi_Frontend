@@ -15,7 +15,7 @@ interface ProductPageProps {
 }
 
 const categories: { [key: string]: Category[] } = {
-  Bag: [
+  bag: [
     { cate: "전체" },
     { cate: "백팩" },
     { cate: "크로스백" },
@@ -27,7 +27,7 @@ const categories: { [key: string]: Category[] } = {
     { cate: "지갑" },
     { cate: "캐리어" },
   ],
-  Dress: [
+  dress: [
     { cate: "전체" },
     { cate: "미니원피스" },
     { cate: "롱원피스" },

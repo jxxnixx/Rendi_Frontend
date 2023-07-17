@@ -139,7 +139,7 @@ export const usersApi = {
 
   // 일반 로그인
   login: ({ username, password }: ALogInProps) =>
-    axios.post("member/login/", {
+    axios.post("/member/login/", {
       // login_method: "normal",
       username,
       password,
