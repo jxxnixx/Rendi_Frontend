@@ -15,6 +15,10 @@ module.exports = {
       colors: {
         mc: "#FC435A",
       },
+      screens: {
+        laptop: { max: "1280px" },
+        mobile: { max: "640px" },
+      },
     },
   },
   plugins: [],
