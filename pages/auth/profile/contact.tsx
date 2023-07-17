@@ -52,7 +52,11 @@ function Contact() {
         <div className="flex justify-center  mt-[10px] ">
           <Line />
         </div>
-        <div className="flex h-[1000px] justify-center items-center  "></div>
+        <div className="flex h-[500px] justify-center items-center  ">
+          <div className="flex flex-col justify-center items-center w-[1040px] h-[300px] bg-white">
+            이메일 문의 : RendiCorporation@gmail.com
+          </div>
+        </div>
       </Layout>
     </>
   );
