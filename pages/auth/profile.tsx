@@ -7,6 +7,8 @@ import Link from "next/link";
 import { Line, MyPage, Next, ShoppingBag } from "@/components/icons";
 import Items from "@/components/product/items";
 import Items8 from "@/components/product/items8";
+import { loginState } from "@/libs/client/atom";
+import { useRecoilState } from "recoil";
 
 interface ProfileForm {
   id: string;
@@ -16,6 +18,7 @@ interface ProfileForm {
 }
 
 function Profile() {
+  const [username, setUsername] = useRecoilState(loginState);
   return (
     <>
       <Layout>
@@ -62,11 +65,13 @@ function Profile() {
               <MyPage size={30} />
             </div>
             <div>
-              <div className="flex items-end h-[50px] h-[30px] ">
-                <p className="text-lg text-center text-black">아무개 님</p>
+              <div className="flex items-end h-[50px]  ">
+                <p className="text-lg text-center text-black">
+                  {username.username}님
+                </p>
               </div>
               <Link href="/auth/profile/update">
-                <button className="flex items-top h-[50px] h-[30px] ">
+                <button className="flex items-top h-[50px] ">
                   <p className="text-m text-center text-[#666]">
                     회원정보 수정
                   </p>
