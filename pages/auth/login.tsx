@@ -7,12 +7,14 @@ import Head from "next/head";
 import Link from "next/link";
 import { Google, KakaoTalk, LoginLine, Naver } from "@/components/icons";
 import { useEffect, useState } from "react";
-import router from "next/router";
-import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
+import { LoginState, isLoggedInState, loginState } from "@/libs/client/atom";
+import { useRecoilState } from "recoil";
+import { useRouter } from "next/router";
 
 function LogIn() {
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
@@ -21,6 +23,9 @@ function LogIn() {
   });
 
   const [loginError, setLoginError] = useState<string>("");
+  const [login, setLogin] = useRecoilState(isLoggedInState);
+  const [logUsername, setLogUsername] = useRecoilState(loginState);
+  const router = useRouter();
 
   const loginMutation = useMutation(
     (data: ALogInProps) => usersApi.login(data) // usersApi.login 사용
@@ -39,9 +44,22 @@ function LogIn() {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
 
+        const username = watch("username");
+        const updatedUsername: LoginState = {
+          ...logUsername,
+          username,
+        };
+
+        setLogin(true);
+        setLogUsername(updatedUsername);
+
+        console.log(login);
+        console.log(isLoggedInState);
+        console.log(updatedUsername);
+
         // 페이지 이동
         // 예시: 메인 페이지로 이동
-        window.location.href = "/";
+        router.push("/");
       } else {
         // 로그인 실패
         setLoginError(

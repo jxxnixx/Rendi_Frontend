@@ -5,27 +5,17 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Items from "@/components/product/items";
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
-import { useRecoilValue } from "recoil";
-import { isLoggedInState, loginState } from "@/libs/client/atom";
+import { isLoggedInState } from "@/libs/client/atom";
 
-const Home: NextPage = () => {
-  const Login = useRecoilValue(isLoggedInState);
-  const router = useRouter();
-
-  console.log(Login);
-
-  useEffect(() => {
-    if (Login) {
-      router.push("/main");
-    }
-  }, [Login, router]);
+const Main = () => {
+  console.log(isLoggedInState);
 
   return (
     <Layout>
       <Head>
-        <title>Home</title>
+        <title>Main</title>
       </Head>
       <div className="relative mt-[135px] bg-slate-200">
         <div className="bg-white">
@@ -59,4 +49,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Main;

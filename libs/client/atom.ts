@@ -15,6 +15,10 @@ export interface SignUpState {
   phoneAgreeYn: string;
 }
 
+export interface LoginState {
+  username: string;
+}
+
 export const signUpState = atom<SignUpState>({
   key: "signUpState",
   default: {
@@ -31,4 +35,14 @@ export const signUpState = atom<SignUpState>({
     emailAgreeYn: "Y",
     phoneAgreeYn: "Y",
   },
+});
+
+export const isLoggedInState = atom<boolean>({
+  key: "isLoggedInState",
+  default: false,
+});
+
+export const loginState = atom<LoginState>({
+  key: "loginState",
+  default: { username: "" },
 });

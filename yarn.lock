@@ -325,10 +325,17 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+<<<<<<< Updated upstream
 "@next/env@13.4.7":
   version "13.4.7"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-13.4.7.tgz#ca12d341edb128ca70384635bd2794125ffb1c01"
   integrity sha512-ZlbiFulnwiFsW9UV1ku1OvX/oyIPLtMk9p/nnvDSwI0s7vSoZdRtxXNsaO+ZXrLv/pMbXVGq4lL8TbY9iuGmVw==
+=======
+"@next/env@13.4.11-canary.0":
+  version "13.4.11-canary.0"
+  resolved "https://registry.yarnpkg.com/@next/env/-/env-13.4.11-canary.0.tgz#9e1bc75a71d434fc7a35a1347c2faffec55d961e"
+  integrity sha512-J867wBc4xDrha/NiHcy4W4tk2scjkU15HgX7juetGqSGnIjrU74Nu5/8W1BZxECQt1PV4/JunyYYxPxiC4MZNA==
+>>>>>>> Stashed changes
 
 "@next/eslint-plugin-next@13.3.3":
   version "13.3.3"
@@ -337,6 +344,7 @@
   dependencies:
     glob "7.1.7"
 
+<<<<<<< Updated upstream
 "@next/swc-darwin-arm64@13.4.7":
   version "13.4.7"
   resolved "https://registry.yarnpkg.com/@next/swc-darwin-arm64/-/swc-darwin-arm64-13.4.7.tgz#5e36c26dda5b0bc0ea15d8555d0abd71a1ef4b5d"
@@ -381,6 +389,52 @@
   version "13.4.7"
   resolved "https://registry.yarnpkg.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.4.7.tgz#5137780f58d7f0230adc293a0429821bfa7d8c21"
   integrity sha512-sW9Yt36Db1nXJL+mTr2Wo0y+VkPWeYhygvcHj1FF0srVtV+VoDjxleKtny21QHaG05zdeZnw2fCtf2+dEqgwqA==
+=======
+"@next/swc-darwin-arm64@13.4.11-canary.0":
+  version "13.4.11-canary.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-darwin-arm64/-/swc-darwin-arm64-13.4.11-canary.0.tgz#a1a3c4464defc0188ae3c3b1df8d6a6113c60521"
+  integrity sha512-DWzR95TS+YZhsY9xxTXVq8/QGXzla4xLFSop/A3BBUaT1rIwx3m+ZFxjKxoKXUvxPYo/AM5w0oUWI5k02Vi0YQ==
+
+"@next/swc-darwin-x64@13.4.11-canary.0":
+  version "13.4.11-canary.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-darwin-x64/-/swc-darwin-x64-13.4.11-canary.0.tgz#be4556183ae91fde59851c0422c5caf1f870839e"
+  integrity sha512-9ftyY7G0wpuWS07cMuMXgtiauV6xwW5xFlXrB5p19rXiNiqdOn604MQgIptuC/WlR+eC6+Z2F/Y+qMV+vnOXrA==
+
+"@next/swc-linux-arm64-gnu@13.4.11-canary.0":
+  version "13.4.11-canary.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-13.4.11-canary.0.tgz#948604ea8cdad4018065825c95c4f0308ab4816a"
+  integrity sha512-xWy1Vtut6/0YwKV1Io2pQq6NJkaLqR0jkqUY0+P96zbQdHTr/5s1hulQ8NObjFUDJImiYlnl2kXeBRy5v/IcJw==
+
+"@next/swc-linux-arm64-musl@13.4.11-canary.0":
+  version "13.4.11-canary.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-13.4.11-canary.0.tgz#5ef3541c69b849d2c2e6b47f71235fca08d417a1"
+  integrity sha512-goWXtEKPq9+Ihu+SAJ4V+pusqT7+B5BERfgt8i+kTebdr1cEWwPAtSkSJG4RMwsKPHTMiJU/HycwxlKbHFb+bw==
+
+"@next/swc-linux-x64-gnu@13.4.11-canary.0":
+  version "13.4.11-canary.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-13.4.11-canary.0.tgz#67304c878ee76c8778ec0728bf9d4f59677a50f1"
+  integrity sha512-qL0+g38fM3wdw9nd7SViMBcY2otP2My1hDvGihI36121Q73MrET5T/8/o/6tdZViOffEu8A29GozUpy7wRpoaw==
+
+"@next/swc-linux-x64-musl@13.4.11-canary.0":
+  version "13.4.11-canary.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-13.4.11-canary.0.tgz#4f8dced2bdfc5197d6e95a448183da2c9f49580a"
+  integrity sha512-FqyTE0Ae+xXwbqOVpUWDvqs7OsY/IhvnjmyY1ZP5mibMqghnEckSMHKMbkok2Dn8Z90tX+jkAW44cVNFCvN/sA==
+
+"@next/swc-win32-arm64-msvc@13.4.11-canary.0":
+  version "13.4.11-canary.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-13.4.11-canary.0.tgz#5c80614f20e9d4f7bd55c3a849f39459a9bf3c56"
+  integrity sha512-rYnUwR68fG690WZK0QZqycAQfJp4Ev1aV6YWa0H3Jdfkg7U2mgciOXC/iEB+JfuhmY6AAoDvXO98nn7OkY0J2g==
+
+"@next/swc-win32-ia32-msvc@13.4.11-canary.0":
+  version "13.4.11-canary.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-13.4.11-canary.0.tgz#8a67233f54996d755d9894e7d6748a27c50dd412"
+  integrity sha512-dl3i4nfpRim1wPJWnr+MXwAEL/S5Mi6Z1thn7x1DHThBYAWjtQN+nHsGdzWwy5PHEKk561GdnqhwoE48hxVvLw==
+
+"@next/swc-win32-x64-msvc@13.4.11-canary.0":
+  version "13.4.11-canary.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.4.11-canary.0.tgz#bf0798c2f672536abeebce3e28d6f8c162b50c17"
+  integrity sha512-7CfNXURind99rR6rxUy/RRVYEcQ73Rkrcfx5ztPy/7HRksPFoFf/XmEQUcDTqU8/ONHV1UmEMaULNDUzf524VA==
+>>>>>>> Stashed changes
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -486,6 +540,11 @@
     rc-motion "^2.0.0"
     rc-resize-observer "^1.3.1"
     rc-util "^5.33.0"
+
+"@remix-run/router@1.7.2":
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.7.2.tgz#cba1cf0a04bc04cb66027c51fa600e9cbc388bc8"
+  integrity sha512-7Lcn7IqGMV+vizMPoEl5F0XDshcdDYtMI6uJLQdQz5CfZAwy3vvGKYSUk789qndt5dEC4HfSjviSYlSoHGL2+A==
 
 "@rushstack/eslint-patch@^1.1.3":
   version "1.2.0"
@@ -2286,12 +2345,21 @@ next-auth@^4.22.1:
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
 
+<<<<<<< Updated upstream
 next@^13.4.7:
   version "13.4.7"
   resolved "https://registry.yarnpkg.com/next/-/next-13.4.7.tgz#2ab20e6fada2e25cb81bd17f68956705ffd9824e"
   integrity sha512-M8z3k9VmG51SRT6v5uDKdJXcAqLzP3C+vaKfLIAM0Mhx1um1G7MDnO63+m52qPdZfrTFzMZNzfsgvm3ghuVHIQ==
   dependencies:
     "@next/env" "13.4.7"
+=======
+next@^13.4.11-canary.0:
+  version "13.4.11-canary.0"
+  resolved "https://registry.yarnpkg.com/next/-/next-13.4.11-canary.0.tgz#70d7cb1c236550928990ed7f14efb3b5a3114a6c"
+  integrity sha512-OYSTwIHF3TMgjgWpqEVqKRFjPa9bIamGSvZSdq1ZWyhOXofjqfDOlr8W5WBQMAvteCs9xfW4MIWBv1OrXhbFGg==
+  dependencies:
+    "@next/env" "13.4.11-canary.0"
+>>>>>>> Stashed changes
     "@swc/helpers" "0.5.1"
     busboy "1.6.0"
     caniuse-lite "^1.0.30001406"
@@ -2300,6 +2368,7 @@ next@^13.4.7:
     watchpack "2.4.0"
     zod "3.21.4"
   optionalDependencies:
+<<<<<<< Updated upstream
     "@next/swc-darwin-arm64" "13.4.7"
     "@next/swc-darwin-x64" "13.4.7"
     "@next/swc-linux-arm64-gnu" "13.4.7"
@@ -2309,6 +2378,17 @@ next@^13.4.7:
     "@next/swc-win32-arm64-msvc" "13.4.7"
     "@next/swc-win32-ia32-msvc" "13.4.7"
     "@next/swc-win32-x64-msvc" "13.4.7"
+=======
+    "@next/swc-darwin-arm64" "13.4.11-canary.0"
+    "@next/swc-darwin-x64" "13.4.11-canary.0"
+    "@next/swc-linux-arm64-gnu" "13.4.11-canary.0"
+    "@next/swc-linux-arm64-musl" "13.4.11-canary.0"
+    "@next/swc-linux-x64-gnu" "13.4.11-canary.0"
+    "@next/swc-linux-x64-musl" "13.4.11-canary.0"
+    "@next/swc-win32-arm64-msvc" "13.4.11-canary.0"
+    "@next/swc-win32-ia32-msvc" "13.4.11-canary.0"
+    "@next/swc-win32-x64-msvc" "13.4.11-canary.0"
+>>>>>>> Stashed changes
 
 node-releases@^2.0.8:
   version "2.0.10"
@@ -2597,9 +2677,15 @@ preact-render-to-string@^5.1.19:
     pretty-format "^3.8.0"
 
 preact@^10.6.3:
+<<<<<<< Updated upstream
   version "10.15.1"
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.15.1.tgz#a1de60c9fc0c79a522d969c65dcaddc5d994eede"
   integrity sha512-qs2ansoQEwzNiV5eAcRT1p1EC/dmEzaATVDJNiB3g2sRDWdA7b7MurXdJjB2+/WQktGWZwxvDrnuRFbWuIr64g==
+=======
+  version "10.16.0"
+  resolved "https://registry.npmjs.org/preact/-/preact-10.16.0.tgz"
+  integrity sha512-XTSj3dJ4roKIC93pald6rWuB2qQJO9gO2iLLyTe87MrjQN+HklueLsmskbywEWqCHlclgz3/M4YLL2iBr9UmMA==
+>>>>>>> Stashed changes
 
 prelude-ls@^1.2.1:
   version "1.2.1"
@@ -3021,6 +3107,24 @@ react-is@^16.12.0, react-is@^16.13.1, react-is@^16.7.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+<<<<<<< Updated upstream
+=======
+react-router-dom@^6.14.2:
+  version "6.14.2"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.14.2.tgz#88f520118b91aa60233bd08dbd3fdcaea3a68488"
+  integrity sha512-5pWX0jdKR48XFZBuJqHosX3AAHjRAzygouMTyimnBPOLdY3WjzUSKhus2FVMihUFWzeLebDgr4r8UeQFAct7Bg==
+  dependencies:
+    "@remix-run/router" "1.7.2"
+    react-router "6.14.2"
+
+react-router@6.14.2:
+  version "6.14.2"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.14.2.tgz#1f60994d8c369de7b8ba7a78d8f7ec23df76b300"
+  integrity sha512-09Zss2dE2z+T1D03IheqAFtK4UzQyX8nFPWx6jkwdYzGLXd5ie06A6ezS2fO6zJfEb/SpG6UocN2O1hfD+2urQ==
+  dependencies:
+    "@remix-run/router" "1.7.2"
+
+>>>>>>> Stashed changes
 react@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"

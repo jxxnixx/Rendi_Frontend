@@ -1,36 +1,58 @@
 import Link from "next/link";
 import { MyPage } from "../icons";
+import { isLoggedInState, loginState } from "@/libs/client/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 export default function ProfileBtn() {
+  const isLoggedIn = useRecoilValue(isLoggedInState);
+  const [username, setUsername] = useRecoilState(loginState);
+
+  const handleLogout = () => {
+    // 로그아웃 버튼 클릭 시 실행되는 함수
+    // isLoggedInState 상태를 false로 변경하여 로그아웃 상태로 설정
+    setUsername({ username: "" }); // 사용자 이름을 초기화
+  };
+
   return (
     <>
-      <button className="w-[18px] h-[18px] absolute left-[870px] top-[3px] opacity-75 text-xs font-medium text-left text-[#666666]">
-        <Link href="/auth/profile" legacyBehavior>
-          <a className="text-[#666]">
-            <MyPage size={14} />
-          </a>
-        </Link>
-      </button>
-
-      <Link href="/auth/login" legacyBehavior>
-        <button className="w-[40px] h-[30px]">
-          <p className="w-[40px] h-[30px] absolute left-[890px] top-[4px] opacity-75 text-[9pt] font-medium text-left text-[#666666]">
-            로그인
+      {isLoggedIn ? (
+        <>
+          <button
+            onClick={handleLogout}
+            className="w-[60px] h-[18px] absolute left-[870px] top-[3px] opacity-75 text-xs font-medium text-left text-[#666666]"
+          >
+            로그아웃
+          </button>
+          <p className="absolute left-[890px] top-[4px] opacity-75 text-[9pt] font-medium text-left text-[#666666]">
+            {username.username}님
+            <Link href="/auth/profile" legacyBehavior>
+              <a className="text-[#666]">
+                <MyPage size={14} />
+              </a>
+            </Link>
           </p>
-        </button>
-      </Link>
-
-      <p className="absolute left-[930px] top-[3.5px] opacity-75 text-[10pt] font-medium text-left text-[#666]">
-        |
-      </p>
-
-      <Link href="/auth/signUp" legacyBehavior>
-        <button className="w-[50px] h-[30px]">
-          <p className="w-[50px] h-[30px] absolute left-[944px] top-[4px] opacity-75 text-[9pt] font-medium text-left text-[#666666]">
-            회원가입
+        </>
+      ) : (
+        <>
+          <Link href="/auth/login" legacyBehavior>
+            <button className="w-[40px] h-[30px]">
+              <p className="w-[40px] h-[30px] absolute left-[890px] top-[4px] opacity-75 text-[9pt] font-medium text-left text-[#666666]">
+                로그인
+              </p>
+            </button>
+          </Link>
+          <p className="absolute left-[930px] top-[3.5px] opacity-75 text-[10pt] font-medium text-left text-[#666]">
+            |
           </p>
-        </button>
-      </Link>
+          <Link href="/auth/signUp" legacyBehavior>
+            <button className="w-[50px] h-[30px]">
+              <p className="w-[50px] h-[30px] absolute left-[944px] top-[4px] opacity-75 text-[9pt] font-medium text-left text-[#666666]">
+                회원가입
+              </p>
+            </button>
+          </Link>
+        </>
+      )}
     </>
   );
 }
