@@ -59,31 +59,7 @@ function Taste() {
         // 페이지 이동
         router.push("/");
         console.log("회원가입 완료!");
-
-        // // 회원가입 성공
-        // const accessToken = signupResponse.data.response.accessToken;
-        // const refreshToken = signupResponse.data.response.refreshToken;
-
-        // // 로그인 요청
-        // const loginData = {
-        //   username: updatedSignUpData.username,
-        //   password: updatedSignUpData.password,
-        // };
-        // const loginResponse = await axios.post("/member/login", loginData);
-        // console.log(loginResponse.data);
-
-        // if (loginResponse.data.success) {
-        //   // 로그인 성공
-        //   const accessToken = loginResponse.data.response.accessToken;
-
-        //   // 토큰 저장
-        //   localStorage.setItem("accessToken", accessToken);
-        //   localStorage.setItem("refreshToken", refreshToken);
       }
-      // } else {
-      //   // 회원가입 실패
-      //   console.log("회원가입 실패:", signupResponse.data.error);
-      // }
     } catch (error) {
       console.log("회원가입 오류:", error);
     }

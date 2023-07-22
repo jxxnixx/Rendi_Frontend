@@ -1,4 +1,7 @@
-import { atom } from "recoil";
+import { AtomEffect, atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist();
 
 export interface SignUpState {
   username: string;
@@ -37,12 +40,35 @@ export const signUpState = atom<SignUpState>({
   },
 });
 
+const localStorageEffect =
+  (key: string): AtomEffect<any> =>
+  ({ setSelf, onSet }) => {
+    const savedValue = localStorage.getItem(key);
+    if (savedValue != null) {
+      setSelf(JSON.parse(savedValue));
+    }
+
+    onSet((newValue, _, isReset) => {
+      isReset
+        ? localStorage.removeItem(key)
+        : localStorage.setItem(key, JSON.stringify(newValue));
+    });
+  };
+
+// const currentUserIDState = atom<number>({
+//   key: 'CurrentUserID',
+//   default: 1,
+//   effects_UNSTABLE: [localStorageEffect('current_user')],
+// });
+
 export const isLoggedInState = atom<boolean>({
   key: "isLoggedInState",
   default: false,
+  effects_UNSTABLE: [localStorageEffect("current_user")],
 });
 
 export const loginState = atom<LoginState>({
   key: "loginState",
   default: { username: "" },
+  effects_UNSTABLE: [localStorageEffect("current_user")],
 });

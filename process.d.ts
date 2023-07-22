@@ -2,6 +2,8 @@ declare namespace NodeJS {
   export interface ProcessEnv {
     NEXTAUTH_URL: string;
     NEXTAUTH_SECRET: string;
+    NEXT_PUBLIC_ID: string;
+    NEXT_PUBLIC_SECRET: string;
     GOOGLE_ID: string;
     GOOGLE_SECRET: string;
     AUTH0_ID: string;

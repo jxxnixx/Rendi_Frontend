@@ -11,6 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { LoginState, isLoggedInState, loginState } from "@/libs/client/atom";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
+import { setCookie } from "@/libs/client/cookies";
 
 function LogIn() {
   const {
@@ -41,21 +42,23 @@ function LogIn() {
         const refreshToken = response.data.response.refreshToken;
 
         // 토큰 저장
-        localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
 
-        const username = watch("username");
-        const updatedUsername: LoginState = {
-          ...logUsername,
-          username,
-        };
+        setCookie("accessToken", accessToken);
 
         setLogin(true);
-        setLogUsername(updatedUsername);
 
-        console.log(login);
-        console.log(isLoggedInState);
-        console.log(updatedUsername);
+        // const username = watch("username");
+        // const updatedUsername: LoginState = {
+        //   ...logUsername,
+        //   username,
+        // };
+        // setLogUsername(updatedUsername);
+        // console.log(updatedUsername);
+
+        // 사용자 이름을 localStorage에 저장
+        // 보안상 취약하므로 다음부턴 session
+        localStorage.setItem("username", watch("username"));
 
         // 페이지 이동
         // 예시: 메인 페이지로 이동

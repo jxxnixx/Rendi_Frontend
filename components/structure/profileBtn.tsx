@@ -3,20 +3,20 @@ import { MyPage } from "../icons";
 import { isLoggedInState, loginState } from "@/libs/client/atom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useRouter } from "next/router";
+import { removeCookie } from "@/libs/client/cookies";
 
 export default function ProfileBtn() {
   const [username, setUsername] = useRecoilState(loginState);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const router = useRouter();
 
+  console.log(username);
+
   const handleLogout = () => {
     // 로그아웃 버튼 클릭 시 실행되는 함수
 
-    localStorage.removeItem("accessToken"); // accessToken 삭제
+    removeCookie("accessToken"); // accessToken 삭제
     localStorage.removeItem("refreshToken"); // refreshToken 삭제
-    setIsLoggedIn(false); // isLoggedInState 상태를 false로 변경하여 로그아웃 상태로 설정
-    setUsername({ username: "" }); // usernameState 상태를 빈 문자열로 초기화하여 사용자 이름을 제거
-
     router.push("/"); // 페이지 이동
   };
 
@@ -28,7 +28,7 @@ export default function ProfileBtn() {
             <Link href="/auth/profile" legacyBehavior>
               <a className="text-[#666]">
                 {/* <MyPage size={14} /> */}
-                {username.username}님
+                HIHI
               </a>
             </Link>
           </p>

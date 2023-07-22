@@ -5,22 +5,20 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Items from "@/components/product/items";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRecoilValue } from "recoil";
-import { isLoggedInState, loginState } from "@/libs/client/atom";
+import { getCookie } from "@/libs/client/cookies";
 
 const Home: NextPage = () => {
-  const Login = useRecoilValue(isLoggedInState);
   const router = useRouter();
 
-  console.log(Login);
-
   useEffect(() => {
-    if (Login) {
+    const accessToken = getCookie("accessToken");
+    if (accessToken) {
       router.push("/main");
     }
-  }, [Login, router]);
+  }, []);
 
   return (
     <Layout>
