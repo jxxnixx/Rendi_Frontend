@@ -1,33 +1,39 @@
-// import React from "react";
 // import { Line } from "@/components/icons";
-// import Item from "@/components/product/item";
+// import Items from "@/components/product/items";
+// import Items8 from "@/components/product/items8";
 // import Prodlist from "@/components/sort/prodlist";
+// import BrLine from "@/components/structure/brLine";
 // import Pagination from "@/components/structure/pagination";
 // import Layout from "@/layouts/layout";
 // import Head from "next/head";
+// import React, { useEffect, useState } from "react"; // useEffect와 useState를 불러옵니다.
 // import { useRouter } from "next/router";
-// import { useEffect } from "react";
-// import dummyData from "@/components/product/dummyData.json";
+// import { Product } from "@/components/product/DataTypes"; // Product 타입을 불러옵니다.
+// import dummyData from "@/components/product/dummyData.json"; // 더미 데이터를 불러옵니다.
 
-// interface SearchResultProps {
-//   totalPages: number;
-// }
-
-// const SearchResult = ({ totalPages }: SearchResultProps) => {
-//   const itemsPerPage = 12; // 한 페이지에 보여줄 아이템 수
+// export default function SearchResult() {
 //   const router = useRouter();
 //   const { search, image } = router.query;
 //   useEffect(() => {
-//     // 검색어와 이미지 값을 활용하여 필요한 작업을 수행합니다.
 //     console.log("검색어:", search);
 //     console.log("이미지:", image);
 //   }, [router.query]);
 
-//   // 페이지네이션을 위한 처리
-//   const currentPage = 1; // 현재 페이지, 여기서는 기본적으로 1페이지를 보여주도록 설정
+//   // 전체 아이템의 개수와 총 페이지 수 계산
+//   const totalItems = dummyData.length;
+//   const itemsPerPage = 16;
+//   const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+//   // 현재 페이지 상태값 추가
+//   const [currentPage, setCurrentPage] = useState(1);
+
+//   const handlePageChange = (pageNumber: number) => {
+//     setCurrentPage(pageNumber);
+//   };
+
 //   const startIndex = (currentPage - 1) * itemsPerPage;
 //   const endIndex = startIndex + itemsPerPage;
-//   const itemsToShow = dummyData.slice(startIndex, endIndex);
+//   const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
 
 //   return (
 //     <Layout>
@@ -39,8 +45,7 @@
 //           <div className="flex items-center w-[1040px] h-[60px] mt-[135px] text-lg font-medium ">
 //             <p className="flex justify-start text-lg text-left">
 //               “<span className="text-[#fc435a]">{search}</span>” 검색결과 ( 전체
-//               <span className="text-[#fc435a]">{dummyData.length}</span>
-//               개의 상품 )
+//               <span className="text-[#fc435a]">{totalItems}</span>개의 상품 )
 //             </p>
 //           </div>
 //           <div className="flex w-[1040px] h-[60px] items-center top-[30px]">
@@ -50,45 +55,52 @@
 //         </div>
 //       </div>
 
-//       <div className=" flex flex-col items-center justify-center">
-//         {itemsToShow.map((item) => (
-//           <Item key={item.productId} item={item} />
-//         ))}
-//         <Pagination totalPages={totalPages} />
+//       <div className="flex flex-col items-center justify-center">
+//         <Items itemsPerPage={itemsPerPage} />
+//         <Pagination
+//           currentPage={currentPage}
+//           totalPages={totalPages}
+//           onPageChange={handlePageChange}
+//         />
 //       </div>
 //     </Layout>
 //   );
-// };
-
-// export default SearchResult;
-
+// }
 import { Line } from "@/components/icons";
 import Items from "@/components/product/items";
-import Items8 from "@/components/product/items8";
 import Prodlist from "@/components/sort/prodlist";
-import BrLine from "@/components/structure/brLine";
 import Pagination from "@/components/structure/pagination";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { Product } from "@/components/product/DataTypes";
+import dummyData from "@/components/product/dummyData.json";
 
 export default function SearchResult() {
   const router = useRouter();
   const { search, image } = router.query;
   useEffect(() => {
-    // 검색어와 이미지 값을 활용하여 필요한 작업을 수행합니다.
-
     console.log("검색어:", search);
     console.log("이미지:", image);
   }, [router.query]);
 
-  // //페이지네이션을 위한 처리
-  //   const currentPage = 1; // 현재 페이지, 여기서는 기본적으로 1페이지를 보여주도록 설정
-  //   const startIndex = (currentPage - 1) * itemsPerPage;
-  //   const endIndex = startIndex + itemsPerPage;
-  //   const itemsToShow = dummyData.slice(startIndex, endIndex);
+  // 전체 아이템의 개수와 총 페이지 수 계산
+  const totalItems = dummyData.length;
+  const itemsPerPage = 16;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  // 현재 페이지 상태값 추가
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // 현재 페이지에 해당하는 상품들을 계산
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
 
   return (
     <Layout>
@@ -100,8 +112,7 @@ export default function SearchResult() {
           <div className="flex items-center w-[1040px] h-[60px] mt-[135px] text-lg font-medium ">
             <p className="flex justify-start text-lg text-left">
               “<span className="text-[#fc435a]">{search}</span>” 검색결과 ( 전체
-              <span className="text-[#fc435a]">234</span>
-              개의 상품 )
+              <span className="text-[#fc435a]">{totalItems}</span>개의 상품 )
             </p>
           </div>
           <div className="flex w-[1040px] h-[60px] items-center top-[30px]">
@@ -111,9 +122,15 @@ export default function SearchResult() {
         </div>
       </div>
 
-      <div className=" flex flex-col items-center justify-center">
-        <Items itemsPerPage={16} />
-        {/* <Pagination totalPages={totalPages} /> */}
+      <div className="flex flex-col items-center justify-center">
+        {/* Items 컴포넌트에 itemsPerPage를 전달 */}
+        <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
+        {/* Pagination 컴포넌트에 현재 페이지와 총 페이지 수, 페이지 변경 함수를 전달 */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </Layout>
   );

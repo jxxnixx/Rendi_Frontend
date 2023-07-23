@@ -5,7 +5,7 @@ import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
 import { Line, MyPage, Next, ShoppingBag } from "@/components/icons";
-import Items8 from "@/components/product/items8";
+import Items from "@/components/product/items";
 
 interface ProfileForm {
   id: string;
@@ -87,7 +87,7 @@ function Profile() {
               <p className="flex items-center h-[40px] ">최근 본 상품</p>
             </div>
             <div className="flex items-end justify-center">
-              <Items8 />
+              <Items itemsPerPage={8} />
             </div>
           </div>
         </div>

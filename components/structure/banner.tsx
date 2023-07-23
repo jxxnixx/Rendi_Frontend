@@ -1,13 +1,18 @@
 import React from "react";
 import { Carousel } from "antd";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 export default function Banner() {
   return (
     <div className="w-[1040px] h-[362px] ">
       {/* <img src="banner.png" className="w-[1040px] h-[362px] object-cover" /> */}
-
-      <Carousel autoplay draggable>
+      <Carousel
+        autoplay
+        draggable
+        nextArrow={<RightOutlined className="carousel-arrow" />}
+        prevArrow={<LeftOutlined className="carousel-arrow" />}
+      >
         <div>
           <img src="banner.png" className="w-[1040px] h-[362px] object-cover" />
         </div>

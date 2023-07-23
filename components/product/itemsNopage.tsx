@@ -6,10 +6,9 @@ import { useRouter } from "next/router";
 
 interface ItemsProps {
   itemsPerPage: number; // itemsPerPage를 props로 받습니다.
-  itemsToShow?: Product[]; // itemsToShow를 옵셔널하게 설정합니다.
 }
 
-export default function Items({ itemsPerPage, itemsToShow }: ItemsProps) {
+export default function ItemsNoPage({ itemsPerPage }: ItemsProps) {
   const router = useRouter();
   const { search, image } = router.query;
   useEffect(() => {
@@ -18,11 +17,8 @@ export default function Items({ itemsPerPage, itemsToShow }: ItemsProps) {
     console.log("이미지:", image);
   }, [router.query]);
 
-  // 전체 상품 데이터를 가져옵니다.
-  const allItems: Product[] = dummyData;
-
-  // 만약 itemsToShow가 제공되지 않았다면, 처음 itemsPerPage개의 상품만 보여줍니다.
-  const itemsToDisplay = itemsToShow || allItems.slice(0, itemsPerPage);
+  // itemsToShow가 없다면 dummyData에서 상품들을 선택합니다.
+  const itemsToDisplay: Product[] = itemsToShow || dummyData;
 
   const renderItems = () => {
     const rows = [];

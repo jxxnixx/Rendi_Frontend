@@ -5,7 +5,6 @@ import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
 import { Line, ShoppingBag } from "@/components/icons";
-import Items8 from "@/components/product/items8";
 import Markets8 from "@/components/product/martketList";
 
 function LikedMarket() {
@@ -54,7 +53,7 @@ function LikedMarket() {
         <div className="flex justify-center  mt-[10px] ">
           <Line />
         </div>
-        {/* 최근본상품 */}
+        {/* 즐겨찾기한 마켓 */}
         <div className="flex justify-center">
           <div className="flex-row  w-[1040px] h-[834px]">
             <div className="flex text-[12pt] font-medium  text-black">

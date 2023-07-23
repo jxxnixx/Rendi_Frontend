@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect, memo } from "react";
 import { HeartIcon } from "../icons";
+import { Carousel } from "antd";
+import router from "next/router";
 
 interface ItemProps {
   item: {
@@ -22,7 +24,8 @@ const updateBrandId = (item: ItemProps["item"]) => {
 };
 
 const Item = ({ item }: ItemProps) => {
-  const [isLiked, setIsLiked] = useState(false);
+  // 이전에 좋아요를 눌렀는지 여부를 상태로 관리합니다.
+  const [isLiked, setIsLiked] = useState(item.wishYN === "Y");
   const [isCenterHeartShown, setIsCenterHeartShown] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>();
 
@@ -45,27 +48,44 @@ const Item = ({ item }: ItemProps) => {
   }, [isCenterHeartShown]);
 
   const handleLike = () => {
-    setIsLiked((prevIsLiked) => !prevIsLiked);
-    if (!isLiked) {
-      setIsCenterHeartShown(true);
-    }
+    setIsCenterHeartShown(true);
+    // 좋아요를 토글하여 업데이트
+    const updatedWishYN = isLiked ? "N" : "Y";
+    const updatedItem = { ...item, wishYN: updatedWishYN };
+    // TODO: 아이템의 업데이트된 정보를 서버에 저장하는 로직을 추가해야 합니다.
+    setIsLiked(updatedWishYN === "Y"); // 상태를 업데이트합니다.
+    console.log(updatedItem);
   };
 
   // brandId가 1인 경우 "CIDER"로 변경된 item 사용
   const updatedItem = updateBrandId(item);
 
+  const handleItemClick = () => {
+    // 상품을 클릭했을 때 item.href로 페이지 이동
+    router.push(item.href);
+  };
+
   return (
     <div className="relative mb-[10px] w-[222px] h-[361px]">
       {/* 상품 이미지 */}
-      <a href="/404" className="relative  w-[222px] h-[278px] inline-block">
-        {updatedItem.imgUrls && updatedItem.imgUrls.length > 0 && (
-          <img
-            className="w-56 h-69 rounded-lg border-2 border-gray-100 shadow-md"
-            src={updatedItem.imgUrls[0]}
-            alt={updatedItem.title}
-          />
-        )}
-      </a>
+      {/* 이미지 슬라이드 자동으로 넘기는거 싫으면 autoplay삭제*/}
+      <div
+        onClick={handleItemClick}
+        className="cursor-pointer transition-shadow shadow-sm hover:shadow-md"
+      >
+        <Carousel autoplay>
+          {item.imgUrls &&
+            item.imgUrls.map((url, index) => (
+              <div key={index}>
+                <img
+                  className="w-56 h-69 rounded-lg border-2 border-gray-100 shadow-md"
+                  src={url}
+                  alt={item.title}
+                />
+              </div>
+            ))}
+        </Carousel>
+      </div>
       {/* 좋아요 버튼 */}
       <button
         className="absolute top-2 right-3 w-7 h-7 z-10"
@@ -88,7 +108,10 @@ const Item = ({ item }: ItemProps) => {
         fill="#FC435A"
       />
 
-      <div className="mt-[22px] w-[222px] h-5 relative">
+      <div
+        className="mt-[10px] w-[222px] h-5 relative cursor-pointer"
+        onClick={handleItemClick}
+      >
         <p className="w-[222px] h-5  left-[25px] top-[321px] text-[15px] text-left text-black">
           {updatedItem.title}
         </p>
