@@ -11,14 +11,13 @@ export default function New() {
       <Head>
         <title>New</title>
       </Head>
+
       <div className="relative mt-[135px] flex w-full flex-col bg-white text-lg font-medium ">
         <ProdBar category={"default"} />
         <div className="flex justify-center py-8">
-          <Items />
+          <Items itemsPerPage={16} />
         </div>
-        <div className="flex justify-center py-1">
-          <Pagination />
-        </div>
+        <div className="flex justify-center py-1">{/* <Pagination /> */}</div>
       </div>
     </Layout>
   );

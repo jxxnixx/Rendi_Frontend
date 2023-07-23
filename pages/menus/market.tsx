@@ -22,12 +22,10 @@ export default function Market() {
             <button className=" justify-center w-[100px] h-[30px] mb-[4px] ml-[25px] text-[11pt] text-[#666666]">
               이번주 신제품
             </button>
-            <Items />
+            <Items itemsPerPage={16} />
           </div>
         </div>
-        <div className="flex justify-center py-1">
-          <Pagination />
-        </div>
+        <div className="flex justify-center py-1">{/* <Pagination /> */}</div>
       </div>
     </Layout>
   );

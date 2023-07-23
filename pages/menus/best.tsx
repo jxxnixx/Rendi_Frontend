@@ -14,11 +14,9 @@ export default function Best() {
       <div className="relative mt-[135px] flex w-full flex-col text-lg font-medium bg-white ">
         <ProdBar category={"default"} />
         <div className="flex justify-center py-8">
-          <Items />
+          <Items itemsPerPage={16} />
         </div>
-        <div className="flex justify-center py-1">
-          <Pagination />
-        </div>
+        <div className="flex justify-center py-1">{/* <Pagination /> */}</div>
       </div>
     </Layout>
   );
