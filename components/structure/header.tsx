@@ -4,6 +4,8 @@ import ProfileBtn from "./profileBtn";
 import SearchBar from "./searchBar";
 
 export default function Header() {
+  // 쿠키에서 로그인 상태를 확인하는 함수
+
   return (
     <header className="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 z-30  h-[100px] bg-white mx-auto">
       <div className="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 z-30  h-[100px] w-[1040px] bg-white mx-auto">
