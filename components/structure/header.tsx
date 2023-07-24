@@ -30,7 +30,6 @@ export default function Header() {
         </div>
         {/* 회원가입/로그인 */}
         <div className="w-[85px] h-[30px]">
-          {/* {login ? <ProfileBtn2 /> : <ProfileBtn />} */}
           <ProfileBtn />
         </div>
       </div>
