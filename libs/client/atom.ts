@@ -40,20 +40,20 @@ export const signUpState = atom<SignUpState>({
   },
 });
 
-const localStorageEffect =
-  (key: string): AtomEffect<any> =>
-  ({ setSelf, onSet }) => {
-    const savedValue = localStorage.getItem(key);
-    if (savedValue != null) {
-      setSelf(JSON.parse(savedValue));
-    }
+// const localStorageEffect =
+//   (key: string): AtomEffect<any> =>
+//   ({ setSelf, onSet }) => {
+//     const savedValue = localStorage.getItem(key);
+//     if (savedValue != null) {
+//       setSelf(JSON.parse(savedValue));
+//     }
 
-    onSet((newValue, _, isReset) => {
-      isReset
-        ? localStorage.removeItem(key)
-        : localStorage.setItem(key, JSON.stringify(newValue));
-    });
-  };
+//     onSet((newValue, _, isReset) => {
+//       isReset
+//         ? localStorage.removeItem(key)
+//         : localStorage.setItem(key, JSON.stringify(newValue));
+//     });
+//   };
 
 // const currentUserIDState = atom<number>({
 //   key: 'CurrentUserID',
@@ -61,14 +61,18 @@ const localStorageEffect =
 //   effects_UNSTABLE: [localStorageEffect('current_user')],
 // });
 
-export const isLoggedInState = atom<boolean>({
-  key: "isLoggedInState",
-  default: false,
-  effects_UNSTABLE: [localStorageEffect("current_user")],
-});
+// export const isLoggedInState = atom<boolean>({
+//   key: "isLoggedInState",
+//   default: false,
+//   effects_UNSTABLE: [persistAtom],
+//   // effects_UNSTABLE: [localStorageEffect("current_user")],
+// });
 
-export const loginState = atom<LoginState>({
-  key: "loginState",
-  default: { username: "" },
-  effects_UNSTABLE: [localStorageEffect("current_user")],
-});
+// export const loginState = atom<LoginState>({
+//   key: "loginState",
+//   default: { username: "" },
+//   effects_UNSTABLE: [persistAtom],
+//   // effects_UNSTABLE: [localStorageEffect("current_user")],
+// });
+
+// // persistAtom이나 localStorageEffect나 도찐개찐임

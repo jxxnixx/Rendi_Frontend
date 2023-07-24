@@ -2,9 +2,6 @@ import Link from "next/link";
 import BrLine from "./brLine";
 import ProfileBtn from "./profileBtn";
 import SearchBar from "./searchBar";
-import ProfileBtn2 from "./profileBtn2";
-import { isLoggedInState } from "@/libs/client/atom";
-import { useRecoilState } from "recoil";
 
 export default function Header() {
   // 쿠키에서 로그인 상태를 확인하는 함수

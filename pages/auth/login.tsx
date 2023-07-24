@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Google, KakaoTalk, LoginLine, Naver } from "@/components/icons";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { LoginState, isLoggedInState, loginState } from "@/libs/client/atom";
+// import { LoginState, isLoggedInState, loginState } from "@/libs/client/atom";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { setCookie } from "@/libs/client/cookies";
@@ -24,8 +24,8 @@ function LogIn() {
   });
 
   const [loginError, setLoginError] = useState<string>("");
-  const [login, setLogin] = useRecoilState(isLoggedInState);
-  const [logUsername, setLogUsername] = useRecoilState(loginState);
+  // const [login, setLogin] = useRecoilState(isLoggedInState);
+  // const [logUsername, setLogUsername] = useRecoilState(loginState);
   const router = useRouter();
 
   const loginMutation = useMutation(
@@ -46,7 +46,7 @@ function LogIn() {
 
         setCookie("accessToken", accessToken);
 
-        setLogin(true);
+        // setLogin(true);
 
         // const username = watch("username");
         // const updatedUsername: LoginState = {
