@@ -47,7 +47,7 @@ const Home: NextPage = () => {
                 </Link>
               </div>
               <div className="flex justify-center ">
-                <Items />
+                <Items itemsPerPage={12} />
               </div>
             </div>
           </div>

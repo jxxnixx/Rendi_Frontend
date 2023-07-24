@@ -8,7 +8,11 @@ export default function Trend() {
       <Head>
         <title>Trend</title>
       </Head>
-      <div className="relative mt-[136px] h-[800px] flex w-full flex-col text-lg font-medium "></div>
+      <div className="relative mt-[136px] h-[800px] flex w-full flex-col text-lg font-medium ">
+        <div className="text-4xl mt-[100px] font-bold text-center">
+          준비중입니다...
+        </div>
+      </div>
     </Layout>
   );
 }
