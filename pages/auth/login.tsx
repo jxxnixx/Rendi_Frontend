@@ -8,7 +8,6 @@ import Link from "next/link";
 import { Google, KakaoTalk, LoginLine, Naver } from "@/components/icons";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-// import { LoginState, isLoggedInState, loginState } from "@/libs/client/atom";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { setCookie } from "@/libs/client/cookies";
@@ -31,6 +30,7 @@ function LogIn() {
   const loginMutation = useMutation(
     (data: ALogInProps) => usersApi.login(data) // usersApi.login 사용
   );
+  // useMutation의 첫 번째 매개변수 : 비동기 작업을 수행하는 콜백 함수
 
   const submitForm: SubmitHandler<ALogInProps> = async (data: ALogInProps) => {
     try {

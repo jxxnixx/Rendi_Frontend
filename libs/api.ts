@@ -42,6 +42,13 @@ export interface ASocialLoginProps {
   email: string;
 }
 
+export interface AEditInfosProps {
+  username: string;
+  password: string;
+  nickname: string;
+  phonenum: string;
+}
+
 // export const axiosPrivate = axios.create({
 //   baseURL: API_URL,
 //   headers: { "Content-Type": "application/json" },
@@ -158,4 +165,23 @@ export const usersApi = {
   // PW 변경
   changePW: (email: string, password: string) =>
     axios.post("/member/find-pw/", { email, password }),
+
+  // 회원정보 수정
+  editInfos: ({ username, password, nickname, phonenum }: AEditInfosProps) =>
+    axios.post(
+      "//URL",
+      {
+        ...(username && { username }),
+        ...(password && { password }),
+        ...(nickname && { nickname }),
+        ...(phonenum && { phonenum }),
+      }
+      // {
+      //   headers: {
+      //     Authorization: token,
+      //     "Content-Type": "application/json",
+      //   },
+      // }
+      // token 핸들링 필요
+    ),
 };

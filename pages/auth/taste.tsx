@@ -45,8 +45,6 @@ function Taste() {
 
     setSignUpData(updatedSignUpData);
 
-    console.log(updatedSignUpData);
-
     try {
       // 회원가입 요청
       const signupResponse = await axios.post(

@@ -12,10 +12,6 @@ interface Category {
   cate: string;
 }
 
-interface ProductPageProps {
-  category: Category;
-}
-
 const categories: { [key: string]: Category[] } = {
   bag: [
     { cate: "전체" },
@@ -125,7 +121,7 @@ const categories: { [key: string]: Category[] } = {
   ],
 };
 
-const ProductPage: React.FC<ProductPageProps> = ({ category }) => {
+const ProductPage = () => {
   const router = useRouter();
   const { id } = router.query;
 

@@ -9,59 +9,34 @@ import { useState } from "react";
 import { SignUpState, signUpState } from "@/libs/client/atom";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
+import { useMutation } from "@tanstack/react-query";
+import { AEditInfosProps, usersApi } from "@/libs/api";
 
-interface UpdateForm extends SignUpState {
-  extraError?: string;
-  cPassword: string;
-  authCode: string;
-}
-
-function Update() {
+function Edit() {
   const {
     watch,
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<UpdateForm>({
+  } = useForm<AEditInfosProps>({
     mode: "onChange",
   });
 
-  const [signUpData, setSignUpData] = useRecoilState(signUpState);
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleClick = async () => {
     // 입력값 가져오기
+    const nickname = watch("nickname");
     const username = watch("username");
     const password = watch("password");
-    const cPassword = watch("cPassword");
-    const nickname = watch("profile.nickname");
-    const email = watch("profile.email");
-    const phonenum = watch("profile.phonenum");
-    const birth = watch("profile.birth");
-    const sex = value.toString() as "1" | "2";
-    const interests = watch("profile.interests");
-
-    // signUpState 업데이트
-    const updatedSignUpData: SignUpState = {
-      ...signUpData,
-      username,
-      password,
-      profile: {
-        ...signUpData.profile,
-        nickname,
-        email,
-        phonenum,
-        birth,
-        sex,
-        interests,
-      },
-    };
-    setSignUpData(updatedSignUpData);
-
-    console.log(updatedSignUpData);
+    const phonenum = watch("phonenum");
 
     router.push("/auth/taste");
   };
+
+  const loginMutation = useMutation(
+    (data: ALogInProps) => usersApi.login(data) // usersApi.login 사용
+  );
 
   const [value, setValue] = useState<string | number>("Map");
 
@@ -90,9 +65,40 @@ function Update() {
 
               <div className="relative top-[133px]">
                 <Input
+                  name="profile.email"
+                  label="이메일"
+                  type="email"
+                  kind="disabled"
+                  register={register("profile.email", {
+                    required: "이메일을 입력하세요",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "유효한 이메일 주소를 입력하세요.",
+                    },
+                  })}
+                  placeholder="xxxx@xxx.com"
+                  error={errors.profile?.email?.message}
+                />
+
+                <Input
+                  name="profile.nickname"
+                  label="이름"
+                  type="nickname"
+                  kind="text"
+                  register={register("profile.nickname", {
+                    required: "한글로 입력해주세요.",
+                    pattern: {
+                      value: /^[ㄱ-ㅎ|가-힣|A-z][ㄱ-ㅎ|가-힣|A-z0-9-_]{2,23}$/,
+                      message: "올바르지 않은 형식의 이름입니다.",
+                    },
+                  })}
+                  placeholder="김유저"
+                  error={errors?.profile?.nickname?.message}
+                />
+
+                <Input
                   name="username"
                   label="아이디"
-                  checkLabel="확인"
                   type="username"
                   register={register("username", {
                     required: {
@@ -104,9 +110,11 @@ function Update() {
                       message: "적합하지 않은 형태의 아이디 입니다.",
                     },
                   })}
-                  placeholder="아이디"
+                  placeholder="user_name"
+                  // server 문제 해결되면 placeholder 말고 axios로 불러올 것
                   error={errors?.username?.message}
                   kind="check"
+                  checkLabel="확인"
                   watch={watch}
                   errors={errors}
                 />
@@ -130,7 +138,7 @@ function Update() {
                         "영어,숫자,특수문자를 1자 이상씩 포함하여 8자 이상으로 구성해주세요.",
                     },
                   })}
-                  placeholder="비밀번호"
+                  placeholder="new password"
                   error={errors?.password?.message}
                   autoComplete="off"
                 />
@@ -146,73 +154,22 @@ function Update() {
                       value === watch("password") ||
                       "입력한 비밀번호와 동일하지 않습니다.",
                   })}
-                  placeholder="비밀번호 확인"
+                  placeholder=""
                   error={errors?.cPassword?.message}
                   autoComplete="off"
-                />
-
-                <Input
-                  name="profile.nickname"
-                  label="이름"
-                  type="nickname"
-                  kind="text"
-                  register={register("profile.nickname", {
-                    required: "한글로 입력해주세요.",
-                    pattern: {
-                      value: /^[ㄱ-ㅎ|가-힣|A-z][ㄱ-ㅎ|가-힣|A-z0-9-_]{2,23}$/,
-                      message: "올바르지 않은 형식의 이름입니다.",
-                    },
-                  })}
-                  placeholder="이름"
-                  error={errors?.profile?.nickname?.message}
                 />
 
                 <Input
                   name="profile.birth"
                   label="생년월일"
                   type="birth"
+                  kind="disabled"
                   register={register("profile.birth", {
                     required: "생년월일을 입력해주세요.",
-                    pattern: {
-                      value:
-                        /^(19|20)\d{2}-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])$/,
-                      message: "올바르지 않은 형태의 생년월일입니다.",
-                    },
                   })}
-                  placeholder="YYYY-MM-DD"
+                  placeholder="2000-01-01"
                   error={errors?.profile?.birth?.message}
                 />
-
-                <div className="font-bold text-[#666]">
-                  성별
-                  <div>
-                    <Segmented
-                      name="profile.sex"
-                      type="sex"
-                      className="w-[148px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0] p-[5px]s"
-                      options={[
-                        {
-                          label: (
-                            <div className="w-1/2 p-[10px]">
-                              <div>남성</div>
-                            </div>
-                          ),
-                          value: "1",
-                        },
-                        {
-                          label: (
-                            <div className="w-1/2 p-[10px]">
-                              <div>여성</div>
-                            </div>
-                          ),
-                          value: "2",
-                        },
-                      ]}
-                      value={value}
-                      onChange={setValue}
-                    />
-                  </div>
-                </div>
 
                 <Input
                   name="profile.phonenum"
@@ -226,38 +183,8 @@ function Update() {
                       message: "-를 제외하고 입력하세요.",
                     },
                   })}
-                  placeholder="-를 제외하고 입력하세요."
+                  placeholder="010-9988-7766"
                   error={errors?.profile?.phonenum?.message}
-                />
-
-                <Input
-                  name="profile.email"
-                  label="이메일"
-                  checkLabel="인증"
-                  type="email"
-                  kind="check"
-                  register={register("profile.email", {
-                    required: "이메일을 입력하세요",
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "유효한 이메일 주소를 입력하세요.",
-                    },
-                  })}
-                  placeholder="유효한 이메일 주소를 입력하세요."
-                  error={errors.profile?.email?.message}
-                />
-
-                <Input
-                  name="authCode"
-                  label="인증번호"
-                  checkLabel="확인"
-                  type="authCode"
-                  kind="check"
-                  register={register("authCode", {
-                    required: "인증번호를 입력하세요",
-                  })}
-                  placeholder="인증번호를 입력하세요."
-                  error={errors?.authCode?.message}
                 />
 
                 <div className="flex mt-[40px] text-center justify-center">

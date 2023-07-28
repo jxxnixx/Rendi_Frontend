@@ -3,7 +3,7 @@ import React from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputProps {
-  kind?: "text" | "check" | "num"; // check: 인증번호, birth: 주민번호 입력창
+  kind?: "text" | "check" | "num" | "disabled"; // check: 인증번호, birth: 주민번호 입력창
   label: string;
   checkLabel?: string;
   name: string;
@@ -68,22 +68,23 @@ export default function Input({
         </button>
       </div>
     );
-  } else if (kind === "num") {
+  } else if (kind === "disabled") {
     inputComponent = (
-      <div className="w-[200px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0]">
+      <div className="w-[448px] h-[55px] rounded-[50px] bg-white ">
         <input
           {...inputProps}
           {...rest}
           ref={ref}
           onChange={onChange}
           className={cls(
-            "w-full h-full rounded-[50px] bg-white border-none px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
+            "w-[448px] h-[55px] rounded-[50px] bg-gray-100 border border-[#e0e0e0] px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
             error
-              ? "w-full h-full rounded-[50px] bg-white border border-[#f00]"
-              : "w-full h-full rounded-[50px] bg-white border border-[#4caf50]"
+              ? "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#f00]"
+              : "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#4caf50]"
           )}
           id={name}
           name={name}
+          disabled
         />
       </div>
     );
