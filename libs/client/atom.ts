@@ -40,16 +40,6 @@ export const signUpState = atom<SignUpState>({
   },
 });
 
-// export const atomCate = atom<string>({
-//   key: "atomCate",
-//   default: "전체", // 기본값은 전체
-// });
-
-export const atomActiveCate = atom<string>({
-  key: "atomActiveCate",
-  default: "전체", // 기본값은 전체
-});
-
 // const localStorageEffect =
 //   (key: string): AtomEffect<any> =>
 //   ({ setSelf, onSet }) => {
