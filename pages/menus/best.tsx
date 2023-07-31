@@ -31,7 +31,7 @@ export default function Best() {
         <title>Best</title>
       </Head>
       <div className="relative mt-[135px] flex w-full flex-col text-lg font-medium bg-white ">
-        <ProdBar category={"default"} />
+        <ProdBar category={"default"} id={""} />
         <div className="flex justify-center py-8">
           <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
         </div>

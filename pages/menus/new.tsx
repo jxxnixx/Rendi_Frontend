@@ -32,7 +32,7 @@ export default function New() {
       </Head>
 
       <div className="relative mt-[135px] flex w-full flex-col bg-white text-lg font-medium ">
-        <ProdBar category={"default"} />
+        <ProdBar category={"default"} id={""} />
         <div className="flex justify-center py-8">
           <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
         </div>
