@@ -172,7 +172,7 @@ function LogIn() {
             <div className="mt-[40px] bg-white text-gray-600 text-[11pt] text-base">
               Rendi가 처음이신가요?
             </div>
-            <Link href="/auth/signUp" legacyBehavior>
+            <Link href="/auth/signup" legacyBehavior>
               <button className="mt-[3px] bg-white text-black text-[12pt] text-base">
                 회원가입
               </button>

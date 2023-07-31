@@ -49,6 +49,15 @@ export interface AEditInfosProps {
   phonenum: string;
 }
 
+export interface AEmailVeriProps {
+  nickname: string;
+  email: string;
+}
+
+export interface ACheckIDProps {
+  username: string;
+}
+
 // export const axiosPrivate = axios.create({
 //   baseURL: API_URL,
 //   headers: { "Content-Type": "application/json" },
@@ -108,11 +117,13 @@ export const usersApi = {
   },
 
   // ID 중복체크 확인
-  checkID: (username: ASignUpProps) =>
-    axios.get(`/member/id_check?username=${username}`),
+  checkID: (username: ACheckIDProps) =>
+    axios.post(`/member/id_check`, {
+      id: username,
+    }),
 
-  // 회원가입 인증번호 발급
-  getSignupCode: ({ nickname, email }: ASignUpProps) =>
+  // 이메일 인증
+  emailVerification: ({ nickname, email }: AEmailVeriProps) =>
     axios.post("/member/email/", {
       name: nickname,
       email,
@@ -147,7 +158,6 @@ export const usersApi = {
   // 일반 로그인
   login: ({ username, password }: ALogInProps) =>
     axios.post("/member/login/", {
-      // login_method: "normal",
       username,
       password,
     }),
