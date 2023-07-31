@@ -8,3 +8,9 @@ export interface Product {
   imgUrls: string[];
   href: string;
 }
+
+export interface TasteProduct {
+  productId: number;
+  title: string;
+  imgUrls: string[];
+}
