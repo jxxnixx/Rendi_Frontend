@@ -8,6 +8,7 @@ import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 
 export default function Market() {
+  const [activeCate, setActiveCate] = useState("전체");
   // 전체 아이템의 개수와 총 페이지 수 계산
   const totalItems = dummyData.length;
   const itemsPerPage = 16;
@@ -35,7 +36,11 @@ export default function Market() {
       </div>
 
       <div className="flex  w-full flex-col text-lg font-medium ">
-        <ProdBar category={"default"} />
+        <ProdBar
+          category={"default"}
+          activeCate={activeCate}
+          setActiveCate={setActiveCate}
+        />
         <div className="flex justify-center ">
           <div className=" pt-[9px]">
             <button className=" justify-center w-[100px] h-[30px] mb-[4px] ml-[25px] text-[11pt] text-[#666666]">
