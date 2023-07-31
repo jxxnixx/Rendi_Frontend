@@ -1,6 +1,6 @@
 [
   {
-    "productId": "100",
+    "productId": 100,
     "price": "20800",
     "brandId": 1,
     "title": "모카 런 애슬레틱 미니 스커트",
@@ -12,7 +12,7 @@
     "href": ""
   },
   {
-    "productId": "101",
+    "productId": 101,
     "price": "26000",
     "brandId": 1,
     "title": "솔리드 미들 웨이스트 플리츠 스커트",
@@ -24,7 +24,7 @@
     "href": ""
   },
   {
-    "productId": "102",
+    "productId": 102,
     "price": "34400",
     "brandId": 1,
     "title": "솔리드 포켓 드로스트링 미니 스커트",
@@ -36,7 +36,7 @@
     "href": ""
   },
   {
-    "productId": "103",
+    "productId": 103,
     "price": "34500",
     "brandId": 1,
     "title": "솔리드 포켓 드로스트링 롱 카고 스커트",
@@ -48,7 +48,7 @@
     "href": ""
   },
   {
-    "productId": "104",
+    "productId": 104,
     "price": "26000",
     "brandId": 1,
     "title": "새틴 솔리드 러플 롱스커트",
@@ -60,19 +60,18 @@
     "href": ""
   },
   {
-    "productId": "105",
+    "productId": 105,
     "price": "39600",
     "brandId": 1,
     "title": "Miss Crafty 패치워크 데님 미디 스커트",
     "wishYN": "N",
     "imgUrls": [
-      "https://img1.shopcider.com/product/1661430337000-KWsGjJ.jpg?x-oss-process=image/resize,w_350,m_lfit/quality,Q_80/interlace,10",
       "https://img.shopcider.com/hermes/video/1674191970000-3rydss.jpg?x-oss-process=image/resize,w_350,m_lfit/quality,Q_80/interlace,1"
     ],
     "href": ""
   },
   {
-    "productId": "106",
+    "productId": 106,
     "price": "31200",
     "brandId": 1,
     "title": "종이 클립 미니 스커트",
@@ -84,7 +83,7 @@
     "href": ""
   },
   {
-    "productId": "107",
+    "productId": 107,
     "price": "41700",
     "brandId": 1,
     "title": "데님 솔리드 포켓 맥시 스커트",
@@ -96,7 +95,7 @@
     "href": ""
   },
   {
-    "productId": "108",
+    "productId": 108,
     "price": "29000",
     "brandId": 1,
     "title": "데님 매듭 스플릿 쇼트 스커트",
@@ -108,7 +107,7 @@
     "href": ""
   },
   {
-    "productId": "109",
+    "productId": 109,
     "price": "23400",
     "brandId": 1,
     "title": "솔리드 러플 탑어드 미니 스커트",
@@ -120,7 +119,7 @@
     "href": ""
   },
   {
-    "productId": "110",
+    "productId": 110,
     "price": "23400",
     "brandId": 1,
     "title": "데님 솔리드 스플릿 미니 스커트",
@@ -132,7 +131,7 @@
     "href": ""
   },
   {
-    "productId": "111",
+    "productId": 111,
     "price": "31400",
     "brandId": 1,
     "title": "매듭 솔리드 새틴 미디 스커트",
@@ -144,7 +143,7 @@
     "href": ""
   },
   {
-    "productId": "112",
+    "productId": 112,
     "price": "18200",
     "brandId": 1,
     "title": "솔리드 슬릿 베이직 쇼츠",
@@ -156,7 +155,7 @@
     "href": ""
   },
   {
-    "productId": "113",
+    "productId": 113,
     "price": "29000",
     "brandId": 1,
     "title": "니트 미니 플리츠 스커트",
@@ -168,7 +167,7 @@
     "href": ""
   },
   {
-    "productId": "114",
+    "productId": 114,
     "price": "23400",
     "brandId": 1,
     "title": "Toile de Jouy 미니 스커트",
@@ -180,7 +179,7 @@
     "href": ""
   },
   {
-    "productId": "115",
+    "productId": 115,
     "price": "12200",
     "brandId": 1,
     "title": "솔리드 플리츠 체인 디테일 미니 스커트",
@@ -192,7 +191,7 @@
     "href": ""
   },
   {
-    "productId": "116",
+    "productId": 116,
     "price": "31200",
     "brandId": 1,
     "title": "종이 클립 미니 스커트",
@@ -204,7 +203,7 @@
     "href": ""
   },
   {
-    "productId": "117",
+    "productId": 117,
     "price": "41700",
     "brandId": 1,
     "title": "데님 솔리드 포켓 맥시 스커트",
@@ -216,7 +215,7 @@
     "href": ""
   },
   {
-    "productId": "118",
+    "productId": 118,
     "price": "29000",
     "brandId": 1,
     "title": "데님 매듭 스플릿 쇼트 스커트",
@@ -228,7 +227,7 @@
     "href": ""
   },
   {
-    "productId": "119",
+    "productId": 119,
     "price": "23400",
     "brandId": 1,
     "title": "솔리드 러플 탑어드 미니 스커트",
@@ -240,7 +239,7 @@
     "href": ""
   },
   {
-    "productId": "120",
+    "productId": 120,
     "price": "23400",
     "brandId": 1,
     "title": "데님 솔리드 스플릿 미니 스커트",
@@ -252,7 +251,7 @@
     "href": ""
   },
   {
-    "productId": "121",
+    "productId": 121,
     "price": "31400",
     "brandId": 1,
     "title": "매듭 솔리드 새틴 미디 스커트",
@@ -264,7 +263,7 @@
     "href": ""
   },
   {
-    "productId": "122",
+    "productId": 122,
     "price": "18200",
     "brandId": 1,
     "title": "솔리드 슬릿 베이직 쇼츠",
@@ -276,7 +275,7 @@
     "href": ""
   },
   {
-    "productId": "123",
+    "productId": 123,
     "price": "29000",
     "brandId": 1,
     "title": "니트 미니 플리츠 스커트",
@@ -288,7 +287,7 @@
     "href": ""
   },
   {
-    "productId": "124",
+    "productId": 124,
     "price": "23400",
     "brandId": 1,
     "title": "Toile de Jouy 미니 스커트",
@@ -300,7 +299,7 @@
     "href": ""
   },
   {
-    "productId": "125",
+    "productId": 125,
     "price": "12200",
     "brandId": 1,
     "title": "솔리드 플리츠 체인 디테일 미니 스커트",
@@ -312,7 +311,7 @@
     "href": ""
   },
   {
-    "productId": "126",
+    "productId": 126,
     "price": "31200",
     "brandId": 1,
     "title": "종이 클립 미니 스커트",
@@ -324,7 +323,7 @@
     "href": ""
   },
   {
-    "productId": "127",
+    "productId": 127,
     "price": "41700",
     "brandId": 1,
     "title": "데님 솔리드 포켓 맥시 스커트",
@@ -336,7 +335,7 @@
     "href": ""
   },
   {
-    "productId": "128",
+    "productId": 128,
     "price": "29000",
     "brandId": 1,
     "title": "데님 매듭 스플릿 쇼트 스커트",
@@ -348,7 +347,7 @@
     "href": ""
   },
   {
-    "productId": "129",
+    "productId": 129,
     "price": "23400",
     "brandId": 1,
     "title": "솔리드 러플 탑어드 미니 스커트",
@@ -360,7 +359,7 @@
     "href": ""
   },
   {
-    "productId": "130",
+    "productId": 130,
     "price": "23400",
     "brandId": 1,
     "title": "데님 솔리드 스플릿 미니 스커트",
@@ -372,7 +371,7 @@
     "href": ""
   },
   {
-    "productId": "131",
+    "productId": 131,
     "price": "31400",
     "brandId": 1,
     "title": "매듭 솔리드 새틴 미디 스커트",
@@ -384,7 +383,7 @@
     "href": ""
   },
   {
-    "productId": "132",
+    "productId": 132,
     "price": "18200",
     "brandId": 1,
     "title": "솔리드 슬릿 베이직 쇼츠",
@@ -396,7 +395,7 @@
     "href": ""
   },
   {
-    "productId": "133",
+    "productId": 133,
     "price": "29000",
     "brandId": 1,
     "title": "니트 미니 플리츠 스커트",
@@ -408,7 +407,7 @@
     "href": ""
   },
   {
-    "productId": "134",
+    "productId": 134,
     "price": "23400",
     "brandId": 1,
     "title": "Toile de Jouy 미니 스커트",
@@ -420,7 +419,7 @@
     "href": ""
   },
   {
-    "productId": "135",
+    "productId": 135,
     "price": "12200",
     "brandId": 1,
     "title": "솔리드 플리츠 체인 디테일 미니 스커트",
@@ -432,7 +431,7 @@
     "href": ""
   },
   {
-    "productId": "136",
+    "productId": 136,
     "price": "20800",
     "brandId": 1,
     "title": "솔리드 플리츠 체인 디테일 미니 스커트",
@@ -444,7 +443,7 @@
     "href": ""
   },
   {
-    "productId": "137",
+    "productId": 137,
     "price": "20800",
     "brandId": 1,
     "title": "솔리드 플리츠 체인 디테일 미니 스커트",
@@ -456,7 +455,7 @@
     "href": ""
   },
   {
-    "productId": "138",
+    "productId": 138,
     "price": "29000",
     "brandId": 1,
     "title": "데님 매듭 스플릿 쇼트 스커트",
@@ -468,7 +467,7 @@
     "href": ""
   },
   {
-    "productId": "139",
+    "productId": 139,
     "price": "23400",
     "brandId": 1,
     "title": "솔리드 러플 탑어드 미니 스커트",
