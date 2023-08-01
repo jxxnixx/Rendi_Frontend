@@ -1,10 +1,7 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import SubmitBtn from "@/components/function/submitBtn";
-import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
-import { HeartIcon, Line, ShoppingBag } from "@/components/icons";
+import { HeartIcon, Line } from "@/components/icons";
 import Pagination from "@/components/structure/pagination";
 import Items from "@/components/product/items";
 import React, { useState } from "react";
