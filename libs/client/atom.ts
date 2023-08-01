@@ -38,8 +38,3 @@ export const signUpState = atom<SignUpState>({
     phoneAgreeYn: "Y",
   },
 });
-
-export const atomActiveCate = atom<string>({
-  key: "atomActiveCate",
-  default: "전체", // 기본값은 전체
-});

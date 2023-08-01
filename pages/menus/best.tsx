@@ -8,6 +8,7 @@ import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 
 export default function Best() {
+  const [activeCate, setActiveCate] = useState("전체");
   // 전체 아이템의 개수와 총 페이지 수 계산
   const totalItems = dummyData.length;
   const itemsPerPage = 16;
@@ -31,7 +32,11 @@ export default function Best() {
         <title>Best</title>
       </Head>
       <div className="relative mt-[135px] flex w-full flex-col text-lg font-medium bg-white ">
-        <ProdBar category={"default"} id={""} />
+        <ProdBar
+          category={"default"}
+          activeCate={activeCate}
+          setActiveCate={setActiveCate}
+        />
         <div className="flex justify-center py-8">
           <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
         </div>
