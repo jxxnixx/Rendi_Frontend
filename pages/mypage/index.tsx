@@ -1,27 +1,15 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import SubmitButton from "@/components/function/submitBtn";
-import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
 import { Line, MyPage, Next, ShoppingBag } from "@/components/icons";
 import Items from "@/components/product/items";
 
-import { useRecoilState } from "recoil";
-
-interface ProfileForm {
-  id: string;
-  password: string;
-
-  extraError?: string;
-}
-
-function Profile() {
+function Mypage() {
   return (
     <>
       <Layout>
         <Head>
-          <title>Profile</title>
+          <title>Mypage</title>
         </Head>
         <div className="flex justify-center items-center">
           <div className="flex justify-center w-[1040px] h-[98px] mt-[135px] bg-blue">
@@ -32,25 +20,25 @@ function Profile() {
         </div>
         {/* 버튼 */}
         <div className="flex justify-center items-center mt-[0px] opacity-90 gap-[100px] bg-white">
-          <Link href="/auth/profile/liked" legacyBehavior>
+          <Link href="/auth/mypage/liked" legacyBehavior>
             <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
               찜한 상품
             </button>
           </Link>
 
-          <Link href="/auth/profile/likedMarket" legacyBehavior>
+          <Link href="/auth/mypage/likedMarket" legacyBehavior>
             <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
               즐겨찾기 마켓
             </button>
           </Link>
 
-          <Link href="/auth/profile/contact" legacyBehavior>
+          <Link href="/auth/mypage/contact" legacyBehavior>
             <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
               고객센터
             </button>
           </Link>
 
-          <Link href="/auth/profile/terms" legacyBehavior>
+          <Link href="/auth/mypage/terms" legacyBehavior>
             <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
               이용약관
             </button>
@@ -63,10 +51,10 @@ function Profile() {
               <MyPage size={30} />
             </div>
             <div>
-              <div className="flex items-end h-[50px] h-[30px] ">
+              <div className="flex items-end h-[50px] ">
                 <p className="text-lg text-center text-black">아무개! 님</p>
               </div>
-              <Link href="/auth/profile/update">
+              <Link href="/auth/mypage/edit">
                 <button className="flex items-top h-[50px] ">
                   <p className="text-m text-center text-[#666]">
                     회원정보 수정
@@ -98,4 +86,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Mypage;

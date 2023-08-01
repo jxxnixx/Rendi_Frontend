@@ -5,7 +5,7 @@ import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
 import { Segmented } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SignUpState, signUpState } from "@/libs/client/atom";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
@@ -14,9 +14,10 @@ interface IsignUpForm extends SignUpState {
   extraError?: string;
   cPassword: string;
   authCode: string;
+  isEmailVerified: boolean;
 }
 
-function SignUp() {
+function Signup() {
   const {
     watch,
     register,
@@ -28,6 +29,10 @@ function SignUp() {
 
   const [signUpData, setSignUpData] = useRecoilState(signUpState);
   const router = useRouter();
+
+  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState("");
+  const [authCode, setAuthCode] = useState("");
 
   const handleClick = () => {
     // 입력값 가져오기
@@ -92,7 +97,7 @@ function SignUp() {
                 <Input
                   name="username"
                   label="아이디"
-                  checkLabel="확인"
+                  checkLabel="중복확인"
                   type="username"
                   register={register("username", {
                     required: {
@@ -156,6 +161,8 @@ function SignUp() {
                   label="이름"
                   type="nickname"
                   kind="text"
+                  inputNameValue={nickname}
+                  onChange={setNickname}
                   register={register("profile.nickname", {
                     required: "한글로 입력해주세요.",
                     pattern: {
@@ -236,6 +243,8 @@ function SignUp() {
                   checkLabel="인증"
                   type="email"
                   kind="check"
+                  inputEmailValue={email}
+                  onChange={setEmail}
                   register={register("profile.email", {
                     required: "이메일을 입력하세요",
                     pattern: {
@@ -253,6 +262,8 @@ function SignUp() {
                   checkLabel="확인"
                   type="authCode"
                   kind="check"
+                  inputAuthCodeValue={authCode}
+                  onChange={setAuthCode}
                   register={register("authCode", {
                     required: "인증번호를 입력하세요",
                   })}
@@ -286,4 +297,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Signup;

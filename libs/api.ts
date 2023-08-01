@@ -42,6 +42,32 @@ export interface ASocialLoginProps {
   email: string;
 }
 
+export interface AEditInfosProps {
+  username: string;
+  password: string;
+  nickname: string;
+  phonenum: string;
+}
+
+export interface AEmailVeriProps {
+  nickname: string;
+  email: string;
+}
+
+export interface ACheckIDProps {
+  username: string;
+}
+
+export interface AFindIDProps {
+  nickname: string;
+  email: string;
+}
+
+export interface AFindPWProps {
+  email: string;
+  password: string;
+}
+
 // export const axiosPrivate = axios.create({
 //   baseURL: API_URL,
 //   headers: { "Content-Type": "application/json" },
@@ -101,11 +127,13 @@ export const usersApi = {
   },
 
   // ID 중복체크 확인
-  checkID: (username: ASignUpProps) =>
-    axios.get(`/member/id_check?username=${username}`),
+  checkID: (username: ACheckIDProps) =>
+    axios.post(`/member/id_check`, {
+      id: username,
+    }),
 
-  // 회원가입 인증번호 발급
-  getSignupCode: ({ nickname, email }: ASignUpProps) =>
+  // 이메일 인증
+  emailVerification: ({ nickname, email }: AEmailVeriProps) =>
     axios.post("/member/email/", {
       name: nickname,
       email,
@@ -140,7 +168,6 @@ export const usersApi = {
   // 일반 로그인
   login: ({ username, password }: ALogInProps) =>
     axios.post("/member/login/", {
-      // login_method: "normal",
       username,
       password,
     }),
@@ -153,9 +180,35 @@ export const usersApi = {
     }),
 
   // ID 찾기
-  findID: (email: string) => axios.get(`/member/find-id/?email=${email}`),
+  findID: ({ nickname, email }: AFindIDProps) =>
+    axios.post(`/member/find-id/`, {
+      name: nickname,
+      email,
+    }),
 
   // PW 변경
-  changePW: (email: string, password: string) =>
-    axios.post("/member/find-pw/", { email, password }),
+  changePW: ({ email, password }: AFindPWProps) =>
+    axios.post("/member/find-pw/", {
+      email,
+      password,
+    }),
+
+  // 회원정보 수정
+  editInfos: ({ username, password, nickname, phonenum }: AEditInfosProps) =>
+    axios.post(
+      "//URL",
+      {
+        ...(username && { username }),
+        ...(password && { password }),
+        ...(nickname && { nickname }),
+        ...(phonenum && { phonenum }),
+      }
+      // {
+      //   headers: {
+      //     Authorization: token,
+      //     "Content-Type": "application/json",
+      //   },
+      // }
+      // token 핸들링 필요
+    ),
 };

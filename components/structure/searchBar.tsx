@@ -17,7 +17,7 @@ export default function SearchBar() {
     router.push(`/searchResult?search=${searchValue}&image=${imageValue}`);
     inputRef.current && (inputRef.current.value = "");
   };
-  //Ref로 사각형, input dom요소 참조
+  // Ref로 사각형, input dom요소 참조
   // const squareRef = useRef<HTMLDivElement>(null);
   // const inputRef = useRef<HTMLInputElement>(null);
   const squareRef = useRef<HTMLDivElement | null>(null);
