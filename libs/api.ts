@@ -58,6 +58,16 @@ export interface ACheckIDProps {
   username: string;
 }
 
+export interface AFindIDProps {
+  nickname: string;
+  email: string;
+}
+
+export interface AFindPWProps {
+  email: string;
+  password: string;
+}
+
 // export const axiosPrivate = axios.create({
 //   baseURL: API_URL,
 //   headers: { "Content-Type": "application/json" },
@@ -170,11 +180,18 @@ export const usersApi = {
     }),
 
   // ID 찾기
-  findID: (email: string) => axios.get(`/member/find-id/?email=${email}`),
+  findID: ({ nickname, email }: AFindIDProps) =>
+    axios.post(`/member/find-id/`, {
+      name: nickname,
+      email,
+    }),
 
   // PW 변경
-  changePW: (email: string, password: string) =>
-    axios.post("/member/find-pw/", { email, password }),
+  changePW: ({ email, password }: AFindPWProps) =>
+    axios.post("/member/find-pw/", {
+      email,
+      password,
+    }),
 
   // 회원정보 수정
   editInfos: ({ username, password, nickname, phonenum }: AEditInfosProps) =>

@@ -1,7 +1,19 @@
-import { useState } from "react";
 import { ACheckIDProps, usersApi } from "../api";
 
-const [backendAuthCode, setBackendAuthCode] = useState<any>(" ");
+// backendAuthCode 저장할 closure 생성
+const createAuthCodeStorage = () => {
+  let backendAuthCode = " ";
+
+  return {
+    getAuthCode: () => backendAuthCode,
+    setAuthCode: (newAuthCode: string) => {
+      backendAuthCode = newAuthCode;
+    },
+  };
+};
+
+// Closure 인스턴스 생성
+const authCodeStorage = createAuthCodeStorage();
 
 // 사용자 이름 중복 확인
 export function onUsernameVerfication(inputNameValue: string) {
@@ -42,7 +54,7 @@ export function onEmailVerification(
           const match = response.data.response.message.match(regex);
           if (match) {
             const backendVeriCode = match[1];
-            setBackendAuthCode(backendVeriCode);
+            authCodeStorage.setAuthCode(backendVeriCode);
 
             console.log("받은 인증코드:", backendVeriCode);
           } else {
@@ -64,6 +76,7 @@ export function onEmailVerification(
 // 인증 코드 검증
 export function onAuthCodeVerification(inputAuthCodeValue: string) {
   console.log("인증 코드 확인 중:", inputAuthCodeValue);
+  const backendAuthCode = authCodeStorage.getAuthCode();
   if (backendAuthCode === inputAuthCodeValue) {
     console.log("인증 코드 검증 성공!");
   } else {

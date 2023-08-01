@@ -46,19 +46,9 @@ function LogIn() {
 
         setCookie("accessToken", accessToken);
 
-        // setLogin(true);
-
-        // const username = watch("username");
-        // const updatedUsername: LoginState = {
-        //   ...logUsername,
-        //   username,
-        // };
-        // setLogUsername(updatedUsername);
-        // console.log(updatedUsername);
-
         // 사용자 이름을 localStorage에 저장
         // 보안상 취약하므로 다음부턴 session
-        localStorage.setItem("username", watch("username"));
+        // localStorage.setItem("username", watch("username"));
 
         // 페이지 이동
         // 예시: 메인 페이지로 이동
@@ -127,13 +117,14 @@ function LogIn() {
                 Remember ID
               </label>
               <div className="flex">
-                {/* 아이디, 비번찾기 페이지 새로 만들어야함 !! */}
-                <Link href="flex items-center " legacyBehavior>
-                  <button className="">아이디 찾기</button>
+                <Link href="/find/id" legacyBehavior>
+                  <button className=" bg-white">아이디 찾기</button>
                 </Link>
-                <p className=" m-[5px]"> | </p>
-                <Link href="" legacyBehavior>
-                  <button>비밀번호 찾기</button>
+
+                <p className=" px-[5px] text-[10pt]"> | </p>
+
+                <Link href="/find/pw" legacyBehavior>
+                  <button className=" bg-white">비밀번호 찾기</button>
                 </Link>
               </div>
             </div>
