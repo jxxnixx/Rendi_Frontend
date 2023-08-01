@@ -8,6 +8,7 @@ import Head from "next/head";
 import { useState } from "react";
 import { signUpState, SignUpState } from "@/libs/client/atom";
 import axios from "axios";
+import { ASignUpProps, usersApi } from "@/libs/api";
 
 interface ITasteForm {
   interests: string[];
@@ -38,24 +39,26 @@ function Taste() {
       interests: selectedItemIds,
     };
 
-    const updatedSignUpData: SignUpState = {
-      ...signUpData,
-      profile: updatedProfile,
+    // const updatedSignUpData: SignUpState = {
+    //   ...signUpData,
+    //   profile: updatedProfile,
+    // } ;
+
+    // setSignUpData(updatedSignUpData);
+
+    const { profile, ...restOfSignUpData } = signUpData;
+
+    const updatedSignUpData: ASignUpProps = {
+      ...updatedProfile,
+      ...restOfSignUpData,
     };
-
-    setSignUpData(updatedSignUpData);
-
-    console.log(updatedSignUpData);
 
     try {
       // 회원가입 요청
-      const signupResponse = await axios.post(
-        "/member/local",
-        updatedSignUpData
-      );
-      console.log(signupResponse.data);
+      const signupResponse = await usersApi.signup(updatedSignUpData);
+      console.log(signupResponse);
 
-      if (signupResponse.data.success) {
+      if (signupResponse.success) {
         // 페이지 이동
         router.push("/");
         console.log("회원가입 완료!");

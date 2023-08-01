@@ -8,7 +8,6 @@ import Link from "next/link";
 import { Google, KakaoTalk, LoginLine, Naver } from "@/components/icons";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-// import { LoginState, isLoggedInState, loginState } from "@/libs/client/atom";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { setCookie } from "@/libs/client/cookies";
@@ -31,6 +30,7 @@ function LogIn() {
   const loginMutation = useMutation(
     (data: ALogInProps) => usersApi.login(data) // usersApi.login 사용
   );
+  // useMutation의 첫 번째 매개변수 : 비동기 작업을 수행하는 콜백 함수
 
   const submitForm: SubmitHandler<ALogInProps> = async (data: ALogInProps) => {
     try {
@@ -46,19 +46,9 @@ function LogIn() {
 
         setCookie("accessToken", accessToken);
 
-        // setLogin(true);
-
-        // const username = watch("username");
-        // const updatedUsername: LoginState = {
-        //   ...logUsername,
-        //   username,
-        // };
-        // setLogUsername(updatedUsername);
-        // console.log(updatedUsername);
-
         // 사용자 이름을 localStorage에 저장
         // 보안상 취약하므로 다음부턴 session
-        localStorage.setItem("username", watch("username"));
+        // localStorage.setItem("username", watch("username"));
 
         // 페이지 이동
         // 예시: 메인 페이지로 이동
@@ -127,13 +117,14 @@ function LogIn() {
                 Remember ID
               </label>
               <div className="flex">
-                {/* 아이디, 비번찾기 페이지 새로 만들어야함 !! */}
-                <Link href="flex items-center " legacyBehavior>
-                  <button className="">아이디 찾기</button>
+                <Link href="/find/id" legacyBehavior>
+                  <button className=" bg-white">아이디 찾기</button>
                 </Link>
-                <p className=" m-[5px]"> | </p>
-                <Link href="" legacyBehavior>
-                  <button>비밀번호 찾기</button>
+
+                <p className=" px-[5px] text-[10pt]"> | </p>
+
+                <Link href="/find/pw" legacyBehavior>
+                  <button className=" bg-white">비밀번호 찾기</button>
                 </Link>
               </div>
             </div>
@@ -172,7 +163,7 @@ function LogIn() {
             <div className="mt-[40px] bg-white text-gray-600 text-[11pt] text-base">
               Rendi가 처음이신가요?
             </div>
-            <Link href="/auth/signUp" legacyBehavior>
+            <Link href="/auth/signup" legacyBehavior>
               <button className="mt-[3px] bg-white text-black text-[12pt] text-base">
                 회원가입
               </button>
