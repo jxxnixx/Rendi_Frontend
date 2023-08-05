@@ -1,5 +1,6 @@
 import axios from "axios";
-// export const API_URL = "http://121.166.191.129:9876";
+
+export const API_URL = "http://121.166.191.129:9876";
 
 // const api = axios.create({
 //   baseURL: API_URL,
@@ -68,13 +69,23 @@ export interface AFindPWProps {
   password: string;
 }
 
-// export const axiosPrivate = axios.create({
-//   baseURL: API_URL,
-//   headers: { "Content-Type": "application/json" },
-//   withCredentials: true,
-// });
+export interface APopularSearchProps {
+  keyword: string;
+  searchCount: number;
+}
+
+export interface ASaveSearchProps {
+  keyword: string;
+}
+
+export const axiosPrivate = axios.create({
+  baseURL: API_URL,
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true,
+});
 
 export const usersApi = {
+  // 일반 회원가입
   signup: async ({
     username,
     password,
@@ -114,33 +125,100 @@ export const usersApi = {
           success: false,
           response: null,
           error: {
-            errorCode: "MEMBER_DUPLICATED",
-            errorMessage: "이미 가입된 회원입니다.",
+            errorCode: "API_ERROR",
+            errorMessage: "API 요청 중 오류가 발생했습니다.",
             errors: null,
           },
         };
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response) {
+        const { status, data } = error.response;
+        if (status === 400) {
+          // Bad Request
+          return {
+            success: false,
+            response: null,
+            error: {
+              errorCode: data.errorCode || "BAD_INPUT",
+              errorMessage: data.errorMessage || "입력이 올바르지 않습니다.",
+              errors: data.errors || null,
+            },
+          };
+        } else if (status === 409) {
+          // Conflict - Member already exists
+          return {
+            success: false,
+            response: null,
+            error: {
+              errorCode: "MEMBER_DUPLICATED",
+              errorMessage: "이미 가입된 회원입니다.",
+              errors: null,
+            },
+          };
+        }
+      }
       console.error("회원가입 오류:", error);
       throw error;
     }
   },
 
-  // ID 중복체크 확인
-  checkID: (username: ACheckIDProps) =>
-    axios.post(`/member/id_check`, {
-      id: username,
-    }),
+  // ID 중복 확인
+  checkID: async (username: ACheckIDProps) => {
+    try {
+      const response = await axios.post("/member/id-check/", {
+        id: username,
+      });
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: {
+            message: "사용 가능한 아이디 입니다.",
+          },
+          error: null,
+        };
+      } else {
+        return {
+          success: false,
+          response: null,
+          error: {
+            errorCode: "API_ERROR",
+            errorMessage: "API 요청 중 오류가 발생했습니다.",
+            errors: null,
+          },
+        };
+      }
+    } catch (error: any) {
+      if (error.response) {
+        const { status } = error.response;
+        if (status === 400) {
+          // Bad Request - Member duplicated (already exists)
+          return {
+            success: false,
+            response: null,
+            error: {
+              errorCode: "MEMBER_DUPLICATED",
+              errorMessage: "이미 가입된 회원입니다.",
+              errors: null,
+            },
+          };
+        }
+      }
+      // Handle other errors or throw the original error
+      console.error("아이디 중복 확인 오류:", error);
+      throw error;
+    }
+  },
 
   // 이메일 인증
-  emailVerification: ({ nickname, email }: AEmailVeriProps) =>
+  emailVerification: async ({ nickname, email }: AEmailVeriProps) =>
     axios.post("/member/email/", {
       name: nickname,
       email,
     }),
 
   // 소셜 회원가입
-  socialSignup: ({
+  socialSignup: async ({
     provider,
     nickname,
     email,
@@ -166,49 +244,554 @@ export const usersApi = {
     }),
 
   // 일반 로그인
-  login: ({ username, password }: ALogInProps) =>
-    axios.post("/member/login/", {
-      username,
-      password,
-    }),
+  login: async ({ username, password }: ALogInProps) => {
+    try {
+      const response = await axios.post("/member/login/", {
+        username,
+        password,
+      });
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      } else {
+        return {
+          success: false,
+          response: null,
+          error: {
+            errorCode: "API_ERROR",
+            errorMessage: "API 요청 중 오류가 발생했습니다.",
+            errors: null,
+          },
+        };
+      }
+    } catch (error: any) {
+      if (error.response) {
+        const { status, data } = error.response;
+        if (status === 404) {
+          // Not Found - Member not found
+          return {
+            success: false,
+            response: null,
+            error: {
+              errorCode: "MEMBER_NOT_FOUND",
+              errorMessage: "회원을 찾을 수 없습니다.",
+              errors: null,
+            },
+          };
+        } else if (status === 401) {
+          // Unauthorized - Incorrect credentials
+          return {
+            success: false,
+            response: null,
+            error: {
+              errorCode: "CREDENTIAL_MISS_MATCH",
+              errorMessage: "비밀번호가 틀렸습니다.",
+              errors: null,
+            },
+          };
+        }
+      }
+      console.error("회원가입 오류:", error);
+      throw error;
+    }
+  },
 
   //소셜 로그인
-  socialLogin: ({ provider, email }: ASocialLoginProps) =>
+  socialLogin: async ({ provider, email }: ASocialLoginProps) =>
     axios.post("/member/social-token/", {
       provider,
       email,
     }),
 
   // ID 찾기
-  findID: ({ nickname, email }: AFindIDProps) =>
-    axios.post(`/member/find-id/`, {
-      name: nickname,
-      email,
-    }),
+  findID: async ({ nickname, email }: AFindIDProps) => {
+    try {
+      const response = await axios.post("/member/find-id/", {
+        name: nickname,
+        email,
+      });
+
+      if (response.status === 200) {
+        const responseData = response.data;
+        if (responseData.success) {
+          // ID found
+          const username = responseData.response.username;
+          const createdDate = responseData.response.createdDate;
+
+          return {
+            success: true,
+            response: {
+              username,
+              createdDate,
+            },
+            error: null,
+          };
+        } else {
+          // Member not found
+          return {
+            success: false,
+            response: null,
+            error: {
+              errorCode: "MEMBER_NOT_FOUND",
+              errorMessage: "회원을 찾을 수 없습니다.",
+              errors: null,
+            },
+          };
+        }
+      } else {
+        return {
+          success: false,
+          response: null,
+          error: {
+            errorCode: "API_ERROR",
+            errorMessage: "API 요청 중 오류가 발생했습니다.",
+            errors: null,
+          },
+        };
+      }
+    } catch (error) {
+      // Handle other errors or throw the original error
+      console.error("아이디 찾기 오류:", error);
+      throw error;
+    }
+  },
 
   // PW 변경
-  changePW: ({ email, password }: AFindPWProps) =>
-    axios.post("/member/find-pw/", {
-      email,
-      password,
-    }),
+  changePW: async ({ email, password }: AFindPWProps) => {
+    try {
+      const response = await axios.post("/member/find-pw/", {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: {
+            message: "비밀번호 재설정이 완료되었습니다.",
+          },
+          error: null,
+        };
+      } else {
+        return {
+          success: false,
+          response: null,
+          error: {
+            errorCode: "API_ERROR",
+            errorMessage: "API 요청 중 오류가 발생했습니다.",
+            errors: null,
+          },
+        };
+      }
+    } catch (error: any) {
+      if (error.response) {
+        const { status } = error.response;
+        if (status === 404) {
+          // Not Found - Member not found
+          return {
+            success: false,
+            response: null,
+            error: {
+              errorCode: "MEMBER_PW_UPDATE_FAILED",
+              errorMessage: "비밀번호 재설정에 실패하였습니다.",
+              errors: null,
+            },
+          };
+        }
+      }
+      // Handle other errors or throw the original error
+      console.error("비밀번호 변경 오류:", error);
+      throw error;
+    }
+  },
+
+  // 회원정보 조회
+  viewInfos: async (accessToken: string) => {
+    try {
+      // const response = await axiosPrivate.get("/member/infromation/");
+      const response = await axios.get("/member/infromation/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      } else {
+        return {
+          success: false,
+          response: null,
+          error: {
+            errorCode: "API_ERROR",
+            errorMessage: "API 요청 중 오류가 발생했습니다.",
+            errors: null,
+          },
+        };
+      }
+    } catch (error) {
+      console.error("회원정보 조회 오류:", error);
+      throw error;
+    }
+  },
 
   // 회원정보 수정
-  editInfos: ({ username, password, nickname, phonenum }: AEditInfosProps) =>
-    axios.post(
-      "//URL",
-      {
-        ...(username && { username }),
-        ...(password && { password }),
-        ...(nickname && { nickname }),
-        ...(phonenum && { phonenum }),
+  editInfos: async (accessToken: string, updatedInfos: AEditInfosProps) => {
+    try {
+      // const response = await axiosPrivate.put("/member/information", updatedInfos);
+      const response = await axios.put("/member/information", updatedInfos, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      } else {
+        return {
+          success: false,
+          response: null,
+          error: {
+            errorCode: "API_ERROR",
+            errorMessage: "API 요청 중 오류가 발생했습니다.",
+            errors: null,
+          },
+        };
       }
-      // {
-      //   headers: {
-      //     Authorization: token,
-      //     "Content-Type": "application/json",
-      //   },
-      // }
-      // token 핸들링 필요
-    ),
+    } catch (error) {
+      console.error("회원정보 수정 오류:", error);
+      throw error;
+    }
+  },
+
+  // 토큰 재발급
+  reissueToken: async (accessToken: string, refreshToken: string) => {
+    try {
+      // const response = await axiosPrivate.post("/member/reissue/", {
+      //   accessToken,
+      //   refreshToken,
+      // });
+
+      const response = await axios.post("/member/reissue/", {
+        accessToken,
+        refreshToken,
+      });
+
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      } else {
+        return {
+          success: false,
+          response: null,
+          error: {
+            errorCode: "API_ERROR",
+            errorMessage: "API 요청 중 오류가 발생했습니다.",
+            errors: null,
+          },
+        };
+      }
+    } catch (error) {
+      console.error("토큰 재발급 오류:", error);
+      throw error;
+    }
+  },
 };
+
+export const itemsApi = {
+  // 인기 검색어 조회
+  popularSearch: async (accessToken: string) => {
+    try {
+      // const response = await axiosPrivate.get("/search/keyword/popular/");
+      const response = await axios.get("/search/keyword/popular/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data as APopularSearchProps[],
+          error: null,
+        };
+      } else {
+        return {
+          success: false,
+          response: null,
+          error: {
+            errorCode: "API_ERROR",
+            errorMessage: "API 요청 중 오류가 발생했습니다.",
+            errors: null,
+          },
+        };
+      }
+    } catch (error) {
+      console.error("인기 검색어 요청 오류:", error);
+      throw error;
+    }
+  },
+
+  // 검색어 저장
+  saveSearch: async (accessToken: string, { keyword }: ASaveSearchProps) => {
+    try {
+      // const response = await axiosPrivate.post("/search/keyword/update/", { keyword });
+      const response = await axios.post(
+        "/search/keyword/update/",
+        { keyword },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: {
+            message: "검색어 DB 업데이트 성공",
+          },
+          error: null,
+        };
+      } else {
+        return {
+          success: false,
+          response: null,
+          error: {
+            errorCode: "API_ERROR",
+            errorMessage: "API 요청 중 오류가 발생했습니다.",
+            errors: null,
+          },
+        };
+      }
+    } catch (error) {
+      console.error("검색어 저장 오류:", error);
+      throw error;
+    }
+  },
+
+  // 찜하기 조회
+  getWish: async (accessToken: string) => {
+    try {
+      // const response = await axiosPrivate.get("/wishlist/all/");
+      const response = await axios.get("/wishlist/all/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      } else {
+        return {
+          success: false,
+          response: null,
+          error: {
+            errorCode: "API_ERROR",
+            errorMessage: "API 요청 중 오류가 발생했습니다.",
+            errors: null,
+          },
+        };
+      }
+    } catch (error) {
+      console.error("찜한 상품 조회 오류:", error);
+      throw error;
+    }
+  },
+
+  // 찜하기 변경
+  toggleWish: async (accessToken: string, productId: number) => {
+    try {
+      // const response = await axiosPrivate.post(`/wishlist/${productId}`);
+      const response = await axios.post(`/wishlist/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      } else {
+        return {
+          success: false,
+          response: null,
+          error: {
+            errorCode: "API_ERROR",
+            errorMessage: "API 요청 중 오류가 발생했습니다.",
+            errors: null,
+          },
+        };
+      }
+    } catch (error) {
+      console.error("찜 변경 오류:", error);
+      throw error;
+    }
+  },
+};
+
+/* 사용예시
+
+(async () => {
+  try {
+    const username = "born2slayy77"; // ID to be checked
+
+    const result = await usersApi.checkID({ username });
+
+    if (result.success) {
+      console.log(result.response.message);
+    } else {
+      console.log("아이디 중복 확인 오류:", result.error?.errorMessage);
+    }
+  } catch (error) {
+    console.error("아이디 중복 확인 요청 오류:", error);
+  }
+})();
+
+(async () => {
+  try {
+    const email = "born2slayy77@gmail.com";
+    const password = "pw1234"; // New password
+
+    const result = await usersApi.changePassword({ email, password });
+
+    if (result.success) {
+      console.log(result.response.message);
+    } else {
+      console.log("비밀번호 변경 오류:", result.error?.errorMessage);
+    }
+  } catch (error) {
+    console.error("비밀번호 변경 요청 오류:", error);
+  }
+})();
+
+
+(async () => {
+  try {
+    const result = await searchApi.popular();
+
+    if (result.success) {
+      console.log("인기 검색어 TOP 10:");
+      console.log(result.response);
+    } else {
+      console.log("인기 검색어 조회 오류:", result.error?.errorMessage);
+    }
+  } catch (error) {
+    console.error("인기 검색어 요청 오류:", error);
+  }
+})();
+
+(async () => {
+  try {
+    const keyword = "검색어"; // 실제 저장하고자 하는 검색어를 변수에 할당해줍니다.
+    const result = await searchApi.updateKeyword({ keyword });
+
+    if (result.success) {
+      console.log("검색어 저장 성공:", result.response.message);
+    } else {
+      console.log("검색어 저장 실패:", result.error?.errorMessage);
+    }
+  } catch (error) {
+    console.error("검색어 저장 오류:", error);
+  }
+})();
+
+(async () => {
+  try {
+    const result = await wishlistApi.getWishlist();
+
+    if (result.success) {
+      console.log("찜한 상품 목록:");
+      console.log(result.response);
+    } else {
+      console.log("찜한 상품 조회 오류:", result.error?.errorMessage);
+    }
+  } catch (error) {
+    console.error("찜한 상품 조회 오류:", error);
+  }
+})();
+
+(async () => {
+  try {
+    const productId = 3; // 수정하고자 하는 상품의 아이디
+    const result = await wishlistApi.toggleWishlist(productId);
+
+    if (result.success) {
+      console.log(result.response.message);
+    } else {
+      console.log("찜 변경 오류:", result.error?.errorMessage);
+    }
+  } catch (error) {
+    console.error("찜 변경 오류:", error);
+  }
+})();
+
+(async () => {
+  try {
+    const accessToken = "기존 accessToken";
+    const refreshToken = "기존 refreshToken";
+
+    const result = await usersApi.reissueToken(accessToken, refreshToken);
+
+    if (result.success) {
+      console.log("새로운 액세스 토큰:", result.response.accessToken);
+      console.log("새로운 리프레시 토큰:", result.response.refreshToken);
+    } else {
+      console.log("토큰 재발급 오류:", result.error?.errorMessage);
+    }
+  } catch (error) {
+    console.error("토큰 재발급 요청 오류:", error);
+  }
+})();
+
+
+import { updateMemberInformation } from "./api";
+
+(async () => {
+  try {
+    const accessToken = "여기에_토큰_입력";
+
+    const updatedInfo = {
+      email: "gankstershj@gmail.com",
+      nickname: "새로운 이름(장지혜)",
+      birth: "2000-10-12",
+      phonenum: "01012345678",
+    };
+
+    const result = await updateMemberInformation(accessToken, updatedInfo);
+
+    if (result.success) {
+      console.log("회원정보 수정 성공:", result.response);
+    } else {
+      console.log("회원정보 수정 오류:", result.error?.errorMessage);
+    }
+  } catch (error) {
+    console.error("회원정보 수정 요청 오류:", error);
+  }
+})();
+
+
+*/

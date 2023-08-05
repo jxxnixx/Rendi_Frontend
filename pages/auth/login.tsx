@@ -36,19 +36,16 @@ function LogIn() {
     try {
       const response = await loginMutation.mutateAsync(data);
 
-      if (response.data.success) {
+      if (response.success) {
         // 로그인 성공
-        const accessToken = response.data.response.accessToken;
-        const refreshToken = response.data.response.refreshToken;
+        const accessToken = response.response.accessToken;
+        const refreshToken = response.response.refreshToken;
 
         // 토큰 저장
+        // refreshToken 저장 위치 고려..!
         localStorage.setItem("refreshToken", refreshToken);
 
         setCookie("accessToken", accessToken);
-
-        // 사용자 이름을 localStorage에 저장
-        // 보안상 취약하므로 다음부턴 session
-        // localStorage.setItem("username", watch("username"));
 
         // 페이지 이동
         // 예시: 메인 페이지로 이동
