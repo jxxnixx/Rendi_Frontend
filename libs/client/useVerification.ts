@@ -18,21 +18,24 @@ const authCodeStorage = createAuthCodeStorage();
 // 사용자 이름 중복 확인
 export function onUsernameVerfication(inputNameValue: string) {
   try {
-    const username: ACheckIDProps = { username: inputNameValue };
+    const id: ACheckIDProps = { id: inputNameValue };
     usersApi
-      .checkID(username)
+      .checkID(id)
       .then((response) => {
-        if (response.status === 200) {
+        if (response.success) {
           console.log("사용자 이름 중복 확인 성공!");
         } else {
-          console.log("사용자 이름 중복 확인 실패:", response.data.error);
+          console.log(id);
+          console.log(response);
+          console.log("사용자 이름 중복 확인 실패:", response.error);
         }
       })
       .catch((error) => {
         console.log("사용자 이름 중복 확인 오류:", error);
       });
+    console.log("사용자 이름 확인 중:", inputNameValue);
   } catch (error) {
-    console.log("사용자 이름 중복 확인 오류:", error);
+    console.log("사용자 이름 중복 확인 오류2:", error);
   }
   console.log("사용자 이름 확인 중:", inputNameValue);
 }
@@ -49,9 +52,13 @@ export function onEmailVerification(
         email: inputEmailValue,
       })
       .then((response) => {
+        console.log("이메일 인증 요청 결과:", response.data);
+
         if (response.status === 200 && response.data.success) {
+          const responseData = response.data.response;
           const regex = /인증코드: ([a-zA-Z0-9]+)/;
-          const match = response.data.response.message.match(regex);
+          const match = responseData.message.match(regex);
+
           if (match) {
             const backendVeriCode = match[1];
             authCodeStorage.setAuthCode(backendVeriCode);
@@ -65,9 +72,9 @@ export function onEmailVerification(
         }
       })
       .catch((error) => {
+        console.log(inputEmailValue);
         console.log("이메일 인증 요청 오류:", error);
       });
-    console.log("이메일 확인 중:", inputEmailValue);
   } catch (error) {
     console.log("이메일 인증 요청 오류:", error);
   }

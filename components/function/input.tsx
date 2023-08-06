@@ -15,9 +15,9 @@ interface InputProps {
   checkLabel?: string;
   name: string;
   register: UseFormRegisterReturn;
-  inputNameValue?: any;
-  inputEmailValue?: any;
-  inputAuthCodeValue?: any;
+  inputNameValue?: string;
+  inputEmailValue?: string;
+  inputAuthCodeValue?: string;
   [key: string]: any;
 }
 
@@ -27,13 +27,28 @@ export default function Input({
   name,
   register,
   kind = "text",
-  inputNameValue,
-  inputEmailValue,
-  inputAuthCodeValue,
   error,
   ...rest
 }: InputProps) {
   const { ref, onChange, ...inputProps } = register;
+
+  // 사용자 입력값들을 상태로 관리
+  const [inputNameValue, setInputNameValue] = useState(""); // 아이디 입력값
+  const [inputEmailValue, setInputEmailValue] = useState(""); // 이메일 입력값
+  const [inputAuthCodeValue, setInputAuthCodeValue] = useState(""); // 인증 코드 입력값
+
+  // Input 컴포넌트의 onChange 핸들러를 호출할 때마다, 사용자 입력값을 해당 상태로 업데이트
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (name === "username") {
+      setInputNameValue(value);
+    } else if (name === "profile.email") {
+      setInputEmailValue(value);
+    } else if (name === "authCode") {
+      setInputAuthCodeValue(value);
+    }
+    onChange(event); // 기존의 onChange 핸들러도 호출
+  };
 
   let inputComponent;
   if (kind === "text") {
@@ -70,8 +85,10 @@ export default function Input({
           )}
           id={name}
           name={name}
+          onChange={handleChange}
         />
         <button
+          type="button"
           onClick={() => {
             if (checkLabel === "중복확인") {
               onUsernameVerfication(inputNameValue);

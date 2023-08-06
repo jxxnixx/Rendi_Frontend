@@ -56,7 +56,7 @@ export interface AEmailVeriProps {
 }
 
 export interface ACheckIDProps {
-  username: string;
+  id: string;
 }
 
 export interface AFindIDProps {
@@ -164,11 +164,13 @@ export const usersApi = {
   },
 
   // ID 중복 확인
-  checkID: async (username: ACheckIDProps) => {
+  checkID: async (id: ACheckIDProps) => {
     try {
       const response = await axios.post("/member/id-check/", {
-        id: username,
+        id,
       });
+      console.log(id, response);
+
       if (response.status === 200) {
         return {
           success: true,
@@ -411,8 +413,8 @@ export const usersApi = {
   // 회원정보 조회
   viewInfos: async (accessToken: string) => {
     try {
-      // const response = await axiosPrivate.get("/member/infromation/");
-      const response = await axios.get("/member/infromation/", {
+      // const response = await axiosPrivate.get("/member/information/");
+      const response = await axios.get("/member/information/", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
