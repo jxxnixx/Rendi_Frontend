@@ -14,7 +14,7 @@ interface Category {
   cate: string;
 }
 
-const categories: { [key: string]: Category[] } = {
+export const categories: { [key: string]: Category[] } = {
   bag: [
     { cate: "전체" },
     { cate: "백팩" },
@@ -123,9 +123,7 @@ const categories: { [key: string]: Category[] } = {
   ],
 };
 
-
 const ProductPage = () => {
-
   const router = useRouter();
   const { id } = router.query;
   // 현재 페이지 상태값 추가
