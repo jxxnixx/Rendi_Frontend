@@ -26,7 +26,7 @@ export async function onEmailVerification(
       name: inputNameValue,
       email: inputEmailValue,
     });
-
+7
     console.log(EmailVeriResponse);
 
     if (EmailVeriResponse.success) {
