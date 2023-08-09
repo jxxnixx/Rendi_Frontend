@@ -51,12 +51,8 @@ export interface AEditInfosProps {
 }
 
 export interface AEmailVeriProps {
-  nickname: string;
+  name: string;
   email: string;
-}
-
-export interface ACheckIDProps {
-  id: string;
 }
 
 export interface AFindIDProps {
@@ -164,60 +160,46 @@ export const usersApi = {
   },
 
   // ID 중복 확인
-  checkID: async (id: ACheckIDProps) => {
+  checkID: async (id: string) => {
     try {
-      const response = await axios.post("/member/id-check/", {
-        id,
+      const response = await axios.post("/member/id-check", id, {
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-      console.log(id, response);
 
-      if (response.status === 200) {
-        return {
-          success: true,
-          response: {
-            message: "사용 가능한 아이디 입니다.",
-          },
-          error: null,
-        };
-      } else {
-        return {
-          success: false,
-          response: null,
-          error: {
-            errorCode: "API_ERROR",
-            errorMessage: "API 요청 중 오류가 발생했습니다.",
-            errors: null,
-          },
-        };
-      }
+      console.log(response.data);
+
+      const message = response.data.response.message;
+      alert(message);
+      console.log(message);
+
+      return response.data;
     } catch (error: any) {
-      if (error.response) {
-        const { status } = error.response;
-        if (status === 400) {
-          // Bad Request - Member duplicated (already exists)
-          return {
-            success: false,
-            response: null,
-            error: {
-              errorCode: "MEMBER_DUPLICATED",
-              errorMessage: "이미 가입된 회원입니다.",
-              errors: null,
-            },
-          };
-        }
-      }
-      // Handle other errors or throw the original error
-      console.error("아이디 중복 확인 오류:", error);
+      // Handle the error
+      console.error("중복 확인 오류:", error);
       throw error;
     }
   },
 
   // 이메일 인증
-  emailVerification: async ({ nickname, email }: AEmailVeriProps) =>
-    axios.post("/member/email/", {
-      name: nickname,
-      email,
-    }),
+  emailVerification: async ({ name, email }: AEmailVeriProps) => {
+    try {
+      const response = await axios.post("/member/email", { name, email });
+
+      console.log(response.data);
+
+      const message = response.data.response.message;
+      alert(message);
+      console.log(message);
+
+      return response.data;
+    } catch (error: any) {
+      // Handle the error
+      console.error("이메일 인증 오류:", error);
+      throw error;
+    }
+  },
 
   // 소셜 회원가입
   socialSignup: async ({

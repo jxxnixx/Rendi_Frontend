@@ -30,10 +30,6 @@ function Signup() {
   const [signUpData, setSignUpData] = useRecoilState(signUpState);
   const router = useRouter();
 
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
-  const [authCode, setAuthCode] = useState("");
-
   const handleClick = () => {
     // 입력값 가져오기
     const username = watch("username");
@@ -161,8 +157,6 @@ function Signup() {
                   label="이름"
                   type="nickname"
                   kind="text"
-                  inputNameValue={nickname}
-                  onChange={setNickname}
                   register={register("profile.nickname", {
                     required: "한글로 입력해주세요.",
                     pattern: {
@@ -243,8 +237,6 @@ function Signup() {
                   checkLabel="인증"
                   type="email"
                   kind="check"
-                  inputEmailValue={email}
-                  onChange={setEmail}
                   register={register("profile.email", {
                     required: "이메일을 입력하세요",
                     pattern: {
@@ -262,8 +254,6 @@ function Signup() {
                   checkLabel="확인"
                   type="authCode"
                   kind="check"
-                  inputAuthCodeValue={authCode}
-                  onChange={setAuthCode}
                   register={register("authCode", {
                     required: "인증번호를 입력하세요",
                   })}

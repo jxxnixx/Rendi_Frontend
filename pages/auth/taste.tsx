@@ -39,13 +39,6 @@ function Taste() {
       interests: selectedItemIds,
     };
 
-    // const updatedSignUpData: SignUpState = {
-    //   ...signUpData,
-    //   profile: updatedProfile,
-    // } ;
-
-    // setSignUpData(updatedSignUpData);
-
     const { profile, ...restOfSignUpData } = signUpData;
 
     const updatedSignUpData: ASignUpProps = {
