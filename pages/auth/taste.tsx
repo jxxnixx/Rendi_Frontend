@@ -7,7 +7,6 @@ import Layout from "@/layouts/layout";
 import Head from "next/head";
 import { useState } from "react";
 import { signUpState, SignUpState } from "@/libs/client/atom";
-import axios from "axios";
 import { ASignUpProps, usersApi } from "@/libs/api";
 
 interface ITasteForm {

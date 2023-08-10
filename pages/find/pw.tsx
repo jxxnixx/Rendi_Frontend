@@ -3,12 +3,13 @@ import SubmitBtn from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
-import { useState } from "react";
-import { AFindPWProps } from "@/libs/api";
+import { AFindPWProps, usersApi } from "@/libs/api";
+import { useRecoilState } from "recoil";
+import { UserInputState, findPWInputState } from "@/libs/client/atom";
 
-export interface IFindPWProps extends AFindPWProps {
+export interface IFindPWProps extends UserInputState {
+  password: string;
   cPassword: string;
-  authCode: string;
 }
 
 function FindPW() {
@@ -21,15 +22,30 @@ function FindPW() {
     mode: "onChange",
   });
 
-  // const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
-  const [authCode, setAuthCode] = useState("");
+  const [findPWInputValue, setFindPWInputValue] =
+    useRecoilState(findPWInputState);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     // 입력값 가져오기
 
-    const email = watch("email");
+    const email = watch("profile.email");
     const password = watch("password");
+
+    const updatedFindPW: AFindPWProps = {
+      email,
+      password,
+    };
+
+    try {
+      const changePWResponse = await usersApi.changePW(updatedFindPW);
+      console.log(changePWResponse);
+
+      if (changePWResponse?.success) {
+        console.log("비밀번호 재설정 성공!");
+      }
+    } catch (error) {
+      console.log("비밀번호 재설정 오류");
+    }
   };
 
   const submitForm: SubmitHandler<IFindPWProps> = (data: IFindPWProps) => {
@@ -72,6 +88,8 @@ function FindPW() {
                     })}
                     placeholder="이름"
                     error={errors?.profile?.nickname?.message}
+                    inputValue={findPWInputValue}
+                    setInputValue={setFindPWInputValue}
                   />
 
                   <Input
@@ -89,6 +107,8 @@ function FindPW() {
                     })}
                     placeholder="유효한 이메일 주소를 입력하세요."
                     error={errors.profile?.email?.message}
+                    inputValue={findPWInputValue}
+                    setInputValue={setFindPWInputValue}
                   />
 
                   <Input
@@ -102,6 +122,8 @@ function FindPW() {
                     })}
                     placeholder="인증번호를 입력하세요."
                     error={errors?.authCode?.message}
+                    inputValue={findPWInputValue}
+                    setInputValue={setFindPWInputValue}
                   />
 
                   <Input
@@ -126,6 +148,8 @@ function FindPW() {
                     placeholder="새 비밀번호"
                     error={errors?.password?.message}
                     autoComplete="off"
+                    inputValue={findPWInputValue}
+                    setInputValue={setFindPWInputValue}
                   />
 
                   <Input
@@ -142,6 +166,8 @@ function FindPW() {
                     placeholder="비밀번호 확인"
                     error={errors?.cPassword?.message}
                     autoComplete="off"
+                    inputValue={findPWInputValue}
+                    setInputValue={setFindPWInputValue}
                   />
                 </div>
                 <div className="flex mt-[180px] text-center justify-center">
@@ -150,7 +176,7 @@ function FindPW() {
                     large={true}
                     text="비밀번호 찾기"
                     className="flex justify-center items-center h-screen"
-                    onClick={handleClick} // handleClick 함수 추가
+                    onClick={handleClick}
                   />
                 </div>
               </div>

@@ -18,7 +18,8 @@ export interface SignUpState {
 }
 
 export interface UserInputState {
-  username: string;
+  username?: string;
+  password?: string;
   profile: {
     nickname: string;
     email: string;
@@ -44,8 +45,8 @@ export const signUpState = atom<SignUpState>({
   },
 });
 
-export const userInputState = atom<UserInputState>({
-  key: "userInputState",
+export const signUpInputState = atom<UserInputState>({
+  key: "signUpInputState",
   default: {
     username: "",
     profile: {
@@ -55,6 +56,34 @@ export const userInputState = atom<UserInputState>({
     authCode: "",
   },
 });
+
+export const findIDInputState = atom<UserInputState>({
+  key: "findIDInputState",
+  default: {
+    profile: {
+      nickname: "",
+      email: "",
+    },
+    authCode: "",
+  },
+});
+
+export const findPWInputState = atom<UserInputState>({
+  key: "findPWInputState",
+  default: {
+    password: "",
+    profile: {
+      nickname: "",
+      email: "",
+    },
+    authCode: "",
+  },
+});
+
+// export const editInfoState = atom<UserInputState>({
+//   key: "editInfoState",
+//   default: {},
+// });
 
 export const backendVeriCodeState = atom<string>({
   key: "backendVeriCodeState",

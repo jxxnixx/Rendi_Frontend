@@ -6,7 +6,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { Segmented } from "antd";
 import { useEffect, useState } from "react";
-import { SignUpState, signUpState } from "@/libs/client/atom";
+import { SignUpState, signUpInputState, signUpState } from "@/libs/client/atom";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 
@@ -28,6 +28,8 @@ function Signup() {
   });
 
   const [signUpData, setSignUpData] = useRecoilState(signUpState);
+  const [signUpInputValue, setSignUpInputValue] =
+    useRecoilState(signUpInputState);
   const router = useRouter();
 
   const handleClick = () => {
@@ -110,6 +112,8 @@ function Signup() {
                   kind="check"
                   watch={watch}
                   errors={errors}
+                  inputValue={signUpInputValue}
+                  setInputValue={setSignUpInputValue}
                 />
 
                 <Input
@@ -134,6 +138,8 @@ function Signup() {
                   placeholder="비밀번호"
                   error={errors?.password?.message}
                   autoComplete="off"
+                  inputValue={signUpInputValue}
+                  setInputValue={setSignUpInputValue}
                 />
 
                 <Input
@@ -150,6 +156,8 @@ function Signup() {
                   placeholder="비밀번호 확인"
                   error={errors?.cPassword?.message}
                   autoComplete="off"
+                  inputValue={signUpInputValue}
+                  setInputValue={setSignUpInputValue}
                 />
 
                 <Input
@@ -166,6 +174,8 @@ function Signup() {
                   })}
                   placeholder="이름"
                   error={errors?.profile?.nickname?.message}
+                  inputValue={signUpInputValue}
+                  setInputValue={setSignUpInputValue}
                 />
 
                 <Input
@@ -182,6 +192,8 @@ function Signup() {
                   })}
                   placeholder="YYYY-MM-DD"
                   error={errors?.profile?.birth?.message}
+                  inputValue={signUpInputValue}
+                  setInputValue={setSignUpInputValue}
                 />
 
                 <div className="font-bold text-[#666]">
@@ -229,6 +241,8 @@ function Signup() {
                   })}
                   placeholder="-를 제외하고 입력하세요."
                   error={errors?.profile?.phonenum?.message}
+                  inputValue={signUpInputValue}
+                  setInputValue={setSignUpInputValue}
                 />
 
                 <Input
@@ -246,6 +260,8 @@ function Signup() {
                   })}
                   placeholder="유효한 이메일 주소를 입력하세요."
                   error={errors.profile?.email?.message}
+                  inputValue={signUpInputValue}
+                  setInputValue={setSignUpInputValue}
                 />
 
                 <Input
@@ -259,6 +275,8 @@ function Signup() {
                   })}
                   placeholder="인증번호를 입력하세요."
                   error={errors?.authCode?.message}
+                  inputValue={signUpInputValue}
+                  setInputValue={setSignUpInputValue}
                 />
 
                 <div className="flex mt-[40px] text-center justify-center">
