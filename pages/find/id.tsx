@@ -57,12 +57,10 @@ function FindID() {
 
                 <div className="relative top-[133px]">
                   <Input
-                    name="nickname"
+                    name="profile.nickname"
                     label="이름"
                     type="nickname"
                     kind="text"
-                    inputNameValue={nickname}
-                    onChange={setNickname}
                     register={register("nickname", {
                       required: "한글로 입력해주세요.",
                       pattern: {
@@ -72,18 +70,16 @@ function FindID() {
                       },
                     })}
                     placeholder="이름"
-                    error={errors?.nickname?.message}
+                    error={errors?.profile?.nickname?.message}
                   />
 
                   <Input
-                    name="email"
+                    name="profile.email"
                     label="이메일"
                     checkLabel="인증"
                     type="email"
                     kind="check"
-                    inputEmailValue={email}
-                    onChange={setEmail}
-                    register={register("email", {
+                    register={register("profile.email", {
                       required: "이메일을 입력하세요",
                       pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -91,7 +87,7 @@ function FindID() {
                       },
                     })}
                     placeholder="유효한 이메일 주소를 입력하세요."
-                    error={errors.email?.message}
+                    error={errors.profile?.email?.message}
                   />
 
                   <Input
@@ -100,8 +96,6 @@ function FindID() {
                     checkLabel="확인"
                     type="authCode"
                     kind="check"
-                    inputAuthCodeValue={authCode}
-                    onChange={setAuthCode}
                     register={register("authCode", {
                       required: "인증번호를 입력하세요",
                     })}

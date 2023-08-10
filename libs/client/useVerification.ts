@@ -1,5 +1,4 @@
 import { usersApi } from "../api";
-import { useInputContext } from "./inputContext";
 
 // 사용자 이름 중복 확인
 export async function onUsernameVerification(inputIDValue: string) {
@@ -23,10 +22,10 @@ export async function onEmailVerification(
 ) {
   try {
     const EmailVeriResponse = await usersApi.emailVerification({
-      name: inputNameValue,
+      nickname: inputNameValue,
       email: inputEmailValue,
     });
-7
+
     console.log(EmailVeriResponse);
 
     if (EmailVeriResponse.success) {

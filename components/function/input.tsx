@@ -8,7 +8,8 @@ import {
   onEmailVerification,
   onUsernameVerification,
 } from "@/libs/client/useVerification";
-import { useInputContext } from "@/libs/client/inputContext";
+import { useRecoilState } from "recoil";
+import { backendVeriCodeState, userInputState } from "@/libs/client/atom";
 
 interface InputProps {
   kind?: "text" | "check" | "disabled";
@@ -29,37 +30,18 @@ export default function Input({
   ...rest
 }: InputProps) {
   const { ref, onChange, ...inputProps } = register;
-  const {
-    inputNameValue,
-    setInputNameValue,
-    inputIDValue,
-    setInputIDValue,
-    inputEmailValue,
-    setInputEmailValue,
-    inputAuthCodeValue,
-    setInputAuthCodeValue,
-    backendVeriCode,
-    setBackendVeriCode,
-  } = useInputContext();
 
-  // // 사용자 입력값들을 상태로 관리
-  // const [inputIDValue, setInputIDValue] = useState(""); // 아이디 입력값
-  // const [inputNameValue, setInputNameValue] = useState("");
-  // const [inputEmailValue, setInputEmailValue] = useState(""); // 이메일 입력값
-  // const [inputAuthCodeValue, setInputAuthCodeValue] = useState(""); // 인증 코드 입력값
+  const [userInput, setUserInput] = useRecoilState(userInputState);
+  const [backendVeriCode, setBackendVeriCode] =
+    useRecoilState(backendVeriCodeState);
 
   // Input 컴포넌트의 onChange 핸들러를 호출할 때마다, 사용자 입력값을 해당 상태로 업데이트
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    if (name === "username") {
-      setInputIDValue(value);
-    } else if (name === "profile.email") {
-      setInputEmailValue(value);
-    } else if (name === "authCode") {
-      setInputAuthCodeValue(value);
-    } else if (name === "profile.nickname") {
-      setInputNameValue(value);
-    }
+    setUserInput((prevInputValues) => ({
+      ...prevInputValues,
+      [name]: value,
+    }));
     onChange(event); // 기존의 onChange 핸들러도 호출
   };
 
@@ -104,20 +86,20 @@ export default function Input({
           type="button"
           onClick={async () => {
             if (checkLabel === "중복확인") {
-              console.log(inputIDValue);
-              onUsernameVerification(inputIDValue);
+              console.log(userInput.username);
+              onUsernameVerification(userInput.username);
             } else if (checkLabel === "인증") {
-              console.log(inputNameValue, inputEmailValue);
+              console.log(userInput.profile.nickname, userInput.profile.email);
               const VeriCode = await onEmailVerification(
-                inputNameValue,
-                inputEmailValue
+                userInput.profile.nickname,
+                userInput.profile.email
               );
               console.log(VeriCode);
               setBackendVeriCode(VeriCode);
             }
             if (checkLabel === "확인") {
               console.log(backendVeriCode);
-              onAuthCodeVerification(inputAuthCodeValue, backendVeriCode);
+              onAuthCodeVerification(userInput.authCode, backendVeriCode);
             }
           }}
           className="absolute top-[10px] right-[20px] w-[67px] h-[35px] bg-[#FC435A] rounded-[50px] text-base text-white flex justify-center items-center"

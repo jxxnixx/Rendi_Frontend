@@ -17,8 +17,13 @@ export interface SignUpState {
   phoneAgreeYn: string;
 }
 
-export interface LoginState {
+export interface UserInputState {
   username: string;
+  profile: {
+    nickname: string;
+    email: string;
+  };
+  authCode: string;
 }
 
 export const signUpState = atom<SignUpState>({
@@ -37,4 +42,21 @@ export const signUpState = atom<SignUpState>({
     emailAgreeYn: "Y",
     phoneAgreeYn: "Y",
   },
+});
+
+export const userInputState = atom<UserInputState>({
+  key: "userInputState",
+  default: {
+    username: "",
+    profile: {
+      nickname: "",
+      email: "",
+    },
+    authCode: "",
+  },
+});
+
+export const backendVeriCodeState = atom<string>({
+  key: "backendVeriCodeState",
+  default: "",
 });

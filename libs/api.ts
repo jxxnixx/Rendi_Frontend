@@ -51,7 +51,7 @@ export interface AEditInfosProps {
 }
 
 export interface AEmailVeriProps {
-  name: string;
+  nickname: string;
   email: string;
 }
 
@@ -183,9 +183,12 @@ export const usersApi = {
   },
 
   // 이메일 인증
-  emailVerification: async ({ name, email }: AEmailVeriProps) => {
+  emailVerification: async ({ nickname, email }: AEmailVeriProps) => {
     try {
-      const response = await axios.post("/member/email", { name, email });
+      const response = await axios.post("/member/email", {
+        name: nickname,
+        email,
+      });
 
       console.log(response.data);
 
@@ -298,6 +301,8 @@ export const usersApi = {
         email,
       });
 
+      console.log(response.data);
+
       if (response.status === 200) {
         const responseData = response.data;
         if (responseData.success) {
@@ -313,31 +318,9 @@ export const usersApi = {
             },
             error: null,
           };
-        } else {
-          // Member not found
-          return {
-            success: false,
-            response: null,
-            error: {
-              errorCode: "MEMBER_NOT_FOUND",
-              errorMessage: "회원을 찾을 수 없습니다.",
-              errors: null,
-            },
-          };
         }
-      } else {
-        return {
-          success: false,
-          response: null,
-          error: {
-            errorCode: "API_ERROR",
-            errorMessage: "API 요청 중 오류가 발생했습니다.",
-            errors: null,
-          },
-        };
       }
-    } catch (error) {
-      // Handle other errors or throw the original error
+    } catch (error: any) {
       console.error("아이디 찾기 오류:", error);
       throw error;
     }
@@ -371,22 +354,6 @@ export const usersApi = {
         };
       }
     } catch (error: any) {
-      if (error.response) {
-        const { status } = error.response;
-        if (status === 404) {
-          // Not Found - Member not found
-          return {
-            success: false,
-            response: null,
-            error: {
-              errorCode: "MEMBER_PW_UPDATE_FAILED",
-              errorMessage: "비밀번호 재설정에 실패하였습니다.",
-              errors: null,
-            },
-          };
-        }
-      }
-      // Handle other errors or throw the original error
       console.error("비밀번호 변경 오류:", error);
       throw error;
     }
