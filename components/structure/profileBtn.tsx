@@ -18,7 +18,7 @@ export default function ProfileBtn() {
       {isMainPage ? (
         <>
           <p className="w-[60px] h-[30px] absolute right-[114px] top-[4px] opacity-75 text-[9pt] font-medium text-right text-[#666666]">
-            <Link href="/mypage" legacyBehavior>
+            <Link href="/main/mypage" legacyBehavior>
               <a className="text-[#666]">마이페이지</a>
             </Link>
           </p>

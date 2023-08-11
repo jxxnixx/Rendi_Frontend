@@ -48,9 +48,6 @@ function LogIn() {
         const refreshToken: string =
           loginResponse.response.response.refreshToken;
 
-        console.log(accessToken);
-        console.log(refreshToken);
-
         // 토큰 저장
         // refreshToken 저장 위치 고려..!
         localStorage.setItem("accessToken", accessToken);

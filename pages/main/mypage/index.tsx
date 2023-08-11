@@ -20,25 +20,25 @@ function Mypage() {
         </div>
         {/* 버튼 */}
         <div className="flex justify-center items-center mt-[0px] opacity-90 gap-[100px] bg-white">
-          <Link href="/auth/mypage/liked" legacyBehavior>
+          <Link href="/main/mypage/liked" legacyBehavior>
             <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
               찜한 상품
             </button>
           </Link>
 
-          <Link href="/auth/mypage/likedMarket" legacyBehavior>
+          <Link href="/main/mypage/likedMarket" legacyBehavior>
             <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
               즐겨찾기 마켓
             </button>
           </Link>
 
-          <Link href="/auth/mypage/contact" legacyBehavior>
+          <Link href="/main/mypage/contact" legacyBehavior>
             <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
               고객센터
             </button>
           </Link>
 
-          <Link href="/auth/mypage/terms" legacyBehavior>
+          <Link href="/main/mypage/terms" legacyBehavior>
             <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
               이용약관
             </button>
@@ -54,7 +54,7 @@ function Mypage() {
               <div className="flex items-end h-[50px] ">
                 <p className="text-lg text-center text-black">아무개! 님</p>
               </div>
-              <Link href="/mypage/view">
+              <Link href="/main/mypage/view">
                 <button className="flex items-top h-[50px] ">
                   <p className="text-m text-center text-[#666]">
                     회원정보 조회
