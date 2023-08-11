@@ -27,25 +27,34 @@ function LogIn() {
   // const [logUsername, setLogUsername] = useRecoilState(loginState);
   const router = useRouter();
 
-  const loginMutation = useMutation(
-    (data: ALogInProps) => usersApi.login(data) // usersApi.login 사용
-  );
+  // const loginMutation = useMutation(
+  //   (data: ALogInProps) => usersApi.login(data) // usersApi.login 사용
+  // );
   // useMutation의 첫 번째 매개변수 : 비동기 작업을 수행하는 콜백 함수
 
   const submitForm: SubmitHandler<ALogInProps> = async (data: ALogInProps) => {
     try {
-      const response = await loginMutation.mutateAsync(data);
+      const loginResponse = await usersApi.login(data);
 
-      if (response.success) {
+      console.log(data);
+
+      if (loginResponse.success) {
+        console.log("로그인 성공!");
+
+        console.log(loginResponse);
+
         // 로그인 성공
-        const accessToken = response.response.accessToken;
-        const refreshToken = response.response.refreshToken;
+        const accessToken: string = loginResponse.response.response.accessToken;
+        const refreshToken: string =
+          loginResponse.response.response.refreshToken;
+
+        console.log(accessToken);
+        console.log(refreshToken);
 
         // 토큰 저장
         // refreshToken 저장 위치 고려..!
-        localStorage.setItem("refreshToken", refreshToken);
-
-        setCookie("accessToken", accessToken);
+        localStorage.setItem("accessToken", accessToken);
+        setCookie("refreshToken", refreshToken);
 
         // 페이지 이동
         // 예시: 메인 페이지로 이동

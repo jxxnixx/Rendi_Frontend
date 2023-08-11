@@ -114,6 +114,7 @@ function Signup() {
                   errors={errors}
                   inputValue={signUpInputValue}
                   setInputValue={setSignUpInputValue}
+                  onValueChange
                 />
 
                 <Input
@@ -176,6 +177,7 @@ function Signup() {
                   error={errors?.profile?.nickname?.message}
                   inputValue={signUpInputValue}
                   setInputValue={setSignUpInputValue}
+                  onValueChange
                 />
 
                 <Input
@@ -259,7 +261,7 @@ function Signup() {
                     },
                   })}
                   placeholder="유효한 이메일 주소를 입력하세요."
-                  error={errors.profile?.email?.message}
+                  error={errors?.profile?.email?.message}
                   inputValue={signUpInputValue}
                   setInputValue={setSignUpInputValue}
                 />

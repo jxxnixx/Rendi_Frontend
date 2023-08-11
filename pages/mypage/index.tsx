@@ -54,10 +54,10 @@ function Mypage() {
               <div className="flex items-end h-[50px] ">
                 <p className="text-lg text-center text-black">아무개! 님</p>
               </div>
-              <Link href="/auth/mypage/edit">
+              <Link href="/mypage/view">
                 <button className="flex items-top h-[50px] ">
                   <p className="text-m text-center text-[#666]">
-                    회원정보 수정
+                    회원정보 조회
                   </p>
                   <div className="flex items-top mt-[4.5px]">
                     <Next />

@@ -23,6 +23,8 @@ export interface UserInputState {
   profile: {
     nickname: string;
     email: string;
+    birth?: string;
+    phonenum?: string;
   };
   authCode: string;
 }
@@ -71,10 +73,22 @@ export const findIDInputState = atom<UserInputState>({
 export const findPWInputState = atom<UserInputState>({
   key: "findPWInputState",
   default: {
-    password: "",
     profile: {
       nickname: "",
       email: "",
+    },
+    authCode: "",
+  },
+});
+
+export const editInfoInputState = atom<UserInputState>({
+  key: "editInfoInputState",
+  default: {
+    profile: {
+      nickname: "",
+      email: "",
+      birth: "",
+      phonenum: "",
     },
     authCode: "",
   },

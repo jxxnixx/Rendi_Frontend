@@ -1,9 +1,6 @@
 import Link from "next/link";
 import { MyPage } from "../icons";
-// import { isLoggedInState, loginState } from "@/libs/client/atom";
-// import { useRecoilState, useRecoilValue } from "recoil";
 import { useRouter } from "next/router";
-import { removeCookie } from "@/libs/client/cookies";
 
 export default function ProfileBtn() {
   const router = useRouter();
@@ -12,8 +9,7 @@ export default function ProfileBtn() {
   const handleLogout = () => {
     // 로그아웃 버튼 클릭 시 실행되는 함수
 
-    removeCookie("accessToken"); // accessToken 삭제
-    localStorage.removeItem("refreshToken"); // refreshToken 삭제
+    localStorage.removeItem("accessToken"); // accessToken 삭제
     router.push("/"); // 페이지 이동
   };
 
@@ -21,8 +17,8 @@ export default function ProfileBtn() {
     <>
       {isMainPage ? (
         <>
-          <p className="w-[50px] h-[30px] absolute right-[114px] top-[4px] opacity-75 text-[9pt] font-medium text-right text-[#666666]">
-            <Link href="/auth/profile" legacyBehavior>
+          <p className="w-[60px] h-[30px] absolute right-[114px] top-[4px] opacity-75 text-[9pt] font-medium text-right text-[#666666]">
+            <Link href="/mypage" legacyBehavior>
               <a className="text-[#666]">마이페이지</a>
             </Link>
           </p>

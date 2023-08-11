@@ -57,6 +57,7 @@ export function onAuthCodeVerification(
   backendVeriCode: string
 ) {
   if (inputAuthCodeValue === backendVeriCode) {
+    alert("인증코드 검증 성공!");
     console.log("인증코드 검증 성공!");
     return true;
   } else {

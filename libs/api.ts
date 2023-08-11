@@ -44,10 +44,10 @@ export interface ASocialLoginProps {
 }
 
 export interface AEditInfosProps {
-  username: string;
-  password: string;
-  nickname: string;
-  phonenum: string;
+  email?: string;
+  nickname?: string;
+  birth?: string;
+  phonenum?: string;
 }
 
 export interface AEmailVeriProps {
@@ -237,6 +237,7 @@ export const usersApi = {
         username,
         password,
       });
+
       if (response.status === 200) {
         return {
           success: true,
@@ -281,7 +282,7 @@ export const usersApi = {
           };
         }
       }
-      console.error("회원가입 오류:", error);
+      console.error("로그인 오류:", error);
       throw error;
     }
   },
@@ -362,13 +363,14 @@ export const usersApi = {
   // 회원정보 조회
   viewInfos: async (accessToken: string) => {
     try {
-      // const response = await axiosPrivate.get("/member/information/");
       const response = await axios.get("/member/information/", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
         },
       });
-      if (response.status === 200) {
+
+      if (response.data.success) {
         return {
           success: true,
           response: response.data,
@@ -395,7 +397,7 @@ export const usersApi = {
   editInfos: async (accessToken: string, updatedInfos: AEditInfosProps) => {
     try {
       // const response = await axiosPrivate.put("/member/information", updatedInfos);
-      const response = await axios.put("/member/information", updatedInfos, {
+      const response = await axios.put("/member/information/", updatedInfos, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -606,38 +608,6 @@ export const itemsApi = {
 
 /* 사용예시
 
-(async () => {
-  try {
-    const username = "born2slayy77"; // ID to be checked
-
-    const result = await usersApi.checkID({ username });
-
-    if (result.success) {
-      console.log(result.response.message);
-    } else {
-      console.log("아이디 중복 확인 오류:", result.error?.errorMessage);
-    }
-  } catch (error) {
-    console.error("아이디 중복 확인 요청 오류:", error);
-  }
-})();
-
-(async () => {
-  try {
-    const email = "born2slayy77@gmail.com";
-    const password = "pw1234"; // New password
-
-    const result = await usersApi.changePassword({ email, password });
-
-    if (result.success) {
-      console.log(result.response.message);
-    } else {
-      console.log("비밀번호 변경 오류:", result.error?.errorMessage);
-    }
-  } catch (error) {
-    console.error("비밀번호 변경 요청 오류:", error);
-  }
-})();
 
 
 (async () => {
@@ -717,32 +687,5 @@ export const itemsApi = {
     console.error("토큰 재발급 요청 오류:", error);
   }
 })();
-
-
-import { updateMemberInformation } from "./api";
-
-(async () => {
-  try {
-    const accessToken = "여기에_토큰_입력";
-
-    const updatedInfo = {
-      email: "gankstershj@gmail.com",
-      nickname: "새로운 이름(장지혜)",
-      birth: "2000-10-12",
-      phonenum: "01012345678",
-    };
-
-    const result = await updateMemberInformation(accessToken, updatedInfo);
-
-    if (result.success) {
-      console.log("회원정보 수정 성공:", result.response);
-    } else {
-      console.log("회원정보 수정 오류:", result.error?.errorMessage);
-    }
-  } catch (error) {
-    console.error("회원정보 수정 요청 오류:", error);
-  }
-})();
-
 
 */

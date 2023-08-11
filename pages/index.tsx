@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const accessToken = getCookie("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       router.push("/main");
     }

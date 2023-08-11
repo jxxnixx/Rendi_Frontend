@@ -37,15 +37,3 @@ export const setCookie = (name: string, value: string, options?: any) => {
 export const getCookie = (name: string) => {
   return cookies.get(name);
 };
-
-export const removeCookie = (name: string) => {
-  const expires = new Date(0);
-
-  return cookies.remove(name, {
-    path: "/",
-    secure: true,
-    sameSite: "strict",
-    httpOnly: true,
-    expires,
-  });
-};
