@@ -14,7 +14,7 @@ export default function SearchBar() {
 
     setShowUpload(false);
 
-    router.push(`/searchResult?search=${searchValue}&image=${imageValue}`);
+    router.push(`/main/searchResult?search=${searchValue}&image=${imageValue}`);
     inputRef.current && (inputRef.current.value = "");
   };
   // Ref로 사각형, input dom요소 참조
