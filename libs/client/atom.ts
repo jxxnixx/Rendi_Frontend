@@ -29,6 +29,7 @@ export interface UserInputState {
   authCode: string;
 }
 
+// 찐 회원가입용 atom. taste 페이지에서 회원가입 post 시 사용
 export const signUpState = atom<SignUpState>({
   key: "signUpState",
   default: {
@@ -47,6 +48,7 @@ export const signUpState = atom<SignUpState>({
   },
 });
 
+// signUp 페이지에서 사용자 입력값을 받아오기 위한 일시적 atom
 export const signUpInputState = atom<UserInputState>({
   key: "signUpInputState",
   default: {
@@ -59,6 +61,7 @@ export const signUpInputState = atom<UserInputState>({
   },
 });
 
+// findID 페이지에서 사용자 입력값을 받아오기 위한 일시적 atom
 export const findIDInputState = atom<UserInputState>({
   key: "findIDInputState",
   default: {
@@ -70,6 +73,7 @@ export const findIDInputState = atom<UserInputState>({
   },
 });
 
+// findPW 페이지에서 사용자 입력값을 받아오기 위한 일시적 atom
 export const findPWInputState = atom<UserInputState>({
   key: "findPWInputState",
   default: {
@@ -81,6 +85,7 @@ export const findPWInputState = atom<UserInputState>({
   },
 });
 
+// 회원정보 수정 페이지에서 사용자 입력값을 받아오기 위한 일시적 atom
 export const editInfoInputState = atom<UserInputState>({
   key: "editInfoInputState",
   default: {
@@ -99,6 +104,7 @@ export const editInfoInputState = atom<UserInputState>({
 //   default: {},
 // });
 
+//
 export const backendVeriCodeState = atom<string>({
   key: "backendVeriCodeState",
   default: "",

@@ -117,19 +117,15 @@ export default function Input({
           type="button"
           onClick={async () => {
             if (checkLabel === "중복확인") {
-              console.log(inputValue.username);
               onUsernameVerification(inputValue.username);
             } else if (checkLabel === "인증") {
-              console.log(inputValue);
               const VeriCode = await onEmailVerification(
                 inputValue.profile.nickname,
                 inputValue.profile.email
               );
-              console.log(VeriCode);
               setBackendVeriCode(VeriCode);
             }
             if (checkLabel === "확인") {
-              console.log(backendVeriCode);
               onAuthCodeVerification(inputValue.authCode, backendVeriCode);
             }
           }}

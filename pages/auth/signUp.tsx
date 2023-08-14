@@ -27,13 +27,17 @@ function Signup() {
     mode: "onChange",
   });
 
+  // taste.tsx에서 이뤄지는 백엔드와의 소통을 위한 atom. 찐 회원가입용 atom
   const [signUpData, setSignUpData] = useRecoilState(signUpState);
+
+  // 사용자 입력값 확인용 atom
   const [signUpInputValue, setSignUpInputValue] =
     useRecoilState(signUpInputState);
+
   const router = useRouter();
 
   const handleClick = () => {
-    // 입력값 가져오기
+    // 입력값 가져오기(submit 이후)
     const username = watch("username");
     const password = watch("password");
     const cPassword = watch("cPassword");
@@ -59,6 +63,7 @@ function Signup() {
         interests,
       },
     };
+
     setSignUpData(updatedSignUpData);
 
     console.log(updatedSignUpData);
@@ -78,7 +83,7 @@ function Signup() {
     <>
       <Layout>
         <Head>
-          <title>SignUp</title>
+          <title>Signup</title>
         </Head>
 
         <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium ">
