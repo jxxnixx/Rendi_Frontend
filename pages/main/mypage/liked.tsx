@@ -4,9 +4,11 @@ import Link from "next/link";
 import { HeartIcon, Line } from "@/components/icons";
 import Pagination from "@/components/structure/pagination";
 import Items from "@/components/product/items";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
+import Mymenus from "@/components/structure/mymenus";
+import { itemsApi } from "@/libs/api";
 
 function Liked() {
   // 전체 아이템의 개수와 총 페이지 수 계산
@@ -21,6 +23,40 @@ function Liked() {
     setCurrentPage(pageNumber);
   };
 
+  // 찜한 상품 목록 관리
+  const [wishList, setWishList] = useState<Product[]>([]);
+
+  useEffect(() => {
+    // localStorage에서 accessToken을 가져옵니다.
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      console.error("액세스 토큰이 없습니다.");
+      return;
+    }
+
+    // getWish API를 호출하여 찜한 상품 목록 가져오기
+    const getWishList = async () => {
+      try {
+        console.log(accessToken);
+        const getWishresponse = await itemsApi.getWish(accessToken);
+
+        console.log(getWishresponse);
+
+        if (getWishresponse.success) {
+          // API 응답에서 찜한 상품 목록을 가져와 상태값으로 업데이트
+          setWishList(getWishresponse.response.response.wishList);
+        } else {
+          console.error("API 호출 실패:", getWishresponse.error);
+        }
+      } catch (error) {
+        // 에러 처리를 여기에서 수행합니다.
+        console.error("찜한 상품 목록을 가져오는 중 에러 발생:", error);
+      }
+    };
+
+    getWishList();
+  }, []);
+
   // 현재 페이지에 해당하는 상품들을 계산
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -32,42 +68,7 @@ function Liked() {
         <Head>
           <title>Profile</title>
         </Head>
-        <div className="flex justify-center items-center">
-          <div className="flex justify-center w-[1040px] h-[98px] mt-[135px] bg-blue">
-            <Link href="/auth/profile" legacyBehavior>
-              <button className="flex justify-center  left-[441buttonx] mt-[35px] text-[21pt] font-semibold text-left text-black hover:text-mc">
-                마이페이지
-              </button>
-            </Link>
-          </div>
-        </div>
-        {/* 버튼 */}
-        <div className="flex justify-center items-center mt-[0px] opacity-90 gap-[100px] bg-white">
-          <Link href="/auth/profile/liked" legacyBehavior>
-            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-mc hover:text-mc">
-              찜한 상품
-            </button>
-          </Link>
-
-          <Link href="/auth/profile/likedMarket" legacyBehavior>
-            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
-              즐겨찾기 마켓
-            </button>
-          </Link>
-
-          <Link href="/auth/profile/contact" legacyBehavior>
-            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
-              고객센터
-            </button>
-          </Link>
-
-          <Link href="/auth/profile/terms" legacyBehavior>
-            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
-              이용약관
-            </button>
-          </Link>
-        </div>
-
+        <Mymenus />
         <div className="flex justify-center  mt-[10px] ">
           <Line />
         </div>

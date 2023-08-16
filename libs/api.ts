@@ -542,7 +542,6 @@ export const itemsApi = {
       const response = await axios.get("/wishlist/all/", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
         },
       });
 
@@ -570,15 +569,14 @@ export const itemsApi = {
   },
 
   // 찜하기 변경
-  toggleWish: async (accessToken: string, productId: number) => {
+  toggleWish: async (productId: number, accessToken: string) => {
     try {
-      // const response = await axiosPrivate.post(`/wishlist/${productId}`);
-      const response = await axios.post(`/wishlist/${productId}`, {
+      const response = await axios.post(`/wishlist/${productId}`, null, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
         },
       });
+
       if (response.status === 200) {
         return {
           success: true,

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, memo } from "react";
 import { HeartIcon } from "../icons";
 import { Carousel } from "antd";
 import router from "next/router";
+import { itemsApi } from "@/libs/api";
 
 interface ItemProps {
   item: {
@@ -24,10 +25,22 @@ const updateBrandId = (item: ItemProps["item"]) => {
 };
 
 const Item = ({ item }: ItemProps) => {
-  // 이전에 좋아요를 눌렀는지 여부를 상태로 관리합니다.
+  // 이전에 좋아요를 눌렀는지 여부를 상태로 관리
   const [isLiked, setIsLiked] = useState(item.wishYN === "Y");
   const [isCenterHeartShown, setIsCenterHeartShown] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>();
+
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedAccessToken: string | null =
+        localStorage.getItem("accessToken");
+      if (storedAccessToken) {
+        setAccessToken(storedAccessToken);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (isCenterHeartShown) {
@@ -47,14 +60,33 @@ const Item = ({ item }: ItemProps) => {
     }
   }, [isCenterHeartShown]);
 
-  const handleLike = () => {
+  const handleLike = async () => {
     setIsCenterHeartShown(true);
-    // 좋아요를 토글하여 업데이트
-    const updatedWishYN = isLiked ? "N" : "Y";
-    const updatedItem = { ...item, wishYN: updatedWishYN };
-    // TODO: 아이템의 업데이트된 정보를 서버에 저장하는 로직을 추가해야 합니다.
-    setIsLiked(updatedWishYN === "Y"); // 상태를 업데이트합니다.
-    console.log(updatedItem);
+
+    if (accessToken) {
+      try {
+        // 좋아요를 토글하여 업데이트
+        const updatedWishYN = isLiked ? "N" : "Y";
+        const updatedItem = { ...item, wishYN: updatedWishYN };
+
+        console.log(accessToken);
+        console.log(updatedItem.productId);
+
+        // 서버에 업데이트된 정보를 저장하는 로직
+        const likedResponse = await itemsApi.toggleWish(
+          updatedItem.productId,
+          accessToken
+        );
+        console.log(likedResponse);
+
+        setIsLiked(updatedWishYN === "Y"); // 상태를 업데이트
+        console.log(updatedItem);
+      } catch (error) {
+        console.log("찜하기 업데이트 에러", error);
+      }
+    } else {
+      alert("로그인이 필요한 서비스입니다.");
+    }
   };
 
   // brandId가 1인 경우 "CIDER"로 변경된 item 사용
