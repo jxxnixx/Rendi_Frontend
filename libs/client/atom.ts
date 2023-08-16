@@ -103,3 +103,11 @@ export const backendVeriCodeState = atom<string>({
   key: "backendVeriCodeState",
   default: "",
 });
+
+const { persistAtom } = recoilPersist();
+
+export const recentSearchHistoryState = atom<string[]>({
+  key: "recentSearchHistoryState",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});

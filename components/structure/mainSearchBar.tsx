@@ -2,29 +2,98 @@ import React, { useState, useRef, useEffect } from "react";
 import { Camera, Search } from "../icons";
 import { Button, Upload } from "antd";
 import { useRouter } from "next/router";
+import { APopularSearchProps, itemsApi } from "@/libs/api";
+import { useRecoilState } from "recoil";
+import { recentSearchHistoryState } from "@/libs/client/atom";
 
 export default function SearchBar() {
   const router = useRouter();
+  const isMainPage = router.asPath.includes("/main");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [accessToken, setAccessToken] = useState<string>(" ");
+
+  const [popularKeywords, setPopularKeywords] = useState<APopularSearchProps[]>(
+    []
+  );
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedAccessToken: string | null =
+        localStorage.getItem("accessToken");
+      if (storedAccessToken) {
+        setAccessToken(storedAccessToken);
+      }
+    }
+  }, []);
+
+  const [recentSearchHistory, setRecentSearchHistory] = useRecoilState(
+    recentSearchHistoryState
+  );
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const searchValue = inputRef.current?.value;
+    const searchValue: any = inputRef.current?.value;
     const imageValue = ""; // 이미지 값 가져오는 방법에 따라 추가
 
     setShowUpload(false);
 
-    if (showContent === "popular") {
-      alert("로그인이 필요한 서비스입니다.");
-      router.push("/");
-    } else {
-      router.push(
-        `/main/searchResult?search=${searchValue}&image=${imageValue}`
-      );
-    }
+    // 기존 최근 검색어와 중복을 제거한 후 새로운 검색어 추가
+    setRecentSearchHistory((prevHistory) => {
+      const updatedHistory = [
+        searchValue,
+        ...prevHistory.filter((item) => item !== searchValue),
+      ];
+      return updatedHistory;
+    });
 
-    inputRef.current && (inputRef.current.value = "");
+    console.log(accessToken);
+    console.log(searchValue);
+
+    if (accessToken && searchValue) {
+      try {
+        const saveResponse = await itemsApi.saveKeyword(
+          searchValue,
+          accessToken
+        );
+        console.log(saveResponse); // 응답 데이터 출력
+
+        // 성공적으로 검색어를 저장한 후, 다음 동작을 수행할 수 있음
+        router.push(
+          `/main/searchResult?search=${searchValue}&image=${imageValue}`
+        );
+        inputRef.current && (inputRef.current.value = "");
+      } catch (error) {
+        console.log("검색 키워드 저장 오류:", error);
+      }
+    }
   };
+
+  // 클릭된 button 구별, 관리
+  const handleTabClick = (tab: string) => {
+    setShowContent(tab);
+
+    if (isMainPage) {
+      if (tab === "recent") {
+      } else if (tab === "popular") {
+        handlePopular(accessToken);
+      }
+    } else {
+    }
+  };
+
+  const handlePopular = async (accessToken: string) => {
+    try {
+      const popularResponse = await itemsApi.popularSearch(accessToken);
+      if (popularResponse.response) {
+        setPopularKeywords(popularResponse.response.response.slice(0, 10)); // 최대 10개만 저장
+      }
+      console.log(popularResponse);
+    } catch (error) {
+      console.log("인기 검색어 받아오기 오류!", error);
+    }
+  };
+
   // Ref로 사각형, input dom요소 참조
   // const squareRef = useRef<HTMLDivElement>(null);
   // const inputRef = useRef<HTMLInputElement>(null);
@@ -66,11 +135,6 @@ export default function SearchBar() {
 
   const handleCameraClick = () => {
     setShowUpload(true);
-  };
-
-  // 클릭된 button 구별, 관리
-  const handleTabClick = (tab: string) => {
-    setShowContent(tab);
   };
 
   // 닫기 button
@@ -234,8 +298,18 @@ export default function SearchBar() {
                   className="w-[203px] absolute left-[229px] top-[157px] text-sm font-medium text-center text-black"
                 >
                   {showContent === "recent"
-                    ? "최근 검색한 기록이 없습니다."
-                    : "로그인이 필요한 서비스입니다."}
+                    ? recentSearchHistory.length > 0
+                      ? recentSearchHistory.map((item, index) => (
+                          <div key={index}>{item}</div>
+                        ))
+                      : "최근 검색한 기록이 없습니다."
+                    : popularKeywords.length > 0
+                    ? popularKeywords.map((item, index) => (
+                        <div key={index}>
+                          {item.keyword} ({item.searchCount}회 검색)
+                        </div>
+                      ))
+                    : "인기 검색어 로딩 중.."}
                 </div>
               </div>
             </div>

@@ -162,7 +162,7 @@ export default function Input({
   }
 
   return (
-    <div className="flex flex-col justify-center items-center flex-grow-0 flex-shrink-0 relative gap-1.5 py-[10px]">
+    <div className="flex flex-col justify-center flex-grow-0 flex-shrink-0 relative gap-1.5 py-[10px]">
       <label
         className="flex-grow-0 flex-shrink-0 text-lg font-bold text-left text-[#666]"
         htmlFor={name}

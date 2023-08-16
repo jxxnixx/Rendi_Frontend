@@ -70,10 +70,6 @@ export interface APopularSearchProps {
   searchCount: number;
 }
 
-export interface ASaveSearchProps {
-  keyword: string;
-}
-
 export const axiosPrivate = axios.create({
   baseURL: API_URL,
   headers: { "Content-Type": "application/json" },
@@ -499,12 +495,13 @@ export const itemsApi = {
   },
 
   // 검색어 저장
-  saveSearch: async (accessToken: string, { keyword }: ASaveSearchProps) => {
+  saveKeyword: async (keyword: string, accessToken: string) => {
     try {
-      // const response = await axiosPrivate.post("/search/keyword/update/", { keyword });
       const response = await axios.post(
-        "/search/keyword/update/",
-        { keyword },
+        `/search/keyword/update/`,
+        {
+          keyword,
+        },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,

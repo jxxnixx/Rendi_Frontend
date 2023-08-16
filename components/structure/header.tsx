@@ -2,9 +2,14 @@ import Link from "next/link";
 import BrLine from "./brLine";
 import ProfileBtn from "./profileBtn";
 import SearchBar from "./searchBar";
+import { useRouter } from "next/router";
+import MainSearchBar from "./mainSearchBar";
 
 export default function Header() {
   // 쿠키에서 로그인 상태를 확인하는 함수
+
+  const router = useRouter();
+  const isMainPage = router.asPath.includes("/main");
 
   return (
     <header className="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 z-30  h-[100px] bg-white mx-auto">
@@ -26,7 +31,7 @@ export default function Header() {
         </div>
         {/* 검색창 */}
         <div className="w-[679px] h-[46px] left-[181px] mt-[38px]">
-          <SearchBar />
+          {isMainPage ? <MainSearchBar /> : <SearchBar />}
         </div>
         {/* 회원가입/로그인 */}
         <div className="w-[85px] h-[30px]">

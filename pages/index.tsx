@@ -7,8 +7,6 @@ import { useRouter } from "next/router";
 import Items from "@/components/product/items";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRecoilValue } from "recoil";
-import { getCookie } from "@/libs/client/cookies";
 
 const Home: NextPage = () => {
   const router = useRouter();
