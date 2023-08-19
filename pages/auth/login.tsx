@@ -53,7 +53,7 @@ function LogIn() {
 
         // 페이지 이동
         // 예시: 메인 페이지로 이동
-        router.push("/");
+        router.push("/main");
       } else {
         // 로그인 실패
         setLoginError(
