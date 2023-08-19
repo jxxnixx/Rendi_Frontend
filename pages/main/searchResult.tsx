@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import FilterPopup from "@/components/sort/filterPopup";
+import { useScreenSize } from "@/libs/client/useScreenSize";
 
 export default function SearchResult() {
   const router = useRouter();
@@ -34,6 +35,7 @@ export default function SearchResult() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
+  const screen = useScreenSize();
 
   return (
     <Layout>
@@ -41,9 +43,9 @@ export default function SearchResult() {
         <title>SearchResult</title>
       </Head>
       <div className="flex items-center justify-center">
-        <div className="flex-col w-[1040px] pb-[32px]">
-          <div className="flex items-center w-[1040px] h-[60px] mt-[135px] text-lg font-medium ">
-            <p className="flex justify-start text-lg text-left">
+        <div className="flex-col pb-[32px] mt-[135px] w-[1040px] mobile:mt-[50px] mobile: w-full">
+          <div className=" flex items-center h-[60px] top-[30px]  w-[1040px] mobile:mt-[25px] mobile:ml-[10px] mobile:w-full">
+            <p className="flex justify-start text-lg text-left text-lg mobile:text-sm">
               “<span className="text-[#fc435a]">{search}</span>” 검색결과 ( 전체
               <span className="text-[#fc435a]">{totalItems}</span>개의 상품 )
             </p>

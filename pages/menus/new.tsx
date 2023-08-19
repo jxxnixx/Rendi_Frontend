@@ -32,13 +32,13 @@ export default function New() {
         <title>New</title>
       </Head>
 
-      <div className="relative mt-[135px] flex w-full flex-col bg-white text-lg font-medium ">
+      <div className="relative mt-[135px] flex w-full flex-col bg-white text-lg font-medium mobile:mt-[90px">
         <ProdBar
           category={"default"}
           activeCate={activeCate}
           setActiveCate={setActiveCate}
         />
-        <div className="flex justify-center py-8">
+        <div className="flex justify-center py-8 mobile:py-3">
           <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
         </div>
         <div className="flex justify-center py-1">

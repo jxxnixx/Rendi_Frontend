@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface Category {
   cate: string;
@@ -43,7 +43,7 @@ export default function ProdBar({
   }
 
   return (
-    <nav className="relative h-[60px] text-[14px] text-[#666] bg-white py-[11px] text-base flex shadow-md space-x-[60px] items-center justify-center">
+    <nav className="relative h-[60px] mobile:h-[40px] text-[14px] mobile:text-[12px] text-[#666] bg-white py-[11px] text-base flex shadow-md space-x-[60px] mobile:space-x-[30px] items-center justify-center">
       {categories.map(({ cate }) => (
         <button
           key={cate}
@@ -52,7 +52,7 @@ export default function ProdBar({
             activeCate === cate ? "text-black" : ""
           } hover:text-black`}
         >
-          <p>{cate}</p>
+          <p className="mobile:text-[9pt] mobile:m-1">{cate}</p>
         </button>
       ))}
     </nav>

@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Items from "@/components/product/items";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useScreenSize } from "@/libs/client/useScreenSize";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -23,17 +24,20 @@ const Home: NextPage = () => {
       <Head>
         <title>Home</title>
       </Head>
-      <div className="relative mt-[135px] bg-slate-200">
+      <div className="relative mt-[135px] bg-slate-200 mobile:mt-[85px]">
         <div className="bg-white">
           <div className="flex justify-center">
             <Banner />
           </div>
-          <div className="flex justify-center">
-            <HoriCategory />
+          <div className="flex justify-center mobile:w-full">
+            {/* 스크롤 가능한 영역 */}
+            <div className="overflow-x-scroll scrollbar-hide">
+              <HoriCategory />
+            </div>
           </div>
 
           <div className="flex justify-center">
-            <div className="flex-row w-[1040px]">
+            <div className="flex-row w-[1040px] mobile:w-full">
               <div className="flex justify-between text-[12pt] font-medium text-black">
                 <p className="ml-[30px] mt-[10px]">이번주 신제품</p>
 

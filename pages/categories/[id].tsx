@@ -173,7 +173,7 @@ const ProductPage = () => {
           activeCate={activeCate}
           setActiveCate={setActiveCate}
         />
-        <div className="flex justify-center py-8">
+        <div className="flex justify-center py-8 mobile:items-center">
           <Items itemsPerPage={16} itemsToShow={itemsToShow} />
         </div>
         <div className="flex justify-center py-1">
