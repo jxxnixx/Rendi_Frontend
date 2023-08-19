@@ -198,35 +198,35 @@ function Signup() {
                   setInputValue={setSignUpInputValue}
                 />
 
-                <div className="font-bold text-[#666]">
-                  성별
-                  <div>
-                    <Segmented
-                      name="profile.sex"
-                      type="sex"
-                      className="w-[148px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0] p-[5px]s"
-                      options={[
-                        {
-                          label: (
-                            <div className="w-1/2 p-[10px]">
-                              <div>남성</div>
-                            </div>
-                          ),
-                          value: "1",
-                        },
-                        {
-                          label: (
-                            <div className="w-1/2 p-[10px]">
-                              <div>여성</div>
-                            </div>
-                          ),
-                          value: "2",
-                        },
-                      ]}
-                      value={value}
-                      onChange={setValue}
-                    />
-                  </div>
+                <div className="flex flex-col justify-center flex-grow-0 flex-shrink-0 relative gap-1.5 py-[10px] w-[448px] mobile:px-[75px]">
+                  <label className="flex-grow-0 flex-shrink-0 text-lg font-bold text-left text-[#666] mobile:items-start">
+                    성별
+                  </label>
+                  <Segmented
+                    name="profile.sex"
+                    type="sex"
+                    className="w-[148px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0] px-[17px] font-bold"
+                    options={[
+                      {
+                        label: (
+                          <div className="w-1/2 p-[10px]">
+                            <div>남</div>
+                          </div>
+                        ),
+                        value: "1",
+                      },
+                      {
+                        label: (
+                          <div className="w-1/2 p-[10px]">
+                            <div>여</div>
+                          </div>
+                        ),
+                        value: "2",
+                      },
+                    ]}
+                    value={value}
+                    onChange={setValue}
+                  />
                 </div>
 
                 <Input
@@ -293,7 +293,7 @@ function Signup() {
 
                 <div className="flex justify-center">
                   <Link href="/auth/login" legacyBehavior>
-                    <button className=" py-[30px] bg-white text-gray-600 text-center">
+                    <button className=" py-[30px] bg-white text-gray-600 text-center mobile:text-base">
                       계정이 이미 있으신가요?
                     </button>
                   </Link>

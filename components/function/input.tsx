@@ -78,7 +78,7 @@ export default function Input({
   let inputComponent;
   if (kind === "text") {
     inputComponent = (
-      <div className="w-[448px] h-[55px] rounded-[50px] bg-white justify-center items-center mobile:flex mobile:justify-center mobile:items-center">
+      <div className="w-[448px] h-[55px] rounded-[50px] bg-white justify-center items-center mobile:flex mobile:justify-center mobile:items-center mobile:w-[302px]">
         <input
           {...inputProps}
           {...rest}
@@ -98,13 +98,13 @@ export default function Input({
     );
   } else if (kind === "check") {
     inputComponent = (
-      <div className="relative w-[448px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0]">
+      <div className="relative w-[448px] h-[55px] rounded-[50px] bg-white justify-center mobile:flex mobile:items-center mobile:w-[302px]">
         <input
           {...inputProps}
           {...rest}
           ref={ref}
           className={cls(
-            "w-[448px] h-[55px] rounded-[50px] bg-gray-100 border border-[#e0e0e0] px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A] mobile:w-[302px]",
+            "w-[448px] h-[55px] rounded-[50px] bg-gray-100 border border-[#e0e0e0] px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A] mobile:w-[302px] mobile:justify-center",
             error
               ? "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#f00]"
               : "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#4caf50]"
@@ -162,9 +162,9 @@ export default function Input({
   }
 
   return (
-    <div className="flex flex-col justify-center flex-grow-0 flex-shrink-0 relative gap-1.5 py-[10px]">
+    <div className="flex flex-col justify-center flex-grow-0 flex-shrink-0 relative gap-1.5 py-[10px] w-[448px] mobile:px-[75px] mobile:text-sm">
       <label
-        className="flex-grow-0 flex-shrink-0 text-lg font-bold text-left text-[#666]"
+        className="flex-grow-0 flex-shrink-0 text-lg font-bold text-left text-[#666] mobile:items-start"
         htmlFor={name}
       >
         {label}
