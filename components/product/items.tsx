@@ -37,7 +37,9 @@ export default function Items({ itemsPerPage, itemsToShow }: ItemsProps) {
       const row = (
         <div
           key={i}
-          className="flex relative justify-between items-start flex-grow-0 flex-shrink-0 w-[1040px] mobile:w-full px-[25px] py-[5px] mb-[10px]"
+          className={`flex relative justify-between items-start ${
+            screen === "mobile" ? "w-full" : "w-[1040px]"
+          } px-[25px] py-[5px] mb-[10px]`}
         >
           {rowItems.map((item: Product) => (
             <Item key={item.productId} item={item} />
@@ -51,7 +53,7 @@ export default function Items({ itemsPerPage, itemsToShow }: ItemsProps) {
   };
 
   return (
-    <div className="w-[1040px] relative overflow-hidden bg-white">
+    <div className="w-[1040px] relative overflow-hidden bg-white mobile:w-[640px] mobile:px-[30px]">
       {renderItems()}
     </div>
   );

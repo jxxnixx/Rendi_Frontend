@@ -106,7 +106,7 @@ export default function Circle({ icon }: cProps) {
           }}
           legacyBehavior
         >
-          <a className="text-xs">{getKeyword()}</a>
+          <a className="text-[14px] mobile:text-[12px]">{getKeyword()}</a>
         </Link>
       </div>
     </>

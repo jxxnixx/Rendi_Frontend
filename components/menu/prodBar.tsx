@@ -43,16 +43,18 @@ export default function ProdBar({
   }
 
   return (
-    <nav className="relative h-[60px] mobile:h-[40px] text-[14px] mobile:text-[12px] text-[#666] bg-white py-[11px] text-base flex shadow-md space-x-[60px] mobile:space-x-[30px] items-center justify-center">
+    <nav className="relative h-[60px] mobile:h-[40px] text-[#666] bg-white py-[11px] flex shadow-md space-x-[60px] mobile:space-x-[10px] items-center justify-center">
       {categories.map(({ cate }) => (
         <button
           key={cate}
           onClick={() => handleButtonClick(cate)}
-          className={`${
+          className={` ${
             activeCate === cate ? "text-black" : ""
           } hover:text-black`}
         >
-          <p className="mobile:text-[9pt] mobile:m-1">{cate}</p>
+          <p className="mobile:text-[9pt] mobile:m-1 overflow-x-auto whitespace-nowrap">
+            {cate}
+          </p>
         </button>
       ))}
     </nav>

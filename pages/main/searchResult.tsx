@@ -43,14 +43,31 @@ export default function SearchResult() {
         <title>SearchResult</title>
       </Head>
       <div className="flex items-center justify-center">
-        <div className="flex-col pb-[32px] mt-[135px] w-[1040px] mobile:mt-[50px] mobile: w-full">
-          <div className=" flex items-center h-[60px] top-[30px]  w-[1040px] mobile:mt-[25px] mobile:ml-[10px] mobile:w-full">
-            <p className="flex justify-start text-lg text-left text-lg mobile:text-sm">
+        <div
+          className={`flex-col  pb-[32px] ${
+            screen === "mobile" ? "mt-[50px] w-full" : "mt-[135px] w-[1040px]"
+          }`}
+        >
+          <div
+            className={`flex items-center h-[60px] ${
+              screen === "mobile"
+                ? "mobile:mt-[25px] ml-[20px] w-full"
+                : "top-[30px] w-[1040px]"
+            }`}
+          >
+            <p
+              className={`flex justify-start text-lg text-left ${
+                screen === "mobile" ? "text-sm" : "text-lg"
+              }`}
+            >
+              {/* <div className="flex-col pb-[32px] mt-[135px] w-[1040px] mobile:mt-[50px] mobile:w-[640px]">
+          <div className="flex items-center h-[60px] top-[30px] mobile:mt-[25px] mobile:ml-[10px] mobile:w-[640px]">
+            <p className="flex justify-start text-left text-lg mobile:text-sm"> */}
               “<span className="text-[#fc435a]">{search}</span>” 검색결과 ( 전체
               <span className="text-[#fc435a]">{totalItems}</span>개의 상품 )
             </p>
           </div>
-          <div className="flex w-[1040px] h-[60px] items-center top-[30px]">
+          <div className="flex w-[1040px] h-[60px] items-center top-[30px] mobile:w-full mobile:ml-[15px]">
             <Prodlist products={[]} />
           </div>
           <Line />

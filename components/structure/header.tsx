@@ -43,6 +43,7 @@ export default function Header() {
                 onClick={() => setIsMobileSearchOpen(true)}
               />
               <UserOutlined className="text-2xl" />
+              {/* 로그인 아닌 상태에서는 로그인 페이지로, 로그인 상태에서는 마이페이지로 연결 */}
             </div>
           </div>
         ) : (

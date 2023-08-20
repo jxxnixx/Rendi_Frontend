@@ -30,11 +30,11 @@ export default function SearchBar() {
     recentSearchHistoryState
   );
 
+  const [searchValue, setSearchValue] = useState(""); // 검색어 상태
+  const [imageValue, setImageValue] = useState(""); // 이미지 상태
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const searchValue: any = inputRef.current?.value;
-    const imageValue = ""; // 이미지 값 가져오는 방법에 따라 추가
 
     setShowUpload(false);
 
@@ -62,7 +62,7 @@ export default function SearchBar() {
         router.push(
           `/main/searchResult?search=${searchValue}&image=${imageValue}`
         );
-        inputRef.current && (inputRef.current.value = "");
+        setSearchValue(""); // 검색어 초기화
       } catch (error) {
         console.log("검색 키워드 저장 오류:", error);
       }
@@ -148,12 +148,6 @@ export default function SearchBar() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label
-        htmlFor="default-search"
-        className="text-sm font-medium text-gray-900 sr-only dark:text-white"
-      >
-        Search
-      </label>
       {/* div 수정 */}
       <div className="relative">
         {!showSquare && !showUpload ? (
@@ -164,7 +158,7 @@ export default function SearchBar() {
             className="block w-[679px] h-[46px] px-[20px] rounded-[50px] bg-white border-2 border-[#FC435A] focus:outline-none focus:ring-0"
             // placeholder=!showSquare?"검색어를 입력하세요":"사진을 업로드해주세요"
             placeholder="검색어를 입력하세요."
-            onClick={handleInputClick}
+            onChange={(e) => setSearchValue(e.target.value)} // 검색어 상태 변경
           />
         ) : (
           <input
@@ -228,21 +222,21 @@ export default function SearchBar() {
                 } overflow-hidden`}
               >
                 <svg
-                  width={673}
+                  width={570}
                   height={1}
-                  viewBox="0 0 673 1"
+                  viewBox="0 0 570 1"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   className="absolute top-[47px]"
                   preserveAspectRatio="none"
                 >
-                  <path d="M0 1L673 1" stroke="black" strokeOpacity="0.5" />
+                  <path d="M0 1L570 1" stroke="black" strokeOpacity="0.5" />
                 </svg>
 
                 <svg
-                  width={338}
+                  width={200}
                   height={2}
-                  viewBox="0 0 338 2"
+                  viewBox="0 0 200 2"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   className={`absolute top-[46px] ${
@@ -250,22 +244,22 @@ export default function SearchBar() {
                   }`}
                   preserveAspectRatio="none"
                 >
-                  <path d="M0 2L338 2" stroke="#FC435A" strokeWidth="5" />
+                  <path d="M0 2L200 2" stroke="#FC435A" strokeWidth="5" />
                 </svg>
 
                 <svg
-                  width={673}
+                  width={570}
                   height={1}
-                  viewBox="0 0 673 1"
+                  viewBox="0 0 570 1"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   className="absolute top-[-1px]"
                   preserveAspectRatio="none"
                 >
-                  <path d="M0 0L673 0" stroke="black" strokeOpacity="0.5" />
+                  <path d="M0 0L570 0" stroke="black" strokeOpacity="0.5" />
                 </svg>
 
-                <div className=" w-[679px] h-12 flex flex-row text-sm font-medium text-center text-black content-center">
+                <div className=" w-[570px] h-12 flex flex-row text-sm font-medium text-center text-black content-center">
                   <button
                     type="button"
                     id="recent"
@@ -281,7 +275,7 @@ export default function SearchBar() {
                   <button
                     type="button"
                     id="popular"
-                    className={`w-1/2 h-12 items-center justify-center ${
+                    className={`w-1/2 h-12 items-center justify-center content-center ${
                       showContent === "popular"
                         ? "text-[#FC435A] border-b-2 border-[#FC435A]"
                         : ""

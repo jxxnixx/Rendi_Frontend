@@ -32,7 +32,7 @@ export default function New() {
         <title>New</title>
       </Head>
 
-      <div className="relative mt-[135px] flex w-full flex-col bg-white text-lg font-medium mobile:mt-[90px">
+      <div className="relative mt-[135px] flex w-full flex-col bg-white text-lg font-medium mobile:mt-[90px]">
         <ProdBar
           category={"default"}
           activeCate={activeCate}
