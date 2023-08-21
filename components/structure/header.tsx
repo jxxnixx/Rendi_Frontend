@@ -4,10 +4,11 @@ import ProfileBtn from "./profileBtn";
 import SearchBar from "./searchBar";
 import { useRouter } from "next/router";
 import MainSearchBar from "./mainSearchBar";
-import MobileSearchBar from "./mobileSearchBar";
 import { useScreenSize } from "@/libs/client/useScreenSize";
 import { useState } from "react";
 import { MenuOutlined, SearchOutlined, UserOutlined } from "@ant-design/icons";
+import MoMainSearchBar from "./momainSearchBar";
+import MoSearchBar from "./moSearchBar";
 
 export default function Header() {
   // 쿠키에서 로그인 상태를 확인하는 함수
@@ -42,8 +43,16 @@ export default function Header() {
                 className="text-2xl cursor-pointer"
                 onClick={() => setIsMobileSearchOpen(true)}
               />
-              <UserOutlined className="text-2xl" />
               {/* 로그인 아닌 상태에서는 로그인 페이지로, 로그인 상태에서는 마이페이지로 연결 */}
+              {isMainPage ? (
+                <Link href="/main/mypage" legacyBehavior>
+                  <UserOutlined className="text-2xl" />
+                </Link>
+              ) : (
+                <Link href="/auth/login" legacyBehavior>
+                  <UserOutlined className="text-2xl" />
+                </Link>
+              )}
             </div>
           </div>
         ) : (
@@ -78,9 +87,12 @@ export default function Header() {
           </>
         )}
       </div>
-      {isMobileSearchOpen && (
-        <MobileSearchBar onClose={() => setIsMobileSearchOpen(false)} />
-      )}
+      {isMobileSearchOpen &&
+        (isMainPage ? (
+          <MoMainSearchBar onClose={() => setIsMobileSearchOpen(false)} />
+        ) : (
+          <MoSearchBar onClose={() => setIsMobileSearchOpen(false)} />
+        ))}
     </header>
   );
 }

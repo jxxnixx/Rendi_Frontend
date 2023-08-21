@@ -73,19 +73,19 @@ function LogIn() {
           <title>LogIn</title>
         </Head>
         <div className=" flex flex-col items-center">
-          <div className="relative top-[241px] text-center">
+          <div className="relative top-[240px] mobile:top-[120px] text-center">
             <p className="text-4xl mb-[70px] font-semibold text-black">
               로그인
             </p>
           </div>
-          <div className="absolute top-[305px] text-center">
+          <div className="absolute top-[305px] mobile:top-[185px] text-center">
             <p className="text-lg text-[#666]">
               Rendi만의 지능형 AI 검색을 경험해보세요!
             </p>
           </div>
         </div>
 
-        <div className="flex flex-col justify-center items-center mt-[50px] h-screen">
+        <div className="flex flex-col justify-center items-center mt-[50px] h-screen mobile:mt-0">
           <form
             className=" flex flex-col justify-center items-center gap-1 p-0 w-[590px] h-[890px] mobile:w-[390px] mobile:h-[930px]"
             onSubmit={handleSubmit(submitForm)}

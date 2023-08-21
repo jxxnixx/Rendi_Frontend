@@ -6,25 +6,20 @@ import { useRouter } from "next/router";
 export default function SearchBar() {
   const router = useRouter();
 
+  const [searchValue, setSearchValue] = useState(""); // 검색어 상태
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const searchValue = inputRef.current?.value;
-    const imageValue = ""; // 이미지 값 가져오는 방법에 따라 추가
 
     setShowUpload(false);
 
     if (showContent === "popular") {
       alert("로그인이 필요한 서비스입니다.");
       router.push("/");
-    } else {
-      router.push(
-        `/main/searchResult?search=${searchValue}&image=${imageValue}`
-      );
     }
-
-    inputRef.current && (inputRef.current.value = "");
+    setSearchValue(""); // 검색어 초기화
   };
+
   // Ref로 사각형, input dom요소 참조
   // const squareRef = useRef<HTMLDivElement>(null);
   // const inputRef = useRef<HTMLInputElement>(null);
@@ -84,12 +79,6 @@ export default function SearchBar() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label
-        htmlFor="default-search"
-        className="text-sm font-medium text-gray-900 sr-only dark:text-white"
-      >
-        Search
-      </label>
       {/* div 수정 */}
       <div className="relative">
         {!showSquare && !showUpload ? (

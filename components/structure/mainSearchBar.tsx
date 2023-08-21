@@ -158,7 +158,7 @@ export default function SearchBar() {
             className="block w-[679px] h-[46px] px-[20px] rounded-[50px] bg-white border-2 border-[#FC435A] focus:outline-none focus:ring-0"
             // placeholder=!showSquare?"검색어를 입력하세요":"사진을 업로드해주세요"
             placeholder="검색어를 입력하세요."
-            onChange={(e) => setSearchValue(e.target.value)} // 검색어 상태 변경
+            onClick={handleInputClick} // 검색어 상태 변경
           />
         ) : (
           <input
@@ -222,21 +222,21 @@ export default function SearchBar() {
                 } overflow-hidden`}
               >
                 <svg
-                  width={570}
+                  width={673}
                   height={1}
-                  viewBox="0 0 570 1"
+                  viewBox="0 0 673 1"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   className="absolute top-[47px]"
                   preserveAspectRatio="none"
                 >
-                  <path d="M0 1L570 1" stroke="black" strokeOpacity="0.5" />
+                  <path d="M0 1L673 1" stroke="black" strokeOpacity="0.5" />
                 </svg>
 
                 <svg
-                  width={200}
+                  width={338}
                   height={2}
-                  viewBox="0 0 200 2"
+                  viewBox="0 0 338 2"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   className={`absolute top-[46px] ${
@@ -244,22 +244,22 @@ export default function SearchBar() {
                   }`}
                   preserveAspectRatio="none"
                 >
-                  <path d="M0 2L200 2" stroke="#FC435A" strokeWidth="5" />
+                  <path d="M0 2L338 2" stroke="#FC435A" strokeWidth="5" />
                 </svg>
 
                 <svg
-                  width={570}
+                  width={673}
                   height={1}
-                  viewBox="0 0 570 1"
+                  viewBox="0 0 673 1"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   className="absolute top-[-1px]"
                   preserveAspectRatio="none"
                 >
-                  <path d="M0 0L570 0" stroke="black" strokeOpacity="0.5" />
+                  <path d="M0 0L673 0" stroke="black" strokeOpacity="0.5" />
                 </svg>
 
-                <div className=" w-[570px] h-12 flex flex-row text-sm font-medium text-center text-black content-center">
+                <div className=" w-[679px] h-12 flex flex-row text-sm font-medium text-center text-black content-center">
                   <button
                     type="button"
                     id="recent"

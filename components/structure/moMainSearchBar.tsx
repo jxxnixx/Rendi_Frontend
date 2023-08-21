@@ -8,11 +8,11 @@ import { recentSearchHistoryState } from "@/libs/client/atom";
 import { Camera, Search } from "../icons";
 import SubmitBtn from "../function/submitBtn";
 
-interface MobileSearchBarProps {
+interface MoMainSearchBarProps {
   onClose: () => void; // 팝업 닫기 핸들러
 }
 
-export default function MobileSearchBar({ onClose }: any) {
+export default function MoMainSearchBar({ onClose }: any) {
   const router = useRouter();
   const isMainPage = router.asPath.includes("/main");
 

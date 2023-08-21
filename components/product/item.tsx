@@ -61,9 +61,8 @@ const Item = ({ item }: ItemProps) => {
   }, [isCenterHeartShown]);
 
   const handleLike = async () => {
-    setIsCenterHeartShown(true);
-
     if (accessToken) {
+      setIsCenterHeartShown(true);
       try {
         // 좋아요를 토글하여 업데이트
         const updatedWishYN = isLiked ? "N" : "Y";
