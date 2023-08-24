@@ -1,4 +1,3 @@
-// ScreenUtil.js
 import { useState, useEffect } from "react";
 
 export function useScreenSize() {
@@ -22,4 +21,23 @@ export function useScreenSize() {
   }, []);
 
   return screen;
+}
+
+export function useScreenWidth() {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return screenWidth;
 }

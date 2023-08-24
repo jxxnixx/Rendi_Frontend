@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 import { recentSearchHistoryState } from "@/libs/client/atom";
 import { Camera, Search } from "../icons";
 import SubmitBtn from "../function/submitBtn";
+import { useScreenSize, useScreenWidth } from "@/libs/client/useScreen";
 
 interface MoSearchBarProps {
   onClose: () => void; // 팝업 닫기 핸들러
@@ -14,6 +15,7 @@ interface MoSearchBarProps {
 
 export default function MoSearchBar({ onClose }: any) {
   const router = useRouter();
+  const screenWidth = useScreenWidth();
 
   const [searchValue, setSearchValue] = useState(""); // 검색어 상태
 
@@ -58,15 +60,15 @@ export default function MoSearchBar({ onClose }: any) {
           />
         </div>
         {/* 최근 검색어와 인기 검색어 */}
-        <div className="px-4">
-          <div className="w-[570px] h-[570px] relative z-0">
+        <div className="m-auto">
+          <div className="w-screen h-[570px] relative">
             <div
-              className={`w-[570px] h-12 absolute ${
+              className={`w-screen h-12 absolute ${
                 showContent === "recent" ? "left-[0px]" : "right-[0px]"
               } overflow-hidden`}
             >
               <svg
-                width={570}
+                width={screenWidth}
                 height={0.5}
                 viewBox="0 0 570 1"
                 fill="none"
@@ -78,7 +80,7 @@ export default function MoSearchBar({ onClose }: any) {
               </svg>
 
               <svg
-                width={235}
+                width={screenWidth / 2}
                 height={2}
                 viewBox="0 0 235 2"
                 fill="none"
@@ -92,7 +94,7 @@ export default function MoSearchBar({ onClose }: any) {
               </svg>
 
               <svg
-                width={570}
+                width={screenWidth}
                 height={1}
                 viewBox="0 0 570 1"
                 fill="none"
@@ -103,7 +105,7 @@ export default function MoSearchBar({ onClose }: any) {
                 <path d="M0 0L500 0" stroke="black" strokeOpacity="0.5" />
               </svg>
 
-              <div className="w-[570px] h-12 absolute left-0 top-0">
+              <div className="w-screen h-12 absolute left-0 top-0">
                 <div className="flex flex-row text-sm font-medium text-center text-black content-center">
                   <button
                     type="button"
@@ -132,10 +134,10 @@ export default function MoSearchBar({ onClose }: any) {
                 </div>
               </div>
             </div>
-            <div className="w-[570px] h-[361px] absolute left-0 right-0 top-12 overflow-hidden">
+            <div className="w-screen h-[500px] top-12 relative left-0 right-0 overflow-hidden justify-center items-center m-auto">
               <div
                 id="content"
-                className="w-[200px] absolute left-[190px] top-[157px] text-sm font-medium text-center text-black"
+                className="w-1/2 h-[500px] text-sm font-medium justify-center items-center text-center text-black m-auto mt-20"
               >
                 {showContent === "recent"
                   ? "최근 검색한 기록이 없습니다."

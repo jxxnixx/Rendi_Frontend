@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Carousel } from "antd";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { useScreenSize } from "@/libs/client/useScreenSize";
+import { useScreenSize } from "@/libs/client/useScreen";
 
 export default function Banner() {
   const screen = useScreenSize();

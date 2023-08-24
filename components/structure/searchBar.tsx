@@ -80,7 +80,7 @@ export default function SearchBar() {
   return (
     <form onSubmit={handleSubmit}>
       {/* div 수정 */}
-      <div className="relative">
+      <div className="relative ">
         {!showSquare && !showUpload ? (
           <input
             ref={inputRef}
@@ -106,7 +106,7 @@ export default function SearchBar() {
           />
         )}
         {showUpload && (
-          <div className="absolute top-[46px] left-[0px] w-[679px] h-[456px] bg-white border-2 border-[#FC435A]  rounded-b-[23px] border-t-0">
+          <div className="absolute top-[46px] left-[0px] w-[679px] h-[456px] bg-white border-2 border-[#FC435A] rounded-b-[23px] border-t-0">
             <div className="flex  flex-col justify-center items-center w-[679px] h-[410px]">
               <div className=" w-[600px] mt-[10px] p-[20px] overflow-y-auto">
                 <span className="flex m-[20px] justify-center text-sm  font-medium text-gray-900 ">

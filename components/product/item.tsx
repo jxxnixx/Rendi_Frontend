@@ -3,6 +3,7 @@ import { HeartIcon } from "../icons";
 import { Carousel } from "antd";
 import router from "next/router";
 import { itemsApi } from "@/libs/api";
+import { useScreenSize } from "@/libs/client/useScreen";
 
 interface ItemProps {
   item: {
@@ -29,6 +30,7 @@ const Item = ({ item }: ItemProps) => {
   const [isLiked, setIsLiked] = useState(item.wishYN === "Y");
   const [isCenterHeartShown, setIsCenterHeartShown] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>();
+  const screen = useScreenSize();
 
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
@@ -97,7 +99,11 @@ const Item = ({ item }: ItemProps) => {
   };
 
   return (
-    <div className="relative mb-[10px] w-[222px] h-[361px]">
+    <div
+      className={`relative mb-[10px] ${
+        screen === "mobile" ? "w-[162px] h-[271px]" : "w-[222px] h-[361px]"
+      }`}
+    >
       {/* 상품 이미지 */}
       {/* 이미지 슬라이드 자동으로 넘기는거 싫으면 autoplay삭제*/}
       <div
@@ -109,7 +115,11 @@ const Item = ({ item }: ItemProps) => {
             item.imgUrls.map((url, index) => (
               <div key={index}>
                 <img
-                  className="w-56 h-69 rounded-lg border-2 border-gray-100 shadow-md"
+                  className={`${
+                    screen === "mobile"
+                      ? "w-[162px] h-[204px]"
+                      : "w-[222px] h-[288px]"
+                  } rounded-lg border-2 border-gray-100 shadow-md`}
                   src={url}
                   alt={item.title}
                 />

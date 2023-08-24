@@ -3,7 +3,7 @@ import Item from "./item";
 import dummyData from "./dummyData.json";
 import { Product } from "@/components/product/DataTypes";
 import { useRouter } from "next/router";
-import { useScreenSize } from "@/libs/client/useScreenSize";
+import { useScreenSize } from "@/libs/client/useScreen";
 
 interface ItemsProps {
   itemsPerPage: number; // itemsPerPage를 props로 받습니다.
@@ -38,8 +38,10 @@ export default function Items({ itemsPerPage, itemsToShow }: ItemsProps) {
         <div
           key={i}
           className={`flex relative justify-between items-start ${
-            screen === "mobile" ? "w-full" : "w-[1040px]"
-          } px-[25px] py-[5px] mb-[10px]`}
+            screen === "mobile"
+              ? "w-full px-[16px] py-[3px] mb-[5px]"
+              : "w-[1040px] px-[25px] py-[5px] mb-[10px]"
+          } `}
         >
           {rowItems.map((item: Product) => (
             <Item key={item.productId} item={item} />
@@ -53,7 +55,7 @@ export default function Items({ itemsPerPage, itemsToShow }: ItemsProps) {
   };
 
   return (
-    <div className="w-[1040px] relative overflow-hidden bg-white mobile:w-[640px] mobile:px-[30px]">
+    <div className="w-[1040px] relative overflow-hidden bg-white mobile:w-[640px]">
       {renderItems()}
     </div>
   );

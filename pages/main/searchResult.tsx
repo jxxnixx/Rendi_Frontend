@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import FilterPopup from "@/components/sort/filterPopup";
-import { useScreenSize } from "@/libs/client/useScreenSize";
+import { useScreenSize } from "@/libs/client/useScreen";
 
 export default function SearchResult() {
   const router = useRouter();

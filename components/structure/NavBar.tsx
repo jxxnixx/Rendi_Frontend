@@ -24,7 +24,7 @@ export default function NavBar() {
               {text}
               {/* 밑줄 */}
               {router.pathname === href && (
-                <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-black mb-[-6.5px] z-500"></span>
+                <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-black mb-[-6.5px] z-30"></span>
               )}
             </a>
           </Link>

@@ -4,11 +4,12 @@ import ProfileBtn from "./profileBtn";
 import SearchBar from "./searchBar";
 import { useRouter } from "next/router";
 import MainSearchBar from "./mainSearchBar";
-import { useScreenSize } from "@/libs/client/useScreenSize";
+import { useScreenSize } from "@/libs/client/useScreen";
 import { useState } from "react";
 import { MenuOutlined, SearchOutlined, UserOutlined } from "@ant-design/icons";
-import MoMainSearchBar from "./momainSearchBar";
+import MoMainSearchBar from "./moMainSearchBar";
 import MoSearchBar from "./moSearchBar";
+import SideBar from "./sidebar";
 
 export default function Header() {
   // 쿠키에서 로그인 상태를 확인하는 함수
@@ -24,8 +25,9 @@ export default function Header() {
       <div className="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 z-30  h-[100px] mobile:h-[50px] w-[1040px] bg-white mx-auto mobile:w-full">
         {screen === "mobile" ? (
           <div className="flex items-center justify-between w-full">
-            <div className="flex items-center justify-center space-x-4 ml-4 mr-6 ">
-              <MenuOutlined className="text-2xl" />
+            <div className="flex items-center justify-center space-x-4 ml-4 mr-6">
+              {/* <MenuOutlined className="text-2xl" /> */}
+              <SideBar />
             </div>
             <div>
               <Link href="/" legacyBehavior>
