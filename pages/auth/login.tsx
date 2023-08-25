@@ -149,7 +149,7 @@ function LogIn() {
                 카카오 로그인
               </button>
               {/* <div className="mobile:flex mobile:my-3"> */}
-              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a] mobile:w-[155px] ">
+              {/* <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a] mobile:w-[155px] ">
                 <div className="mr-[10px]">
                   <Naver />
                 </div>
@@ -160,14 +160,14 @@ function LogIn() {
                   <Google />
                 </div>
                 구글 로그인
-              </button>
+              </button> */}
               {/* </div> */}
             </div>
 
             <div className="mt-[40px] bg-white text-gray-600 text-[11pt] text-base">
               Rendi가 처음이신가요?
             </div>
-            <Link href="/auth/signup" legacyBehavior>
+            <Link href="/auth/signUp" legacyBehavior>
               <button className="mt-[3px] bg-white text-black text-[12pt] text-base">
                 회원가입
               </button>

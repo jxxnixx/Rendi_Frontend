@@ -32,21 +32,23 @@ export default function Market() {
         <title>Market</title>
       </Head>
       <div className="flex justify-center">
-        <div className=" mt-[135px] w-[1040px]  h-[400px] bg-[#FFE9EC]"></div>{" "}
+        <div className="mt-[135px] mobile:mt-[80px] w-full h-[400px] mobile:h-[250px] bg-[#FFE9EC]"></div>{" "}
       </div>
 
-      <div className="flex  w-full flex-col text-lg font-medium ">
+      <div className="flex w-full flex-col text-lg font-medium ">
         <ProdBar
           category={"default"}
           activeCate={activeCate}
           setActiveCate={setActiveCate}
         />
-        <div className="flex justify-center ">
-          <div className=" pt-[9px]">
-            <button className=" justify-center w-[100px] h-[30px] mb-[4px] ml-[25px] text-[11pt] text-[#666666]">
+        <div className="flex justify-center">
+          <div className="pt-4 mobile:pt-4">
+            <button className="justify-center w-[100px] h-[30px] mb-[4px] ml-[25px] mobile:mb-0 mobile:ml-[10px] text-[11pt] text-[#666666]">
               이번주 신제품
             </button>
-            <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
+            <div className="flex w-full relative justify-center pt-1.5 pb-8 mobile:py-2">
+              <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
+            </div>
           </div>
         </div>
         <div className="flex justify-center py-1">

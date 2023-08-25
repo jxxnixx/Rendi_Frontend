@@ -43,7 +43,7 @@ export default function ProdBar({
   }
 
   return (
-    <nav className="relative h-[60px] mobile:h-[40px] text-[#666] bg-white py-[11px] flex shadow-md space-x-[60px] mobile:space-x-[10px] items-center justify-center">
+    <nav className="relative h-[60px] mobile:h-[40px] text-[#666] bg-white py-[11px] flex shadow-md space-x-[60px] mobile:space-x-[10px] items-center justify-center mobile:justify-start mobile:pl-4 mobile:overflow-scroll mobile:scrollbar-hide">
       {categories.map(({ cate }) => (
         <button
           key={cate}

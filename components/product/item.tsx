@@ -15,6 +15,9 @@ interface ItemProps {
     imgUrls: string[];
     href: string;
   };
+  updateClickCount: (productId: number, clickCount: number) => void;
+  lastClickTime: number | null; // 클릭 시간 정보 전달
+  updateLastClickTime: (productId: number, clickTime: number | null) => void; // 클릭 시간 업데이트 함수
 }
 
 // brandId가 1인 경우 "CIDER"로 변경하는 함수
@@ -25,10 +28,17 @@ const updateBrandId = (item: ItemProps["item"]) => {
   return item;
 };
 
-const Item = ({ item }: ItemProps) => {
+const Item = ({
+  item,
+  updateClickCount,
+  lastClickTime,
+  updateLastClickTime,
+}: ItemProps) => {
   // 이전에 좋아요를 눌렀는지 여부를 상태로 관리
   const [isLiked, setIsLiked] = useState(item.wishYN === "Y");
   const [isCenterHeartShown, setIsCenterHeartShown] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+
   const timeoutRef = useRef<NodeJS.Timeout>();
   const screen = useScreenSize();
 
@@ -70,9 +80,6 @@ const Item = ({ item }: ItemProps) => {
         const updatedWishYN = isLiked ? "N" : "Y";
         const updatedItem = { ...item, wishYN: updatedWishYN };
 
-        console.log(accessToken);
-        console.log(updatedItem.productId);
-
         // 서버에 업데이트된 정보를 저장하는 로직
         const likedResponse = await itemsApi.toggleWish(
           updatedItem.productId,
@@ -94,7 +101,10 @@ const Item = ({ item }: ItemProps) => {
   const updatedItem = updateBrandId(item);
 
   const handleItemClick = () => {
-    // 상품을 클릭했을 때 item.href로 페이지 이동
+    const currentTime = Date.now();
+    setClickCount(clickCount + 1);
+    updateClickCount(item.productId, clickCount + 1); // 클릭 정보 업데이트
+    updateLastClickTime(item.productId, currentTime); // 클릭 시간 업데이트
     router.push(item.href);
   };
 

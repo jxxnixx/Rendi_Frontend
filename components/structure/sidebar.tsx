@@ -1,19 +1,5 @@
 import { motion, useCycle, Variants } from "framer-motion";
 import Link from "next/link";
-import {
-  Top,
-  Outer,
-  Dress,
-  Pants,
-  Skirt,
-  Training,
-  Inner,
-  Swimsuit,
-  Shoes,
-  Bag,
-  Mgoods,
-  ETC,
-} from "../icons";
 import Circle from "../category/circle";
 
 // Sidebar animation variants
