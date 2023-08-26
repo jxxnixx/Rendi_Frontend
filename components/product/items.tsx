@@ -4,6 +4,7 @@ import dummyData from "./dummyData.json";
 import { Product } from "@/components/product/DataTypes";
 import { useRouter } from "next/router";
 import { useScreenSize } from "@/libs/client/useScreen";
+import { itemsApi } from "@/libs/api";
 
 interface ItemsProps {
   itemsPerPage: number;
@@ -44,8 +45,12 @@ export default function Items({ itemsPerPage, itemsToShow }: ItemsProps) {
       for (const productId in clickCounts) {
         const productIdn = parseInt(productId); // 문자열을 숫자로 변환
         const clickCount = clickCounts[productId];
-        console.log(productIdn + ":" + clickCount);
-        // await itemsApi.updateClickCount(productId, clickCount);
+        console.log(productIdn);
+        console.log(clickCount);
+        console.log(clickCounts);
+
+        const hitsResponse = await itemsApi.updateHits(productIdn, clickCount);
+        console.log(hitsResponse);
       }
     } catch (error) {
       console.log("클릭 카운트 업데이트 에러:", error);

@@ -158,7 +158,9 @@ export default function SearchBar() {
             className="block w-[679px] h-[46px] px-[20px] rounded-[50px] bg-white border-2 border-[#FC435A] focus:outline-none focus:ring-0"
             // placeholder=!showSquare?"검색어를 입력하세요":"사진을 업로드해주세요"
             placeholder="검색어를 입력하세요."
-            onClick={handleInputClick} // 검색어 상태 변경
+            onChange={(e) => setSearchValue(e.target.value)}
+            onClick={handleInputClick}
+            value={searchValue}
           />
         ) : (
           <input

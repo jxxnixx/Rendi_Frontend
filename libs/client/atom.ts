@@ -111,3 +111,9 @@ export const recentSearchHistoryState = atom<string[]>({
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
+
+export const recentViewedItemsState = atom<number[]>({
+  key: "recentViewedItemsState",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});

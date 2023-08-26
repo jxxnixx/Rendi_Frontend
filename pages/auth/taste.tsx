@@ -50,7 +50,7 @@ function Taste() {
       const signupResponse = await usersApi.signup(updatedSignUpData);
       console.log(signupResponse);
 
-      if (signupResponse.success) {
+      if (signupResponse) {
         // 페이지 이동
         router.push("/");
         console.log("회원가입 완료!");

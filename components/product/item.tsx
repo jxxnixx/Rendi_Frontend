@@ -4,6 +4,8 @@ import { Carousel } from "antd";
 import router from "next/router";
 import { itemsApi } from "@/libs/api";
 import { useScreenSize } from "@/libs/client/useScreen";
+import { useRecoilState } from "recoil";
+import { recentViewedItemsState } from "@/libs/client/atom";
 
 interface ItemProps {
   item: {
@@ -38,6 +40,9 @@ const Item = ({
   const [isLiked, setIsLiked] = useState(item.wishYN === "Y");
   const [isCenterHeartShown, setIsCenterHeartShown] = useState(false);
   const [clickCount, setClickCount] = useState(0);
+  const [recentViewedItems, setRecentViewedItems] = useRecoilState(
+    recentViewedItemsState
+  );
 
   const timeoutRef = useRef<NodeJS.Timeout>();
   const screen = useScreenSize();
@@ -80,6 +85,8 @@ const Item = ({
         const updatedWishYN = isLiked ? "N" : "Y";
         const updatedItem = { ...item, wishYN: updatedWishYN };
 
+        console.log(updatedItem);
+
         // 서버에 업데이트된 정보를 저장하는 로직
         const likedResponse = await itemsApi.toggleWish(
           updatedItem.productId,
@@ -105,6 +112,14 @@ const Item = ({
     setClickCount(clickCount + 1);
     updateClickCount(item.productId, clickCount + 1); // 클릭 정보 업데이트
     updateLastClickTime(item.productId, currentTime); // 클릭 시간 업데이트
+
+    // 이미 포함된 productId가 있으면 해당 기록 삭제
+    const updatedRecentViewedItems = recentViewedItems.filter(
+      (productId) => productId !== item.productId
+    );
+    // 가장 최근 순으로 추가
+    setRecentViewedItems([item.productId, ...updatedRecentViewedItems]);
+
     router.push(item.href);
   };
 
