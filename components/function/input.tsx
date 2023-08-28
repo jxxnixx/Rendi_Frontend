@@ -132,7 +132,7 @@ export default function Input({
                 if (setIdCheck) setIdCheck(true); // 값이 있을 때만 호출
               } else {
                 console.log(false);
-                if (setIdCheck) setIdCheck(false); // 값이 있을 때만 호출
+                if (setIdCheck) setIdCheck(false); // 값이 없을 때만 호출
               }
             } else if (checkLabel === "인증") {
               const VeriCode = await onEmailVerification(
@@ -152,7 +152,7 @@ export default function Input({
                 if (setCodeCheck) setCodeCheck(true); // 값이 있을 때만 호출
               } else {
                 console.log(false);
-                if (setCodeCheck) setCodeCheck(false); // 값이 있을 때만 호출
+                if (setCodeCheck) setCodeCheck(false); // 값이 없을 때만 호출
               }
             }
           }}

@@ -205,10 +205,6 @@ export const usersApi = {
 
       console.log(response.data);
 
-      const message = response.data.response.message;
-      alert(message);
-      console.log(message);
-
       return response.data;
     } catch (error: any) {
       // Handle the error
