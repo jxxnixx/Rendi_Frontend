@@ -3,8 +3,12 @@ import SubmitBtn from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
-import { UserInputState, editInfoInputState } from "@/libs/client/atom";
-import { useRecoilState } from "recoil";
+import {
+  UserInputState,
+  editInfoInputState,
+  userInfoState,
+} from "@/libs/client/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { AEditInfosProps, usersApi } from "@/libs/api";
 import { useEffect, useState } from "react"; //
 import router, { useRouter } from "next/router"; //
@@ -16,7 +20,6 @@ export interface IEditInfosProps extends UserInputState {
 
 function Edit() {
   const {
-    watch,
     register,
     formState: { errors },
     handleSubmit,
@@ -28,38 +31,15 @@ function Edit() {
   const [editInfoInputValue, setEditInfoInputValue] =
     useRecoilState(editInfoInputState);
 
+  const userInfo = useRecoilValue(userInfoState);
+
   useEffect(() => {
-    const fetchAndSetDefaultValues = async () => {
-      try {
-        const accessToken = localStorage.getItem("accessToken");
-
-        if (accessToken) {
-          const viewInfoResponse = await usersApi.viewInfos(accessToken);
-          console.log(viewInfoResponse);
-          if (viewInfoResponse?.success) {
-            console.log("회원정보 조회 성공!");
-            setValue("username", viewInfoResponse.response.response.username);
-            setValue(
-              "profile.nickname",
-              viewInfoResponse.response.response.nickname
-            );
-            setValue("profile.email", viewInfoResponse.response.response.email);
-            setValue("profile.birth", viewInfoResponse.response.response.birth);
-            setValue(
-              "profile.phonenum",
-              viewInfoResponse.response.response.phone
-            );
-          }
-        } else {
-          console.log("accessToken이 없습니다.");
-        }
-      } catch (error) {
-        console.log("회원정보 조회 오류");
-      }
-    };
-
-    fetchAndSetDefaultValues();
-  }, []);
+    register("username"); // Register username field manually
+    register("profile.nickname"); // Register profile.nickname field manually
+    register("profile.email"); // Register profile.email field manually
+    register("profile.birth"); // Register profile.birth field manually
+    register("profile.phonenum"); // Register profile.phonenum field manually
+  }, [register]);
 
   const handleClick = async (data: IEditInfosProps) => {
     try {
@@ -135,6 +115,7 @@ function Edit() {
                   })}
                   error={errors?.profile?.nickname?.message}
                   disabled={true}
+                  defaultValue={userInfo.username}
                 />
 
                 <Input
@@ -151,6 +132,7 @@ function Edit() {
                   })}
                   // placeholder={userValue.nickname}
                   error={errors?.profile?.nickname?.message}
+                  defaultValue={userInfo.nickname}
                 />
 
                 <Input
@@ -167,21 +149,7 @@ function Edit() {
                   })}
                   // placeholder={userValue.email}
                   error={errors.profile?.email?.message}
-                />
-
-                <Input
-                  name="authCode"
-                  label="인증번호"
-                  checkLabel="확인"
-                  type="authCode"
-                  kind="check"
-                  register={register("authCode", {
-                    required: "인증번호를 입력하세요",
-                  })}
-                  placeholder="인증번호를 입력하세요."
-                  error={errors?.authCode?.message}
-                  inputValue={editInfoInputValue}
-                  setInputValue={setEditInfoInputValue}
+                  defaultValue={userInfo.email}
                 />
 
                 <Input
@@ -200,6 +168,7 @@ function Edit() {
                   error={errors?.profile?.birth?.message}
                   inputValue={editInfoInputValue}
                   setInputValue={setEditInfoInputValue}
+                  defaultValue={userInfo.birth}
                 />
 
                 <Input
@@ -218,6 +187,7 @@ function Edit() {
                   error={errors?.profile?.phonenum?.message}
                   inputValue={editInfoInputValue}
                   setInputValue={setEditInfoInputValue}
+                  defaultValue={userInfo.phonenum}
                 />
 
                 <div className="flex mt-[40px] text-center justify-center">

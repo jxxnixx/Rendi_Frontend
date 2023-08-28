@@ -1,30 +1,16 @@
+import { useScreenSize, useScreenWidth } from "@/libs/client/useScreen";
 import { Line } from "../icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Footer() {
-  const [screen, setScreen] = useState("laptop");
-
-  useEffect(() => {
-    const handleResize = () => {
-      // console.log(window.innerWidth);
-      if (window.innerWidth <= 640) {
-        setScreen("mobile");
-      } else {
-        setScreen("laptop");
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize(); // 초기화
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const screen = useScreenSize();
+  const screenWidth = useScreenWidth();
 
   return (
     <>
       <Line />
-      <footer className="relative flex items-center justify-center bottom-0 left-0 right-0 z-10 w-[auto] h-[auto] relative overflow-hidden bg-white">
+      <footer className=" flex items-center justify-center bottom-0 left-0 right-0 z-10 w-[auto] h-[auto] relative overflow-hidden bg-white">
         {screen === "laptop" ? (
           <div className="w-[1040px] h-[989.52px] flex items-center justify-center">
             <div className="w-[1040px] h-[420px] absolute left-0 top-0 overflow-hidden bg-white">

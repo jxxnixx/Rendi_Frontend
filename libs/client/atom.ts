@@ -29,6 +29,14 @@ export interface UserInputState {
   authCode: string;
 }
 
+export interface UserInfoState {
+  username: string;
+  nickname: string;
+  email: string;
+  birth: string;
+  phonenum: string;
+}
+
 // 찐 회원가입용 atom. taste 페이지에서 회원가입 post 시 사용
 export const signUpState = atom<SignUpState>({
   key: "signUpState",
@@ -121,5 +129,17 @@ export const recentSearchHistoryState = atom<string[]>({
 export const recentViewedItemsState = atom<number[]>({
   key: "recentViewedItemsState",
   default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const userInfoState = atom<UserInfoState>({
+  key: "userInfoState",
+  default: {
+    username: "",
+    nickname: "",
+    email: "",
+    birth: "",
+    phonenum: "",
+  },
   effects_UNSTABLE: [persistAtom],
 });

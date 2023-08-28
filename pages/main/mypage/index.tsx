@@ -7,19 +7,24 @@ import { AEditInfosProps, usersApi } from "@/libs/api";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import { UserInputState } from "@/libs/client/atom";
+import {
+  UserInfoState,
+  UserInputState,
+  userInfoState,
+} from "@/libs/client/atom";
+import { useRecoilState } from "recoil";
 
 function Mypage() {
   const router = useRouter();
   const {
     watch,
-    register,
     formState: { errors },
-    handleSubmit,
     setValue,
   } = useForm<UserInputState>({
     mode: "onChange",
   });
+
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   useEffect(() => {
     const fetchAndSetDefaultValues = async () => {
@@ -31,17 +36,17 @@ function Mypage() {
           console.log(viewInfoResponse);
           if (viewInfoResponse?.success) {
             console.log("회원정보 조회 성공!");
-            setValue("username", viewInfoResponse.response.response.username);
-            setValue(
-              "profile.nickname",
-              viewInfoResponse.response.response.nickname
-            );
-            setValue("profile.email", viewInfoResponse.response.response.email);
-            setValue("profile.birth", viewInfoResponse.response.response.birth);
-            setValue(
-              "profile.phonenum",
-              viewInfoResponse.response.response.phone
-            );
+
+            const updatedUserInfoData: UserInfoState = {
+              username: viewInfoResponse.response.response.username,
+              nickname: viewInfoResponse.response.response.nickname,
+              email: viewInfoResponse.response.response.email,
+              birth: viewInfoResponse.response.response.birth,
+              phonenum: viewInfoResponse.response.response.phone,
+            };
+
+            setUserInfo(updatedUserInfoData);
+            console.log(updatedUserInfoData);
           }
         } else {
           console.log("accessToken이 없습니다.");
@@ -103,7 +108,7 @@ function Mypage() {
               <div className="flex items-end h-[50px] ">
                 {/* <p className="text-lg text-center text-black">아무개! 님</p> */}
                 <p className="text-lg text-center text-black">
-                  {watch("profile.nickname")} 님
+                  {userInfo.nickname} 님
                 </p>
               </div>
               <Link href="/main/mypage/edit">

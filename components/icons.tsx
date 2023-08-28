@@ -1,3 +1,4 @@
+import { useScreenWidth } from "@/libs/client/useScreen";
 import React from "react";
 
 interface HeartIconProps {
@@ -411,11 +412,13 @@ export function ShoppingBag() {
 }
 
 export function Line() {
+  const screenWidth = useScreenWidth();
+
   return (
     <svg
-      width={1039}
+      width={screenWidth}
       height={1}
-      viewBox="0 0 1039 1"
+      viewBox={`0 0 ${screenWidth} 1`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="none"
@@ -423,7 +426,7 @@ export function Line() {
       <line
         x1={-227}
         y1="0.5"
-        x2={1213}
+        x2={screenWidth}
         y2="0.5"
         stroke="black"
         strokeOpacity="0.5"
