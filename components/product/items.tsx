@@ -1,42 +1,109 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Item from "./item";
 import dummyData from "./dummyData.json";
 import { Product } from "@/components/product/DataTypes";
 import { useRouter } from "next/router";
+import { useScreenSize } from "@/libs/client/useScreen";
+import { itemsApi } from "@/libs/api";
 
 interface ItemsProps {
-  itemsPerPage: number; // itemsPerPage를 props로 받습니다.
-  itemsToShow?: Product[]; // itemsToShow를 옵셔널하게 설정합니다.
+  itemsPerPage: number;
+  itemsToShow?: Product[];
 }
+
+type ClickCounts = { [productId: number]: number };
+type LastClickTimes = { [productId: number]: number | null };
 
 export default function Items({ itemsPerPage, itemsToShow }: ItemsProps) {
   const router = useRouter();
-  const { search, image } = router.query;
-  useEffect(() => {
-    // 검색어와 이미지 값을 활용하여 필요한 작업을 수행합니다.
-    console.log("검색어:", search);
-    console.log("이미지:", image);
-  }, [router.query]);
-
-  // 전체 상품 데이터를 가져옵니다.
+  const screen = useScreenSize();
   const allItems: Product[] = dummyData;
-
-  // 만약 itemsToShow가 제공되지 않았다면, 처음 itemsPerPage개의 상품만 보여줍니다.
   const itemsToDisplay = itemsToShow || allItems.slice(0, itemsPerPage);
+  // 만약 itemsToShow가 제공되지 않았다면, 처음 itemsPerPage개의 상품만 보여줍니다.
+
+  const [clickCounts, setClickCounts] = useState<ClickCounts>({});
+  const [lastClickTimes, setLastClickTimes] = useState<LastClickTimes>({});
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+
+  const updateClickCount = (productId: number, clickCount: number) => {
+    setClickCounts((prevClickCounts) => ({
+      ...prevClickCounts,
+      [productId]: clickCount,
+    }));
+    console.log(productId + ":" + clickCount);
+  };
+
+  const updateLastClickTime = (productId: number, clickTime: number | null) => {
+    setLastClickTimes((prevLastClickTimes) => ({
+      ...prevLastClickTimes,
+      [productId]: clickTime,
+    }));
+  };
+
+  const sendClickCountsToBackend = async () => {
+    try {
+      for (const productId in clickCounts) {
+        const productIdn = parseInt(productId); // 문자열을 숫자로 변환
+        const clickCount = clickCounts[productId];
+        console.log(productIdn);
+        console.log(clickCount);
+        console.log(clickCounts);
+
+        const hitsResponse = await itemsApi.updateHits(productIdn, clickCount);
+        console.log(hitsResponse);
+      }
+    } catch (error) {
+      console.log("클릭 카운트 업데이트 에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    const startInterval = () => {
+      const newIntervalId = setInterval(() => {
+        sendClickCountsToBackend();
+      }, 600000); // 600초 (10분)
+
+      setIntervalId(newIntervalId);
+    };
+
+    // 클릭 타임스탬프가 있는 경우에만 주기적인 업데이트 시작
+    if (Object.keys(lastClickTimes).length > 0) {
+      startInterval();
+    } else if (intervalId) {
+      clearInterval(intervalId);
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+      sendClickCountsToBackend(); // 컴포넌트 언마운트 시 마지막 업데이트 수행
+    };
+  }, [lastClickTimes]);
 
   const renderItems = () => {
     const rows = [];
-    const numItemsPerRow = 4;
+    const numItemsPerRow = screen === "mobile" ? 2 : 4;
 
     for (let i = 0; i < itemsToDisplay.length; i += numItemsPerRow) {
       const rowItems = itemsToDisplay.slice(i, i + numItemsPerRow);
       const row = (
         <div
           key={i}
-          className="flex justify-start items-start flex-grow-0 flex-shrink-0 w-[1040px] relative gap-[35px] px-[25px] py-[5px] mb-[10px]"
+          className={`flex relative justify-between items-start ${
+            screen === "mobile"
+              ? "w-full px-[16px] py-[3px] mb-[5px]"
+              : "w-[1040px] px-[25px] py-[5px] mb-[10px]"
+          } `}
         >
           {rowItems.map((item: Product) => (
-            <Item key={item.productId} item={item} />
+            <Item
+              key={item.productId}
+              item={item}
+              updateClickCount={updateClickCount}
+              lastClickTime={lastClickTimes[item.productId] || null}
+              updateLastClickTime={updateLastClickTime} // setLastClickTime 함수 전달
+            />
           ))}
         </div>
       );
@@ -47,7 +114,7 @@ export default function Items({ itemsPerPage, itemsToShow }: ItemsProps) {
   };
 
   return (
-    <div className="w-[1040px] relative overflow-hidden bg-white">
+    <div className="w-[1040px] relative overflow-hidden bg-white mobile:w-full">
       {renderItems()}
     </div>
   );

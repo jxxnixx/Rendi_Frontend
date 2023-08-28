@@ -1,6 +1,7 @@
 import NavBar from "@/components/structure/NavBar";
 import Footer from "@/components/structure/footer";
 import Header from "@/components/structure/header";
+import { useScreenSize } from "@/libs/client/useScreen";
 
 interface IProps {
   children: React.ReactNode;

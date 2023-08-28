@@ -1,14 +1,12 @@
 import { ALogInProps, usersApi } from "@/libs/api";
 import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
-import SubmitButton from "@/components/function/submitBtn";
+import SubmitBtn from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
 import { Google, KakaoTalk, LoginLine, Naver } from "@/components/icons";
 import { useEffect, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { setCookie } from "@/libs/client/cookies";
 
@@ -55,7 +53,7 @@ function LogIn() {
 
         // 페이지 이동
         // 예시: 메인 페이지로 이동
-        router.push("/");
+        router.push("/main");
       } else {
         // 로그인 실패
         setLoginError(
@@ -75,21 +73,21 @@ function LogIn() {
           <title>LogIn</title>
         </Head>
         <div className=" flex flex-col items-center">
-          <div className="relative top-[241px] text-center">
+          <div className="relative top-[240px] mobile:top-[120px] text-center">
             <p className="text-4xl mb-[70px] font-semibold text-black">
               로그인
             </p>
           </div>
-          <div className="absolute  top-[305px] text-center">
+          <div className="absolute top-[305px] mobile:top-[185px] text-center">
             <p className="text-lg text-[#666]">
               Rendi만의 지능형 AI 검색을 경험해보세요!
             </p>
           </div>
         </div>
 
-        <div className="flex justify-center items-center mt-[50px] h-screen">
+        <div className="flex flex-col justify-center items-center mt-[50px] h-screen mobile:mt-0">
           <form
-            className=" flex flex-col items-center gap-1 p-0 w-448 h-1017"
+            className=" flex flex-col justify-center items-center gap-1 p-0 w-[590px] h-[890px] mobile:w-[390px] mobile:h-[930px]"
             onSubmit={handleSubmit(submitForm)}
           >
             <Input
@@ -100,6 +98,7 @@ function LogIn() {
               placeholder="아이디"
               kind="text"
               error={errors?.username?.message}
+              className="justify-center items-center"
             />
             <Input
               name="password"
@@ -111,7 +110,7 @@ function LogIn() {
               error={errors?.password?.message}
               autoComplete="off"
             />
-            <div className="flex text-xs justify-between items-center h-[40px] w-[448px] text-[#666]">
+            <div className="flex text-xs justify-between mobile:flex-col items-center h-[40px] w-[448px] text-[#666]">
               <label
                 htmlFor="rememberId"
                 className="flex items-center cursor-pointer"
@@ -119,54 +118,56 @@ function LogIn() {
                 <input type="checkbox" id="rememberId" className="mr-2" />
                 Remember ID
               </label>
-              <div className="flex">
+              <div className="flex mobile:p-[20px]">
                 <Link href="/find/id" legacyBehavior>
                   <button className=" bg-white">아이디 찾기</button>
                 </Link>
 
-                <p className=" px-[5px] text-[10pt]"> | </p>
+                <p className="px-[5px] text-[10pt]"> | </p>
 
                 <Link href="/find/pw" legacyBehavior>
                   <button className=" bg-white">비밀번호 찾기</button>
                 </Link>
               </div>
             </div>
-            <div className="flex mt-[10px] text-center text-xs justify-center">
-              <SubmitButton
+            <div className="flex mt-[10px] text-center text-xs justify-center mobile:pt-[20px]">
+              <SubmitBtn
                 type="submit"
                 text="로그인"
                 className="flex justify-center items-center h-screen"
               />
             </div>
-            <div className="mt-[60px]">
+            <div className="mt-[20px] mobile:mt-[15px]">
               <LoginLine />
             </div>
 
-            <div className="flex mt-[20px] text-center text-[10pt]">
-              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#fee500]">
+            <div className="flex mobile:flex-col mt-[20px] text-center text-[10pt] mobile:mt-[15px]">
+              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#fee500] mobile:w-[326px] mobile:mx-auto ">
                 <div className="mr-[10px]">
                   <KakaoTalk />
                 </div>
                 카카오 로그인
               </button>
-              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a]">
+              {/* <div className="mobile:flex mobile:my-3"> */}
+              {/* <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a] mobile:w-[155px] ">
                 <div className="mr-[10px]">
                   <Naver />
                 </div>
                 네이버 로그인
               </button>
-              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] p-5 rounded-[15px] bg-white border border-[#666]/30">
+              <button className="flex items-center justify-center flex-row w-[186px] h-[46px] p-5 rounded-[15px] bg-white border border-[#cecdcd] mobile:w-[155px]">
                 <div className="mr-[10px]">
                   <Google />
                 </div>
                 구글 로그인
-              </button>
+              </button> */}
+              {/* </div> */}
             </div>
 
             <div className="mt-[40px] bg-white text-gray-600 text-[11pt] text-base">
               Rendi가 처음이신가요?
             </div>
-            <Link href="/auth/signup" legacyBehavior>
+            <Link href="/auth/signUp" legacyBehavior>
               <button className="mt-[3px] bg-white text-black text-[12pt] text-base">
                 회원가입
               </button>

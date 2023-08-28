@@ -43,7 +43,7 @@ export default function ProfileBtn() {
           <p className="absolute right-[105px] top-[3.5px] opacity-75 text-[10pt] font-medium text-right text-[#666]">
             |
           </p>
-          <Link href="/auth/signup" legacyBehavior>
+          <Link href="/auth/signUp" legacyBehavior>
             <button className="w-[50px] h-[30px]">
               <p className="w-[50px] h-[30px] absolute right-[60px] top-[4px] opacity-75 text-[9pt] font-medium text-right text-[#666666]">
                 회원가입

@@ -434,19 +434,19 @@ export function Line() {
 
 export function LoginLine() {
   return (
-    <div className="flex items-center w-[592px] h-[15px]">
+    <div className="flex items-center w-[592px] h-[15px] mobile:w-[302px]">
       <svg
         width={190}
         height={2}
         viewBox="0 0 190 2"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="flex"
+        className="flex mobile:w-[80px]"
         preserveAspectRatio="none"
       >
         <path d="M0 1H190" stroke="#DBDBDB" />
       </svg>
-      <p className="flex ml-[56px] mr-[56px] text-[13px] text-left text-black">
+      <p className="flex mx-[56px] text-[13px] text-left text-black mobile:w-[102px] mobile:mx-[20px]">
         {" "}
         Or continue with
       </p>
@@ -456,7 +456,7 @@ export function LoginLine() {
         viewBox="0 0 190 2"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="flex"
+        className="flex mobile:w-[80px]"
         preserveAspectRatio="none"
       >
         <path d="M0 1H190" stroke="#DBDBDB" />

@@ -5,7 +5,7 @@ import Head from "next/head";
 import Items from "@/components/product/items";
 import Link from "next/link";
 
-const Main = () => {
+export default function Main() {
   return (
     <Layout>
       <Head>
@@ -41,6 +41,4 @@ const Main = () => {
       </div>
     </Layout>
   );
-};
-
-export default Main;
+}

@@ -167,13 +167,13 @@ const ProductPage = () => {
       <Head>
         <title>{categoryName}</title>
       </Head>
-      <div className="relative mt-[135px] flex w-full flex-col text-lg font-medium bg-white">
+      <div className="relative mt-[135px] flex w-full flex-col text-lg font-medium bg-white mobile:mt-[90px]">
         <ProdBar
           category={selectedCategory}
           activeCate={activeCate}
           setActiveCate={setActiveCate}
         />
-        <div className="flex justify-center py-8">
+        <div className="flex justify-center py-8 mobile:py-3">
           <Items itemsPerPage={16} itemsToShow={itemsToShow} />
         </div>
         <div className="flex justify-center py-1">

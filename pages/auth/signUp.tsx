@@ -4,17 +4,20 @@ import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
-import { Segmented } from "antd";
+import { Checkbox, Segmented } from "antd";
 import { useEffect, useState } from "react";
 import { SignUpState, signUpInputState, signUpState } from "@/libs/client/atom";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 
 interface IsignUpForm extends SignUpState {
   extraError?: string;
   cPassword: string;
   authCode: string;
   isEmailVerified: boolean;
+  idCheck: boolean; // 아이디 중복확인 여부
+  emailCheck: boolean; // 이메일 인증 여부
 }
 
 function Signup() {
@@ -34,46 +37,137 @@ function Signup() {
   const [signUpInputValue, setSignUpInputValue] =
     useRecoilState(signUpInputState);
 
+  const [idCheck, setIdCheck] = useState<boolean>(false);
+  const [codeCheck, setCodeCheck] = useState<boolean>(false);
+  const [stateEmailAgree, setStateEmailAgree] = useState<string>("N");
+  const [statePhoneAgree, setStatePhoneAgree] = useState<string>("N");
+
   const router = useRouter();
 
+  useEffect(() => {
+    setIdCheck(false);
+  }, [signUpInputValue.username]); // username 값이 변경될 때 실행
+
+  useEffect(() => {
+    setCodeCheck(false);
+  }, [signUpInputValue.authCode]); // authCode 값이 변경될 때 실행
+
+  // 약관동의
+  const emailAgreeOnChange = (e: CheckboxChangeEvent) => {
+    console.log(`email checked = ${e.target.checked}`);
+    setSignUpData((prevValue) => ({
+      ...prevValue,
+      emailAgreeYn: e.target.checked ? "Y" : "N",
+    }));
+    setStateEmailAgree(e.target.checked ? "Y" : "N");
+  };
+  const phoneAgreeOnChange = (e: CheckboxChangeEvent) => {
+    console.log(`phone checked = ${e.target.checked}`);
+    setSignUpData((prevValue) => ({
+      ...prevValue,
+      phoneAgreeYn: e.target.checked ? "Y" : "N",
+    }));
+    setStatePhoneAgree(e.target.checked ? "Y" : "N");
+  };
+
+  useEffect(() => {
+    // emailAgreeYn이 변경될 때의 동작을 여기에 추가
+    console.log("emailAgreeYn changed:", stateEmailAgree);
+  }, [stateEmailAgree]);
+
+  useEffect(() => {
+    // phoneAgreeYn이 변경될 때의 동작을 여기에 추가
+    console.log("phoneAgreeYn changed:", statePhoneAgree);
+  }, [statePhoneAgree]);
+
   const handleClick = () => {
-    // 입력값 가져오기(submit 이후)
-    const username = watch("username");
-    const password = watch("password");
-    const cPassword = watch("cPassword");
-    const nickname = watch("profile.nickname");
-    const email = watch("profile.email");
-    const phonenum = watch("profile.phonenum");
-    const birth = watch("profile.birth");
-    const sex = value.toString() as "1" | "2";
-    const interests = watch("profile.interests");
+    console.log(idCheck, codeCheck);
+    console.log("emailAgreeYn :", stateEmailAgree);
+    console.log("phoneAgreeYn :", statePhoneAgree);
 
-    // signUpState 업데이트
-    const updatedSignUpData: SignUpState = {
-      ...signUpData,
-      username,
-      password,
-      profile: {
-        ...signUpData.profile,
-        nickname,
-        email,
-        phonenum,
-        birth,
-        sex,
-        interests,
-      },
-    };
+    if (
+      idCheck &&
+      codeCheck &&
+      statePhoneAgree === "Y" &&
+      stateEmailAgree === "Y"
+    ) {
+      console.log("idCheck: " + idCheck + ", codeCheck: " + codeCheck);
 
-    setSignUpData(updatedSignUpData);
+      // 입력값 가져오기
+      const username = watch("username");
+      const password = watch("password");
+      const cPassword = watch("cPassword");
+      const nickname = watch("profile.nickname");
+      const email = watch("profile.email");
+      const phonenum = watch("profile.phonenum");
+      const birth = watch("profile.birth");
+      const sex = value.toString() as "1" | "2";
+      const interests = watch("profile.interests");
+      const emailAgreeYn = stateEmailAgree;
+      const phoneAgreeYn = statePhoneAgree;
 
-    console.log(updatedSignUpData);
+      // signUpState 업데이트
+      const updatedSignUpData: SignUpState = {
+        ...signUpData,
+        username,
+        password,
+        profile: {
+          ...signUpData.profile,
+          nickname,
+          email,
+          phonenum,
+          birth,
+          sex,
+          interests,
+        },
+        emailAgreeYn,
+        phoneAgreeYn,
+      };
+      setSignUpData(updatedSignUpData);
 
-    router.push("/auth/taste");
+      console.log(updatedSignUpData);
+
+      router.push("/auth/taste");
+    } else if (
+      !idCheck &&
+      codeCheck &&
+      statePhoneAgree === "Y" &&
+      stateEmailAgree === "Y"
+    ) {
+      // console.log("idCheck: " + idCheck + ", codeCheck: " + codeCheck);
+      alert("아이디 중복확인을 해주세요.");
+    } else if (
+      !codeCheck &&
+      idCheck &&
+      statePhoneAgree === "Y" &&
+      stateEmailAgree === "Y"
+    ) {
+      // console.log("idCheck: " + idCheck + ", codeCheck: " + codeCheck);
+      alert("이메일 인증번호 확인을 완료해주세요.");
+    } else if (
+      codeCheck &&
+      idCheck &&
+      (statePhoneAgree === "N" || stateEmailAgree === "N")
+    ) {
+      alert("약관을 모두 동의를 해주세요.");
+    } else {
+      alert("아이디 중복 확인과 이메일 인증을 완료해주세요.");
+    }
   };
 
   const [value, setValue] = useState<string | number>("Map");
 
   const submitForm: SubmitHandler<IsignUpForm> = (data: IsignUpForm) => {
+    // 약관동의 여부를 가져옵니다
+    const emailAgreeYn = stateEmailAgree;
+    const phoneAgreeYn = statePhoneAgree;
+
+    // data 객체에 약관동의 여부를 추가합니다
+    const formDataWithAgree = {
+      ...data,
+      emailAgreeYn,
+      phoneAgreeYn,
+    };
     console.log(data);
 
     handleClick();
@@ -203,35 +297,35 @@ function Signup() {
                   setInputValue={setSignUpInputValue}
                 />
 
-                <div className="font-bold text-[#666]">
-                  성별
-                  <div>
-                    <Segmented
-                      name="profile.sex"
-                      type="sex"
-                      className="w-[148px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0] p-[5px]s"
-                      options={[
-                        {
-                          label: (
-                            <div className="w-1/2 p-[10px]">
-                              <div>남성</div>
-                            </div>
-                          ),
-                          value: "1",
-                        },
-                        {
-                          label: (
-                            <div className="w-1/2 p-[10px]">
-                              <div>여성</div>
-                            </div>
-                          ),
-                          value: "2",
-                        },
-                      ]}
-                      value={value}
-                      onChange={setValue}
-                    />
-                  </div>
+                <div className="flex flex-col justify-center flex-grow-0 flex-shrink-0 relative gap-1.5 py-[10px] w-[448px] mobile:px-[75px]">
+                  <label className="flex-grow-0 flex-shrink-0 text-lg font-bold text-left text-[#666] mobile:items-start">
+                    성별
+                  </label>
+                  <Segmented
+                    name="profile.sex"
+                    type="sex"
+                    className="w-[148px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0] px-[17px] font-bold"
+                    options={[
+                      {
+                        label: (
+                          <div className="w-1/2 p-[10px]">
+                            <div>남</div>
+                          </div>
+                        ),
+                        value: "1",
+                      },
+                      {
+                        label: (
+                          <div className="w-1/2 p-[10px]">
+                            <div>여</div>
+                          </div>
+                        ),
+                        value: "2",
+                      },
+                    ]}
+                    value={value}
+                    onChange={setValue}
+                  />
                 </div>
 
                 <Input
@@ -286,6 +380,13 @@ function Signup() {
                   setInputValue={setSignUpInputValue}
                 />
 
+                <Checkbox onChange={emailAgreeOnChange}>
+                  이메일 정보 수집 약관동의
+                </Checkbox>
+                <Checkbox onChange={phoneAgreeOnChange}>
+                  휴대폰 정보 수집 약관동의
+                </Checkbox>
+
                 <div className="flex mt-[40px] text-center justify-center">
                   <SubmitBtn
                     type="submit"
@@ -298,7 +399,7 @@ function Signup() {
 
                 <div className="flex justify-center">
                   <Link href="/auth/login" legacyBehavior>
-                    <button className=" py-[30px] bg-white text-gray-600 text-center">
+                    <button className=" py-[30px] bg-white text-gray-600 text-center mobile:text-base">
                       계정이 이미 있으신가요?
                     </button>
                   </Link>

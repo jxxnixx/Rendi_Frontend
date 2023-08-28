@@ -3,47 +3,48 @@ import Head from "next/head";
 import Link from "next/link";
 import { Line, MyPage, Next, ShoppingBag } from "@/components/icons";
 import Items from "@/components/product/items";
+import Mymenus from "@/components/structure/mymenus";
+import { QueryClient, useQuery } from "@tanstack/react-query";
+import { itemsApi } from "@/libs/api";
+import { useRecoilValue } from "recoil";
+import { recentViewedItemsState } from "@/libs/client/atom";
+import { useEffect, useState } from "react";
 
-function Mypage() {
+const queryClient = new QueryClient();
+
+export default function Mypage() {
+  const recentViewedItems = useRecoilValue(recentViewedItemsState);
+
+  const [recentProducts, setRecentProducts] = useState([]);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (accessToken) {
+      const fetchRecentProducts = async () => {
+        console.log(recentViewedItems);
+        console.log(accessToken);
+        try {
+          const recentViewResponse = await itemsApi.recentView({
+            recentViewedItems,
+            accessToken,
+          });
+          setRecentProducts(recentViewResponse);
+        } catch (error) {
+          console.error("최근 본 상품 조회 오류:", error);
+        }
+      };
+      fetchRecentProducts();
+    }
+  }, [recentViewedItems]);
+
   return (
     <>
       <Layout>
         <Head>
           <title>Mypage</title>
         </Head>
-        <div className="flex justify-center items-center">
-          <div className="flex justify-center w-[1040px] h-[98px] mt-[135px] bg-blue">
-            <p className="flex justify-center  left-[441px] mt-[35px] text-[21pt] font-semibold text-left text-black">
-              마이페이지
-            </p>
-          </div>
-        </div>
-        {/* 버튼 */}
-        <div className="flex justify-center items-center mt-[0px] opacity-90 gap-[100px] bg-white">
-          <Link href="/main/mypage/liked" legacyBehavior>
-            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
-              찜한 상품
-            </button>
-          </Link>
-
-          <Link href="/main/mypage/likedMarket" legacyBehavior>
-            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
-              즐겨찾기 마켓
-            </button>
-          </Link>
-
-          <Link href="/main/mypage/contact" legacyBehavior>
-            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
-              고객센터
-            </button>
-          </Link>
-
-          <Link href="/main/mypage/terms" legacyBehavior>
-            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
-              이용약관
-            </button>
-          </Link>
-        </div>
+        <Mymenus />
         {/* 회원정보수정 */}
         <div className="flex justify-center items-center  ">
           <div className="flex justify-center items-center  w-[1040px] h-[85px] mt-[10px]  border-t border-b border-black">
@@ -85,5 +86,3 @@ function Mypage() {
     </>
   );
 }
-
-export default Mypage;

@@ -19,6 +19,8 @@ interface InputProps {
   register: UseFormRegisterReturn;
   setInputValue?: (newState: any) => void; // Recoil 상태 업데이트 함수
   onValueChange?: boolean;
+  setIdCheck?: (value: boolean) => void | undefined; // 추가
+  setCodeCheck?: (value: boolean) => void | undefined; // 추가
   [key: string]: any;
 }
 
@@ -32,6 +34,10 @@ export default function Input({
   inputValue, // Recoil 상태 추가
   setInputValue, // Recoil 상태 업데이트 함수 추가
   onValueChange = false,
+  idCheck,
+  codeCheck,
+  setIdCheck,
+  setCodeCheck,
   ...rest
 }: InputProps) {
   const { ref, onChange, ...inputProps } = register;
@@ -78,7 +84,7 @@ export default function Input({
   let inputComponent;
   if (kind === "text") {
     inputComponent = (
-      <div className="w-[448px] h-[55px] rounded-[50px] bg-white">
+      <div className="w-[448px] h-[55px] rounded-[50px] bg-white justify-center items-center mobile:flex mobile:justify-center mobile:items-center mobile:w-[302px]">
         <input
           {...inputProps}
           {...rest}
@@ -86,7 +92,7 @@ export default function Input({
           // onChange={onValueChange ? handleChange : onChange}
           onChange={handleChange}
           className={cls(
-            "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0] px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
+            "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0] px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A] mobile:w-[302px] mobile:justify-center",
             error
               ? "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#f00]"
               : "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#4caf50]"
@@ -98,13 +104,13 @@ export default function Input({
     );
   } else if (kind === "check") {
     inputComponent = (
-      <div className="relative w-[448px] h-[55px] rounded-[50px] bg-white border border-[#e0e0e0]">
+      <div className="relative w-[448px] h-[55px] rounded-[50px] bg-white justify-center mobile:flex mobile:items-center mobile:w-[302px]">
         <input
           {...inputProps}
           {...rest}
           ref={ref}
           className={cls(
-            "w-[448px] h-[55px] rounded-[50px] bg-gray-100 border border-[#e0e0e0] px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
+            "w-[448px] h-[55px] rounded-[50px] bg-gray-100 border border-[#e0e0e0] px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A] mobile:w-[302px] mobile:justify-center",
             error
               ? "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#f00]"
               : "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#4caf50]"
@@ -118,6 +124,16 @@ export default function Input({
           onClick={async () => {
             if (checkLabel === "중복확인") {
               onUsernameVerification(inputValue.username);
+              const changeIdCheck: any = await onUsernameVerification(
+                inputValue.username
+              );
+              if (changeIdCheck) {
+                console.log(true);
+                if (setIdCheck) setIdCheck(true); // 값이 있을 때만 호출
+              } else {
+                console.log(false);
+                if (setIdCheck) setIdCheck(false); // 값이 있을 때만 호출
+              }
             } else if (checkLabel === "인증") {
               const VeriCode = await onEmailVerification(
                 inputValue.profile.nickname,
@@ -127,6 +143,17 @@ export default function Input({
             }
             if (checkLabel === "확인") {
               onAuthCodeVerification(inputValue.authCode, backendVeriCode);
+              const changeCodeCheck = await onAuthCodeVerification(
+                inputValue.authCode,
+                backendVeriCode
+              );
+              if (changeCodeCheck) {
+                console.log(true);
+                if (setCodeCheck) setCodeCheck(true); // 값이 있을 때만 호출
+              } else {
+                console.log(false);
+                if (setCodeCheck) setCodeCheck(false); // 값이 있을 때만 호출
+              }
             }
           }}
           className="absolute top-[10px] right-[20px] w-[67px] h-[35px] bg-[#FC435A] rounded-[50px] text-base text-white flex justify-center items-center"
@@ -144,7 +171,7 @@ export default function Input({
           ref={ref}
           onChange={onChange}
           className={cls(
-            "w-[448px] h-[55px] rounded-[50px] bg-gray-100 border border-[#e0e0e0] px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A]",
+            "w-[448px] h-[55px] rounded-[50px] bg-gray-100 border border-[#e0e0e0] px-[20px] py-[19.25px] placeholder-gray-400 placeholder: shadow-sm focus:border-[#666] focus:outline-none focus:ring-[#FC435A] mobile:w-[302px]",
             error
               ? "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#f00]"
               : "w-[448px] h-[55px] rounded-[50px] bg-white border border-[#4caf50]"
@@ -158,9 +185,9 @@ export default function Input({
   }
 
   return (
-    <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 relative gap-1.5 py-[10px]">
+    <div className="flex flex-col justify-center flex-grow-0 flex-shrink-0 relative gap-1.5 py-[10px] w-[448px] mobile:px-[75px] mobile:text-sm">
       <label
-        className="flex-grow-0 flex-shrink-0 text-lg font-bold text-left text-[#666]"
+        className="flex-grow-0 flex-shrink-0 text-lg font-bold text-left text-[#666] mobile:items-start"
         htmlFor={name}
       >
         {label}

@@ -1,10 +1,5 @@
-import axios from "axios";
-
-export const API_URL = "http://121.166.191.129:9876";
-
-// const api = axios.create({
-//   baseURL: API_URL,
-// });
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { getCookie, setCookie } from "./client/cookies";
 
 export interface ASignUpProps {
   username: string;
@@ -70,15 +65,91 @@ export interface APopularSearchProps {
   searchCount: number;
 }
 
-export interface ASaveSearchProps {
-  keyword: string;
+export interface ARecentProps {
+  productIds: any;
+  accessToken: string;
 }
 
-export const axiosPrivate = axios.create({
-  baseURL: API_URL,
-  headers: { "Content-Type": "application/json" },
-  withCredentials: true,
-});
+// export const API_URL = "http://121.166.191.129:9876";
+
+// export const api = axios.create({
+//   baseURL: API_URL,
+//   withCredentials: true,
+// });
+
+// api.interceptors.request.use(
+//   function (config: AxiosRequestConfig): any {
+//     const token = localStorage.getItem("accessToken");
+
+//     if (!config.headers) config.headers = {};
+
+//     //요청시 AccessToken 계속 보내주기
+//     if (!token) {
+//       config.headers.accessToken = null;
+//       config.headers.refreshToken = null;
+//       return config;
+//     }
+
+//     if (config.headers && token) {
+//       const { accessToken, refreshToken } = JSON.parse(token);
+//       config.headers.authorization = `Bearer ${accessToken}`;
+//       config.headers.refreshToken = `Bearer ${refreshToken}`;
+//       return config;
+//     }
+//     // Do something before request is sent
+//     console.log("request start", config);
+//   },
+//   function (error) {
+//     // Do something with request error
+//     console.log("request error", error);
+//     return Promise.reject(error);
+//   }
+// );
+
+// // Add a response interceptor
+// api.interceptors.response.use(
+//   function (response: AxiosResponse) {
+//     // Any status code that lie within the range of 2xx cause this function to trigger
+//     // Do something with response data
+//     console.log("get response", response);
+//     return response;
+//   },
+//   async (error) => {
+//     const { config, response } = error;
+//     if (response && response.status === 401) {
+//       if (error.response.data.message === "expired") {
+//         const originalRequest = config;
+//         const refreshToken = getCookie("refreshToken");
+//         // token refresh 요청
+//         try {
+//           const accessToken = localStorage.getItem("accessToken");
+//           const reissueResponse = await axios.post(
+//             `/member/reissue`,
+//             { accessToken, refreshToken } // Send accessToken and refreshToken as parameters
+//           );
+//           const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+//             reissueResponse.data;
+
+//           localStorage.setItem("accessToken", newAccessToken);
+//           setCookie("refreshToken", newRefreshToken);
+
+//           api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+//           originalRequest.headers.authorization = `Bearer ${newAccessToken}`;
+
+//           return api(originalRequest);
+//         } catch (reissueError) {
+//           console.log("Failed to reissue token", reissueError);
+//           return Promise.reject(error);
+//         }
+//       }
+//     }
+//     console.log("response error", error);
+//     return Promise.reject(error);
+//   }
+// );
+// export default api;
+
+//https://velog.io/@wooya/axios-interceptors%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-token%EB%A7%8C%EB%A3%8C%EC%8B%9C-refreshToken-%EC%9E%90%EB%8F%99%EC%9A%94%EC%B2%AD
 
 export const usersApi = {
   // 일반 회원가입
@@ -116,44 +187,8 @@ export const usersApi = {
           response: response.data,
           error: null,
         };
-      } else {
-        return {
-          success: false,
-          response: null,
-          error: {
-            errorCode: "API_ERROR",
-            errorMessage: "API 요청 중 오류가 발생했습니다.",
-            errors: null,
-          },
-        };
       }
     } catch (error: any) {
-      if (error.response) {
-        const { status, data } = error.response;
-        if (status === 400) {
-          // Bad Request
-          return {
-            success: false,
-            response: null,
-            error: {
-              errorCode: data.errorCode || "BAD_INPUT",
-              errorMessage: data.errorMessage || "입력이 올바르지 않습니다.",
-              errors: data.errors || null,
-            },
-          };
-        } else if (status === 409) {
-          // Conflict - Member already exists
-          return {
-            success: false,
-            response: null,
-            error: {
-              errorCode: "MEMBER_DUPLICATED",
-              errorMessage: "이미 가입된 회원입니다.",
-              errors: null,
-            },
-          };
-        }
-      }
       console.error("회원가입 오류:", error);
       throw error;
     }
@@ -237,51 +272,14 @@ export const usersApi = {
         username,
         password,
       });
-
       if (response.status === 200) {
         return {
           success: true,
           response: response.data,
           error: null,
         };
-      } else {
-        return {
-          success: false,
-          response: null,
-          error: {
-            errorCode: "API_ERROR",
-            errorMessage: "API 요청 중 오류가 발생했습니다.",
-            errors: null,
-          },
-        };
       }
     } catch (error: any) {
-      if (error.response) {
-        const { status, data } = error.response;
-        if (status === 404) {
-          // Not Found - Member not found
-          return {
-            success: false,
-            response: null,
-            error: {
-              errorCode: "MEMBER_NOT_FOUND",
-              errorMessage: "회원을 찾을 수 없습니다.",
-              errors: null,
-            },
-          };
-        } else if (status === 401) {
-          // Unauthorized - Incorrect credentials
-          return {
-            success: false,
-            response: null,
-            error: {
-              errorCode: "CREDENTIAL_MISS_MATCH",
-              errorMessage: "비밀번호가 틀렸습니다.",
-              errors: null,
-            },
-          };
-        }
-      }
       console.error("로그인 오류:", error);
       throw error;
     }
@@ -334,7 +332,6 @@ export const usersApi = {
         email,
         password,
       });
-
       if (response.status === 200) {
         return {
           success: true,
@@ -342,16 +339,6 @@ export const usersApi = {
             message: "비밀번호 재설정이 완료되었습니다.",
           },
           error: null,
-        };
-      } else {
-        return {
-          success: false,
-          response: null,
-          error: {
-            errorCode: "API_ERROR",
-            errorMessage: "API 요청 중 오류가 발생했습니다.",
-            errors: null,
-          },
         };
       }
     } catch (error: any) {
@@ -369,22 +356,11 @@ export const usersApi = {
           "Content-Type": "application/json",
         },
       });
-
       if (response.data.success) {
         return {
           success: true,
           response: response.data,
           error: null,
-        };
-      } else {
-        return {
-          success: false,
-          response: null,
-          error: {
-            errorCode: "API_ERROR",
-            errorMessage: "API 요청 중 오류가 발생했습니다.",
-            errors: null,
-          },
         };
       }
     } catch (error) {
@@ -409,55 +385,9 @@ export const usersApi = {
           response: response.data,
           error: null,
         };
-      } else {
-        return {
-          success: false,
-          response: null,
-          error: {
-            errorCode: "API_ERROR",
-            errorMessage: "API 요청 중 오류가 발생했습니다.",
-            errors: null,
-          },
-        };
       }
     } catch (error) {
       console.error("회원정보 수정 오류:", error);
-      throw error;
-    }
-  },
-
-  // 토큰 재발급
-  reissueToken: async (accessToken: string, refreshToken: string) => {
-    try {
-      // const response = await axiosPrivate.post("/member/reissue/", {
-      //   accessToken,
-      //   refreshToken,
-      // });
-
-      const response = await axios.post("/member/reissue/", {
-        accessToken,
-        refreshToken,
-      });
-
-      if (response.status === 200) {
-        return {
-          success: true,
-          response: response.data,
-          error: null,
-        };
-      } else {
-        return {
-          success: false,
-          response: null,
-          error: {
-            errorCode: "API_ERROR",
-            errorMessage: "API 요청 중 오류가 발생했습니다.",
-            errors: null,
-          },
-        };
-      }
-    } catch (error) {
-      console.error("토큰 재발급 오류:", error);
       throw error;
     }
   },
@@ -474,22 +404,11 @@ export const itemsApi = {
           "Content-Type": "application/json",
         },
       });
-
       if (response.status === 200) {
         return {
           success: true,
           response: response.data as APopularSearchProps[],
           error: null,
-        };
-      } else {
-        return {
-          success: false,
-          response: null,
-          error: {
-            errorCode: "API_ERROR",
-            errorMessage: "API 요청 중 오류가 발생했습니다.",
-            errors: null,
-          },
         };
       }
     } catch (error) {
@@ -499,12 +418,13 @@ export const itemsApi = {
   },
 
   // 검색어 저장
-  saveSearch: async (accessToken: string, { keyword }: ASaveSearchProps) => {
+  saveKeyword: async (keyword: string, accessToken: string) => {
     try {
-      // const response = await axiosPrivate.post("/search/keyword/update/", { keyword });
       const response = await axios.post(
-        "/search/keyword/update/",
-        { keyword },
+        `/search/keyword/update/`,
+        {
+          keyword,
+        },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -512,7 +432,6 @@ export const itemsApi = {
           },
         }
       );
-
       if (response.status === 200) {
         return {
           success: true,
@@ -520,16 +439,6 @@ export const itemsApi = {
             message: "검색어 DB 업데이트 성공",
           },
           error: null,
-        };
-      } else {
-        return {
-          success: false,
-          response: null,
-          error: {
-            errorCode: "API_ERROR",
-            errorMessage: "API 요청 중 오류가 발생했습니다.",
-            errors: null,
-          },
         };
       }
     } catch (error) {
@@ -545,25 +454,13 @@ export const itemsApi = {
       const response = await axios.get("/wishlist/all/", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
         },
       });
-
       if (response.status === 200) {
         return {
           success: true,
           response: response.data,
           error: null,
-        };
-      } else {
-        return {
-          success: false,
-          response: null,
-          error: {
-            errorCode: "API_ERROR",
-            errorMessage: "API 요청 중 오류가 발생했습니다.",
-            errors: null,
-          },
         };
       }
     } catch (error) {
@@ -573,13 +470,11 @@ export const itemsApi = {
   },
 
   // 찜하기 변경
-  toggleWish: async (accessToken: string, productId: number) => {
+  toggleWish: async (productId: number, accessToken: string) => {
     try {
-      // const response = await axiosPrivate.post(`/wishlist/${productId}`);
-      const response = await axios.post(`/wishlist/${productId}`, {
+      const response = await axios.post(`/wishlist/${productId}`, null, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
         },
       });
       if (response.status === 200) {
@@ -588,26 +483,46 @@ export const itemsApi = {
           response: response.data,
           error: null,
         };
-      } else {
-        return {
-          success: false,
-          response: null,
-          error: {
-            errorCode: "API_ERROR",
-            errorMessage: "API 요청 중 오류가 발생했습니다.",
-            errors: null,
-          },
-        };
       }
     } catch (error) {
       console.error("찜 변경 오류:", error);
       throw error;
     }
   },
+
+  // 조회수 업데이트
+  updateHits: async (productId: number, hits: number) => {
+    try {
+      const response = await axios.patch(`/products/hits/update`, {
+        productId,
+        hits,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log("조회수 업데이트 오류:", error);
+      throw error;
+    }
+  },
+
+  // 최근 본 상품
+  recentView: async ({ productIds, accessToken }: any) => {
+    try {
+      const response = await axios.get("/products/recent/", {
+        data: productIds, // productIds를 요청의 데이터로 설정
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log("최근 본 상품 불러오기 오류:", error);
+      throw error;
+    }
+  },
 };
 
 /* 사용예시
-
 
 
 (async () => {

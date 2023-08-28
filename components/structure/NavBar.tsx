@@ -5,7 +5,7 @@ export default function NavBar() {
   const router = useRouter();
 
   return (
-    <nav className="fixed flex items-center justify-center top-[100px] z-20 h-[35px] w-full bg-white mx-auto shadow-sm">
+    <nav className="fixed flex items-center justify-center top-[100px] z-20 h-[35px] w-full bg-white mx-auto shadow-sm mobile:top-[50px]">
       <div className="bg-white text-base text-[#666666] space-x-[60px] mobile:space-x-[23px]">
         {[
           { href: "/", text: "Today" },
@@ -24,7 +24,7 @@ export default function NavBar() {
               {text}
               {/* 밑줄 */}
               {router.pathname === href && (
-                <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-black mb-[-6.5px] z-500"></span>
+                <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-black mb-[-6.5px] z-30"></span>
               )}
             </a>
           </Link>

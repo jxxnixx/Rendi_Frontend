@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Select } from "antd";
+import { Select, Button } from "antd";
 import FilterPopup from "./filterPopup";
+import { set } from "react-hook-form";
 
 const handleChange = (value: string) => {
   console.log(`selected ${value}`);
@@ -18,8 +19,16 @@ interface ProdlistProps {
   products: Product[]; // 상품 목록 배열
 }
 
-const Prodlist: React.FC<ProdlistProps> = ({ products }) => {
+export default function Prodlist({ products }: ProdlistProps) {
   const [showPopup, setShowPopup] = useState(false);
+
+  const [sortResult, setSortResult] = useState({
+    sortOrder: "정렬순",
+    category: "카테고리",
+    subcategory: ["서브카테고리"],
+    color: ["색상"],
+    price: { min: 0, max: 500000 },
+  });
 
   const handleShowPopup = () => {
     setShowPopup(true);
@@ -31,47 +40,40 @@ const Prodlist: React.FC<ProdlistProps> = ({ products }) => {
 
   return (
     <div className="gap-[30px]">
-      {/* Sort Order Dropdown */}
-      <Select
-        defaultValue={"추천순"}
-        style={{ width: 120 }}
-        onChange={handleChange}
-        options={[
-          { value: "recommended", label: "추천순" },
-          { value: "popularity", label: "인기순" },
-          { value: "priceLowToHigh", label: "낮은 가격순" },
-          { value: "priceHighToLow", label: "높은 가격순" },
-        ]}
-        onClick={handleShowPopup}
-      />
+      <div className="flex gap-[10px]">
+        {sortResult.sortOrder !== "" && (
+          <Button className="hover:mc" onClick={handleShowPopup}>
+            {sortResult.sortOrder}
+          </Button>
+        )}
+        {sortResult.category !== "" && (
+          <Button className="" onClick={handleShowPopup}>
+            {sortResult.category}
+          </Button>
+        )}
 
-      {/* Categories Dropdown */}
-      <Select
-        defaultValue={"전체"}
-        style={{ width: 120 }}
-        onChange={handleChange}
-        options={[
-          { value: "all", label: "전체" },
-          { value: "top", label: "상의" },
-          { value: "outer", label: "아우터" },
-          { value: "dress", label: "원피스" },
-          { value: "pants", label: "바지" },
-          { value: "skirt", label: "스커트" },
-          { value: "training", label: "트레이닝" },
-          { value: "inner", label: "이너웨어" },
-          { value: "swimsuit", label: "수영복" },
-          { value: "shoes", label: "슈즈" },
-          { value: "bag", label: "가방" },
-          { value: "etc", label: "기타" },
-        ]}
-        onClick={handleShowPopup}
-      />
+        {sortResult.subcategory.length > 0 && (
+          <Button className="" onClick={handleShowPopup}>
+            {sortResult.subcategory.join(", ")}
+          </Button>
+        )}
+        {sortResult.color.length > 0 && (
+          <Button className="" onClick={handleShowPopup}>
+            {sortResult.color.join(", ")}
+          </Button>
+        )}
+        <Button className="" onClick={handleShowPopup}>
+          {sortResult.price.min.toLocaleString()} ~{" "}
+          {sortResult.price.max.toLocaleString()}원
+        </Button>
+      </div>
 
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center z-20">
           <FilterPopup
             onApplyFilters={(filters) => {
               console.log("Applied filters:", filters);
+              setSortResult(filters);
               handleClosePopup(); // 필터 적용 후 팝업 숨기기
             }}
             onResetFilters={() => {
@@ -94,6 +96,4 @@ const Prodlist: React.FC<ProdlistProps> = ({ products }) => {
       </div>
     </div>
   );
-};
-
-export default Prodlist;
+}
