@@ -30,10 +30,7 @@ function Signup() {
     mode: "onChange",
   });
 
-  // taste.tsx에서 이뤄지는 백엔드와의 소통을 위한 atom. 찐 회원가입용 atom
   const [signUpData, setSignUpData] = useRecoilState(signUpState);
-
-  // 사용자 입력값 확인용 atom
   const [signUpInputValue, setSignUpInputValue] =
     useRecoilState(signUpInputState);
 
@@ -177,7 +174,7 @@ function Signup() {
     <>
       <Layout>
         <Head>
-          <title>Signup</title>
+          <title>SignUp</title>
         </Head>
 
         <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium ">
@@ -214,6 +211,7 @@ function Signup() {
                   inputValue={signUpInputValue}
                   setInputValue={setSignUpInputValue}
                   onValueChange
+                  setIdCheck={setIdCheck}
                 />
 
                 <Input
@@ -378,6 +376,7 @@ function Signup() {
                   error={errors?.authCode?.message}
                   inputValue={signUpInputValue}
                   setInputValue={setSignUpInputValue}
+                  setCodeCheck={setCodeCheck}
                 />
 
                 <Checkbox onChange={emailAgreeOnChange}>
