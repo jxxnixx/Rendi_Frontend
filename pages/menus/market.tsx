@@ -41,7 +41,7 @@ export default function Market() {
           activeCate={activeCate}
           setActiveCate={setActiveCate}
         />
-        <div className="flex justify-center">
+        <div>
           <div className="pt-4 mobile:pt-4">
             <button className="justify-center w-[100px] h-[30px] mb-[4px] ml-[25px] mobile:mb-0 mobile:ml-[10px] text-[11pt] text-[#666666]">
               이번주 신제품

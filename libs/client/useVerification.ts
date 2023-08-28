@@ -9,9 +9,11 @@ export async function onUsernameVerification(inputIDValue: string) {
 
     if (checkIDResponse.success) {
       console.log("중복확인 완료!");
+      return true;
     }
   } catch (error) {
     console.log("중복확인 오류:", error);
+    return false;
   }
 }
 
