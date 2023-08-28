@@ -30,13 +30,26 @@ export default function MainSearchBar() {
     recentSearchHistoryState
   );
 
-  const [searchValue, setSearchValue] = useState(""); // 검색어 상태
+  // Ref로 사각형, input dom요소 참조
+  // const squareRef = useRef<HTMLDivElement>(null);
+  // const inputRef = useRef<HTMLInputElement>(null);
+  const squareRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  // 검색창 하단 사각형 표시 여부 관리
+  const [showSquare, setShowSquare] = useState(false);
+  const [showUpload, setShowUpload] = useState(false);
+
+  // 버튼 클릭 여부 관리 recent , popular 둘 중 하나로 결정
+  const [showContent, setShowContent] = useState("recent");
+
+  const searchValue: any = inputRef.current?.value;
   const [imageValue, setImageValue] = useState(""); // 이미지 상태
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setShowUpload(false);
+    //setShowUpload(false);
 
     // 기존 최근 검색어와 중복을 제거한 후 새로운 검색어 추가
     setRecentSearchHistory((prevHistory) => {
@@ -62,7 +75,8 @@ export default function MainSearchBar() {
         router.push(
           `/main/searchResult?search=${searchValue}&image=${imageValue}`
         );
-        setSearchValue(""); // 검색어 초기화
+
+        inputRef.current && (inputRef.current.value = ""); // 검색어 초기화
       } catch (error) {
         console.log("검색 키워드 저장 오류:", error);
       }
@@ -93,19 +107,6 @@ export default function MainSearchBar() {
       console.log("인기 검색어 받아오기 오류!", error);
     }
   };
-
-  // Ref로 사각형, input dom요소 참조
-  // const squareRef = useRef<HTMLDivElement>(null);
-  // const inputRef = useRef<HTMLInputElement>(null);
-  const squareRef = useRef<HTMLDivElement | null>(null);
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
-  // 검색창 하단 사각형 표시 여부 관리
-  const [showSquare, setShowSquare] = useState(false);
-  const [showUpload, setShowUpload] = useState(false);
-
-  // 버튼 클릭 여부 관리 recent , popular 둘 중 하나로 결정
-  const [showContent, setShowContent] = useState("recent");
 
   useEffect(() => {
     // 검색창 외부 클릭 시 사각형 사라지게 설정
@@ -158,8 +159,8 @@ export default function MainSearchBar() {
             className="block w-[679px] h-[46px] px-[20px] rounded-[50px] bg-white border-2 border-[#FC435A] focus:outline-none focus:ring-0"
             // placeholder=!showSquare?"검색어를 입력하세요":"사진을 업로드해주세요"
             placeholder="검색어를 입력하세요."
-            onChange={(e) => setSearchValue(e.target.value)}
             onClick={handleInputClick}
+            // onChange={(e) => setSearchValue(e.target.value)}
             value={searchValue}
           />
         ) : (
