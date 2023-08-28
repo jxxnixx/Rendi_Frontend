@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { cls } from "@/libs/client/utils";
-import type { UseFormRegisterReturn } from "react-hook-form";
+import { set, type UseFormRegisterReturn } from "react-hook-form";
 import {
   onAuthCodeVerification,
   onEmailVerification,
@@ -12,6 +12,8 @@ import { backendVeriCodeState } from "@/libs/client/atom";
 import { RecoilState, useRecoilState } from "recoil";
 
 interface InputProps {
+  setIdCheck?: (value: boolean) => void | undefined; // 추가
+  setCodeCheck?: (value: boolean) => void | undefined; // 추가
   kind?: "text" | "check" | "disabled";
   label: string;
   checkLabel?: string;
@@ -19,12 +21,14 @@ interface InputProps {
   register: UseFormRegisterReturn;
   setInputValue?: (newState: any) => void; // Recoil 상태 업데이트 함수
   onValueChange?: boolean;
-  setIdCheck?: (value: boolean) => void | undefined; // 추가
-  setCodeCheck?: (value: boolean) => void | undefined; // 추가
   [key: string]: any;
 }
 
 export default function Input({
+  idCheck,
+  codeCheck,
+  setIdCheck,
+  setCodeCheck,
   label,
   checkLabel,
   name,
@@ -34,16 +38,15 @@ export default function Input({
   inputValue, // Recoil 상태 추가
   setInputValue, // Recoil 상태 업데이트 함수 추가
   onValueChange = false,
-  idCheck,
-  codeCheck,
-  setIdCheck,
-  setCodeCheck,
   ...rest
 }: InputProps) {
   const { ref, onChange, ...inputProps } = register;
 
   const [backendVeriCode, setBackendVeriCode] =
     useRecoilState(backendVeriCodeState);
+
+  // const [idCheck, setIdCheck] = useState<boolean>(false);
+  // const [codeCheck, setCodeCheck] = useState<boolean>(false);
 
   // Input 컴포넌트의 onChange 핸들러를 호출할 때마다, 사용자 입력값을 해당 상태로 업데이트
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,7 +126,6 @@ export default function Input({
           type="button"
           onClick={async () => {
             if (checkLabel === "중복확인") {
-              onUsernameVerification(inputValue.username);
               const changeIdCheck: any = await onUsernameVerification(
                 inputValue.username
               );
@@ -132,7 +134,7 @@ export default function Input({
                 if (setIdCheck) setIdCheck(true); // 값이 있을 때만 호출
               } else {
                 console.log(false);
-                if (setIdCheck) setIdCheck(false); // 값이 없을 때만 호출
+                if (setIdCheck) setIdCheck(false); // 값이 있을 때만 호출
               }
             } else if (checkLabel === "인증") {
               const VeriCode = await onEmailVerification(
@@ -142,17 +144,16 @@ export default function Input({
               setBackendVeriCode(VeriCode);
             }
             if (checkLabel === "확인") {
-              onAuthCodeVerification(inputValue.authCode, backendVeriCode);
-              const changeCodeCheck = await onAuthCodeVerification(
+              const changeCodeCheck: any = await onAuthCodeVerification(
                 inputValue.authCode,
                 backendVeriCode
               );
-              if (changeCodeCheck) {
+              if (changeCodeCheck === true) {
                 console.log(true);
                 if (setCodeCheck) setCodeCheck(true); // 값이 있을 때만 호출
               } else {
                 console.log(false);
-                if (setCodeCheck) setCodeCheck(false); // 값이 없을 때만 호출
+                if (setCodeCheck) setCodeCheck(false); // 값이 있을 때만 호출
               }
             }
           }}
@@ -164,7 +165,7 @@ export default function Input({
     );
   } else if (kind === "disabled") {
     inputComponent = (
-      <div className="w-[448px] h-[55px] rounded-[50px] bg-white ">
+      <div className="w-[448px] h-[55px] rounded-[50px] bg-white justify-center items-center mobile:flex mobile:justify-center mobile:items-center mobile:w-[302px]">
         <input
           {...inputProps}
           {...rest}

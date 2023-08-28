@@ -1,26 +1,12 @@
+import { useScreenSize, useScreenWidth } from "@/libs/client/useScreen";
 import { Line } from "../icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import BrLine from "./brLine";
 
 export default function Footer() {
-  const [screen, setScreen] = useState("laptop");
-
-  useEffect(() => {
-    const handleResize = () => {
-      // console.log(window.innerWidth);
-      if (window.innerWidth <= 640) {
-        setScreen("mobile");
-      } else {
-        setScreen("laptop");
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize(); // 초기화
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const screen = useScreenSize();
+  const screenWidth = useScreenWidth();
 
   return (
     <>

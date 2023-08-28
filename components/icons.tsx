@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useScreenWidth } from "@/libs/client/useScreen";
+import React from "react";
 
 interface HeartIconProps {
   className?: string;
@@ -411,24 +412,7 @@ export function ShoppingBag() {
 }
 
 export function Line() {
-  const [screenWidth, setScreenWidth] = useState(0);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth);
-    };
-
-    // 초기 로드 시 스크린 크기 설정
-    setScreenWidth(window.innerWidth);
-
-    // 윈도우 창 크기 변경 이벤트 감지
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      // 컴포넌트 언마운트 시 이벤트 리스너 해제
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const screenWidth = useScreenWidth();
 
   return (
     <svg
@@ -440,6 +424,7 @@ export function Line() {
       preserveAspectRatio="none"
     >
       <line
+        x1={-227}
         y1="0.5"
         x2={screenWidth}
         y2="0.5"
