@@ -7,6 +7,16 @@ interface FilterPopupProps {
   onResetFilters: () => void;
 }
 
+// interface Filters {
+//   sortOrder: string;
+//   category: string;
+//   subcategory: string[];
+//   color: string[];
+//   price: { min: number; max: number };
+//   //   size: string;
+//   //   brand: string;
+//   // 다른 필터 옵션들을 여기에 추가하세요
+// }
 interface Filters {
   sortOrder: string;
   category: string;
@@ -97,6 +107,21 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
         subcategory: updatedSubCategories,
       };
     });
+  };
+
+  // 색상 필터를 적용할 때 사용할 함수
+  const handleColorChange = (colorValue: string) => {
+    if (filters.color.includes(colorValue)) {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        color: prevFilters.color.filter((item) => item !== colorValue),
+      }));
+    } else {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        color: [...prevFilters.color, colorValue],
+      }));
+    }
   };
 
   const showList = [
@@ -213,21 +238,7 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
               className={`filter-option px-4 py-2 border rounded mr-2 mb-2 ${
                 filters.color.includes(color.value) ? "bg-mc text-white" : ""
               }`}
-              onClick={() => {
-                if (filters.color.includes(color.value)) {
-                  handleChange(
-                    "color",
-                    filters.color
-                      .filter((item) => item !== color.value)
-                      .join(",") // 배열을 문자열로 결합
-                  );
-                } else {
-                  handleChange(
-                    "color",
-                    filters.color.concat(color.value).toString()
-                  );
-                }
-              }}
+              onClick={() => handleColorChange(color.value)}
             >
               {color.label}
             </button>

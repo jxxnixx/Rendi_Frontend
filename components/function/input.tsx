@@ -19,6 +19,8 @@ interface InputProps {
   register: UseFormRegisterReturn;
   setInputValue?: (newState: any) => void; // Recoil 상태 업데이트 함수
   onValueChange?: boolean;
+  setIdCheck?: (value: boolean) => void | undefined; // 추가
+  setCodeCheck?: (value: boolean) => void | undefined; // 추가
   [key: string]: any;
 }
 
@@ -32,6 +34,10 @@ export default function Input({
   inputValue, // Recoil 상태 추가
   setInputValue, // Recoil 상태 업데이트 함수 추가
   onValueChange = false,
+  idCheck,
+  codeCheck,
+  setIdCheck,
+  setCodeCheck,
   ...rest
 }: InputProps) {
   const { ref, onChange, ...inputProps } = register;
@@ -119,6 +125,16 @@ export default function Input({
             if (checkLabel === "중복확인") {
               console.log(inputValue.username);
               onUsernameVerification(inputValue.username);
+              const changeIdCheck: any = await onUsernameVerification(
+                inputValue.username
+              );
+              if (changeIdCheck) {
+                console.log(true);
+                if (setIdCheck) setIdCheck(true); // 값이 있을 때만 호출
+              } else {
+                console.log(false);
+                if (setIdCheck) setIdCheck(false); // 값이 있을 때만 호출
+              }
             } else if (checkLabel === "인증") {
               console.log(inputValue);
               const VeriCode = await onEmailVerification(
@@ -131,6 +147,17 @@ export default function Input({
             if (checkLabel === "확인") {
               console.log(backendVeriCode);
               onAuthCodeVerification(inputValue.authCode, backendVeriCode);
+              const changeCodeCheck = await onAuthCodeVerification(
+                inputValue.authCode,
+                backendVeriCode
+              );
+              if (changeCodeCheck) {
+                console.log(true);
+                if (setCodeCheck) setCodeCheck(true); // 값이 있을 때만 호출
+              } else {
+                console.log(false);
+                if (setCodeCheck) setCodeCheck(false); // 값이 있을 때만 호출
+              }
             }
           }}
           className="absolute top-[10px] right-[20px] w-[67px] h-[35px] bg-[#FC435A] rounded-[50px] text-base text-white flex justify-center items-center"

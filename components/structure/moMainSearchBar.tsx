@@ -67,6 +67,7 @@ export default function MoMainSearchBar({ onClose }: any) {
         router.push(
           `/main/searchResult?search=${searchValue}&image=${imageValue}`
         );
+
         setSearchValue(""); // 검색어 초기화
       } catch (error) {
         console.log("검색 키워드 저장 오류:", error);
@@ -94,7 +95,7 @@ export default function MoMainSearchBar({ onClose }: any) {
 
   const handlePopular = async (accessToken: string) => {
     try {
-      const popularResponse = await itemsApi.popularSearch(accessToken);
+      const popularResponse: any = await itemsApi.popularSearch(accessToken);
       if (popularResponse.response) {
         setPopularKeywords(popularResponse.response.response.slice(0, 10)); // 최대 10개만 저장
       }

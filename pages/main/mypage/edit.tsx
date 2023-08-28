@@ -6,6 +6,8 @@ import Head from "next/head";
 import { UserInputState, editInfoInputState } from "@/libs/client/atom";
 import { useRecoilState } from "recoil";
 import { AEditInfosProps, usersApi } from "@/libs/api";
+import { useEffect, useState } from "react"; //
+import router, { useRouter } from "next/router"; //
 
 export interface IEditInfosProps extends UserInputState {
   birth: string;
@@ -18,12 +20,46 @@ function Edit() {
     register,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm<IEditInfosProps>({
     mode: "onChange",
   });
 
   const [editInfoInputValue, setEditInfoInputValue] =
     useRecoilState(editInfoInputState);
+
+  useEffect(() => {
+    const fetchAndSetDefaultValues = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+
+        if (accessToken) {
+          const viewInfoResponse = await usersApi.viewInfos(accessToken);
+          console.log(viewInfoResponse);
+          if (viewInfoResponse?.success) {
+            console.log("회원정보 조회 성공!");
+            setValue("username", viewInfoResponse.response.response.username);
+            setValue(
+              "profile.nickname",
+              viewInfoResponse.response.response.nickname
+            );
+            setValue("profile.email", viewInfoResponse.response.response.email);
+            setValue("profile.birth", viewInfoResponse.response.response.birth);
+            setValue(
+              "profile.phonenum",
+              viewInfoResponse.response.response.phone
+            );
+          }
+        } else {
+          console.log("accessToken이 없습니다.");
+        }
+      } catch (error) {
+        console.log("회원정보 조회 오류");
+      }
+    };
+
+    fetchAndSetDefaultValues();
+  }, []);
 
   const handleClick = async (data: IEditInfosProps) => {
     try {
@@ -37,7 +73,7 @@ function Edit() {
       };
       // data.profile.000 이 존재할 경우에만 updatedEditInfors에 뒷 내용 추가
 
-      const editInfoResponse = await usersApi.editInfos(
+      const editInfoResponse: any = await usersApi.editInfos(
         accessToken,
         updatedEditInfos
       );
@@ -46,6 +82,10 @@ function Edit() {
 
       if (editInfoResponse.success) {
         console.log("회원정보 수정 성공!");
+        alert("회원정보 수정을 완료하였습니다.");
+
+        // 회원정보 수정이 성공한 경우에만 페이지 이동
+        router.push("/main/mypage");
       }
     } catch (error) {
       console.log("회원정보 수정 오류");
@@ -81,8 +121,8 @@ function Edit() {
                 <Input
                   name="username"
                   label="아이디"
-                  checkLabel="중복확인"
-                  type="username"
+                  type="nickname"
+                  kind="text"
                   register={register("username", {
                     required: {
                       value: true,
@@ -93,14 +133,8 @@ function Edit() {
                       message: "적합하지 않은 형태의 아이디 입니다.",
                     },
                   })}
-                  placeholder="아이디"
-                  error={errors?.username?.message}
-                  kind="check"
-                  watch={watch}
-                  errors={errors}
-                  inputValue={editInfoInputValue}
-                  setInputValue={setEditInfoInputValue}
-                  onValueChange
+                  error={errors?.profile?.nickname?.message}
+                  disabled={true}
                 />
 
                 <Input
@@ -115,7 +149,7 @@ function Edit() {
                       message: "올바르지 않은 형식의 이름입니다.",
                     },
                   })}
-                  placeholder="김유저"
+                  // placeholder={userValue.nickname}
                   error={errors?.profile?.nickname?.message}
                 />
 
@@ -131,7 +165,7 @@ function Edit() {
                       message: "유효한 이메일 주소를 입력하세요.",
                     },
                   })}
-                  placeholder="xxxx@xxx.com"
+                  // placeholder={userValue.email}
                   error={errors.profile?.email?.message}
                 />
 
@@ -162,7 +196,7 @@ function Edit() {
                       message: "올바르지 않은 형태의 생년월일입니다.",
                     },
                   })}
-                  placeholder="YYYY-MM-DD"
+                  // placeholder={userValue.birth}
                   error={errors?.profile?.birth?.message}
                   inputValue={editInfoInputValue}
                   setInputValue={setEditInfoInputValue}
@@ -180,7 +214,7 @@ function Edit() {
                       message: "-를 제외하고 입력하세요.",
                     },
                   })}
-                  placeholder="-를 제외하고 입력하세요."
+                  // placeholder={userValue.phonenum}
                   error={errors?.profile?.phonenum?.message}
                   inputValue={editInfoInputValue}
                   setInputValue={setEditInfoInputValue}

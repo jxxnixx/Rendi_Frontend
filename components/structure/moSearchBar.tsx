@@ -18,6 +18,7 @@ export default function MoSearchBar({ onClose }: any) {
   const screenWidth = useScreenWidth();
 
   const [searchValue, setSearchValue] = useState(""); // 검색어 상태
+  const [imageValue, setImageValue] = useState(""); // State to store the image value
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

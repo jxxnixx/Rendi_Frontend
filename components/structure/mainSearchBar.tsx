@@ -84,7 +84,7 @@ export default function SearchBar() {
 
   const handlePopular = async (accessToken: string) => {
     try {
-      const popularResponse = await itemsApi.popularSearch(accessToken);
+      const popularResponse: any = await itemsApi.popularSearch(accessToken);
       if (popularResponse.response) {
         setPopularKeywords(popularResponse.response.response.slice(0, 10)); // 최대 10개만 저장
       }
