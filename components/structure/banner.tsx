@@ -8,7 +8,7 @@ export default function Banner() {
   const screen = useScreenSize();
 
   return (
-    <div className="w-[1040px] h-[362px] mobile:w-full mobile:h-[226px] ">
+    <div className="w-[1040px] h-[362px] mobile:w-full mobile:h-[226px]">
       {/* <img src="banner.png" className="w-[1040px] h-[362px] object-cover" /> */}
       <Carousel
         autoplay
