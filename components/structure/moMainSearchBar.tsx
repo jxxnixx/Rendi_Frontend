@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 import { recentSearchHistoryState } from "@/libs/client/atom";
 import SubmitBtn from "../function/submitBtn";
 import { useScreenWidth } from "@/libs/client/useScreen";
+import { CloseOutlined, CloseSquareOutlined } from "@ant-design/icons";
 
 interface MoMainSearchBarProps {
   onClose: () => void; // 팝업 닫기 핸들러
@@ -196,15 +197,24 @@ export default function MoMainSearchBar({ onClose }: any) {
                 </div>
               </div>
             </div>
-            <div className="w-screen h-[500px] top-12 relative left-0 right-0 overflow-hidden justify-center items-center m-auto">
+            <div className="w-screen h-full relative left-0 right-0 overflow-hidden justify-center items-center ">
               <div
                 id="content"
-                className="w-1/2 h-[500px] text-sm font-medium justify-center items-center text-center text-black m-auto mt-20"
+                className="w-screen h-full text-sm font-medium justify-center items-center text-center text-black m-auto mt-20 bg-[#ff9912]"
               >
                 {showContent === "recent"
                   ? recentSearchHistory.length > 0
                     ? recentSearchHistory.map((item, index) => (
-                        <div key={index}>{item}</div>
+                        <div
+                          className="flex flex-row items-center justify-between w-[90%] h-[30px] bg-[#ff134e] m-[10px]"
+                          key={index}
+                        >
+                          <div>{item}</div>
+                          <div className="flex items-center">
+                            <CloseOutlined />
+                            {/* <CloseSquareOutlined /> */}
+                          </div>
+                        </div>
                       ))
                     : "최근 검색한 기록이 없습니다."
                   : popularKeywords.length > 0
