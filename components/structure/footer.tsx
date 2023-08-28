@@ -7,7 +7,7 @@ export default function Footer() {
 
   useEffect(() => {
     const handleResize = () => {
-      console.log(window.innerWidth);
+      // console.log(window.innerWidth);
       if (window.innerWidth <= 640) {
         setScreen("mobile");
       } else {
