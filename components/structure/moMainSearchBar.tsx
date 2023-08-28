@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { LeftOutlined } from "@ant-design/icons";
-import { Button, Upload } from "antd";
 import { useRouter } from "next/router";
 import { APopularSearchProps, itemsApi } from "@/libs/api";
 import { useRecoilState } from "recoil";
 import { recentSearchHistoryState } from "@/libs/client/atom";
-import { Camera, Search } from "../icons";
 import SubmitBtn from "../function/submitBtn";
 
 interface MoMainSearchBarProps {

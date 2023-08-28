@@ -6,7 +6,7 @@ import { APopularSearchProps, itemsApi } from "@/libs/api";
 import { useRecoilState } from "recoil";
 import { recentSearchHistoryState } from "@/libs/client/atom";
 
-export default function SearchBar() {
+export default function MainSearchBar() {
   const router = useRouter();
   const isMainPage = router.asPath.includes("/main");
 
