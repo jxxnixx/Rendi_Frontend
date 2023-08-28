@@ -3,40 +3,56 @@ import Head from "next/head";
 import Link from "next/link";
 import { Line, MyPage, Next, ShoppingBag } from "@/components/icons";
 import Items from "@/components/product/items";
-import Mymenus from "@/components/structure/mymenus";
-import { QueryClient, useQuery } from "@tanstack/react-query";
-import { itemsApi } from "@/libs/api";
-import { useRecoilValue } from "recoil";
-import { recentViewedItemsState } from "@/libs/client/atom";
+import { AEditInfosProps, usersApi } from "@/libs/api";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { UserInputState } from "@/libs/client/atom";
 
-const queryClient = new QueryClient();
-
-export default function Mypage() {
-  const recentViewedItems = useRecoilValue(recentViewedItemsState);
-
-  const [recentProducts, setRecentProducts] = useState([]);
+function Mypage() {
+  const router = useRouter();
+  const {
+    watch,
+    register,
+    formState: { errors },
+    handleSubmit,
+    setValue,
+  } = useForm<UserInputState>({
+    mode: "onChange",
+  });
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
+    const fetchAndSetDefaultValues = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
 
-    if (accessToken) {
-      const fetchRecentProducts = async () => {
-        console.log(recentViewedItems);
-        console.log(accessToken);
-        try {
-          const recentViewResponse = await itemsApi.recentView({
-            recentViewedItems,
-            accessToken,
-          });
-          setRecentProducts(recentViewResponse);
-        } catch (error) {
-          console.error("최근 본 상품 조회 오류:", error);
+        if (accessToken) {
+          const viewInfoResponse = await usersApi.viewInfos(accessToken);
+          console.log(viewInfoResponse);
+          if (viewInfoResponse?.success) {
+            console.log("회원정보 조회 성공!");
+            setValue("username", viewInfoResponse.response.response.username);
+            setValue(
+              "profile.nickname",
+              viewInfoResponse.response.response.nickname
+            );
+            setValue("profile.email", viewInfoResponse.response.response.email);
+            setValue("profile.birth", viewInfoResponse.response.response.birth);
+            setValue(
+              "profile.phonenum",
+              viewInfoResponse.response.response.phone
+            );
+          }
+        } else {
+          console.log("accessToken이 없습니다.");
         }
-      };
-      fetchRecentProducts();
-    }
-  }, [recentViewedItems]);
+      } catch (error) {
+        console.log("회원정보 조회 오류");
+      }
+    };
+
+    fetchAndSetDefaultValues();
+  }, []);
 
   return (
     <>
@@ -44,7 +60,39 @@ export default function Mypage() {
         <Head>
           <title>Mypage</title>
         </Head>
-        <Mymenus />
+        <div className="flex justify-center items-center">
+          <div className="flex justify-center w-[1040px] h-[98px] mt-[135px] bg-blue">
+            <p className="flex justify-center  left-[441px] mt-[35px] text-[21pt] font-semibold text-left text-black">
+              마이페이지
+            </p>
+          </div>
+        </div>
+        {/* 버튼 */}
+        <div className="flex justify-center items-center mt-[0px] opacity-90 gap-[100px] bg-white">
+          <Link href="/main/mypage/liked" legacyBehavior>
+            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
+              찜한 상품
+            </button>
+          </Link>
+
+          <Link href="/main/mypage/likedMarket" legacyBehavior>
+            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
+              즐겨찾기 마켓
+            </button>
+          </Link>
+
+          <Link href="/main/mypage/contact" legacyBehavior>
+            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
+              고객센터
+            </button>
+          </Link>
+
+          <Link href="/main/mypage/terms" legacyBehavior>
+            <button className="flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc">
+              이용약관
+            </button>
+          </Link>
+        </div>
         {/* 회원정보수정 */}
         <div className="flex justify-center items-center  ">
           <div className="flex justify-center items-center  w-[1040px] h-[85px] mt-[10px]  border-t border-b border-black">
@@ -53,9 +101,12 @@ export default function Mypage() {
             </div>
             <div>
               <div className="flex items-end h-[50px] ">
-                <p className="text-lg text-center text-black">아무개! 님</p>
+                {/* <p className="text-lg text-center text-black">아무개! 님</p> */}
+                <p className="text-lg text-center text-black">
+                  {watch("profile.nickname")} 님
+                </p>
               </div>
-              <Link href="/main/mypage/view">
+              <Link href="/main/mypage/edit">
                 <button className="flex items-top h-[50px] ">
                   <p className="text-m text-center text-[#666]">
                     회원정보 조회
@@ -86,3 +137,5 @@ export default function Mypage() {
     </>
   );
 }
+
+export default Mypage;
