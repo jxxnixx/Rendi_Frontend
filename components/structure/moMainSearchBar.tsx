@@ -197,16 +197,16 @@ export default function MoMainSearchBar({ onClose }: any) {
                 </div>
               </div>
             </div>
-            <div className="w-screen h-full relative left-0 right-0 overflow-hidden justify-center items-center ">
+            <div className="w-screen h-[500px] top-[120px] left-0 right-0 overflow-hidden justify-center items-center ">
               <div
                 id="content"
-                className="w-screen h-full text-sm font-medium justify-center items-center text-center text-black m-auto mt-20 bg-[#ff9912]"
+                className="w-screen h-[500px] text-sm font-medium justify-center items-center text-center text-black m-auto mt-[47px] p-[3px] "
               >
                 {showContent === "recent"
                   ? recentSearchHistory.length > 0
                     ? recentSearchHistory.map((item, index) => (
                         <div
-                          className="flex flex-row items-center justify-between w-[90%] h-[30px] bg-[#ff134e] m-[10px]"
+                          className="flex flex-row items-center justify-between w-[90%] h-[30px] m-[10px] border-black"
                           key={index}
                         >
                           <div>{item}</div>
