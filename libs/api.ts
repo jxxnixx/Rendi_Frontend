@@ -86,19 +86,14 @@ api.interceptors.request.use(
     //요청시 AccessToken 계속 보내주기
     if (!token) {
       config.headers.accessToken = null;
-      config.headers.refreshToken = null;
-      return config;
-    }
-
-    if (config.headers && token) {
+      console.log("토큰이 아직업쉥");
+    } else if (config.headers && token) {
       const accessToken = token;
-      const refreshToken = getCookie("refreshToken");
       config.headers.authorization = `Bearer ${accessToken}`;
-      config.headers.refreshToken = `Bearer ${refreshToken}`;
-      return config;
+      console.log("토큰 헤더에 넣는다?");
     }
-    // Do something before request is sent
-    console.log("request start", config);
+    // 인터셉터 내에서 config를 수정한 후 return
+    return config;
   },
   function (error) {
     // Do something with request error
@@ -106,6 +101,8 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+let isRefreshing = false;
 
 // Add a response interceptor
 api.interceptors.response.use(
@@ -118,21 +115,23 @@ api.interceptors.response.use(
   async (error) => {
     const { config, response } = error;
     if (response && response.status === 401) {
-      if (
-        response.data.error.errorCode === "EXPIRED_JWT_TOKEN" ||
-        response.data.error.errorCode === "UNAUTHORIZED" ||
-        response.data.error.errorCode === "INVALID_TOKEN_SIGNATURE" ||
-        response.data.error.errorCode === "INVALID_ACCESS_TOKEN"
-      ) {
-        const originalRequest = config;
-        const refreshToken = getCookie("refreshToken");
+      console.log("토큰 401");
+
+      if (!isRefreshing) {
+        isRefreshing = true;
+        //const originalRequest = config;
+
         // token refresh 요청
         try {
           const accessToken = localStorage.getItem("accessToken");
-          const reissueResponse = await axios.post(
+
+          console.log("재발급 요청한다?");
+
+          const reissueResponse = await api.post(
             `/member/reissue`,
-            { accessToken, refreshToken } // Send accessToken and refreshToken as parameters
+            { accessToken } // Send accessToken (and refreshToken) as parameters
           );
+
           const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
             reissueResponse.data;
 
@@ -140,15 +139,22 @@ api.interceptors.response.use(
           setCookie("refreshToken", newRefreshToken);
 
           api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
-          originalRequest.headers.authorization = `Bearer ${newAccessToken}`;
+          // originalRequest.headers.authorization = `Bearer ${newAccessToken}`;
+          config.headers.authorization = `Bearer ${newAccessToken}`;
 
-          return api(originalRequest);
+          const newRequestConfig = { ...config, retry: true };
+          //return api(originalRequest);
+          return api(newRequestConfig);
         } catch (reissueError) {
+          isRefreshing = false;
           console.log("Failed to reissue token", reissueError);
           return Promise.reject(error);
+        } finally {
+          isRefreshing = false;
         }
       }
     }
+    // }
     console.log("response error", error);
     return Promise.reject(error);
   }
@@ -440,9 +446,7 @@ export const itemsApi = {
       if (response.status === 200) {
         return {
           success: true,
-          response: {
-            message: "검색어 DB 업데이트 성공",
-          },
+          response: response.data,
           error: null,
         };
       }
@@ -506,7 +510,13 @@ export const itemsApi = {
         productId,
         hits,
       });
-      console.log(response);
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
     } catch (error) {
       console.log("조회수 업데이트 오류:", error);
       throw error;
@@ -516,25 +526,57 @@ export const itemsApi = {
   // 최근 본 상품
   recentView: async (recentProductIds: number[], accessToken: string) => {
     try {
-<<<<<<< Updated upstream
-      const response = await axios.get("/products/recent", {
+      const response = await api.get("/products/recent", {
         params: {
           recentProductIds,
         },
-=======
-      const response = await api.get("/products/recent/", {
-        data: productIds, // productIds를 요청의 데이터로 설정
->>>>>>> Stashed changes
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
       });
-      return response.data;
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
     } catch (error) {
       console.log("최근 본 상품 불러오기 오류:", error);
       throw error;
     }
+  },
+
+  allProducts: async (accessToken: string) => {
+    try {
+      const response = await api.get("/products/all", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
+    } catch (error) {}
+  },
+
+  newProducts: async () => {
+    try {
+      const response = await api.get("/products/new");
+      console.log(response);
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
+    } catch (error) {}
   },
 };
 

@@ -1,29 +1,21 @@
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
-import { Line, MyPage, Next, ShoppingBag } from "@/components/icons";
+import { MyPage, Next, ShoppingBag } from "@/components/icons";
 import Items from "@/components/product/items";
-import { AEditInfosProps, itemsApi, usersApi } from "@/libs/api";
+import { itemsApi, usersApi } from "@/libs/api";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import {
   UserInfoState,
-  UserInputState,
   recentViewedItemsState,
   userInfoState,
 } from "@/libs/client/atom";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { access } from "fs";
 
 function Mypage() {
   const router = useRouter();
-  const {
-    watch,
-    formState: { errors },
-    setValue,
-  } = useForm<UserInputState>({
-    mode: "onChange",
-  });
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const recentViewedItems = useRecoilValue(recentViewedItemsState);
@@ -32,15 +24,11 @@ function Mypage() {
     const fetchAndSetDefaultValues = async () => {
       try {
         const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
 
         if (accessToken) {
           const viewInfoResponse = await usersApi.viewInfos(accessToken);
           console.log(viewInfoResponse);
-
-          const recentResponse = await itemsApi.recentView(
-            recentViewedItems,
-            accessToken
-          );
 
           if (viewInfoResponse?.success) {
             console.log("회원정보 조회 성공!");
@@ -62,6 +50,21 @@ function Mypage() {
       } catch (error) {
         console.log("회원정보 조회 오류");
       }
+
+      //   try {
+      //     const accessToken = localStorage.getItem("accessToken");
+
+      //     console.log(recentViewedItems);
+      //     console.log(accessToken);
+      //     if (accessToken) {
+      //       const recentResponse = await itemsApi.recentView(
+      //         recentViewedItems,
+      //         accessToken
+      //       );
+      //       console.log(recentResponse);
+      //     }
+      //   } catch (error) {}
+      // };
     };
 
     fetchAndSetDefaultValues();
@@ -116,9 +119,7 @@ function Mypage() {
               <div className="flex items-end h-[50px] ">
                 {/* <p className="text-lg text-center text-black">아무개! 님</p> */}
                 <p className="text-lg text-center text-black">
-                  {typeof window !== "undefined" && userInfo.nickname
-                    ? `${userInfo.nickname} 님`
-                    : "Loading..."}
+                  {userInfo.nickname} 님
                 </p>
               </div>
               <Link href="/main/mypage/edit">
