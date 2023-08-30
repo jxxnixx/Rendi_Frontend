@@ -70,84 +70,90 @@ export interface ARecentProps {
   accessToken: string;
 }
 
-// export const API_URL = "http://121.166.191.129:9876";
+export const API_URL = "/";
 
-// export const api = axios.create({
-//   baseURL: API_URL,
-//   withCredentials: true,
-// });
+export const api = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+});
 
-// api.interceptors.request.use(
-//   function (config: AxiosRequestConfig): any {
-//     const token = localStorage.getItem("accessToken");
+api.interceptors.request.use(
+  function (config: AxiosRequestConfig): any {
+    const token = localStorage.getItem("accessToken");
 
-//     if (!config.headers) config.headers = {};
+    if (!config.headers) config.headers = {};
 
-//     //요청시 AccessToken 계속 보내주기
-//     if (!token) {
-//       config.headers.accessToken = null;
-//       config.headers.refreshToken = null;
-//       return config;
-//     }
+    //요청시 AccessToken 계속 보내주기
+    if (!token) {
+      config.headers.accessToken = null;
+      config.headers.refreshToken = null;
+      return config;
+    }
 
-//     if (config.headers && token) {
-//       const { accessToken, refreshToken } = JSON.parse(token);
-//       config.headers.authorization = `Bearer ${accessToken}`;
-//       config.headers.refreshToken = `Bearer ${refreshToken}`;
-//       return config;
-//     }
-//     // Do something before request is sent
-//     console.log("request start", config);
-//   },
-//   function (error) {
-//     // Do something with request error
-//     console.log("request error", error);
-//     return Promise.reject(error);
-//   }
-// );
+    if (config.headers && token) {
+      const accessToken = token;
+      const refreshToken = getCookie("refreshToken");
+      config.headers.authorization = `Bearer ${accessToken}`;
+      config.headers.refreshToken = `Bearer ${refreshToken}`;
+      return config;
+    }
+    // Do something before request is sent
+    console.log("request start", config);
+  },
+  function (error) {
+    // Do something with request error
+    console.log("request error", error);
+    return Promise.reject(error);
+  }
+);
 
-// // Add a response interceptor
-// api.interceptors.response.use(
-//   function (response: AxiosResponse) {
-//     // Any status code that lie within the range of 2xx cause this function to trigger
-//     // Do something with response data
-//     console.log("get response", response);
-//     return response;
-//   },
-//   async (error) => {
-//     const { config, response } = error;
-//     if (response && response.status === 401) {
-//       if (error.response.data.message === "expired") {
-//         const originalRequest = config;
-//         const refreshToken = getCookie("refreshToken");
-//         // token refresh 요청
-//         try {
-//           const accessToken = localStorage.getItem("accessToken");
-//           const reissueResponse = await axios.post(
-//             `/member/reissue`,
-//             { accessToken, refreshToken } // Send accessToken and refreshToken as parameters
-//           );
-//           const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
-//             reissueResponse.data;
+// Add a response interceptor
+api.interceptors.response.use(
+  function (response: AxiosResponse) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    console.log("get response", response);
+    return response;
+  },
+  async (error) => {
+    const { config, response } = error;
+    if (response && response.status === 401) {
+      if (
+        response.data.error.errorCode === "EXPIRED_JWT_TOKEN" ||
+        response.data.error.errorCode === "UNAUTHORIZED" ||
+        response.data.error.errorCode === "INVALID_TOKEN_SIGNATURE" ||
+        response.data.error.errorCode === "INVALID_ACCESS_TOKEN"
+      ) {
+        const originalRequest = config;
+        const refreshToken = getCookie("refreshToken");
+        // token refresh 요청
+        try {
+          const accessToken = localStorage.getItem("accessToken");
+          const reissueResponse = await axios.post(
+            `/member/reissue`,
+            { accessToken, refreshToken } // Send accessToken and refreshToken as parameters
+          );
+          const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+            reissueResponse.data;
 
-//           localStorage.setItem("accessToken", newAccessToken);
-//           setCookie("refreshToken", newRefreshToken);
+          localStorage.setItem("accessToken", newAccessToken);
+          setCookie("refreshToken", newRefreshToken);
 
-//           api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
-//           originalRequest.headers.authorization = `Bearer ${newAccessToken}`;
+          api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+          originalRequest.headers.authorization = `Bearer ${newAccessToken}`;
 
-//           return api(originalRequest);
-//         } catch (reissueError) {
-//           console.log("Failed to reissue token", reissueError);
-//           return Promise.reject(error);
-//         }
-//       }
-//     }
-//     console.log("response error", error);
-//     return Promise.reject(error);
-//   }
-// );
-// export default api;
+          return api(originalRequest);
+        } catch (reissueError) {
+          console.log("Failed to reissue token", reissueError);
+          return Promise.reject(error);
+        }
+      }
+    }
+    console.log("response error", error);
+    return Promise.reject(error);
+  }
+);
+export default api;
 
 //https://velog.io/@wooya/axios-interceptors%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-token%EB%A7%8C%EB%A3%8C%EC%8B%9C-refreshToken-%EC%9E%90%EB%8F%99%EC%9A%94%EC%B2%AD
 
@@ -166,7 +172,7 @@ export const usersApi = {
     phoneAgreeYn,
   }: ASignUpProps) => {
     try {
-      const response = await axios.post("/member/local/", {
+      const response = await api.post("/member/local/", {
         username,
         password,
         profile: {
@@ -197,13 +203,16 @@ export const usersApi = {
   // ID 중복 확인
   checkID: async (id: string) => {
     try {
-      const response = await axios.post("/member/id-check", id, {
+      const response = await api.post("/member/id-check", id, {
         headers: {
           "Content-Type": "application/json",
         },
       });
 
       console.log(response.data);
+
+      const message = response.data.response.message;
+      alert(message);
 
       return response.data;
     } catch (error: any) {
@@ -216,7 +225,7 @@ export const usersApi = {
   // 이메일 인증
   emailVerification: async ({ nickname, email }: AEmailVeriProps) => {
     try {
-      const response = await axios.post("/member/email", {
+      const response = await api.post("/member/email", {
         name: nickname,
         email,
       });
@@ -247,7 +256,7 @@ export const usersApi = {
     emailAgreeYn,
     phoneAgreeYn,
   }: ASocialSignUpProps) =>
-    axios.post("/member/social-profile/", {
+    api.post("/member/social-profile/", {
       provider,
       profile: {
         nickname,
@@ -264,7 +273,7 @@ export const usersApi = {
   // 일반 로그인
   login: async ({ username, password }: ALogInProps) => {
     try {
-      const response = await axios.post("/member/login/", {
+      const response = await api.post("/member/login/", {
         username,
         password,
       });
@@ -283,7 +292,7 @@ export const usersApi = {
 
   //소셜 로그인
   socialLogin: async ({ provider, email }: ASocialLoginProps) =>
-    axios.post("/member/social-token/", {
+    api.post("/member/social-token/", {
       provider,
       email,
     }),
@@ -291,7 +300,7 @@ export const usersApi = {
   // ID 찾기
   findID: async ({ nickname, email }: AFindIDProps) => {
     try {
-      const response = await axios.post("/member/find-id/", {
+      const response = await api.post("/member/find-id/", {
         name: nickname,
         email,
       });
@@ -324,7 +333,7 @@ export const usersApi = {
   // PW 변경
   changePW: async ({ email, password }: AFindPWProps) => {
     try {
-      const response = await axios.post("/member/find-pw/", {
+      const response = await api.post("/member/find-pw/", {
         email,
         password,
       });
@@ -346,7 +355,7 @@ export const usersApi = {
   // 회원정보 조회
   viewInfos: async (accessToken: string) => {
     try {
-      const response = await axios.get("/member/information/", {
+      const response = await api.get("/member/information/", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -369,7 +378,7 @@ export const usersApi = {
   editInfos: async (accessToken: string, updatedInfos: AEditInfosProps) => {
     try {
       // const response = await axiosPrivate.put("/member/information", updatedInfos);
-      const response = await axios.put("/member/information/", updatedInfos, {
+      const response = await api.put("/member/information/", updatedInfos, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -394,7 +403,7 @@ export const itemsApi = {
   popularSearch: async (accessToken: string) => {
     try {
       // const response = await axiosPrivate.get("/search/keyword/popular/");
-      const response = await axios.get("/search/keyword/popular/", {
+      const response = await api.get("/search/keyword/popular/", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -416,7 +425,7 @@ export const itemsApi = {
   // 검색어 저장
   saveKeyword: async (keyword: string, accessToken: string) => {
     try {
-      const response = await axios.post(
+      const response = await api.post(
         `/search/keyword/update/`,
         {
           keyword,
@@ -447,7 +456,7 @@ export const itemsApi = {
   getWish: async (accessToken: string) => {
     try {
       // const response = await axiosPrivate.get("/wishlist/all/");
-      const response = await axios.get("/wishlist/all/", {
+      const response = await api.get("/wishlist/all/", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -468,12 +477,16 @@ export const itemsApi = {
   // 찜하기 변경
   toggleWish: async (productId: number, accessToken: string) => {
     try {
-      const response = await axios.post(`/wishlist/${productId}`, null, {
+      const response = await api.post(`/wishlist/${productId}`, null, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
       if (response.status === 200) {
+        console.log(response);
+        console.log(response.data);
+        console.log(response.data.response);
+        console.log(response.data.response.message);
         return {
           success: true,
           response: response.data,
@@ -489,7 +502,7 @@ export const itemsApi = {
   // 조회수 업데이트
   updateHits: async (productId: number, hits: number) => {
     try {
-      const response = await axios.patch(`/products/hits/update`, {
+      const response = await api.patch(`/products/hits/update`, {
         productId,
         hits,
       });
@@ -503,10 +516,15 @@ export const itemsApi = {
   // 최근 본 상품
   recentView: async (recentProductIds: number[], accessToken: string) => {
     try {
+<<<<<<< Updated upstream
       const response = await axios.get("/products/recent", {
         params: {
           recentProductIds,
         },
+=======
+      const response = await api.get("/products/recent/", {
+        data: productIds, // productIds를 요청의 데이터로 설정
+>>>>>>> Stashed changes
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
