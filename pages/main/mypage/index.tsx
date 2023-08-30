@@ -3,16 +3,17 @@ import Head from "next/head";
 import Link from "next/link";
 import { Line, MyPage, Next, ShoppingBag } from "@/components/icons";
 import Items from "@/components/product/items";
-import { AEditInfosProps, usersApi } from "@/libs/api";
+import { AEditInfosProps, itemsApi, usersApi } from "@/libs/api";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import {
   UserInfoState,
   UserInputState,
+  recentViewedItemsState,
   userInfoState,
 } from "@/libs/client/atom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 function Mypage() {
   const router = useRouter();
@@ -25,6 +26,7 @@ function Mypage() {
   });
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const recentViewedItems = useRecoilValue(recentViewedItemsState);
 
   useEffect(() => {
     const fetchAndSetDefaultValues = async () => {
@@ -34,6 +36,12 @@ function Mypage() {
         if (accessToken) {
           const viewInfoResponse = await usersApi.viewInfos(accessToken);
           console.log(viewInfoResponse);
+
+          const recentResponse = await itemsApi.recentView(
+            recentViewedItems,
+            accessToken
+          );
+
           if (viewInfoResponse?.success) {
             console.log("회원정보 조회 성공!");
 
@@ -108,7 +116,9 @@ function Mypage() {
               <div className="flex items-end h-[50px] ">
                 {/* <p className="text-lg text-center text-black">아무개! 님</p> */}
                 <p className="text-lg text-center text-black">
-                  {userInfo.nickname} 님
+                  {typeof window !== "undefined" && userInfo.nickname
+                    ? `${userInfo.nickname} 님`
+                    : "Loading..."}
                 </p>
               </div>
               <Link href="/main/mypage/edit">

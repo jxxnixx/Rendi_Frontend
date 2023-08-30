@@ -501,10 +501,12 @@ export const itemsApi = {
   },
 
   // 최근 본 상품
-  recentView: async ({ productIds, accessToken }: any) => {
+  recentView: async (recentProductIds: number[], accessToken: string) => {
     try {
-      const response = await axios.get("/products/recent/", {
-        data: productIds, // productIds를 요청의 데이터로 설정
+      const response = await axios.get("/products/recent", {
+        params: {
+          recentProductIds,
+        },
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
