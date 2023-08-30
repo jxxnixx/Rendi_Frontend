@@ -17,7 +17,7 @@ export interface IUser {
 }
 
 export const useUser = ({ isPrivate = false }: IProps) => {
-  const { data, error, mutate } = useSWR<IUser>("/api/user");
+  const { data, error, mutate } = useSWR<IUser>("/member/information/");
   const router = useRouter();
 
   useEffect(() => {

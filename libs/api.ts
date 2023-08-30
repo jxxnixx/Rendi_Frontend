@@ -1,4 +1,8 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  CancelTokenSource,
+} from "axios";
 import { getCookie, setCookie } from "./client/cookies";
 
 export interface ASignUpProps {
@@ -77,8 +81,17 @@ export const api = axios.create({
   withCredentials: true,
 });
 
+let cancelTokenSource: CancelTokenSource | null = null;
+
 api.interceptors.request.use(
   function (config: AxiosRequestConfig): any {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel("Request canceled due to new request");
+    }
+
+    cancelTokenSource = axios.CancelToken.source();
+    config.cancelToken = cancelTokenSource.token;
+
     const token = localStorage.getItem("accessToken");
 
     if (!config.headers) config.headers = {};
@@ -97,19 +110,17 @@ api.interceptors.request.use(
   },
   function (error) {
     // Do something with request error
-    console.log("request error", error);
+    console.log("intercept 요청 에러!", error);
     return Promise.reject(error);
   }
 );
-
-let isRefreshing = false;
 
 // Add a response interceptor
 api.interceptors.response.use(
   function (response: AxiosResponse) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    console.log("get response", response);
+    console.log("intercept 잘됨", response);
     return response;
   },
   async (error) => {
@@ -117,46 +128,38 @@ api.interceptors.response.use(
     if (response && response.status === 401) {
       console.log("토큰 401");
 
-      if (!isRefreshing) {
-        isRefreshing = true;
-        //const originalRequest = config;
+      // token refresh 요청
+      try {
+        const accessToken = localStorage.getItem("accessToken");
 
-        // token refresh 요청
+        console.log("재발급 요청한다?");
+
         try {
-          const accessToken = localStorage.getItem("accessToken");
+          const reissueResponse = await api.post("/member/reissue", {
+            accessToken,
+          });
 
-          console.log("재발급 요청한다?");
+          console.log(reissueResponse.data.response);
 
-          const reissueResponse = await api.post(
-            `/member/reissue`,
-            { accessToken } // Send accessToken (and refreshToken) as parameters
-          );
-
-          const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
-            reissueResponse.data;
+          const newAccessToken = reissueResponse.data.response.accessToken;
+          const newRefreshToken = reissueResponse.data.response.refreshToken;
 
           localStorage.setItem("accessToken", newAccessToken);
           setCookie("refreshToken", newRefreshToken);
 
           api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
-          // originalRequest.headers.authorization = `Bearer ${newAccessToken}`;
-          config.headers.authorization = `Bearer ${newAccessToken}`;
 
           const newRequestConfig = { ...config, retry: true };
-          //return api(originalRequest);
           return api(newRequestConfig);
         } catch (reissueError) {
-          isRefreshing = false;
-          console.log("Failed to reissue token", reissueError);
-          return Promise.reject(error);
-        } finally {
-          isRefreshing = false;
+          console.log("토큰 재발급 실패", reissueError);
+          return Promise.reject(reissueError);
         }
+      } catch {
+        console.log("response error", error);
+        return Promise.reject(error);
       }
     }
-    // }
-    console.log("response error", error);
-    return Promise.reject(error);
   }
 );
 export default api;
@@ -202,7 +205,6 @@ export const usersApi = {
       }
     } catch (error: any) {
       console.error("회원가입 오류:", error);
-      throw error;
     }
   },
 
@@ -224,7 +226,6 @@ export const usersApi = {
     } catch (error: any) {
       // Handle the error
       console.error("중복 확인 오류:", error);
-      throw error;
     }
   },
 
@@ -246,7 +247,6 @@ export const usersApi = {
     } catch (error: any) {
       // Handle the error
       console.error("이메일 인증 오류:", error);
-      throw error;
     }
   },
 
@@ -292,7 +292,6 @@ export const usersApi = {
       }
     } catch (error: any) {
       console.error("로그인 오류:", error);
-      throw error;
     }
   },
 
@@ -303,7 +302,8 @@ export const usersApi = {
       email,
     }),
 
-  // ID 찾기
+  //ID 찾기
+
   findID: async ({ nickname, email }: AFindIDProps) => {
     try {
       const response = await api.post("/member/find-id/", {
@@ -332,7 +332,6 @@ export const usersApi = {
       }
     } catch (error: any) {
       console.error("아이디 찾기 오류:", error);
-      throw error;
     }
   },
 
@@ -354,7 +353,6 @@ export const usersApi = {
       }
     } catch (error: any) {
       console.error("비밀번호 변경 오류:", error);
-      throw error;
     }
   },
 
@@ -376,7 +374,6 @@ export const usersApi = {
       }
     } catch (error) {
       console.error("회원정보 조회 오류:", error);
-      throw error;
     }
   },
 
@@ -399,7 +396,6 @@ export const usersApi = {
       }
     } catch (error) {
       console.error("회원정보 수정 오류:", error);
-      throw error;
     }
   },
 };
@@ -424,7 +420,6 @@ export const itemsApi = {
       }
     } catch (error) {
       console.error("인기 검색어 요청 오류:", error);
-      throw error;
     }
   },
 
@@ -452,7 +447,6 @@ export const itemsApi = {
       }
     } catch (error) {
       console.error("검색어 저장 오류:", error);
-      throw error;
     }
   },
 
@@ -474,7 +468,6 @@ export const itemsApi = {
       }
     } catch (error) {
       console.error("찜한 상품 조회 오류:", error);
-      throw error;
     }
   },
 
@@ -499,7 +492,6 @@ export const itemsApi = {
       }
     } catch (error) {
       console.error("찜 변경 오류:", error);
-      throw error;
     }
   },
 
@@ -519,7 +511,6 @@ export const itemsApi = {
       }
     } catch (error) {
       console.log("조회수 업데이트 오류:", error);
-      throw error;
     }
   },
 
@@ -544,7 +535,6 @@ export const itemsApi = {
       }
     } catch (error) {
       console.log("최근 본 상품 불러오기 오류:", error);
-      throw error;
     }
   },
 

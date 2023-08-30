@@ -9,14 +9,14 @@ import dummyData from "@/components/product/dummyData.json";
 import { itemsApi } from "@/libs/api";
 
 export default function New() {
-  useEffect(() => {
-    const fetchNewProducts = async () => {
-      try {
-        const newProResponse: any = await itemsApi.newProducts();
-        console.log("new 상품 목록 : " + newProResponse);
-      } catch (error) {}
-    };
+  const fetchNewProducts = async () => {
+    try {
+      const newProResponse: any = await itemsApi.newProducts();
+      console.log("new 상품 목록 : ", newProResponse);
+    } catch (error) {}
+  };
 
+  useEffect(() => {
     fetchNewProducts();
   }, []);
 
