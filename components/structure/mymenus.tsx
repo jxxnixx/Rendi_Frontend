@@ -20,19 +20,19 @@ export default function Mymenus() {
   return (
     <>
       <div className="flex justify-center items-center">
-        <div className="flex justify-center w-[1040px] h-[98px] mt-[135px] bg-blue">
-          <p className="flex justify-center  left-[441px] mt-[35px] text-[21pt] font-semibold text-left text-black">
-            마이페이지
-          </p>
-        </div>
-      </div>
-      {/* 버튼 */}
-      <div className="flex justify-center items-center mt-[0px] opacity-90 gap-[100px] bg-white">
+<div className="flex justify-center w-[1040px] h-[98px] mt-[135px] bg-blue mobile:mt-[90px] mobile:h-[70px]">
+  <p className="flex justify-center  left-[441px] mt-[35px] text-[21pt] font-semibold text-left text-black mobile:mt-4 mobile:text-[18pt]">
+    마이페이지
+  </p>
+</div>
+</div>
+{/* 버튼 */}
+<div className="flex justify-center items-center mt-[0px] opacity-90 gap-[100px] bg-white mobile:gap-[20px]">
         <Link href="/main/mypage/liked" passHref>
           <button className={getMenuButtonClass("liked")}>찜한 상품</button>
         </Link>
 
-        <Link href="/main/mypage/likedmarket" passHref>
+        <Link href="/main/mypage/likedMarket" passHref>
           <button className={getMenuButtonClass("likedmarket")}>
             즐겨찾기 마켓
           </button>

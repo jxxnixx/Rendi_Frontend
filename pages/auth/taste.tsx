@@ -72,17 +72,17 @@ function Taste() {
         <title>Taste</title>
       </Head>
 
-      <div className="flex flex-col h-[1450px] bg-white justify-center items-center">
+      <div className="flex flex-col h-[1450px] bg-white justify-center items-center mobile:h-full">
         <form
           onSubmit={handleSubmit(submitForm)}
-          className="flex flex-col items-center mt-[100px]"
+          className="flex flex-col items-center mt-[110px] mobile: mt-0"
         >
-          <div className="text-lg text-center font-medium">
+          <div className="text-lg text-center font-medium text-[17pt] mobile:text-[12pt]">
             고객님의 선호 스타일을 최소 3개 이상 선택해주세요!
           </div>
           <TItems onItemSelect={handleItemSelection} />
 
-          <div className="w-screen flex flex-col items-center mt-4">
+          <div className="w-screen flex flex-col items-center mt-4 mb-4">
             <SubmitBtn
               large={true}
               type="submit"
