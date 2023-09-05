@@ -3,11 +3,23 @@ import Items from "@/components/product/items";
 import Pagination from "@/components/structure/pagination";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
+import { itemsApi } from "@/libs/api";
 
 export default function New() {
+  const fetchNewProducts = async () => {
+    try {
+      const newProResponse: any = await itemsApi.newProducts();
+      console.log("new 상품 목록 : ", newProResponse);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchNewProducts();
+  }, []);
+
   const [activeCate, setActiveCate] = useState("전체");
   // 전체 아이템의 개수와 총 페이지 수 계산
   const totalItems = dummyData.length;

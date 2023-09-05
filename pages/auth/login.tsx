@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Google, KakaoTalk, LoginLine, Naver } from "@/components/icons";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { setCookie } from "@/libs/client/cookies";
+import { getCookie, setCookie } from "@/libs/client/cookies";
 
 function LogIn() {
   const {
@@ -32,7 +32,7 @@ function LogIn() {
 
   const submitForm: SubmitHandler<ALogInProps> = async (data: ALogInProps) => {
     try {
-      const loginResponse = await usersApi.login(data);
+      const loginResponse: any = await usersApi.login(data);
 
       console.log(data);
 
@@ -45,6 +45,9 @@ function LogIn() {
         const accessToken: string = loginResponse.response.response.accessToken;
         const refreshToken: string =
           loginResponse.response.response.refreshToken;
+
+        console.log(accessToken);
+        console.log(refreshToken);
 
         // 토큰 저장
         // refreshToken 저장 위치 고려..!

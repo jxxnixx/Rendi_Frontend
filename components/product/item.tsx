@@ -108,10 +108,12 @@ const Item = ({
   const updatedItem = updateBrandId(item);
 
   const handleItemClick = () => {
+    console.log("클릭했넹?");
     const currentTime = Date.now();
     setClickCount(clickCount + 1);
     updateClickCount(item.productId, clickCount + 1); // 클릭 정보 업데이트
     updateLastClickTime(item.productId, currentTime); // 클릭 시간 업데이트
+    console.log("마지막 클릭 시간 : " + lastClickTime);
 
     // 이미 포함된 productId가 있으면 해당 기록 삭제
     const updatedRecentViewedItems = recentViewedItems.filter(
@@ -119,6 +121,7 @@ const Item = ({
     );
     // 가장 최근 순으로 추가
     setRecentViewedItems([item.productId, ...updatedRecentViewedItems]);
+    console.log("최근 본 상품 아톰에 추가했어~");
 
     router.push(item.href);
   };
