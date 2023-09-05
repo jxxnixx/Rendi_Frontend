@@ -128,7 +128,7 @@ export default function Footer() {
           </div>
         ) : (
           <div className="w-[388px] h-[265px] ">
-            <div className="w-[388px] h-[265px] absolute left-[-0.34px] top-[-0.55px] bg-white" />
+            <div className="w-[388px] h-[265px]  left-[-0.34px] top-[-0.55px] bg-white" />
             <div className="w-[187.2px] h-[36.98px]">
               <div className="flex justify-start items-start absolute left-[100px] top-[58.78px]">
                 <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-[4.032558441162109px]">

@@ -5,6 +5,22 @@ import { useRouter } from "next/router";
 import { APopularSearchProps, itemsApi } from "@/libs/api";
 import { useRecoilState } from "recoil";
 import { recentSearchHistoryState } from "@/libs/client/atom";
+import {CloseOutlined, CloseSquareOutlined} from "@ant-design/icons";
+
+function SearchItem({ keyword, onDelete }) {
+  return (
+    <div className="flex justify-between items-center h-[50px]">
+      <div>{keyword}</div>
+      <button
+        className="text-[#666] text-sm focus:outline-none"
+        onClick={() => onDelete(keyword)} // 검색어를 onDelete 함수에 전달
+      >
+        <CloseOutlined />
+      </button>
+    </div>
+  );
+}
+
 
 export default function MainSearchBar() {
   const router = useRouter();
@@ -13,8 +29,27 @@ export default function MainSearchBar() {
   const [accessToken, setAccessToken] = useState<string>(" ");
 
   const [popularKeywords, setPopularKeywords] = useState<APopularSearchProps[]>(
-    []
+       //[]
+       [
+        // 더미 데이터 예시
+        { keyword: "검색어1", searchCount: 10 },
+        { keyword: "검색어2", searchCount: 8 },
+        { keyword: "검색어3", searchCount: 15 },
+        { keyword: "검색어4", searchCount: 20 },
+        { keyword: "검색어5", searchCount: 30 },
+        { keyword: "검색어6", searchCount: 40 },
+        { keyword: "검색어7", searchCount: 50 },
+        { keyword: "검색어8", searchCount: 60 },
+        { keyword: "검색어9", searchCount: 70 },
+        { keyword: "검색어10", searchCount: 80 },
+      ]
   );
+  // 순위를 붙이기 위한 popularKeywords 배열 정리, 순위를 붙여서 rankedPopularKeywords에 저장
+  const rankedPopularKeywords = popularKeywords
+    .slice(0, 10) // 최대 10개까지만 표시
+    .sort((a, b) => b.searchCount - a.searchCount)
+    .map((item, index) => ({ ...item, rank: index + 1 })); // rank를 순위로 설정
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -45,7 +80,16 @@ export default function MainSearchBar() {
 
   const searchValue: any = inputRef.current?.value;
   const [imageValue, setImageValue] = useState(""); // 이미지 상태
+  const MAX_RECENT_SEARCHES = 6; // 최근 검색어 최대 개수
 
+  const handleDeleteRecentSearch = (indexToDelete) => {
+    setRecentSearchHistory((prevHistory) => {
+      const updatedHistory = [...prevHistory];
+      updatedHistory.splice(indexToDelete, 1);
+      return updatedHistory;
+    });
+  };
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -53,10 +97,10 @@ export default function MainSearchBar() {
 
     // 기존 최근 검색어와 중복을 제거한 후 새로운 검색어 추가
     setRecentSearchHistory((prevHistory) => {
-      const updatedHistory = [
-        searchValue,
-        ...prevHistory.filter((item) => item !== searchValue),
-      ];
+      const updatedHistory = [searchValue, ...prevHistory.filter((item) => item !== searchValue)];
+      if (updatedHistory.length > MAX_RECENT_SEARCHES) {
+        updatedHistory.pop(); // 오래된 검색어부터 삭제
+      }
       return updatedHistory;
     });
 
@@ -107,7 +151,7 @@ export default function MainSearchBar() {
       console.log("인기 검색어 받아오기 오류!", error);
     }
   };
-
+  
   useEffect(() => {
     // 검색창 외부 클릭 시 사각형 사라지게 설정
     const handleClickOutside = (event: MouseEvent) => {
@@ -180,7 +224,7 @@ export default function MainSearchBar() {
         {showUpload && (
           <div className="absolute top-[46px] left-[0px] w-[679px] h-[456px] bg-white border-2 border-[#FC435A]  rounded-b-[23px] border-t-0">
             <div className="flex  flex-col justify-center items-center w-[679px] h-[410px]">
-              <div className=" w-[600px] mt-[10px] p-[20px] overflow-y-auto">
+              <div className=" w-[600px] mt-[10px] p-[20px] overflow-hidden">
                 <span className="flex m-[20px] justify-center text-sm  font-medium text-gray-900 ">
                   여기로 이미지를 업로드해주세요.
                 </span>
@@ -289,25 +333,34 @@ export default function MainSearchBar() {
                   </button>
                 </div>
               </div>
-              <div className="w-[679px] h-[361px] absolute left-0 top-12 overflow-hidden">
-                <div
-                  id="content"
-                  className="w-[203px] absolute left-[229px] top-[157px] text-sm font-medium text-center text-black"
-                >
+              <div className="w-[675px] h-[361px] absolute left-0 top-12 overflow-auto">
+            <div
+              id="content"
+              className={`w-[${showContent === "recent" ? 600 : 600}px] absolute ${
+                showContent === "recent" ? "" : ""
+              } top-[17px] text-sm font-medium ${
+                showContent === "recent" ? "" : "text-center" } m-[20px] left-[15px] text-black`}
+            >
                   {showContent === "recent"
                     ? recentSearchHistory.length > 0
                       ? recentSearchHistory.map((item, index) => (
-                          <div key={index}>{item}</div>
+                        <SearchItem
+                        key={index}
+                        keyword={item}
+                        onDelete={() => handleDeleteRecentSearch(index)}
+                      />
                         ))
                       : "최근 검색한 기록이 없습니다."
-                    : popularKeywords.length > 0
-                    ? popularKeywords.map((item, index) => (
-                        <div key={index}>
-                          {item.keyword} ({item.searchCount}회 검색)
+                    : rankedPopularKeywords.length > 0
+                    ?
+                    rankedPopularKeywords.map((item, index) => (
+                        <div key={index} className="h-[50px] overflow-hidden">
+                         {item.rank}. {item.keyword} ({item.searchCount}회 검색)
                         </div>
                       ))
                     : "인기 검색어 로딩 중.."}
                 </div>
+             
               </div>
             </div>
             <div className="w-[679px] h-12 absolute left-0 top-[408px] overflow-hidden">

@@ -86,50 +86,49 @@ export default function Circle({ icon, direction }: cProps) {
     }
   };
 
-  return (
-    <>
-      <div
-        className={`flex items-center ${
-          direction === "hori"
-            ? "flex-col m-[15px] mobile:m-1.5"
-            : "w-[350px] h-[50px] justify-start my-[15px] mx-[10px]"
-        } `}
+  return ( 
+    <div
+    className={`flex items-center ${
+      direction === "hori"
+        ? "flex-col m-[15px] mobile:m-1.5"
+        : "w-[350px] h-[50px] justify-start my-[15px] mx-[10px]"
+    } `}
+  >
+    <button
+      className={`${
+        direction === "hori"
+          ? "w-[50px] h-[50px] mobile:w-[45px] mobile:h-[45px]"
+          : "w-[45px] h-[45px]"
+      } mb-[10px] rounded-full bg-[#FAD5D5] bg-opacity-80 hover:bg-[#FAD5D5]`}
+    >
+      <Link
+        href={{
+          pathname: "/categories/[id]",
+          query: { id: icon.toLowerCase() },
+        }}
+        legacyBehavior
       >
-        <button
-          className={`${
-            direction === "hori"
-              ? "w-[50px] h-[50px] mobile:w-[45px] mobile:h-[45px]"
-              : "w-[45px] h-[45px]"
-          } mb-[10px] rounded-full bg-[#FAD5D5] bg-opacity-80 hover:bg-[#FAD5D5]`}
-        >
-          <Link
-            href={{
-              pathname: "/categories/[id]",
-              query: { id: icon.toLowerCase() },
-            }}
-            legacyBehavior
-          >
-            <a className="text-[#666]">{getComponent()}</a>
-          </Link>
-        </button>
-        <Link
-          href={{
-            pathname: "/categories/[id]",
-            query: { id: icon.toLowerCase() },
-          }}
-          legacyBehavior
-        >
-          <a
-            className={` ${
-              direction === "hori"
-                ? "text-[14px] mobile:text-[12px]"
-                : "text-[20px] ml-[10px]"
-            }`}
-          >
-            {getKeyword()}
-          </a>
-        </Link>
-      </div>
-    </>
+        <a className="text-[#666]">{getComponent()}</a>
+      </Link>
+    </button>
+    <Link
+      href={{
+        pathname: "/categories/[id]",
+        query: { id: icon.toLowerCase() },
+      }}
+      legacyBehavior
+    >
+      <a
+        className={` ${
+          direction === "hori"
+            ? "text-[14px] mobile:text-[12px]"
+            : "text-[15px] ml-[10px] mb-[10px] "
+        }`}
+      >
+        {getKeyword()}
+      </a>
+    </Link>
+  </div>
+
   );
 }
