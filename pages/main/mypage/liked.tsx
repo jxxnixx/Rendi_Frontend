@@ -38,7 +38,7 @@ function Liked() {
     const getWishList = async () => {
       try {
         console.log(accessToken);
-        const getWishresponse = await itemsApi.getWish(accessToken);
+        const getWishresponse: any = await itemsApi.getWish(accessToken);
 
         console.log(getWishresponse);
 

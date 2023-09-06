@@ -49,8 +49,12 @@ export default function Items({ itemsPerPage, itemsToShow }: ItemsProps) {
         console.log(clickCount);
         console.log(clickCounts);
 
-        const hitsResponse = await itemsApi.updateHits(productIdn, clickCount);
-        console.log(hitsResponse);
+        const hitsResponse: any = await itemsApi.updateHits(
+          productIdn,
+          clickCount
+        );
+        console.log("클릭 카운트 업데이트한다?");
+        console.log(hitsResponse.response);
       }
     } catch (error) {
       console.log("클릭 카운트 업데이트 에러:", error);

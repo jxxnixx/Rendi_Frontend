@@ -15,9 +15,7 @@ export const setCookie = (name: string, value: string, options?: any) => {
   // 쿠키 기본 옵션
   const defaultOptions: CookieProps = {
     path: "/",
-    secure: true,
-    sameSite: "strict",
-    httpOnly: true,
+    // httpOnly: true,
   };
 
   // 만료 기간
