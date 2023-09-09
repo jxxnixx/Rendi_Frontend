@@ -1,12 +1,12 @@
 import { motion, useCycle, Variants } from "framer-motion";
 import Link from "next/link";
-import Circle from "../category/circle"; 
+import Circle from "../category/circle";
 import { MyPage } from "../icons";
 // Sidebar animation variants
 const sidebarVariants: Variants = {
   open: {
     x: 0,
-    width: "100vw",  
+    width: "100vw",
     transition: {
       duration: 0.2,
     },
@@ -86,58 +86,57 @@ const Navigation = ({ onItemClick }: any) => {
 
   return (
     <ul className="absolute mt-10">
-   <div className="divide-y divide-solid">
-    {/* 첫번째 구분선 */}
-    <div></div> 
-    {/* 프로필 들어갈 영역 */}
-   <div className="flex justify-center">
-   <Link href="/main/mypage">
-    <div className="w-100vw h-[45px] flex-col m-5">  
-      <div className="flex justify-center align-center">
-        {/* <UserOutlined/> */}
-        <MyPage size={20} />
-      </div>
-      <div className="m-2" >
-          아무개 님
-      </div>
-     </div> 
-     </Link>
-    </div>
-   
-    <div className="">
-      <div className="flex m-2 justify-center">
-        Pages
-      </div>
-    </div>
-   <div className=" ">
-      {navigationItems.map((item, index) => (
-        <li key={index} className="h-[30px] mt-3 ml-5
-       ">
-          <Link
-            href={item.path}
-            onClick={onItemClick}
-            className="flex items-center "
-          >
-            <span>{item.label}</span>
+      <div className="divide-y divide-solid">
+        {/* 첫번째 구분선 */}
+        <div></div>
+        {/* 프로필 들어갈 영역 */}
+        <div className="flex justify-center">
+          <Link href="/main/mypage">
+            <div className="w-100vw h-[45px] flex-col m-5">
+              <div className="flex justify-center align-center">
+                {/* <UserOutlined/> */}
+                <MyPage size={20} />
+              </div>
+              <div className="m-2">아무개 님</div>
+            </div>
           </Link>
-        </li>
-      ))}
-    </div>
-    <div className="">
-      <div className="flex m-2 justify-center">
-        Categories
-      </div>
-    </div>
-      <div className=" ">
-      <li>
-        <div className="flex flex-col items-center ml-2"  onClick={onItemClick}>
-          {icons.map((icon, index) => (
-            <Circle key={index} icon={icon} direction="vert" />
-            
+        </div>
+
+        <div className="">
+          <div className="flex m-2 justify-center">Pages</div>
+        </div>
+        <div className=" ">
+          {navigationItems.map((item, index) => (
+            <li
+              key={index}
+              className="h-[30px] mt-3 ml-5
+       "
+            >
+              <Link
+                href={item.path}
+                onClick={onItemClick}
+                className="flex items-center "
+              >
+                <span>{item.label}</span>
+              </Link>
+            </li>
           ))}
         </div>
-      </li>
-      </div>
+        <div className="">
+          <div className="flex m-2 justify-center">Categories</div>
+        </div>
+        <div className=" ">
+          <li>
+            <div
+              className="flex flex-col items-center ml-2"
+              onClick={onItemClick}
+            >
+              {icons.map((icon, index) => (
+                <Circle key={index} icon={icon} direction="vert" />
+              ))}
+            </div>
+          </li>
+        </div>
       </div>
     </ul>
   );
@@ -148,7 +147,11 @@ export default function SideBar() {
   const [isOpen, toggleOpen] = useCycle(false, true);
 
   return (
-    <div className={`overflow-y-auto ${isOpen ? "fixed inset-0 bg-white" : ""}`}>
+    <div
+      className={`overflow-y-auto scrollbar-hide  ${
+        isOpen ? "fixed inset-0 bg-white" : ""
+      }`}
+    >
       <motion.nav
         initial={false}
         animate={isOpen ? "open" : "closed"}
