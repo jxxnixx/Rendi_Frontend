@@ -39,7 +39,9 @@ const Home: NextPage = () => {
           <div className="flex justify-center">
             <div className="flex-row w-[1040px] mobile:w-full">
               <div className="flex justify-between text-[12pt] font-medium text-black">
-                <p className="ml-[30px] mt-[10px]">이번주 신제품</p>
+                <p className="ml-[30px] mt-[10px] mobile:ml-[20px]">
+                  이번주 신제품
+                </p>
 
                 <Link href="/menus/new">
                   <button className="h-[34px] flex items-end">
