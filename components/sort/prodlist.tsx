@@ -79,6 +79,13 @@ export default function Prodlist({ products }: ProdlistProps) {
             onResetFilters={() => {
               console.log("Reset filters");
               handleClosePopup(); // 필터 초기화 후 팝업 숨기기
+              setSortResult({
+                sortOrder: "정렬순",
+                category: "카테고리",
+                subcategory: ["서브카테고리"],
+                color: ["색상"],
+                price: { min: 0, max: 500000 },
+              });
             }}
           />
         </div>
