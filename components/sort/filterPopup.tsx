@@ -146,22 +146,27 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
   ];
 
   const colorList = [
-    { value: "black", label: "블랙" },
     { value: "white", label: "화이트" },
+    { value: "black", label: "블랙" },
     { value: "gray", label: "그레이" },
-    { value: "red", label: "레드" },
-    { value: "orange", label: "오렌지" },
-    { value: "yellow", label: "옐로우" },
-    { value: "green", label: "그린" },
-    { value: "blue", label: "블루" },
-    { value: "navy", label: "네이비" },
-    { value: "purple", label: "퍼플" },
-    { value: "pink", label: "핑크" },
+    { value: "charcoal", label: "차콜" },
     { value: "brown", label: "브라운" },
     { value: "beige", label: "베이지" },
+    { value: "cream", label: "크림" },
+    { value: "pink", label: "핑크" },
+    { value: "green", label: "그린" },
+    { value: "yellow", label: "옐로우" },
+    { value: "navy", label: "네이비" },
+    { value: "skyblue", label: "스카이블루" },
+    { value: "purple", label: "퍼플" },
+    { value: "red", label: "레드" },
+    { value: "mint", label: "민트" },
     { value: "khaki", label: "카키" },
+    { value: "orange", label: "오렌지" },
+    { value: "blue", label: "블루" },
     { value: "silver", label: "실버" },
     { value: "gold", label: "골드" },
+    { value: "etc", label: "기타" },
   ];
 
   return (
