@@ -92,7 +92,10 @@ const Navigation = ({ onItemClick }: any) => {
         {/* 프로필 들어갈 영역 */}
         <div className="flex justify-center">
           <Link href="/main/mypage">
-            <div className="w-100vw h-[45px] flex-col m-5">
+            <div
+              className="w-100vw h-[45px] flex-col m-5"
+              onClick={onItemClick}
+            >
               <div className="flex justify-center align-center">
                 {/* <UserOutlined/> */}
                 <MyPage size={20} />
