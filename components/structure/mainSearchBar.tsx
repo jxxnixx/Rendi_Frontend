@@ -93,6 +93,10 @@ export default function MainSearchBar() {
 
     //setShowUpload(false);
 
+    // 빈 문자열 또는 공백 문자열인 경우 처리하지 않고 반환
+    if (!searchValue.trim()) {
+      return;
+    }
     // 기존 최근 검색어와 중복을 제거한 후 새로운 검색어 추가
     setRecentSearchHistory((prevHistory) => {
       const updatedHistory = [
