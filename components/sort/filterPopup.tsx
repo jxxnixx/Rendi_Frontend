@@ -165,7 +165,7 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
   ];
 
   return (
-    <div className="popup-container p-4 bg-white border rounded shadow-md">
+    <div className=" popup-container p-4 bg-white border rounded shadow-md mobile:h-[850px] mobile:overflow-auto  mobile:scrollbar-hide">
       <div className="text-xl font-bold mb-4">필터</div>
 
       <div className="filter-section mb-4">
