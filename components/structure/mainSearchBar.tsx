@@ -363,7 +363,7 @@ export default function MainSearchBar() {
                     ? rankedPopularKeywords.map((item, index) => (
                         <div
                           key={index}
-                          className="flex flex-row h-[30px] w-1/2 ml-[40%] mt-[20px] overflow-hidden  "
+                          className="flex flex-row items-center h-[50px] w-1/2 ml-[40%]  overflow-hidden  "
                         >
                           <div className="justify-center items-center  ">
                             {item.rank}.
