@@ -83,7 +83,7 @@ function Taste() {
 
           <TItems onItemSelect={handleItemSelection} />
 
-          <div className="w-screen flex flex-col items-center mt-10 mb-4">
+          <div className="w-screen flex flex-col items-center mt-10 mb-9">
             <SubmitBtn
               // large={true}
               type="submit"
