@@ -78,7 +78,7 @@ export default function MainSearchBar() {
 
   const searchValue: any = inputRef.current?.value;
   const [imageValue, setImageValue] = useState(""); // 이미지 상태
-  const MAX_RECENT_SEARCHES = 6; // 최근 검색어 최대 개수
+  const MAX_RECENT_SEARCHES = 7; // 최근 검색어 최대 개수
 
   const handleDeleteRecentSearch = (indexToDelete) => {
     setRecentSearchHistory((prevHistory) => {
@@ -345,9 +345,9 @@ export default function MainSearchBar() {
                     showContent === "recent" ? 600 : 600
                   }px] absolute ${
                     showContent === "recent" ? "" : ""
-                  } top-[17px] text-sm font-medium ${
+                  }   text-sm font-medium ${
                     showContent === "recent" ? "" : "text-center"
-                  } m-[20px] left-[15px] text-black`}
+                  } m-[15px] mt-[5px]  left-[15px] text-black`}
                 >
                   {showContent === "recent"
                     ? recentSearchHistory.length > 0
@@ -377,10 +377,10 @@ export default function MainSearchBar() {
                 </div>
               </div>
             </div>
-            <div className="w-[679px] h-12 absolute left-0 top-[408px] overflow-hidden">
+            <div className="border-t border-solid border-[#cccccc] w-[679px] h-12 absolute left-0 top-[408px] overflow-hidden">
               <button
                 id="close"
-                className="w-[463px] h-[37px] absolute left-[108px] top-1.5 text-sm font-medium text-center text-[#666]"
+                className=" w-[463px] h-[37px] absolute left-[108px] top-1.5 text-sm font-medium text-center text-[#666]"
                 onClick={handleCloseClick}
               >
                 닫기
