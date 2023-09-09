@@ -32,14 +32,14 @@ export default function MainSearchBar() {
     [
       // 더미 데이터 예시
       { keyword: "검색어1", searchCount: 10 },
-      { keyword: "검색어2", searchCount: 8 },
+      { keyword: "검색어dd2", searchCount: 8 },
       { keyword: "검색어3", searchCount: 15 },
       { keyword: "검색어4", searchCount: 20 },
       { keyword: "검색어5", searchCount: 30 },
       { keyword: "검색어6", searchCount: 40 },
       { keyword: "검색어7", searchCount: 50 },
       { keyword: "검색어8", searchCount: 60 },
-      { keyword: "검색어9", searchCount: 70 },
+      { keyword: "검색어dddd9", searchCount: 70 },
       { keyword: "검색어10", searchCount: 80 },
     ]
   );
@@ -47,7 +47,7 @@ export default function MainSearchBar() {
   const rankedPopularKeywords = popularKeywords
     .slice(0, 10) // 최대 10개까지만 표시
     .sort((a, b) => b.searchCount - a.searchCount)
-    .map((item, index) => ({ ...item, rank: index + 1 })); // rank를 순위로 설정
+    .map((item, index) => ({ ...item, rank: index + 1, padding: "0px 10px" })); // rank를 순위로 설정
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -361,9 +361,16 @@ export default function MainSearchBar() {
                       : "최근 검색한 기록이 없습니다."
                     : rankedPopularKeywords.length > 0
                     ? rankedPopularKeywords.map((item, index) => (
-                        <div key={index} className="h-[50px] overflow-hidden">
-                          {item.rank}. {item.keyword} ({item.searchCount}회
-                          검색)
+                        <div
+                          key={index}
+                          className="flex flex-row h-[50px] w-1/2 ml-[40%] overflow-hidden  "
+                        >
+                          <div className="justify-center items-center  ">
+                            {item.rank}.
+                          </div>
+                          <div>
+                            {item.keyword} ({item.searchCount}회 검색){" "}
+                          </div>
                         </div>
                       ))
                     : "인기 검색어 로딩 중.."}
