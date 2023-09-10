@@ -1,15 +1,26 @@
 import Link from "next/link";
 import { MyPage } from "../icons";
 import { useRouter } from "next/router";
+import { userInfoState } from "@/libs/client/atom"; //추가
+import { useRecoilState } from "recoil"; //추가
 
 export default function ProfileBtn() {
   const router = useRouter();
   const isMainPage = router.asPath.includes("/main");
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState); //추가
 
   const handleLogout = () => {
     // 로그아웃 버튼 클릭 시 실행되는 함수
 
     localStorage.removeItem("accessToken"); // accessToken 삭제
+    setUserInfo({
+      // userInfoState를 빈 객체로 설정
+      username: "",
+      nickname: "",
+      email: "",
+      birth: "",
+      phonenum: "",
+    }); // userInfoState 상태 초기화 //추가
     router.push("/"); // 페이지 이동
   };
 

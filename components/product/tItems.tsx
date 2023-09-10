@@ -16,17 +16,15 @@ export default function TItems({ onItemSelect }: TItemsProps) {
 
   const renderItems = () => {
     const rows = [];
-    const numItemsPerRow= screen === "mobile" ? 2 : 5;
+    const numItemsPerRow = screen === "mobile" ? 3 : 5;
 
     for (let i = 0; i < allItems.length; i += numItemsPerRow) {
       const rowItems = allItems.slice(i, i + numItemsPerRow);
       const row = (
         <div
           key={i}
-          className={`flex justify-start items-start flex-grow-0 flex-shrink-0  relative gap-[35px]${
-            screen === "mobile"
-              ? "w-full px-[16px] py-[3px] mb-[5px]"
-              : "w-[1040px] px-[25px] py-[5px] mb-[10px]"
+          className={`flex justify-center items-start flex-grow-0 flex-shrink-0 gap-[35px]${
+            screen === "mobile" ? "w-full " : "w-[1040px] px-[25px] mt-[40px]"
           }`}
         >
           {rowItems.map((item) => (
@@ -46,7 +44,7 @@ export default function TItems({ onItemSelect }: TItemsProps) {
 
   return (
     <>
-      <div className="w-[1040px] h-[1100px] relative overflow-hidden bg-white  mobile:w-full mobile: h-full">
+      <div className="w-[1040px] h-[1100px]  overflow-hidden  mobile:w-full mobile: h-[990px]">
         {renderItems()}
       </div>
     </>

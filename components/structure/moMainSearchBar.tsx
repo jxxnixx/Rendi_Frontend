@@ -20,37 +20,36 @@ export default function MoMainSearchBar({ onClose }: any) {
   const [accessToken, setAccessToken] = useState<string>(" ");
 
   const [popularKeywords, setPopularKeywords] = useState<APopularSearchProps[]>(
-   //[]
-   [
-    // 더미 데이터 예시
-    { keyword: "검색어1", searchCount: 10 },
-    { keyword: "검색어2", searchCount: 8 },
-    { keyword: "검색어3", searchCount: 15 },
-    { keyword: "검색어4", searchCount: 20 },
-    { keyword: "검색어5", searchCount: 30 },
-    { keyword: "검색어6", searchCount: 40 },
-    { keyword: "검색어7", searchCount: 50 },
-    { keyword: "검색어8", searchCount: 60 },
-    { keyword: "검색어9", searchCount: 70 },
-    { keyword: "검색어10", searchCount: 80 },
-  ]
+    //[]
+    [
+      // 더미 데이터 예시
+      { keyword: "검색어1", searchCount: 10 },
+      { keyword: "검색어2", searchCount: 8 },
+      { keyword: "검색어3", searchCount: 15 },
+      { keyword: "검색어4", searchCount: 20 },
+      { keyword: "검색어5", searchCount: 30 },
+      { keyword: "검색어6", searchCount: 40 },
+      { keyword: "검색어7", searchCount: 50 },
+      { keyword: "검색어8", searchCount: 60 },
+      { keyword: "검색어9", searchCount: 70 },
+      { keyword: "검색어10", searchCount: 80 },
+    ]
   );
-// 순위를 붙이기 위한 popularKeywords 배열 정리, 순위를 붙여서 rankedPopularKeywords에 저장
-const rankedPopularKeywords = popularKeywords
-.slice(0, 10) // 최대 10개까지만 표시
-.sort((a, b) => b.searchCount - a.searchCount)
-.map((item, index) => ({ ...item, rank: index + 1 })); // rank를 순위로 설정
+  // 순위를 붙이기 위한 popularKeywords 배열 정리, 순위를 붙여서 rankedPopularKeywords에 저장
+  const rankedPopularKeywords = popularKeywords
+    .slice(0, 10) // 최대 10개까지만 표시
+    .sort((a, b) => b.searchCount - a.searchCount)
+    .map((item, index) => ({ ...item, rank: index + 1 })); // rank를 순위로 설정
 
-
-useEffect(() => {
-if (typeof window !== "undefined") {
-  const storedAccessToken: string | null =
-    localStorage.getItem("accessToken");
-  if (storedAccessToken) {
-    setAccessToken(storedAccessToken);
-  }
-}
-}, []);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedAccessToken: string | null =
+        localStorage.getItem("accessToken");
+      if (storedAccessToken) {
+        setAccessToken(storedAccessToken);
+      }
+    }
+  }, []);
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedAccessToken: string | null =
@@ -70,7 +69,10 @@ if (typeof window !== "undefined") {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    // 빈 문자열 또는 공백 문자열인 경우 처리하지 않고 반환
+    if (!searchValue.trim()) {
+      return;
+    }
     // 기존 최근 검색어와 중복을 제거한 후 새로운 검색어 추가
     setRecentSearchHistory((prevHistory) => {
       const updatedHistory = [
@@ -246,8 +248,10 @@ if (typeof window !== "undefined") {
                           key={index}
                         >
                           <div>{item}</div>
-                          <div className="flex items-center" 
-                          onClick={() => handleDeleteRecentSearch(index)} >
+                          <div
+                            className="flex items-center "
+                            onClick={() => handleDeleteRecentSearch(index)}
+                          >
                             <CloseOutlined />
                             {/* <CloseSquareOutlined /> */}
                           </div>
@@ -256,11 +260,11 @@ if (typeof window !== "undefined") {
                     : "최근 검색한 기록이 없습니다."
                   : rankedPopularKeywords.length > 0
                   ? rankedPopularKeywords.map((item, index) => (
-                    <div
-                    className="flex flex-row items-center justify-center w-[95%] h-[30px] m-[10px] border-black"
-                    key={index}
-                  >
-                     {item.rank}. {item.keyword} ({item.searchCount}회 검색)
+                      <div
+                        className="flex flex-row items-center justify-center w-[95%] h-[30px] m-[10px] border-black"
+                        key={index}
+                      >
+                        {item.rank}. {item.keyword} ({item.searchCount}회 검색)
                       </div>
                     ))
                   : "인기 검색어 로딩 중.."}

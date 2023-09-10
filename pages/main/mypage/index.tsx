@@ -80,8 +80,8 @@ function Mypage() {
         </Head>
         <Mymenus />
         {/* 회원정보수정 */}
-        <div className="flex justify-center items-center  ">
-          <div className="flex justify-center items-center  w-[1040px] h-[85px] mt-[10px]  border-t border-b border-black">
+        <div className="flex justify-center items-center ">
+          <div className="flex justify-center items-center  w-[1040px] h-[85px] mt-[10px]   border-t border-b border-black ">
             <div className="flex items-center h-[50px] w-[50px] ">
               <MyPage size={30} />
             </div>
@@ -107,7 +107,7 @@ function Mypage() {
         </div>
         {/* 최근본상품 */}
         <div className="flex justify-center">
-          <div className="flex-row  w-[1040px] h-[834px]">
+          <div className="flex-row  w-[1040px] h-[1234px]">
             <div className="flex text-[12pt] font-medium  text-black">
               <div className="flex ml-[10px] mr-[5px] items-center h-[40px]">
                 <ShoppingBag />
