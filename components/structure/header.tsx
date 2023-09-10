@@ -3,11 +3,9 @@ import BrLine from "./brLine";
 import ProfileBtn from "./profileBtn";
 import SearchBar from "./searchBar";
 import { useRouter } from "next/router";
-import MainSearchBar from "./mainSearchBar";
 import { useScreenSize } from "@/libs/client/useScreen";
 import { useState } from "react";
-import { MenuOutlined, SearchOutlined, UserOutlined } from "@ant-design/icons";
-import MoMainSearchBar from "./moMainSearchBar";
+import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import MoSearchBar from "./moSearchBar";
 import SideBar from "./sidebar";
 
@@ -78,7 +76,7 @@ export default function Header() {
                 </div>
                 {/* 검색창 */}
                 <div className="w-[679px] h-[46px] left-[181px] mt-[38px]">
-                  {isMainPage ? <MainSearchBar /> : <SearchBar />}
+                  <SearchBar />
                 </div>
                 {/* 회원가입/로그인 */}
                 <div className="w-[85px] h-[30px]">
@@ -89,12 +87,9 @@ export default function Header() {
           </>
         )}
       </div>
-      {isMobileSearchOpen &&
-        (isMainPage ? (
-          <MoMainSearchBar onClose={() => setIsMobileSearchOpen(false)} />
-        ) : (
-          <MoSearchBar onClose={() => setIsMobileSearchOpen(false)} />
-        ))}
+      {isMobileSearchOpen && (
+        <MoSearchBar onClose={() => setIsMobileSearchOpen(false)} />
+      )}
     </header>
   );
 }
