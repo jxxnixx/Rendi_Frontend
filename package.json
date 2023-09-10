@@ -50,5 +50,5 @@
   "devDependencies": {
     "@types/react": "^18.2.6"
   },
-  "proxy": "http://121.166.191.129:9876"
+  "proxy": "http://211.33.36.227:8081/"
 }
