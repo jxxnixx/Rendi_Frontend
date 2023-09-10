@@ -3,11 +3,23 @@ import Items from "@/components/product/items";
 import Pagination from "@/components/structure/pagination";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
+import { itemsApi } from "@/libs/api";
 
-export default function Market() {
+export default function New() {
+  const fetchNewProducts = async () => {
+    try {
+      const newProResponse: any = await itemsApi.newProducts();
+      console.log("new 상품 목록 : ", newProResponse);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchNewProducts();
+  }, []);
+
   const [activeCate, setActiveCate] = useState("전체");
   // 전체 아이템의 개수와 총 페이지 수 계산
   const totalItems = dummyData.length;
@@ -29,29 +41,20 @@ export default function Market() {
   return (
     <Layout>
       <Head>
-        <title>Market</title>
+        <title>New</title>
       </Head>
-      <div className="flex justify-center">
-        <div className="mt-[135px] mobile:mt-[80px] w-full h-[400px] mobile:h-[250px] bg-[#FFE9EC]"></div>{" "}
-      </div>
 
-      <div className="flex w-full flex-col text-lg font-medium ">
+      <div className="relative mt-[135px] flex w-full flex-col bg-white text-lg font-medium mobile:mt-[90px]">
         <ProdBar
           category={"default"}
           activeCate={activeCate}
           setActiveCate={setActiveCate}
         />
-        <div>
-          <div className="pt-4 mobile:pt-4">
-            <button className="justify-center w-[100px] h-[30px] mb-[4px] ml-[25px] mobile:mb-0 mobile:ml-[10px] text-[11pt] text-[#666666]">
-              이번주 신제품
-            </button>
-            <div className="flex w-full relative justify-center pt-1.5 pb-8 mobile:py-2">
-              <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
-            </div>
-          </div>
+        <div className="flex justify-center py-8 mobile:py-3">
+          <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
         </div>
         <div className="flex justify-center py-1">
+          {" "}
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

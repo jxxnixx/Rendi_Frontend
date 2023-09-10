@@ -8,6 +8,8 @@ import { useState } from "react";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import MoSearchBar from "./moSearchBar";
 import SideBar from "./sidebar";
+import logo from "../../public/logo.png";
+import Image from "next/image";
 
 export default function Header() {
   // 쿠키에서 로그인 상태를 확인하는 함수
@@ -29,9 +31,9 @@ export default function Header() {
             </div>
             <div>
               <Link href="/" legacyBehavior>
-                <img
-                  src="logo.png"
-                  alt="Logo"
+                <Image
+                  src={logo}
+                  alt="logo"
                   className="w-[82px] h-[50px] object-cover"
                 />
               </Link>
@@ -68,8 +70,9 @@ export default function Header() {
                     legacyBehavior
                     className="w-[181px] h-[132px] absolute left-[-0.5px] top-[-1.5px] bg-white"
                   >
-                    <img
-                      src="logo.png"
+                    <Image
+                      src={logo}
+                      alt="logo"
                       className="relative w-[147px] h-[83px] left-[16.5px] top-[38px] object-cover"
                     />
                   </Link>

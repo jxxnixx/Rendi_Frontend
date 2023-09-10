@@ -31,14 +31,14 @@ export default function SearchBar() {
     [
       // 더미 데이터 예시
       { keyword: "검색어1", searchCount: 10 },
-      { keyword: "검색어2", searchCount: 8 },
+      { keyword: "검색어dd2", searchCount: 8 },
       { keyword: "검색어3", searchCount: 15 },
       { keyword: "검색어4", searchCount: 20 },
       { keyword: "검색어5", searchCount: 30 },
       { keyword: "검색어6", searchCount: 40 },
       { keyword: "검색어7", searchCount: 50 },
       { keyword: "검색어8", searchCount: 60 },
-      { keyword: "검색어9", searchCount: 70 },
+      { keyword: "검색어dddd9", searchCount: 70 },
       { keyword: "검색어10", searchCount: 80 },
     ]
   );
@@ -46,7 +46,7 @@ export default function SearchBar() {
   const rankedPopularKeywords = popularKeywords
     .slice(0, 10) // 최대 10개까지만 표시
     .sort((a, b) => b.searchCount - a.searchCount)
-    .map((item, index) => ({ ...item, rank: index + 1 })); // rank를 순위로 설정
+    .map((item, index) => ({ ...item, rank: index + 1, padding: "0px 10px" })); // rank를 순위로 설정
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -131,10 +131,10 @@ export default function SearchBar() {
     setShowUpload(false);
   };
 
-  const handleSubmitForGuests = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitForGuests = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setShowUpload(false);
+    //setShowUpload(false);
 
     if (showContent === "popular") {
       alert("로그인이 필요한 서비스입니다.");
@@ -148,6 +148,10 @@ export default function SearchBar() {
 
     //setShowUpload(false);
 
+    // 빈 문자열 또는 공백 문자열인 경우 처리하지 않고 반환
+    if (!searchValue.trim()) {
+      return;
+    }
     // 기존 최근 검색어와 중복을 제거한 후 새로운 검색어 추가
     setRecentSearchHistory((prevHistory) => {
       const updatedHistory = [
@@ -515,9 +519,9 @@ export default function SearchBar() {
                       showContent === "recent" ? 600 : 600
                     }px] absolute ${
                       showContent === "recent" ? "" : ""
-                    } top-[17px] text-sm font-medium ${
+                    }   text-sm font-medium ${
                       showContent === "recent" ? "" : "text-center"
-                    } m-[20px] left-[15px] text-black`}
+                    } m-[15px] mt-[5px]  left-[15px] text-black`}
                   >
                     {showContent === "recent"
                       ? recentSearchHistory.length > 0
@@ -531,19 +535,26 @@ export default function SearchBar() {
                         : "최근 검색한 기록이 없습니다."
                       : rankedPopularKeywords.length > 0
                       ? rankedPopularKeywords.map((item, index) => (
-                          <div key={index} className="h-[50px] overflow-hidden">
-                            {item.rank}. {item.keyword} ({item.searchCount}회
-                            검색)
+                          <div
+                            key={index}
+                            className="flex flex-row items-center h-[50px] w-1/2 ml-[40%]  overflow-hidden  "
+                          >
+                            <div className="justify-center items-center  ">
+                              {item.rank}.
+                            </div>
+                            <div>
+                              {item.keyword} ({item.searchCount}회 검색){" "}
+                            </div>
                           </div>
                         ))
                       : "인기 검색어 로딩 중.."}
                   </div>
                 </div>
               </div>
-              <div className="w-[679px] h-12 absolute left-0 top-[408px] overflow-hidden">
+              <div className="border-t border-solid border-[#cccccc] w-[679px] h-12 absolute left-0 top-[408px] overflow-hidden">
                 <button
                   id="close"
-                  className="w-[463px] h-[37px] absolute left-[108px] top-1.5 text-sm font-medium text-center text-[#666]"
+                  className=" w-[463px] h-[37px] absolute left-[108px] top-1.5 text-sm font-medium text-center text-[#666]"
                   onClick={handleCloseClick}
                 >
                   닫기
@@ -555,7 +566,7 @@ export default function SearchBar() {
           <button
             type="button"
             className="absolute inset-y-0 right-[45px] top-[11px] flex items-center justify-center w-[25px] h-[25px] p-0 bg-transparent focus:ring-0 focus:outline-none text-gray-500 dark:text-gray-400
-      "
+          "
             onClick={handleCameraClick}
           >
             <Camera />

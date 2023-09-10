@@ -65,23 +65,31 @@ export default function Items({ itemsPerPage, itemsToShow }: ItemsProps) {
     const startInterval = () => {
       const newIntervalId = setInterval(() => {
         sendClickCountsToBackend();
+        // 10분이 지나면 인터벌을 중지하고 마지막 클릭 카운트를 백엔드로 전송
+        clearInterval(newIntervalId);
+        sendClickCountsToBackend();
       }, 600000); // 600초 (10분)
 
       setIntervalId(newIntervalId);
     };
 
+    const stopInterval = () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+        setIntervalId(null);
+      }
+    };
+
     // 클릭 타임스탬프가 있는 경우에만 주기적인 업데이트 시작
     if (Object.keys(lastClickTimes).length > 0) {
       startInterval();
-    } else if (intervalId) {
-      clearInterval(intervalId);
+    } else {
+      stopInterval(); // 클릭 타임스탬프가 없으면 인터벌 중지
     }
 
     return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-      sendClickCountsToBackend(); // 컴포넌트 언마운트 시 마지막 업데이트 수행
+      stopInterval(); // 컴포넌트 언마운트 시 인터벌 중지
+      sendClickCountsToBackend(); // 마지막 업데이트 수행
     };
   }, [lastClickTimes]);
 
