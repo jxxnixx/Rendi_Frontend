@@ -8,7 +8,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
-import FilterPopup from "@/components/sort/filterPopup";
 import { useScreenSize } from "@/libs/client/useScreen";
 
 export default function SearchResult() {
@@ -45,19 +44,21 @@ export default function SearchResult() {
       <div className="flex items-center justify-center">
         <div
           className={`flex-col  pb-[32px] ${
-            screen === "mobile" ? "mt-[50px] w-full" : "mt-[135px] w-[1040px]"
+            screen === "mobile"
+              ? "mt-[50px] w-full h-[135px]"
+              : "mt-[135px] w-[1040px]"
           }`}
         >
           <div
-            className={`flex items-center h-[60px] ${
+            className={`flex items-end h-[40px]  ${
               screen === "mobile"
-                ? "mobile:mt-[25px] ml-[20px] w-full"
+                ? "mobile:mt-[30px] h-[30px] ml-[20px] w-full"
                 : "top-[30px] w-[1040px]"
             }`}
           >
             <p
               className={`flex justify-start text-lg text-left ${
-                screen === "mobile" ? "text-sm" : "text-lg"
+                screen === "mobile" ? "text-sm " : "text-lg"
               }`}
             >
               {/* <div className="flex-col pb-[32px] mt-[135px] w-[1040px] mobile:mt-[50px] mobile:w-[640px]">
@@ -67,7 +68,7 @@ export default function SearchResult() {
               <span className="text-[#fc435a]">{totalItems}</span>개의 상품 )
             </p>
           </div>
-          <div className="flex w-[1040px] h-[60px] items-center top-[30px] mobile:w-full mobile:ml-[15px]">
+          <div className="overflow-x-auto scrollbar-hide flex w-[1040px] h-[60px] items-center mobile:w-full mobile:ml-[15px] mobile:h-[50px]  mobile:mr-[25px]">
             <Prodlist products={[]} />
           </div>
           <Line />

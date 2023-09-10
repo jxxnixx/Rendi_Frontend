@@ -87,17 +87,17 @@ function Edit() {
           <title>Edit</title>
         </Head>
 
-        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium ">
+        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium  mobile:h-[800px]">
           <div className="flex justify-center items-center">
             <form
               onSubmit={handleSubmit(submitForm)}
-              className=" items-center gap-[6px] p-0 w-[448px] h-[1500px]"
+              className=" items-center gap-[6px] p-0 w-[448px] h-[1500px] mobile:h-[800px]"
             >
-              <p className="relative top-[109px] text-4xl font-semibold text-center text-black">
+              <p className="relative top-[109px] text-4xl font-semibold text-center text-black mobile:mt-[20px] mobile:top-0 mobile:text-[19pt]">
                 회원정보 수정
               </p>
 
-              <div className="relative top-[133px]">
+              <div className="relative top-[133px] mobile: top-[25px] ">
                 <Input
                   name="username"
                   label="아이디"

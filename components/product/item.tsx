@@ -181,7 +181,7 @@ const Item = ({
         className="mt-[10px] w-[222px] h-5 relative cursor-pointer"
         onClick={handleItemClick}
       >
-        <p className="w-[222px] h-5  left-[25px] top-[321px] text-[15px] text-left text-black">
+        <p className="w-[222px] h-5  left-[25px] top-[321px] text-[15px] text-left text-black mobile:w-[160px] truncate">
           {updatedItem.title}
         </p>
         <p className="w-[222px] h-5  left-[25px] top-[304px] text-[13px] text-left text-[#666]">

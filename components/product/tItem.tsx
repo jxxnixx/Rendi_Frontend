@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { cls } from "@/libs/client/utils";
+import { useScreenSize } from "@/libs/client/useScreen";
 
 interface TItemProps {
   item: {
@@ -12,6 +13,7 @@ interface TItemProps {
 }
 
 export default function TItem({ item, onItemSelect }: TItemProps) {
+  const screen = useScreenSize();
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
@@ -22,17 +24,25 @@ export default function TItem({ item, onItemSelect }: TItemProps) {
   return (
     <>
       <div
-        className={`relative top-[35px] mb-[80px] w-[170px] h-[250px] bg-white`}
-        onClick={handleClick} // 클릭 이벤트를 처리하는 핸들러를 추가합니다.
+        onClick={handleClick}
+        className={`flex flex-col align-center justify-center mb-[80px] top-[35px] ${
+          screen === "mobile"
+            ? "w-[120px]  h-[150px] mt-[45px] mb-[1px] "
+            : "w-[200px] h-[200px] "
+        }`}
+        // 클릭 이벤트를 처리하는 핸들러를 추가합니다.
       >
         {item.imgUrls && (
-          <div>
+          <div className="flex items-center justify-center ">
             {item.imgUrls.map((url, index) => (
               <img
                 key={index}
                 className={cls(
-                  "relative w-[170px] h-[250px] rounded-lg border-2 border-gray-100 shadow-md",
-                  isClicked ? "border-mc" : "" // isClicked 상태에 따라 테두리 스타일을 변경합니다.
+                  " rounded-lg border-2 border-gray-100 shadow-md",
+                  isClicked ? "border-mc" : "",
+                  screen === "mobile"
+                    ? "w-[100px] h-[150px]"
+                    : "w-[180px] h-[250px]"
                 )}
                 src={url}
                 alt={item.title}
@@ -40,8 +50,8 @@ export default function TItem({ item, onItemSelect }: TItemProps) {
             ))}
           </div>
         )}
-        <div className="w-[170px] h-[30px] relative mt-[5px]">
-          <p className="relative h-[20px] text-[16px] font-bold text-left text-[#000]">
+        <div className="w-auto h-[30px] mt-[5px]">
+          <p className="h-[20px] text-[16px] font-bold text-center text-[#000]">
             {item.title}
           </p>
         </div>

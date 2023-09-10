@@ -75,13 +75,13 @@ function LogIn() {
         <Head>
           <title>LogIn</title>
         </Head>
-        <div className=" flex flex-col items-center">
+        <div className="flex flex-col items-center">
           <div className="relative top-[240px] mobile:top-[120px] text-center">
-            <p className="text-4xl mb-[70px] font-semibold text-black">
+            <p className="text-4xl mb-[70px] font-semibold text-black mobile:text-[20pt] mobile:mb-[60px]">
               로그인
             </p>
           </div>
-          <div className="absolute top-[305px] mobile:top-[185px] text-center">
+          <div className="absolute top-[305px] mobile:top-[170px] text-center">
             <p className="text-lg text-[#666]">
               Rendi만의 지능형 AI 검색을 경험해보세요!
             </p>

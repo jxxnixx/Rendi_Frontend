@@ -1,11 +1,24 @@
 import HoriCategory from "@/components/category/horiCategory";
 import Banner from "@/components/structure/banner";
 import Layout from "@/layouts/layout";
+import type { NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import Items from "@/components/product/items";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useScreenSize } from "@/libs/client/useScreen";
 
-export default function Main() {
+const Home: NextPage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      router.push("/main");
+    }
+  }, []);
+
   return (
     <Layout>
       <Head>
@@ -44,4 +57,6 @@ export default function Main() {
       </div>
     </Layout>
   );
-}
+};
+
+export default Home;

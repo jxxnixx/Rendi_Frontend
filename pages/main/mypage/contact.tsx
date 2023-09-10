@@ -18,7 +18,7 @@ function Contact() {
         <div className="flex justify-center  mt-[10px] ">
           <Line />
         </div>
-        <div className="flex h-[500px] justify-center items-center  ">
+        <div className="flex h-[500px] justify-center items-center mobile:h-[300px] ">
           <div className="flex flex-col justify-center items-center w-[1040px] h-[300px] bg-white">
             이메일 문의 : RendiCorporation@gmail.com
           </div>
