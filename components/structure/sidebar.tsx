@@ -148,7 +148,7 @@ const Navigation = ({ onItemClick }: any) => {
   };
 
   return (
-    <ul className="absolute mt-10">
+    <ul className="absolute mt-5">
       <div className="divide-y divide-solid">
         {/* 첫번째 구분선 */}
         <div></div>
@@ -210,7 +210,7 @@ const Navigation = ({ onItemClick }: any) => {
         {loginState && (
           <div className="">
             <div
-              className="flex m-2 justify-center"
+              className="flex m-2 justify-center cursor-pointer font"
               onClick={() => {
                 handleLogout();
                 onItemClick();

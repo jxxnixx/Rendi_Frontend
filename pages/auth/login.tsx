@@ -6,7 +6,7 @@ import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
 import { Google, KakaoTalk, LoginLine, Naver } from "@/components/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { getCookie, setCookie } from "@/libs/client/cookies";
 
@@ -30,17 +30,41 @@ function LogIn() {
   // );
   // useMutation의 첫 번째 매개변수 : 비동기 작업을 수행하는 콜백 함수
 
+  // 로컬 스토리지에서 저장된 아이디 가져오기
+  const [rememberCheck, setRememberCheck] = useState<boolean>(true);
+  // 아이디 입력 필드의 기본값을 저장하기 위한 상태 변수
+  const [inputValue, setInputValue] = useState<string>("");
+
+  useEffect(() => {
+    // Check if localStorage is available (for server-side rendering)
+    if (typeof window !== "undefined" && window.localStorage) {
+      // Now you can safely use localStorage
+      const rememberedId = localStorage.getItem("rememberedId");
+      const defaultUsernameValue = rememberedId || "";
+      setInputValue(defaultUsernameValue);
+    }
+  }, []);
+
   const submitForm: SubmitHandler<ALogInProps> = async (data: ALogInProps) => {
     try {
+      // 기존 로그인 시 아이디 저장 체크된 경우, 아이디 input에 빈문자열 전달되는 상황 -> 아이디 필드 값을 업데이트
+      if (data.username == "" && data.password != "") {
+        data.username = inputValue;
+      }
       const loginResponse: any = await usersApi.login(data);
-
       console.log(data);
 
       if (loginResponse.success) {
         console.log("로그인 성공!");
-
         console.log(loginResponse);
-
+        // 아이디를 로컬 스토리지에 저장 (리멤버 아이디 체크된 경우에만 저장)
+        console.log(rememberCheck);
+        if (rememberCheck) {
+          localStorage.setItem("rememberedId", data.username);
+        } else {
+          setInputValue("");
+          localStorage.removeItem("rememberedId");
+        }
         // 로그인 성공
         const accessToken: string = loginResponse.response.response.accessToken;
         const refreshToken: string =
@@ -66,6 +90,14 @@ function LogIn() {
     } catch (error) {
       console.error("로그인 오류:", error);
       setLoginError("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  // Enter 키 누를 때 폼 제출
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // 아이디찾기페이지로 넘어가는거 막음
+      handleSubmit(submitForm)(); // 폼 제출 함수 호출
     }
   };
 
@@ -102,6 +134,7 @@ function LogIn() {
               kind="text"
               error={errors?.username?.message}
               className="justify-center items-center"
+              defaultValue={inputValue}
             />
             <Input
               name="password"
@@ -112,13 +145,20 @@ function LogIn() {
               placeholder="비밀번호"
               error={errors?.password?.message}
               autoComplete="off"
+              onKeyPress={handleKeyPress}
             />
             <div className="flex text-xs justify-between mobile:flex-col items-center h-[40px] w-[448px] text-[#666]">
               <label
                 htmlFor="rememberId"
                 className="flex items-center cursor-pointer"
               >
-                <input type="checkbox" id="rememberId" className="mr-2" />
+                <input
+                  type="checkbox"
+                  id="rememberId"
+                  className="mr-2"
+                  onChange={(e) => setRememberCheck(e.target.checked)}
+                  defaultChecked={true}
+                />
                 Remember ID
               </label>
               <div className="flex mobile:p-[20px]">
@@ -133,7 +173,7 @@ function LogIn() {
                 </Link>
               </div>
             </div>
-            <div className="flex mt-[10px] text-center text-xs justify-center mobile:pt-[20px]">
+            <div className="flex mt-[20px] text-center text-xs justify-center mobile:pt-[20px]">
               <SubmitBtn
                 type="submit"
                 text="로그인"
