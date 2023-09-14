@@ -10,6 +10,7 @@ import {
 } from "@/libs/client/atom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 // Sidebar animation variants
 const sidebarVariants: Variants = {
@@ -53,7 +54,7 @@ const Toggler = ({ toggle }: any) => {
     <>
       <button
         onClick={toggle}
-        className="absolute h-[24px] w-[24px] rounded-full border-0 outline-none focus:outline-none ml-3"
+        className="flex h-[24px] w-[24px] rounded-full border-0 outline-none focus:outline-none ml-3"
       >
         <svg width="23" height="23" viewBox="0 0 23 23">
           <Path openPath="M 3 16.5 L 17 2.5" closedPath="M 2 2.5 L 20 2.5" />
@@ -131,8 +132,23 @@ const Navigation = ({ onItemClick }: any) => {
     fetchAndSetDefaultValues();
   }, []);
 
+  const router = useRouter();
+  const handleLogout = () => {
+    // 로그아웃 버튼 클릭 시 실행되는 함수
+    localStorage.removeItem("accessToken"); // accessToken 삭제
+    setUserInfo({
+      // userInfoState를 빈 객체로 설정
+      username: "",
+      nickname: "",
+      email: "",
+      birth: "",
+      phonenum: "",
+    }); // userInfoState 상태 초기화 //추가
+    router.push("/"); // 페이지 이동
+  };
+
   return (
-    <ul className="absolute mt-10">
+    <ul className="absolute mt-5">
       <div className="divide-y divide-solid">
         {/* 첫번째 구분선 */}
         <div></div>
@@ -191,6 +207,19 @@ const Navigation = ({ onItemClick }: any) => {
             </div>
           </li>
         </div>
+        {loginState && (
+          <div className="">
+            <div
+              className="flex m-2 justify-center cursor-pointer font"
+              onClick={() => {
+                handleLogout();
+                onItemClick();
+              }}
+            >
+              로그아웃
+            </div>
+          </div>
+        )}
       </div>
     </ul>
   );

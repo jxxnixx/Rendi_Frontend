@@ -29,12 +29,12 @@ export default function Header() {
               {/* <MenuOutlined className="text-2xl" /> */}
               <SideBar />
             </div>
-            <div>
+            <div className="flex items-center">
               <Link href="/" legacyBehavior>
                 <Image
                   src={logo}
                   alt="logo"
-                  className="w-[82px] h-[50px] object-cover"
+                  className="w-[82px] h-[50px] ml-8 object-cover"
                 />
               </Link>
               <div />
