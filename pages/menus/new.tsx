@@ -9,7 +9,7 @@ import dummyData from "@/components/product/dummyData.json";
 import { itemsApi } from "@/libs/api";
 
 export default function New() {
-  const [activeCate, setActiveCate] = useState<string>(" ");
+  const [activeCate, setActiveCate] = useState<any>(null);
 
   console.log(activeCate);
   // 전체 아이템의 개수와 총 페이지 수 계산

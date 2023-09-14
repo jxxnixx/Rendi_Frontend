@@ -574,7 +574,7 @@ export const itemsApi = {
       });
       console.log(response);
 
-      if (response.status === 200) {
+      if (response) {
         console.log("로그인 신상품 불러오기 성공");
         return {
           success: true,
@@ -638,12 +638,12 @@ export const itemsApi = {
   todayProducts: async (recommendBrandIds: any, accessToken: string) => {
     try {
       const response = await api.get("/products/today", {
-        params: { recommendBrandIds },
+        params: { recommendBrandIds: recommendBrandIds.join(",") },
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       console.log(response);
 
-      if (response.status === 200) {
+      if (response) {
         console.log("추천 상품 불러오기 성공");
         return {
           success: true,

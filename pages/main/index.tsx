@@ -37,8 +37,6 @@ const Home: NextPage = () => {
     fetchNewProducts();
   }, []);
 
-  const router = useRouter();
-
   return (
     <Layout>
       <Head>
