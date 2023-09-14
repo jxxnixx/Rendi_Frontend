@@ -77,7 +77,7 @@ export default function SearchBar() {
 
   let searchValue: any = inputRef.current?.value;
   const [imageValue, setImageValue] = useState(""); // 이미지 상태
-  const MAX_RECENT_SEARCHES = 6; // 최근 검색어 최대 개수
+  const MAX_RECENT_SEARCHES = 7; // 최근 검색어 최대 개수
 
   const handleDeleteRecentSearch = (indexToDelete: any) => {
     setRecentSearchHistory((prevHistory) => {
@@ -328,14 +328,16 @@ export default function SearchBar() {
                     </button>
                   </div>
                 </div>
-                <div className="w-[679px] h-[361px] absolute left-0 top-12 overflow-hidden">
+                <div className="w-[679px] h-[361px] flex  left-0 top-12 overflow-hidden">
                   <div
                     id="content"
-                    className="w-[203px] absolute left-[229px] top-[157px] text-sm font-medium text-center text-black"
+                    className="w-[679px] h-[350px] flex justify-center items-center left-[229px] top-[207px] mt-[48px] text-sm font-medium text-center text-black
+                    "
                   >
-                    {showContent === "recent"
+                    로그인이 필요한 서비스입니다.
+                    {/* {showContent === "recent"
                       ? "최근 검색한 기록이 없습니다."
-                      : "로그인이 필요한 서비스입니다."}
+                      : "로그인이 필요한 서비스입니다."} */}
                   </div>
                 </div>
               </div>
@@ -512,10 +514,10 @@ export default function SearchBar() {
                     </button>
                   </div>
                 </div>
-                <div className="w-[675px] h-[361px] absolute left-0 top-12 overflow-auto">
+                <div className="w-[675px] h-[361px] mt-[48px] absolute left-0  overflow-auto">
                   <div
                     id="content"
-                    className={`w-[${
+                    className={` w-[${
                       showContent === "recent" ? 600 : 600
                     }px] absolute ${
                       showContent === "recent" ? "" : ""
@@ -523,31 +525,41 @@ export default function SearchBar() {
                       showContent === "recent" ? "" : "text-center"
                     } m-[15px] mt-[5px]  left-[15px] text-black`}
                   >
-                    {showContent === "recent"
-                      ? recentSearchHistory.length > 0
-                        ? recentSearchHistory.map((item, index) => (
-                            <SearchItem
-                              key={index}
-                              keyword={item}
-                              onDelete={() => handleDeleteRecentSearch(index)}
-                            />
-                          ))
-                        : "최근 검색한 기록이 없습니다."
-                      : rankedPopularKeywords.length > 0
-                      ? rankedPopularKeywords.map((item, index) => (
-                          <div
+                    {showContent === "recent" ? (
+                      recentSearchHistory.length > 0 ? (
+                        recentSearchHistory.map((item, index) => (
+                          <SearchItem
                             key={index}
-                            className="flex flex-row items-center h-[50px] w-1/2 ml-[40%]  overflow-hidden  "
-                          >
-                            <div className="justify-center items-center  ">
-                              {item.rank}.
-                            </div>
-                            <div>
-                              {item.keyword} ({item.searchCount}회 검색){" "}
-                            </div>
-                          </div>
+                            keyword={item}
+                            onDelete={() => handleDeleteRecentSearch(index)}
+                          />
                         ))
-                      : "인기 검색어 로딩 중.."}
+                      ) : (
+                        <div
+                          id="content"
+                          className="w-[609px] h-[350px] flex justify-center items-center left-[229px]  text-sm font-medium text-center text-black
+                        "
+                        >
+                          최근 검색한 기록이 없습니다.
+                        </div>
+                      )
+                    ) : rankedPopularKeywords.length > 0 ? (
+                      rankedPopularKeywords.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex flex-row items-center h-[50px] w-1/2 ml-[40%]  overflow-hidden  "
+                        >
+                          <div className="justify-center items-center  ">
+                            {item.rank}.
+                          </div>
+                          <div>
+                            {item.keyword} ({item.searchCount}회 검색){" "}
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      "인기 검색어 로딩 중.."
+                    )}
                   </div>
                 </div>
               </div>

@@ -43,9 +43,6 @@ export default function Market() {
         />
         <div>
           <div className="pt-4 mobile:pt-4">
-            <button className="justify-center w-[100px] h-[30px] mb-[4px] ml-[25px] mobile:mb-0 mobile:ml-[10px] text-[11pt] text-[#666666]">
-              이번주 신제품
-            </button>
             <div className="flex w-full relative justify-center pt-1.5 pb-8 mobile:py-2">
               <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
             </div>

@@ -72,6 +72,7 @@ function LogIn() {
 
         console.log(accessToken);
         console.log(refreshToken);
+        alert("로그인에 성공했습니다.");
 
         // 토큰 저장
         // refreshToken 저장 위치 고려..!
@@ -83,11 +84,15 @@ function LogIn() {
         router.push("/main");
       } else {
         // 로그인 실패
+        alert(
+          "로그인에 실패했습니다. 사용자 이름 또는 비밀번호를 확인해주세요."
+        );
         setLoginError(
           "로그인에 실패했습니다. 사용자 이름 또는 비밀번호를 확인해주세요."
         );
       }
     } catch (error) {
+      alert("로그인에 실패했습니다. 사용자 이름 또는 비밀번호를 확인해주세요.");
       console.error("로그인 오류:", error);
       setLoginError("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
@@ -107,8 +112,8 @@ function LogIn() {
         <Head>
           <title>LogIn</title>
         </Head>
-        <div className="flex flex-col items-center">
-          <div className="relative top-[240px] mobile:top-[120px] text-center">
+        <div className="flex flex-col items-center mobile:h-[30px]">
+          <div className="relative top-[240px] mobile:top-[120px] text-center mo ">
             <p className="text-4xl mb-[70px] font-semibold text-black mobile:text-[20pt] mobile:mb-[60px]">
               로그인
             </p>
@@ -120,7 +125,7 @@ function LogIn() {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center items-center mt-[50px] h-screen mobile:mt-0">
+        <div className="flex flex-col justify-center items-center mt-[100px] h-screen mobile:mt-[150px] mobile:h-[600px]">
           <form
             className=" flex flex-col justify-center items-center gap-1 p-0 w-[590px] h-[890px] mobile:w-[390px] mobile:h-[930px]"
             onSubmit={handleSubmit(submitForm)}

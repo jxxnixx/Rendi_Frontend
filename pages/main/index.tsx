@@ -36,9 +36,9 @@ const Home: NextPage = () => {
             </div>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center  ">
             <div className="flex-row w-[1040px] mobile:w-full">
-              <div className="flex justify-between text-[12pt] font-medium text-black">
+              <div className="flex justify-between text-[12pt] font-medium text-[#666666] border-t border-solid border-gray-200">
                 <p className="ml-[30px] mt-[10px]">이번주 신제품</p>
 
                 <Link href="/menus/new">
