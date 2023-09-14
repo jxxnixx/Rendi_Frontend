@@ -77,6 +77,7 @@ const Navigation = ({ onItemClick }: any) => {
     { label: "New", path: "/menus/new" },
     { label: "Market", path: "/menus/market" },
     { label: "Trend", path: "/menus/trend" },
+    { label: "All", path: "/menus/all" },
   ];
 
   const icons = [

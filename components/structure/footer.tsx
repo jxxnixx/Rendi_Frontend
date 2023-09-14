@@ -13,7 +13,7 @@ export default function Footer() {
       <Line />
       <footer className=" flex items-center justify-center bottom-0 left-0 right-0 z-10 w-[auto] h-[auto] relative overflow-hidden bg-white">
         {screen === "laptop" ? (
-          <div className="w-[1040px] h-[989.52px] flex items-center justify-center">
+          <div className="w-[1040px] h-[420px] flex items-center justify-center">
             <div className="w-[1040px] h-[420px] absolute left-0 top-0 overflow-hidden bg-white">
               <p className="w-[328px] absolute left-[29px] bottom-[49px] text-base font-semibold text-left text-[#1a202c]">
                 ©2023 Rendi. All rights reserved

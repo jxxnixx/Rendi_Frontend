@@ -10,13 +10,8 @@ import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import { useScreenSize } from "@/libs/client/useScreen";
 
-export default function SearchResult() {
+export default function All() {
   const router = useRouter();
-  const { search, image } = router.query;
-  useEffect(() => {
-    console.log("검색어:", search);
-    console.log("이미지:", image);
-  }, [router.query]);
 
   // 전체 아이템의 개수와 총 페이지 수 계산
   const totalItems = dummyData.length;
@@ -52,20 +47,16 @@ export default function SearchResult() {
           <div
             className={`flex items-end h-[40px]  ${
               screen === "mobile"
-                ? "mobile:mt-[30px] h-[30px] ml-[20px] w-full"
+                ? "mobile:  mt-[35px] h-[30px] ml-[20px] w-full"
                 : "top-[30px] w-[1040px]"
             }`}
           >
             <p
               className={`flex justify-start text-lg text-left ${
-                screen === "mobile" ? "text-sm " : "text-lg"
+                screen === "mobile" ? "text-[10pt]  " : "text-lg"
               }`}
             >
-              {/* <div className="flex-col pb-[32px] mt-[135px] w-[1040px] mobile:mt-[50px] mobile:w-[640px]">
-          <div className="flex items-center h-[60px] top-[30px] mobile:mt-[25px] mobile:ml-[10px] mobile:w-[640px]">
-            <p className="flex justify-start text-left text-lg mobile:text-sm"> */}
-              “<span className="text-[#fc435a]">{search}</span>” 검색결과 ( 전체
-              <span className="text-[#fc435a]">{totalItems}</span>개의 상품 )
+              전체 상품
             </p>
           </div>
           <div className="overflow-x-auto scrollbar-hide flex w-[1040px] h-[60px] items-center mobile:w-full mobile:ml-[15px] mobile:h-[50px]  mobile:mr-[25px]">
