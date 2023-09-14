@@ -303,7 +303,6 @@ export const usersApi = {
     }),
 
   //ID 찾기
-
   findID: async ({ nickname, email }: AFindIDProps) => {
     try {
       const response = await api.post("/member/find-id/", {
@@ -503,7 +502,6 @@ export const itemsApi = {
         hits,
       });
       if (response.status === 200) {
-        console.log("잘됨 굿굿");
         return {
           success: true,
           response: response.data,
@@ -528,7 +526,6 @@ export const itemsApi = {
         },
       });
       if (response.status === 200) {
-        console.log("최근 본 상품 불러오기 성공");
         return {
           success: true,
           response: response.data,
