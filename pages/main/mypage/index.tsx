@@ -28,27 +28,27 @@ function Mypage() {
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
 
-        if (accessToken) {
-          const viewInfoResponse = await usersApi.viewInfos(accessToken);
-          console.log(viewInfoResponse);
+        // if (accessToken) {
+        //   const viewInfoResponse = await usersApi.viewInfos(accessToken);
+        //   console.log(viewInfoResponse);
 
-          if (viewInfoResponse?.success) {
-            console.log("회원정보 조회 성공!");
+        //   if (viewInfoResponse?.success) {
+        //     console.log("회원정보 조회 성공!");
 
-            const updatedUserInfoData: UserInfoState = {
-              username: viewInfoResponse.response.response.username,
-              nickname: viewInfoResponse.response.response.nickname,
-              email: viewInfoResponse.response.response.email,
-              birth: viewInfoResponse.response.response.birth,
-              phonenum: viewInfoResponse.response.response.phone,
-            };
+        //     const updatedUserInfoData: UserInfoState = {
+        //       username: viewInfoResponse.response.response.username,
+        //       nickname: viewInfoResponse.response.response.nickname,
+        //       email: viewInfoResponse.response.response.email,
+        //       birth: viewInfoResponse.response.response.birth,
+        //       phonenum: viewInfoResponse.response.response.phone,
+        //     };
 
-            setUserInfo(updatedUserInfoData);
-            console.log(updatedUserInfoData);
-          }
-        } else {
-          console.log("accessToken이 없습니다.");
-        }
+        //     setUserInfo(updatedUserInfoData);
+        //     console.log(updatedUserInfoData);
+        //   }
+        // } else {
+        //   console.log("accessToken이 없습니다.");
+        // }
       } catch (error) {
         console.log("회원정보 조회 오류");
       }
@@ -58,6 +58,7 @@ function Mypage() {
 
         console.log(recentViewedItems);
         console.log(accessToken);
+
         if (accessToken) {
           const recentResponse = await itemsApi.recentView(
             recentViewedItems,
