@@ -8,15 +8,33 @@ import Items from "@/components/product/items";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useScreenSize } from "@/libs/client/useScreen";
+import { itemsApi } from "@/libs/api";
 
 const Home: NextPage = () => {
-  const router = useRouter();
+  const [accessToken, setAccessToken] = useState<string>(" ");
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      router.push("/main");
+    if (typeof window !== "undefined") {
+      const storedAccessToken: string | null =
+        localStorage.getItem("accessToken");
+      if (storedAccessToken) {
+        setAccessToken(storedAccessToken);
+      }
     }
+  }, []);
+
+  const fetchNewProducts = async () => {
+    try {
+      const bestProResponse: any = await itemsApi.todayProducts(
+        [1, 2, 3], // interests 받아오는 걸로 수정
+        accessToken
+      );
+      console.log("best 상품 목록 : ", bestProResponse);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchNewProducts();
   }, []);
 
   return (

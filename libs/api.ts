@@ -514,18 +514,23 @@ export const itemsApi = {
   },
 
   // 최근 본 상품
-  recentView: async (recentProductIds: number[], accessToken: string) => {
+  recentView: async (recentProductIds: any, accessToken: string) => {
     try {
+      console.log(recentProductIds);
+      console.log(typeof recentProductIds);
+
       const response = await api.get("/products/recent", {
-        params: {
-          recentProductIds,
-        },
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
+        params: { recentProductIds: recentProductIds.join(",") },
+        headers: { Authorization: `Bearer ${accessToken}` },
       });
+<<<<<<< HEAD
       if (response.status === 200) {
+=======
+      console.log(response);
+
+      if (response) {
+        console.log("최근 본 상품 불러오기 성공");
+>>>>>>> origin/master
         return {
           success: true,
           response: response.data,
@@ -537,6 +542,122 @@ export const itemsApi = {
     }
   },
 
+  // 신상품(비로그인)
+  newProductsForGuests: async (categoryName: string) => {
+    try {
+      console.log(categoryName);
+
+      const response = await api.get("/products/guest/new", {
+        params: { categoryName },
+      });
+      console.log(response);
+
+      if (response) {
+        console.log("비로그인 신상품 불러오기 성공");
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
+    } catch (error) {
+      console.log("비로그인 신상품 불러오기 오류:", error);
+    }
+  },
+
+  // 신상품(로그인)
+  newProductsForUsers: async (categoryName: any, accessToken: any) => {
+    try {
+      console.log(categoryName);
+
+      const response = await api.get("/products/guest/new", {
+        params: { categoryName },
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      console.log(response);
+
+      if (response) {
+        console.log("로그인 신상품 불러오기 성공");
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
+    } catch (error) {
+      console.log("로그인 신상품 불러오기 오류:", error);
+    }
+  },
+
+  //베스트 상품(비로그인)
+  bestProductsForGuests: async (categoryName: any) => {
+    try {
+      console.log(categoryName);
+
+      const response = await api.get("/products/guest/best", {
+        params: { categoryName },
+      });
+      console.log(response);
+
+      if (response) {
+        console.log("비로그인 베스트 불러오기 성공");
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
+    } catch (error) {
+      console.log("비로그인 베스트 불러오기 오류:", error);
+    }
+  },
+
+  //베스트 상품(로그인)
+  bestProductsForUsers: async (categoryName: any, accessToken: any) => {
+    try {
+      console.log(categoryName);
+
+      const response = await api.get("/products/guest/best", {
+        params: { categoryName },
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      console.log(response);
+
+      if (response) {
+        console.log("로그인 베스트 불러오기 성공");
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
+    } catch (error) {
+      console.log("로그인 베스트 불러오기 오류:", error);
+    }
+  },
+
+  //추천 상품 (today)
+  todayProducts: async (recommendBrandIds: any, accessToken: string) => {
+    try {
+      const response = await api.get("/products/today", {
+        params: { recommendBrandIds: recommendBrandIds.join(",") },
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      console.log(response);
+
+      if (response) {
+        console.log("추천 상품 불러오기 성공");
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
+    } catch (error) {
+      console.log("추천 상품 불러오기 오류:", error);
+    }
+  },
+
   allProducts: async (accessToken: string) => {
     try {
       const response = await api.get("/products/all", {
@@ -544,20 +665,6 @@ export const itemsApi = {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      if (response.status === 200) {
-        return {
-          success: true,
-          response: response.data,
-          error: null,
-        };
-      }
-    } catch (error) {}
-  },
-
-  newProducts: async () => {
-    try {
-      const response = await api.get("/products/new");
-      console.log(response);
       if (response.status === 200) {
         return {
           success: true,

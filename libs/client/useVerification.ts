@@ -44,7 +44,7 @@ export async function onEmailVerification(
         return backendVeriCode;
       }
     } else {
-      console.log("이메일 인증 요청 실패:", EmailVeriResponse.data.error);
+      console.log("이메일 인증 요청 실패:", EmailVeriResponse.error);
       return false;
     }
   } catch (error) {

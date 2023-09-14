@@ -20,7 +20,7 @@ export default function ProdBar({
     { cate: "상의" },
     { cate: "아우터" },
     { cate: "원피스/세트" },
-    { cate: "팬츠" },
+    { cate: "바지" },
     { cate: "스커트" },
     { cate: "트레이닝" },
     { cate: "이너웨어" },

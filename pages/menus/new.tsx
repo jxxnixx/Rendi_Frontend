@@ -9,18 +9,9 @@ import dummyData from "@/components/product/dummyData.json";
 import { itemsApi } from "@/libs/api";
 
 export default function New() {
-  const fetchNewProducts = async () => {
-    try {
-      const newProResponse: any = await itemsApi.newProducts();
-      console.log("new 상품 목록 : ", newProResponse);
-    } catch (error) {}
-  };
+  const [activeCate, setActiveCate] = useState<any>(null);
 
-  useEffect(() => {
-    fetchNewProducts();
-  }, []);
-
-  const [activeCate, setActiveCate] = useState("전체");
+  console.log(activeCate);
   // 전체 아이템의 개수와 총 페이지 수 계산
   const totalItems = dummyData.length;
   const itemsPerPage = 16;
@@ -37,6 +28,19 @@ export default function New() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
+
+  const fetchNewProducts = async () => {
+    try {
+      const newProResponse: any = await itemsApi.newProductsForGuests(
+        activeCate
+      );
+      console.log("new 상품 목록 : ", newProResponse);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchNewProducts();
+  }, [activeCate]);
 
   return (
     <Layout>
