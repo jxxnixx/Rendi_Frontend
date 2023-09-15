@@ -303,6 +303,7 @@ export const usersApi = {
     }),
 
   //ID 찾기
+
   findID: async ({ nickname, email }: AFindIDProps) => {
     try {
       const response = await api.post("/member/find-id/", {
@@ -502,6 +503,7 @@ export const itemsApi = {
         hits,
       });
       if (response.status === 200) {
+        console.log("잘됨 굿굿");
         return {
           success: true,
           response: response.data,
@@ -523,14 +525,10 @@ export const itemsApi = {
         params: { recentProductIds: recentProductIds.join(",") },
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-<<<<<<< HEAD
-      if (response.status === 200) {
-=======
       console.log(response);
 
       if (response) {
         console.log("최근 본 상품 불러오기 성공");
->>>>>>> origin/master
         return {
           success: true,
           response: response.data,
