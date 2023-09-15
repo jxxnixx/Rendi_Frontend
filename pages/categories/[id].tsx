@@ -47,6 +47,7 @@ export const categories: { [key: string]: Category[] } = {
     { cate: "전체" },
     { cate: "헤어" },
     { cate: "모자" },
+    { cate: "주얼리" },
     { cate: "아이웨어" },
     { cate: "머플러/스카프" },
     { cate: "장갑" },
