@@ -32,44 +32,15 @@ function Edit() {
   const [editInfoInputValue, setEditInfoInputValue] =
     useRecoilState(editInfoInputState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  setValue("username", userInfo.username);
-  setValue("profile.nickname", userInfo.nickname);
-  setValue("profile.email", userInfo.email);
-  setValue("profile.birth", userInfo.birth);
-  setValue("profile.phonenum", userInfo.phonenum);
 
-  // useEffect(() => {
-  //   const fetchAndSetDefaultValues = async () => {
-  //     try {
-  //       const accessToken = localStorage.getItem("accessToken");
-
-  //       if (accessToken) {
-  //         const viewInfoResponse = await usersApi.viewInfos(accessToken);
-  //         console.log(viewInfoResponse);
-  //         if (viewInfoResponse?.success) {
-  //           console.log("회원정보 조회 성공!");
-  //           setValue("username", viewInfoResponse.response.response.username);
-  //           setValue(
-  //             "profile.nickname",
-  //             viewInfoResponse.response.response.nickname
-  //           );
-  //           setValue("profile.email", viewInfoResponse.response.response.email);
-  //           setValue("profile.birth", viewInfoResponse.response.response.birth);
-  //           setValue(
-  //             "profile.phonenum",
-  //             viewInfoResponse.response.response.phone
-  //           );
-  //         }
-  //       } else {
-  //         console.log("accessToken이 없습니다.");
-  //       }
-  //     } catch (error) {
-  //       console.log("회원정보 조회 오류");
-  //     }
-  //   };
-
-  //   fetchAndSetDefaultValues();
-  // }, []);
+  useEffect(() => {
+    // userInfo에서 초기 값 설정
+    setValue("username", userInfo.username);
+    setValue("profile.nickname", userInfo.nickname);
+    setValue("profile.email", userInfo.email);
+    setValue("profile.birth", userInfo.birth);
+    setValue("profile.phonenum", userInfo.phonenum);
+  }, [userInfo]); // userInfo가 변경될 때마다 초기화
 
   const handleClick = async (data: IEditInfosProps) => {
     try {
@@ -81,7 +52,6 @@ function Edit() {
         ...(data.profile.phonenum && { phonenum: data.profile.phonenum }),
         ...(data.profile.birth && { birth: data.profile.birth }),
       };
-      // data.profile.000 이 존재할 경우에만 updatedEditInfors에 뒷 내용 추가
 
       const editInfoResponse: any = await usersApi.editInfos(
         accessToken,
@@ -96,6 +66,15 @@ function Edit() {
 
         // 회원정보 수정이 성공한 경우에만 페이지 이동
         router.push("/main/mypage");
+
+        // 수정된 값을 userInfo에 업데이트
+        setUserInfo((prevUserInfo) => ({
+          ...prevUserInfo,
+          email: data.profile.email || prevUserInfo.email,
+          nickname: data.profile.nickname || prevUserInfo.nickname,
+          phonenum: data.profile.phonenum || prevUserInfo.phonenum,
+          birth: data.profile.birth || prevUserInfo.birth,
+        }));
       }
     } catch (error) {
       console.log("회원정보 수정 오류");
