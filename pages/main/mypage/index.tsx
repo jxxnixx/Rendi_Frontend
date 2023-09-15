@@ -21,7 +21,6 @@ function Mypage() {
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const recentViewedItems = useRecoilValue(recentViewedItemsState);
-
   useEffect(() => {
     const fetchAndSetDefaultValues = async () => {
       try {
@@ -43,19 +42,11 @@ function Mypage() {
         //       phonenum: viewInfoResponse.response.response.phone,
         //     };
 
+        //     // 먼저 회원정보 업데이트
         //     setUserInfo(updatedUserInfoData);
         //     console.log(updatedUserInfoData);
-        //   }
-        // } else {
-        //   console.log("accessToken이 없습니다.");
-        // }
-      } catch (error) {
-        console.log("회원정보 조회 오류");
-      }
 
-      try {
-        const accessToken = localStorage.getItem("accessToken");
-
+        // 회원정보가 업데이트되면 아래의 최근 본 상품 관련 코드를 실행
         console.log(recentViewedItems);
         console.log(accessToken);
 
@@ -66,7 +57,13 @@ function Mypage() {
           );
           console.log(recentResponse);
         }
-      } catch (error) {}
+        // }
+        // } else {
+        //   console.log("accessToken이 없습니다.");
+        // }
+      } catch (error) {
+        console.log("회원정보 조회 오류");
+      }
     };
 
     fetchAndSetDefaultValues();

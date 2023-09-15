@@ -9,6 +9,9 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useScreenSize } from "@/libs/client/useScreen";
 import { itemsApi } from "@/libs/api";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { UserInfoState, userInfoState } from "@/libs/client/atom";
+import { usersApi } from "@/libs/api";
 
 const Home: NextPage = () => {
   const [accessToken, setAccessToken] = useState<string>(" ");
@@ -37,6 +40,46 @@ const Home: NextPage = () => {
     fetchNewProducts();
   }, []);
 
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
+  useEffect(() => {
+    const fetchAndSetDefaultValues = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
+
+        if (accessToken && !userInfo.nickname) {
+          const viewInfoResponse = await usersApi.viewInfos(accessToken);
+          console.log(viewInfoResponse);
+          console.log(userInfo.nickname);
+
+          if (viewInfoResponse?.success) {
+            console.log("회원정보 조회 성공!");
+            console.log(viewInfoResponse.response.response.nickname);
+            const updatedUserInfoData: UserInfoState = {
+              username: viewInfoResponse.response.response.username,
+              nickname: viewInfoResponse.response.response.nickname,
+              email: viewInfoResponse.response.response.email,
+              birth: viewInfoResponse.response.response.birth,
+              phonenum: viewInfoResponse.response.response.phone,
+            };
+
+            setUserInfo(updatedUserInfoData);
+            console.log(updatedUserInfoData);
+          }
+        } else if (accessToken && userInfo.nickname) {
+          console.log("userInfo 이미 존재:", userInfo.nickname);
+        } else {
+          console.log("accessToken이 없습니다.");
+        }
+      } catch (error) {
+        console.log("회원정보 조회 오류");
+      }
+    };
+
+    fetchAndSetDefaultValues();
+  }, []);
+
   return (
     <Layout>
       <Head>
@@ -57,7 +100,9 @@ const Home: NextPage = () => {
           <div className="flex justify-center  ">
             <div className="flex-row w-[1040px] mobile:w-full">
               <div className="flex justify-between text-[12pt] font-medium text-[#666666] border-t border-solid border-gray-200">
-                <p className="ml-[30px] mt-[10px]">이번주 신제품</p>
+                <p className="ml-[30px] mt-[10px] mobile:ml-[20px] mobile:mt-[8px]">
+                  {userInfo.nickname}님을 위한 추천 상품{" "}
+                </p>
 
                 <Link href="/menus/new">
                   <button className="h-[34px] flex items-end">
