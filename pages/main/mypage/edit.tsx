@@ -4,14 +4,14 @@ import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import {
+  userInfoState,
   UserInputState,
   editInfoInputState,
-  userInfoState,
 } from "@/libs/client/atom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { AEditInfosProps, usersApi } from "@/libs/api";
 import { useEffect, useState } from "react"; //
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router"; //
 
 export interface IEditInfosProps extends UserInputState {
   birth: string;
@@ -20,6 +20,7 @@ export interface IEditInfosProps extends UserInputState {
 
 function Edit() {
   const {
+    watch,
     register,
     formState: { errors },
     handleSubmit,
@@ -30,20 +31,47 @@ function Edit() {
 
   const [editInfoInputValue, setEditInfoInputValue] =
     useRecoilState(editInfoInputState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  setValue("username", userInfo.username);
+  setValue("profile.nickname", userInfo.nickname);
+  setValue("profile.email", userInfo.email);
+  setValue("profile.birth", userInfo.birth);
+  setValue("profile.phonenum", userInfo.phonenum);
 
-  const userInfo = useRecoilValue(userInfoState);
-  const router = useRouter();
+  // useEffect(() => {
+  //   const fetchAndSetDefaultValues = async () => {
+  //     try {
+  //       const accessToken = localStorage.getItem("accessToken");
 
-  useEffect(() => {
-    register("username"); // Register username field manually
-    register("profile.nickname"); // Register profile.nickname field manually
-    register("profile.email"); // Register profile.email field manually
-    register("profile.birth"); // Register profile.birth field manually
-    register("profile.phonenum"); // Register profile.phonenum field manually
-  }, [register]);
+  //       if (accessToken) {
+  //         const viewInfoResponse = await usersApi.viewInfos(accessToken);
+  //         console.log(viewInfoResponse);
+  //         if (viewInfoResponse?.success) {
+  //           console.log("회원정보 조회 성공!");
+  //           setValue("username", viewInfoResponse.response.response.username);
+  //           setValue(
+  //             "profile.nickname",
+  //             viewInfoResponse.response.response.nickname
+  //           );
+  //           setValue("profile.email", viewInfoResponse.response.response.email);
+  //           setValue("profile.birth", viewInfoResponse.response.response.birth);
+  //           setValue(
+  //             "profile.phonenum",
+  //             viewInfoResponse.response.response.phone
+  //           );
+  //         }
+  //       } else {
+  //         console.log("accessToken이 없습니다.");
+  //       }
+  //     } catch (error) {
+  //       console.log("회원정보 조회 오류");
+  //     }
+  //   };
+
+  //   fetchAndSetDefaultValues();
+  // }, []);
 
   const handleClick = async (data: IEditInfosProps) => {
-    console.log("dj");
     try {
       const accessToken: any = localStorage.getItem("accessToken");
 
@@ -53,6 +81,7 @@ function Edit() {
         ...(data.profile.phonenum && { phonenum: data.profile.phonenum }),
         ...(data.profile.birth && { birth: data.profile.birth }),
       };
+      // data.profile.000 이 존재할 경우에만 updatedEditInfors에 뒷 내용 추가
 
       const editInfoResponse: any = await usersApi.editInfos(
         accessToken,
@@ -65,8 +94,8 @@ function Edit() {
         console.log("회원정보 수정 성공!");
         alert("회원정보 수정을 완료하였습니다.");
 
-        // 페이지를 리로드하여 업데이트된 정보를 볼 수 있도록 이동
-        router.push("/main/mypage").then(() => window.location.reload());
+        // 회원정보 수정이 성공한 경우에만 페이지 이동
+        router.push("/main/mypage");
       }
     } catch (error) {
       console.log("회원정보 수정 오류");
@@ -88,21 +117,21 @@ function Edit() {
           <title>Edit</title>
         </Head>
 
-        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium  mobile:h-[800px]">
+        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium mobile:mt-[30px]">
           <div className="flex justify-center items-center">
             <form
               onSubmit={handleSubmit(submitForm)}
-              className=" items-center gap-[6px] p-0 w-[448px] h-[1500px] mobile:h-[800px]"
+              className=" items-center gap-[6px] p-0 w-[448px] h-[1500px]"
             >
-              <p className="relative top-[89px] text-4xl font-semibold text-center text-black mobile:mt-[10px] mobile:top-[10px] mobile:text-[19pt]">
+              <p className="relative top-[109px] text-4xl font-semibold text-center text-black">
                 회원정보 수정
               </p>
 
-              <div className="relative top-[110px]  mobile:top-[13px] ">
+              <div className="relative top-[133px]">
                 <Input
                   name="username"
                   label="아이디"
-                  type="usename"
+                  type="nickname"
                   kind="text"
                   register={register("username", {
                     required: {
@@ -116,7 +145,6 @@ function Edit() {
                   })}
                   error={errors?.profile?.nickname?.message}
                   disabled={true}
-                  defaultValue={userInfo.username}
                 />
 
                 <Input
@@ -131,14 +159,15 @@ function Edit() {
                       message: "올바르지 않은 형식의 이름입니다.",
                     },
                   })}
+                  // placeholder={userValue.nickname}
                   error={errors?.profile?.nickname?.message}
-                  defaultValue={userInfo.nickname}
                 />
 
                 <Input
                   name="profile.email"
                   label="이메일"
-                  type="text"
+                  type="email"
+                  kind="disabled"
                   register={register("profile.email", {
                     required: "이메일을 입력하세요",
                     pattern: {
@@ -146,8 +175,8 @@ function Edit() {
                       message: "유효한 이메일 주소를 입력하세요.",
                     },
                   })}
+                  // placeholder={userValue.email}
                   error={errors.profile?.email?.message}
-                  defaultValue={userInfo.email}
                 />
 
                 <Input
@@ -162,10 +191,10 @@ function Edit() {
                       message: "올바르지 않은 형태의 생년월일입니다.",
                     },
                   })}
+                  // placeholder={userValue.birth}
                   error={errors?.profile?.birth?.message}
                   inputValue={editInfoInputValue}
                   setInputValue={setEditInfoInputValue}
-                  defaultValue={userInfo.birth}
                 />
 
                 <Input
@@ -180,10 +209,10 @@ function Edit() {
                       message: "-를 제외하고 입력하세요.",
                     },
                   })}
+                  // placeholder={userValue.phonenum}
                   error={errors?.profile?.phonenum?.message}
                   inputValue={editInfoInputValue}
                   setInputValue={setEditInfoInputValue}
-                  defaultValue={userInfo.phonenum}
                 />
 
                 <div className="flex mt-[40px] text-center justify-center">
@@ -192,7 +221,7 @@ function Edit() {
                     large={true}
                     text="수정하기"
                     className="flex justify-center items-center h-screen"
-                    onClick={handleSubmit(submitForm)}
+                    onClick={handleClick} // handleClick 함수 추가
                   />
                 </div>
               </div>
