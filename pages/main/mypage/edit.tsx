@@ -93,11 +93,11 @@ function Edit() {
               onSubmit={handleSubmit(submitForm)}
               className=" items-center gap-[6px] p-0 w-[448px] h-[1500px] mobile:h-[800px]"
             >
-              <p className="relative top-[109px] text-4xl font-semibold text-center text-black mobile:mt-[20px] mobile:top-0 mobile:text-[19pt]">
+              <p className="relative top-[89px] text-4xl font-semibold text-center text-black mobile:mt-[20px] mobile:top-0 mobile:text-[19pt]">
                 회원정보 수정
               </p>
 
-              <div className="relative top-[133px] mobile: top-[25px] ">
+              <div className="relative top-[110px] mobile: top-[25px] ">
                 <Input
                   name="username"
                   label="아이디"

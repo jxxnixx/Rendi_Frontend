@@ -24,7 +24,9 @@ export default function TItems({ onItemSelect }: TItemsProps) {
         <div
           key={i}
           className={`flex justify-center items-start flex-grow-0 flex-shrink-0 gap-[35px]${
-            screen === "mobile" ? "w-full " : "w-[1040px] px-[25px] mt-[40px]"
+            screen === "mobile"
+              ? "w-full h-[200px]"
+              : "w-[1040px] px-[25px] mt-[40px]"
           }`}
         >
           {rowItems.map((item) => (
@@ -44,7 +46,7 @@ export default function TItems({ onItemSelect }: TItemsProps) {
 
   return (
     <>
-      <div className="w-[1040px] h-[1100px]  overflow-hidden  mobile:w-full mobile: h-[990px]">
+      <div className="w-[1040px] h-[1100px]  overflow-hidden  mobile:w-full mobile: h-[1050px]">
         {renderItems()}
       </div>
     </>

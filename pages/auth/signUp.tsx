@@ -1,4 +1,3 @@
-
 import { SubmitHandler, useForm } from "react-hook-form";
 import SubmitBtn from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
@@ -186,11 +185,11 @@ function Signup() {
               onSubmit={handleSubmit(submitForm)}
               className=" items-center gap-[6px] p-0 w-[448px] h-[1500px]  mobile:h-[1300px]"
             >
-              <p className="relative top-[109px] text-4xl font-semibold text-center text-black  mobile:mt-[20px] mobile:top-0 mobile:text-[19pt]">
+              <p className="relative top-[89px] text-4xl font-semibold text-center text-black  mobile:mt-[20px] mobile:top-0 mobile:text-[19pt]">
                 회원가입
               </p>
 
-              <div className="relative top-[133px] mobile: top-[25px] ">
+              <div className="relative top-[110px] mobile: top-[25px] ">
                 <Input
                   setIdCheck={setIdCheck}
                   name="username"
