@@ -568,7 +568,7 @@ export const itemsApi = {
     try {
       console.log(categoryName);
 
-      const response = await api.get("/products/guest/new", {
+      const response = await api.get("/products/new", {
         params: { categoryName },
         headers: { Authorization: `Bearer ${accessToken}` },
       });
@@ -615,7 +615,7 @@ export const itemsApi = {
     try {
       console.log(categoryName);
 
-      const response = await api.get("/products/guest/best", {
+      const response = await api.get("/products/best", {
         params: { categoryName },
         headers: { Authorization: `Bearer ${accessToken}` },
       });
@@ -672,87 +672,19 @@ export const itemsApi = {
       }
     } catch (error) {}
   },
+
+  allBrands: async () => {
+    try {
+      const response = await api.get("/brand/all");
+      if (response) {
+        return { success: true, response: response.data, error: null };
+      }
+    } catch (error) {}
+  },
+
+  brandDetails: async (brandName: string) => {
+    try {
+      const response = await api.get("/brand/details", {});
+    } catch (error) {}
+  },
 };
-
-/* 사용예시
-
-
-(async () => {
-  try {
-    const result = await searchApi.popular();
-
-    if (result.success) {
-      console.log("인기 검색어 TOP 10:");
-      console.log(result.response);
-    } else {
-      console.log("인기 검색어 조회 오류:", result.error?.errorMessage);
-    }
-  } catch (error) {
-    console.error("인기 검색어 요청 오류:", error);
-  }
-})();
-
-(async () => {
-  try {
-    const keyword = "검색어"; // 실제 저장하고자 하는 검색어를 변수에 할당해줍니다.
-    const result = await searchApi.updateKeyword({ keyword });
-
-    if (result.success) {
-      console.log("검색어 저장 성공:", result.response.message);
-    } else {
-      console.log("검색어 저장 실패:", result.error?.errorMessage);
-    }
-  } catch (error) {
-    console.error("검색어 저장 오류:", error);
-  }
-})();
-
-(async () => {
-  try {
-    const result = await wishlistApi.getWishlist();
-
-    if (result.success) {
-      console.log("찜한 상품 목록:");
-      console.log(result.response);
-    } else {
-      console.log("찜한 상품 조회 오류:", result.error?.errorMessage);
-    }
-  } catch (error) {
-    console.error("찜한 상품 조회 오류:", error);
-  }
-})();
-
-(async () => {
-  try {
-    const productId = 3; // 수정하고자 하는 상품의 아이디
-    const result = await wishlistApi.toggleWishlist(productId);
-
-    if (result.success) {
-      console.log(result.response.message);
-    } else {
-      console.log("찜 변경 오류:", result.error?.errorMessage);
-    }
-  } catch (error) {
-    console.error("찜 변경 오류:", error);
-  }
-})();
-
-(async () => {
-  try {
-    const accessToken = "기존 accessToken";
-    const refreshToken = "기존 refreshToken";
-
-    const result = await usersApi.reissueToken(accessToken, refreshToken);
-
-    if (result.success) {
-      console.log("새로운 액세스 토큰:", result.response.accessToken);
-      console.log("새로운 리프레시 토큰:", result.response.refreshToken);
-    } else {
-      console.log("토큰 재발급 오류:", result.error?.errorMessage);
-    }
-  } catch (error) {
-    console.error("토큰 재발급 요청 오류:", error);
-  }
-})();
-
-*/

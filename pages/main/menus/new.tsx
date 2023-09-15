@@ -21,7 +21,8 @@ export default function New() {
     }
   }, []);
 
-  const [activeCate, setActiveCate] = useState<string>(" ");
+  const [activeCate, setActiveCate] = useState<any>(null);
+
   // 전체 아이템의 개수와 총 페이지 수 계산
   const totalItems = dummyData.length;
   const itemsPerPage = 16;
@@ -40,15 +41,13 @@ export default function New() {
   const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
 
   const fetchNewProducts = async () => {
-    if (accessToken) {
-      try {
-        const newProResponse: any = await itemsApi.newProductsForUsers(
-          activeCate,
-          accessToken
-        );
-        console.log("new 상품 목록 : ", newProResponse);
-      } catch (error) {}
-    }
+    try {
+      const newProResponse: any = await itemsApi.newProductsForUsers(
+        activeCate,
+        accessToken
+      );
+      console.log("new 상품 목록 : ", newProResponse);
+    } catch (error) {}
   };
 
   useEffect(() => {

@@ -30,7 +30,7 @@ export async function onEmailVerification(
 
     console.log(EmailVeriResponse);
 
-    if (EmailVeriResponse.success) {
+    if (EmailVeriResponse) {
       const responseData = EmailVeriResponse.response;
       const regex = /인증코드: ([a-zA-Z0-9]+)/;
       const match = responseData.message.match(regex);

@@ -21,7 +21,7 @@ export default function Best() {
     }
   }, []);
 
-  const [activeCate, setActiveCate] = useState<string>(" ");
+  const [activeCate, setActiveCate] = useState<any>(null);
 
   // 전체 아이템의 개수와 총 페이지 수 계산
   const totalItems = dummyData.length;
