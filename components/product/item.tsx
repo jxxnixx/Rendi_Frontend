@@ -79,6 +79,7 @@ const Item = ({
 
   const handleLike = async () => {
     if (accessToken) {
+      setIsLiked(!isLiked);
       setIsCenterHeartShown(true);
       try {
         // 좋아요를 토글하여 업데이트
@@ -94,7 +95,7 @@ const Item = ({
         );
         console.log(likedResponse);
 
-        setIsLiked(updatedWishYN === "Y"); // 상태를 업데이트
+        // setIsLiked(updatedWishYN === "Y"); // 상태를 업데이트
         console.log(updatedItem);
       } catch (error) {
         console.log("찜하기 업데이트 에러", error);
