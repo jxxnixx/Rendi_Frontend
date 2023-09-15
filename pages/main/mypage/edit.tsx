@@ -11,7 +11,7 @@ import {
 import { useRecoilState, useRecoilValue } from "recoil";
 import { AEditInfosProps, usersApi } from "@/libs/api";
 import { useEffect, useState } from "react"; //
-import router, { useRouter } from "next/router"; //
+import { useRouter } from "next/router";
 
 export interface IEditInfosProps extends UserInputState {
   birth: string;
@@ -32,6 +32,7 @@ function Edit() {
     useRecoilState(editInfoInputState);
 
   const userInfo = useRecoilValue(userInfoState);
+  const router = useRouter();
 
   useEffect(() => {
     register("username"); // Register username field manually
@@ -42,6 +43,7 @@ function Edit() {
   }, [register]);
 
   const handleClick = async (data: IEditInfosProps) => {
+    console.log("dj");
     try {
       const accessToken: any = localStorage.getItem("accessToken");
 
@@ -51,7 +53,6 @@ function Edit() {
         ...(data.profile.phonenum && { phonenum: data.profile.phonenum }),
         ...(data.profile.birth && { birth: data.profile.birth }),
       };
-      // data.profile.000 이 존재할 경우에만 updatedEditInfors에 뒷 내용 추가
 
       const editInfoResponse: any = await usersApi.editInfos(
         accessToken,
@@ -64,8 +65,8 @@ function Edit() {
         console.log("회원정보 수정 성공!");
         alert("회원정보 수정을 완료하였습니다.");
 
-        // 회원정보 수정이 성공한 경우에만 페이지 이동
-        router.push("/main/mypage");
+        // 페이지를 리로드하여 업데이트된 정보를 볼 수 있도록 이동
+        router.push("/main/mypage").then(() => window.location.reload());
       }
     } catch (error) {
       console.log("회원정보 수정 오류");
@@ -101,7 +102,7 @@ function Edit() {
                 <Input
                   name="username"
                   label="아이디"
-                  type="nickname"
+                  type="usename"
                   kind="text"
                   register={register("username", {
                     required: {
@@ -130,7 +131,6 @@ function Edit() {
                       message: "올바르지 않은 형식의 이름입니다.",
                     },
                   })}
-                  // placeholder={userValue.nickname}
                   error={errors?.profile?.nickname?.message}
                   defaultValue={userInfo.nickname}
                 />
@@ -138,8 +138,7 @@ function Edit() {
                 <Input
                   name="profile.email"
                   label="이메일"
-                  type="email"
-                  kind="disabled"
+                  type="text"
                   register={register("profile.email", {
                     required: "이메일을 입력하세요",
                     pattern: {
@@ -147,7 +146,6 @@ function Edit() {
                       message: "유효한 이메일 주소를 입력하세요.",
                     },
                   })}
-                  // placeholder={userValue.email}
                   error={errors.profile?.email?.message}
                   defaultValue={userInfo.email}
                 />
@@ -164,7 +162,6 @@ function Edit() {
                       message: "올바르지 않은 형태의 생년월일입니다.",
                     },
                   })}
-                  // placeholder={userValue.birth}
                   error={errors?.profile?.birth?.message}
                   inputValue={editInfoInputValue}
                   setInputValue={setEditInfoInputValue}
@@ -183,7 +180,6 @@ function Edit() {
                       message: "-를 제외하고 입력하세요.",
                     },
                   })}
-                  // placeholder={userValue.phonenum}
                   error={errors?.profile?.phonenum?.message}
                   inputValue={editInfoInputValue}
                   setInputValue={setEditInfoInputValue}
@@ -196,7 +192,7 @@ function Edit() {
                     large={true}
                     text="수정하기"
                     className="flex justify-center items-center h-screen"
-                    onClick={handleClick} // handleClick 함수 추가
+                    onClick={handleSubmit(submitForm)}
                   />
                 </div>
               </div>
