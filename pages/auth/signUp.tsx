@@ -179,17 +179,17 @@ function Signup() {
           <title>Signup</title>
         </Head>
 
-        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium mobile:h-[1300px] ">
+        <div className=" mt-[104px] flex w-full h-[1400px] flex-col bg-white text-lg font-medium mobile:h-[1350px] ">
           <div className="flex justify-center items-center">
             <form
               onSubmit={handleSubmit(submitForm)}
               className=" items-center gap-[6px] p-0 w-[448px] h-[1500px]  mobile:h-[1300px]"
             >
-              <p className="relative top-[89px] text-4xl font-semibold text-center text-black  mobile:mt-[20px] mobile:top-0 mobile:text-[19pt]">
+              <p className="relative top-[89px] text-4xl font-semibold text-center text-black  mobile:mt-[20px] mobile:top-[10px] mobile:text-[19pt]">
                 회원가입
               </p>
 
-              <div className="relative top-[110px] mobile: top-[25px] ">
+              <div className="relative top-[110px] mobile:top-[13px] ">
                 <Input
                   setIdCheck={setIdCheck}
                   name="username"
@@ -292,7 +292,7 @@ function Signup() {
                   inputValue={signUpInputValue}
                   setInputValue={setSignUpInputValue}
                 />
-                <div className="font-bold text-[#666] mobile:ml-[75px]">
+                <div className="pt-[10px] pb-[10px] font-bold text-[#666] mobile:ml-[75px] ">
                   성별
                   <div>
                     <Segmented
@@ -372,14 +372,21 @@ function Signup() {
                   inputValue={signUpInputValue}
                   setInputValue={setSignUpInputValue}
                 />
-                <Checkbox onChange={emailAgreeOnChange}>
-                  이메일 정보 수집 약관동의
-                </Checkbox>
-                <Checkbox onChange={phoneAgreeOnChange}>
-                  휴대폰 정보 수집 약관동의
-                </Checkbox>
-
-                <div className="flex mt-[40px] text-center justify-center">
+                <div className="flex mobile:flex-col justify-center mt-[20px] gap-[10px] ">
+                  <Checkbox
+                    onChange={emailAgreeOnChange}
+                    className="mobile:justify-center"
+                  >
+                    이메일 정보 수집 약관동의
+                  </Checkbox>
+                  <Checkbox
+                    onChange={phoneAgreeOnChange}
+                    className="mobile:justify-center"
+                  >
+                    휴대폰 정보 수집 약관동의
+                  </Checkbox>
+                </div>
+                <div className="flex mt-[30px] text-center justify-center">
                   <SubmitBtn
                     type="submit"
                     large={true}
