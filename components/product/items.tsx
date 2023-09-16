@@ -9,15 +9,20 @@ import { itemsApi } from "@/libs/api";
 interface ItemsProps {
   itemsPerPage: number;
   itemsToShow?: Product[];
+  allItems: any;
 }
 
 type ClickCounts = { [productId: number]: number };
 type LastClickTimes = { [productId: number]: number | null };
 
-export default function Items({ itemsPerPage, itemsToShow }: ItemsProps) {
+export default function Items({
+  itemsPerPage,
+  itemsToShow,
+  allItems = dummyData,
+}: ItemsProps) {
   const router = useRouter();
   const screen = useScreenSize();
-  const allItems: Product[] = dummyData;
+  //const allItems: Product[] = dummyData;
   const itemsToDisplay = itemsToShow || allItems.slice(0, itemsPerPage);
   // 만약 itemsToShow가 제공되지 않았다면, 처음 itemsPerPage개의 상품만 보여줍니다.
 

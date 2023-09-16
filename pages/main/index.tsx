@@ -26,21 +26,8 @@ const Home: NextPage = () => {
     }
   }, []);
 
-  const fetchNewProducts = async () => {
-    try {
-      const bestProResponse: any = await itemsApi.todayProducts(
-        [1, 2, 3], // interests 받아오는 걸로 수정
-        accessToken
-      );
-      console.log("best 상품 목록 : ", bestProResponse);
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    fetchNewProducts();
-  }, []);
-
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [realItems, setRealItems] = useState<any>();
 
   useEffect(() => {
     const fetchAndSetDefaultValues = async () => {
@@ -62,6 +49,7 @@ const Home: NextPage = () => {
               email: viewInfoResponse.response.response.email,
               birth: viewInfoResponse.response.response.birth,
               phonenum: viewInfoResponse.response.response.phone,
+              interests: viewInfoResponse.response.response.interests,
             };
 
             setUserInfo(updatedUserInfoData);
@@ -75,7 +63,19 @@ const Home: NextPage = () => {
       }
     };
 
+    const fetchNewProducts = async () => {
+      try {
+        const todayProResponse: any = await itemsApi.todayProducts(
+          userInfo.interests,
+          accessToken
+        );
+        console.log("today 상품 목록 : ", todayProResponse.response.response);
+        setRealItems(todayProResponse.response.response);
+      } catch (error) {}
+    };
+
     fetchAndSetDefaultValues();
+    fetchNewProducts();
   }, []);
 
   return (
@@ -110,7 +110,7 @@ const Home: NextPage = () => {
                 </Link>
               </div>
               <div className="flex justify-center ">
-                <Items itemsPerPage={12} />
+                <Items itemsPerPage={12} allItems={realItems} />
               </div>
             </div>
           </div>
