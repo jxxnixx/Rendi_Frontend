@@ -101,25 +101,34 @@ export default function Items({
   const renderItems = () => {
     const rows = [];
     const numItemsPerRow = screen === "mobile" ? 2 : 4;
+    const itemsCount = itemsToDisplay.length;
+    const isMultipleOfNumItemsPerRow = itemsCount % numItemsPerRow === 0;
 
     for (let i = 0; i < itemsToDisplay.length; i += numItemsPerRow) {
       const rowItems = itemsToDisplay.slice(i, i + numItemsPerRow);
+      const rowClasses = [
+        "flex relative items-start",
+        screen === "mobile"
+          ? "w-full px-[16px] py-[3px] mb-[5px]"
+          : "w-[1040px] px-[25px] py-[5px] mb-[10px]",
+      ];
+
+      // 상품 개수가 numItemsPerRow의 배수가 아닌 경우, 마지막 줄은 왼쪽부터 채워주기 위해 클래스 추가
+      if (!isMultipleOfNumItemsPerRow && i + numItemsPerRow >= itemsCount) {
+        rowClasses.push("justify-start px-[25px] gap-[30px] mobile:px-[16px]");
+      } else {
+        rowClasses.push("justify-between");
+      }
+
       const row = (
-        <div
-          key={i}
-          className={`flex relative justify-between items-start ${
-            screen === "mobile"
-              ? "w-full px-[16px] py-[3px] mb-[5px]"
-              : "w-[1040px] px-[25px] py-[5px] mb-[10px]"
-          } `}
-        >
+        <div key={i} className={rowClasses.join(" ")}>
           {rowItems.map((item: Product) => (
             <Item
               key={item.productId}
               item={item}
               updateClickCount={updateClickCount}
               lastClickTime={lastClickTimes[item.productId] || null}
-              updateLastClickTime={updateLastClickTime} // setLastClickTime 함수 전달
+              updateLastClickTime={updateLastClickTime}
             />
           ))}
         </div>
