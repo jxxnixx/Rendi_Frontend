@@ -226,6 +226,7 @@ export const usersApi = {
     } catch (error: any) {
       // Handle the error
       console.error("중복 확인 오류:", error);
+      alert("이미 존재하는 아이디입니다.");
     }
   },
 

@@ -34,8 +34,13 @@ function FindID() {
     try {
       const findIDResponse = await usersApi.findID(updatedFindID);
       console.log(findIDResponse);
+      if (!findIDResponse) {
+        alert("아이디를 찾을 수 없습니다. 가입 정보를 확인해주세요.");
+        console.log("아이디 찾기 실패!");
+      }
 
       if (findIDResponse?.success) {
+        alert("아이디는 " + findIDResponse.response.username + " 입니다.");
         console.log("아이디 찾기 성공!");
       }
     } catch (error) {
@@ -56,18 +61,18 @@ function FindID() {
           <title>Find-id</title>
         </Head>
 
-        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium ">
+        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium mobile:h-[700px]">
           <div className="flex justify-center items-center">
             <form
               onSubmit={handleSubmit(submitForm)}
               className=" items-center gap-[6px] p-0 w-[448px] h-[1500px] space-x-[60px]"
             >
               <div>
-                <p className="relative top-[109px] text-4xl font-semibold text-center text-black">
+                <p className="relative top-[109px] text-4xl font-semibold text-center text-black mobile:top-[50px]">
                   아이디 찾기
                 </p>
 
-                <div className="relative top-[133px]">
+                <div className="relative top-[133px] mobile:top-[83px]">
                   <Input
                     name="profile.nickname"
                     label="이름"
@@ -122,7 +127,7 @@ function FindID() {
                   />
                 </div>
 
-                <div className="flex mt-[180px] text-center justify-center">
+                <div className="flex mt-[180px] text-center justify-center  mobile:mt-[130px]">
                   <SubmitBtn
                     type="submit"
                     large={true}

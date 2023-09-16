@@ -179,7 +179,7 @@ function Signup() {
           <title>Signup</title>
         </Head>
 
-        <div className=" mt-[104px] flex w-full h-[1400px] flex-col bg-white text-lg font-medium mobile:h-[1350px] ">
+        <div className=" mt-[104px] flex w-full h-[1550px] flex-col bg-white text-lg font-medium mobile:h-[1350px] ">
           <div className="flex justify-center items-center">
             <form
               onSubmit={handleSubmit(submitForm)}

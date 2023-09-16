@@ -44,6 +44,7 @@ export async function onEmailVerification(
         return backendVeriCode;
       }
     } else {
+      alert("다른 이메일을 입력해주세요.");
       console.log("이메일 인증 요청 실패:", EmailVeriResponse.error);
       return false;
     }
@@ -63,6 +64,7 @@ export function onAuthCodeVerification(
     console.log("인증코드 검증 성공!");
     return true;
   } else {
+    alert("잘못된 인증 코드입니다. 다시 시도해주세요.");
     console.log("인증코드 검증 실패: 잘못된 인증 코드");
     return false;
   }

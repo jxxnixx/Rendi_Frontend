@@ -39,8 +39,12 @@ function FindPW() {
     try {
       const changePWResponse = await usersApi.changePW(updatedFindPW);
       console.log(changePWResponse);
-
+      if (!changePWResponse) {
+        alert("비밀번호를 재설정할 수 없습니다. 가입 정보를 확인해주세요.");
+        console.log("비밀번호 재설정 실패!");
+      }
       if (changePWResponse?.success) {
+        alert("비밀번호가 재설정되었습니다. 다시 로그인을 시도해주세요.");
         console.log("비밀번호 재설정 성공!");
       }
     } catch (error) {
@@ -61,18 +65,18 @@ function FindPW() {
           <title>Find-pw</title>
         </Head>
 
-        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium ">
+        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium mobile:h-[900px]">
           <div className="flex justify-center items-center">
             <form
               onSubmit={handleSubmit(submitForm)}
               className=" items-center gap-[6px] p-0 w-[448px] h-[1500px] space-x-[60px]"
             >
               <div>
-                <p className="relative top-[109px] text-4xl font-semibold text-center text-black">
+                <p className="relative top-[109px] text-4xl font-semibold text-center text-black mobile:top-[50px]">
                   비밀번호 찾기
                 </p>
 
-                <div className="relative top-[133px]">
+                <div className="relative top-[133px] mobile:top-[83px]">
                   <Input
                     name="profile.nickname"
                     label="이름"
@@ -170,7 +174,7 @@ function FindPW() {
                     setInputValue={setFindPWInputValue}
                   />
                 </div>
-                <div className="flex mt-[180px] text-center justify-center">
+                <div className="flex mt-[180px] text-center justify-center mobile:mt-[130px]">
                   <SubmitBtn
                     type="submit"
                     large={true}
