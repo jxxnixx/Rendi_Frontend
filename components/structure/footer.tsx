@@ -3,6 +3,8 @@ import { Line } from "../icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import BrLine from "./brLine";
+import logo from "../../public/logo.png";
+import Image from "next/image";
 
 export default function Footer() {
   const screen = useScreenSize();
@@ -119,10 +121,11 @@ export default function Footer() {
                   Help
                 </p>
               </div>
-              <img
-                className="w-[164px] absolute right-[60px] top-[30px]"
-                src="logo.png"
-                alt="Footer Image"
+
+              <Image
+                src={logo}
+                alt="logo"
+                className="w-[164px] absolute right-[60px] top-[60px]"
               />
             </div>
           </div>
