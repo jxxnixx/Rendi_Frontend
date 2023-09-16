@@ -143,7 +143,6 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
     { value: "shoes", label: "슈즈" },
     { value: "bag", label: "가방" },
     { value: "mgoods", label: "패션잡화" },
-    { value: "etc", label: "기타" },
   ];
 
   const colorList = [

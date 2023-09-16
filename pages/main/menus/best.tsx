@@ -42,6 +42,10 @@ export default function Best() {
 
   const fetchNewProducts = async () => {
     try {
+      if (activeCate === "전체") {
+        setActiveCate(null);
+        return;
+      }
       const bestProResponse: any = await itemsApi.bestProductsForUsers(
         activeCate,
         accessToken

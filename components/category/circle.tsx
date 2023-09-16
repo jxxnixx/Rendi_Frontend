@@ -79,8 +79,6 @@ export default function Circle({ icon, direction }: cProps) {
         return "가방";
       case "Mgoods":
         return "패션잡화";
-      case "ETC":
-        return "기타";
       default:
         return null;
     }
@@ -90,7 +88,7 @@ export default function Circle({ icon, direction }: cProps) {
     <div
       className={`flex items-center ${
         direction === "hori"
-          ? "hover:text-[#FC435A] flex-col m-[15px] mobile:m-1.5"
+          ? "hover:text-[#FC435A] flex-col m-[17.5px] mobile:m-1.5"
           : "w-[350px] h-[50px] justify-start my-[15px] mx-[10px]"
       } `}
     >

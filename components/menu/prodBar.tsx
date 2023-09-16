@@ -27,7 +27,6 @@ export default function ProdBar({
     { cate: "수영복" },
     { cate: "가방" },
     { cate: "패션잡화" },
-    { cate: "기타" },
   ];
 
   const handleButtonClick = (cate: string) => {

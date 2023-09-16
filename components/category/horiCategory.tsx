@@ -13,7 +13,6 @@ export default function HoriCategory() {
     "Shoes",
     "Bag",
     "Mgoods",
-    "ETC",
   ];
 
   return (

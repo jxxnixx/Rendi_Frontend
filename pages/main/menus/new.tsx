@@ -42,6 +42,10 @@ export default function New() {
 
   const fetchNewProducts = async () => {
     try {
+      if (activeCate === "전체") {
+        setActiveCate(null);
+        return;
+      }
       const newProResponse: any = await itemsApi.newProductsForUsers(
         activeCate,
         accessToken
