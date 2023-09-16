@@ -99,7 +99,7 @@ const Home: NextPage = () => {
             <div className="flex-row w-[1040px] mobile:w-full">
               <div className="flex justify-between text-[12pt] font-medium text-[#666666] border-t border-solid border-gray-200">
                 <p className="ml-[30px] mt-[8px] mobile:ml-[20px] mobile:mt-[8px]">
-                  {userInfo.nickname}님을 위한 추천 상품{" "}
+                  회원님을 위한 추천 상품
                 </p>
 
                 <Link href="/menus/new">
