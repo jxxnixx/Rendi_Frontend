@@ -21,11 +21,6 @@ const MarketItem = ({ item }: ItemProps) => {
   const screen = useScreenSize();
   const isMainPage = router.asPath.includes("/main"); // "main"이 포함되어 있는지 여부 확인
 
-<<<<<<< HEAD
-  const isMainPage = router.asPath.includes("/main"); // "main"이 포함되어 있는지 여부 확인
-
-=======
->>>>>>> sen2y_2
   const getPathname = () => {
     if (isMainPage) {
       return "/main/menus/marketList/[id]";
