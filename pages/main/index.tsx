@@ -101,13 +101,13 @@ const Home: NextPage = () => {
                 <p className="ml-[30px] mt-[8px] mobile:ml-[20px] mobile:mt-[8px]">
                   {userInfo.nickname}님을 위한 추천 상품{" "}
                 </p>
-
+                {/* 
                 <Link href="/menus/new">
                   <button className="h-[34px] flex items-end">
                     <p className="">More</p>
                     <span className="text-[18px] ml-[2px] mr-[30px]"> +</span>
                   </button>
-                </Link>
+                </Link> */}
               </div>
               <div className="flex justify-center ">
                 <Items itemsPerPage={12} allItems={realItems} />
