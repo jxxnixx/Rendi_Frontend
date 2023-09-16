@@ -4,11 +4,11 @@ import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import {
+  userInfoState,
   UserInputState,
   editInfoInputState,
-  userInfoState,
 } from "@/libs/client/atom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { AEditInfosProps, usersApi } from "@/libs/api";
 import { useEffect, useState } from "react"; //
 import router, { useRouter } from "next/router"; //
@@ -20,6 +20,7 @@ export interface IEditInfosProps extends UserInputState {
 
 function Edit() {
   const {
+    watch,
     register,
     formState: { errors },
     handleSubmit,
@@ -30,16 +31,16 @@ function Edit() {
 
   const [editInfoInputValue, setEditInfoInputValue] =
     useRecoilState(editInfoInputState);
-
-  const userInfo = useRecoilValue(userInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   useEffect(() => {
-    register("username"); // Register username field manually
-    register("profile.nickname"); // Register profile.nickname field manually
-    register("profile.email"); // Register profile.email field manually
-    register("profile.birth"); // Register profile.birth field manually
-    register("profile.phonenum"); // Register profile.phonenum field manually
-  }, [register]);
+    // userInfo에서 초기 값 설정
+    setValue("username", userInfo.username);
+    setValue("profile.nickname", userInfo.nickname);
+    setValue("profile.email", userInfo.email);
+    setValue("profile.birth", userInfo.birth);
+    setValue("profile.phonenum", userInfo.phonenum);
+  }, [userInfo]); // userInfo가 변경될 때마다 초기화
 
   const handleClick = async (data: IEditInfosProps) => {
     try {
@@ -51,7 +52,6 @@ function Edit() {
         ...(data.profile.phonenum && { phonenum: data.profile.phonenum }),
         ...(data.profile.birth && { birth: data.profile.birth }),
       };
-      // data.profile.000 이 존재할 경우에만 updatedEditInfors에 뒷 내용 추가
 
       const editInfoResponse: any = await usersApi.editInfos(
         accessToken,
@@ -66,6 +66,15 @@ function Edit() {
 
         // 회원정보 수정이 성공한 경우에만 페이지 이동
         router.push("/main/mypage");
+
+        // 수정된 값을 userInfo에 업데이트
+        setUserInfo((prevUserInfo) => ({
+          ...prevUserInfo,
+          email: data.profile.email || prevUserInfo.email,
+          nickname: data.profile.nickname || prevUserInfo.nickname,
+          phonenum: data.profile.phonenum || prevUserInfo.phonenum,
+          birth: data.profile.birth || prevUserInfo.birth,
+        }));
       }
     } catch (error) {
       console.log("회원정보 수정 오류");
@@ -87,17 +96,17 @@ function Edit() {
           <title>Edit</title>
         </Head>
 
-        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium  mobile:h-[800px]">
+        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium mobile:mt-[30px]">
           <div className="flex justify-center items-center">
             <form
               onSubmit={handleSubmit(submitForm)}
-              className=" items-center gap-[6px] p-0 w-[448px] h-[1500px] mobile:h-[800px]"
+              className=" items-center gap-[6px] p-0 w-[448px] h-[1500px]"
             >
-              <p className="relative top-[89px] text-4xl font-semibold text-center text-black mobile:mt-[10px] mobile:top-[10px] mobile:text-[19pt]">
+              <p className="relative top-[109px] text-4xl font-semibold text-center text-black">
                 회원정보 수정
               </p>
 
-              <div className="relative top-[110px]  mobile:top-[13px] ">
+              <div className="relative top-[133px]">
                 <Input
                   name="username"
                   label="아이디"
@@ -115,7 +124,6 @@ function Edit() {
                   })}
                   error={errors?.profile?.nickname?.message}
                   disabled={true}
-                  defaultValue={userInfo.username}
                 />
 
                 <Input
@@ -132,7 +140,6 @@ function Edit() {
                   })}
                   // placeholder={userValue.nickname}
                   error={errors?.profile?.nickname?.message}
-                  defaultValue={userInfo.nickname}
                 />
 
                 <Input
@@ -149,7 +156,6 @@ function Edit() {
                   })}
                   // placeholder={userValue.email}
                   error={errors.profile?.email?.message}
-                  defaultValue={userInfo.email}
                 />
 
                 <Input
@@ -168,7 +174,6 @@ function Edit() {
                   error={errors?.profile?.birth?.message}
                   inputValue={editInfoInputValue}
                   setInputValue={setEditInfoInputValue}
-                  defaultValue={userInfo.birth}
                 />
 
                 <Input
@@ -187,7 +192,6 @@ function Edit() {
                   error={errors?.profile?.phonenum?.message}
                   inputValue={editInfoInputValue}
                   setInputValue={setEditInfoInputValue}
-                  defaultValue={userInfo.phonenum}
                 />
 
                 <div className="flex mt-[40px] text-center justify-center">

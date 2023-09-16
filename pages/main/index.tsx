@@ -48,7 +48,7 @@ const Home: NextPage = () => {
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
 
-        if (accessToken && !userInfo.nickname) {
+        if (accessToken) {
           const viewInfoResponse = await usersApi.viewInfos(accessToken);
           console.log(viewInfoResponse);
           console.log(userInfo.nickname);
@@ -67,8 +67,6 @@ const Home: NextPage = () => {
             setUserInfo(updatedUserInfoData);
             console.log(updatedUserInfoData);
           }
-        } else if (accessToken && userInfo.nickname) {
-          console.log("userInfo 이미 존재:", userInfo.nickname);
         } else {
           console.log("accessToken이 없습니다.");
         }
@@ -100,7 +98,7 @@ const Home: NextPage = () => {
           <div className="flex justify-center  ">
             <div className="flex-row w-[1040px] mobile:w-full">
               <div className="flex justify-between text-[12pt] font-medium text-[#666666] border-t border-solid border-gray-200">
-                <p className="ml-[30px] mt-[10px] mobile:ml-[20px] mobile:mt-[8px]">
+                <p className="ml-[30px] mt-[8px] mobile:ml-[20px] mobile:mt-[8px]">
                   {userInfo.nickname}님을 위한 추천 상품{" "}
                 </p>
 

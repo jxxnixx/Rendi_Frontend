@@ -114,7 +114,7 @@ function LogIn() {
         </Head>
         <div className="flex flex-col items-center mobile:h-[30px]">
           <div className="relative top-[240px] mobile:top-[120px] text-center mo ">
-            <p className="text-4xl mb-[70px] font-semibold text-black mobile:text-[20pt] mobile:mb-[60px]">
+            <p className="text-4xl mb-[0px] font-semibold text-black mobile:text-[20pt] mobile:mb-[60px]">
               로그인
             </p>
           </div>
