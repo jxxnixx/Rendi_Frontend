@@ -10,58 +10,60 @@ import dummyData from "@/components/product/dummyData.json";
 import Mymenus from "@/components/structure/mymenus";
 import { itemsApi } from "@/libs/api";
 
-function Liked() {
-  // 전체 아이템의 개수와 총 페이지 수 계산
-  const totalItems = dummyData.length;
-  const itemsPerPage = 8;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+export default function Liked() {
+  const [accessToken, setAccessToken] = useState<any>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedAccessToken: string | null =
+        localStorage.getItem("accessToken");
+      if (storedAccessToken) {
+        setAccessToken(storedAccessToken);
+      }
+    }
+  }, []);
 
   // 현재 페이지 상태값 추가
   const [currentPage, setCurrentPage] = useState(1);
+  const [realItems, setRealItems] = useState<any>();
+
+  const getWishList = async () => {
+    try {
+      console.log(accessToken);
+      const getWishresponse: any = await itemsApi.getWish(accessToken);
+
+      console.log(getWishresponse);
+
+      setRealItems(getWishresponse.response.response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getWishList();
+  }, []);
+
+  console.log(realItems);
+
+  // 전체 아이템의 개수와 총 페이지 수 계산
+  let totalItems = 0;
+  if (realItems) {
+    totalItems = realItems.length;
+  }
+  const itemsPerPage = 16;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
-  // 찜한 상품 목록 관리
-  const [wishList, setWishList] = useState<Product[]>([]);
-
-  useEffect(() => {
-    // localStorage에서 accessToken을 가져옵니다.
-    const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-      console.error("액세스 토큰이 없습니다.");
-      return;
-    }
-
-    // getWish API를 호출하여 찜한 상품 목록 가져오기
-    const getWishList = async () => {
-      try {
-        console.log(accessToken);
-        const getWishresponse: any = await itemsApi.getWish(accessToken);
-
-        console.log(getWishresponse);
-
-        if (getWishresponse.success) {
-          // API 응답에서 찜한 상품 목록을 가져와 상태값으로 업데이트
-          setWishList(getWishresponse.response.response.wishList);
-        } else {
-          console.error("API 호출 실패:", getWishresponse.error);
-        }
-      } catch (error) {
-        // 에러 처리를 여기에서 수행합니다.
-        console.error("찜한 상품 목록을 가져오는 중 에러 발생:", error);
-      }
-    };
-
-    getWishList();
-  }, []);
-
   // 현재 페이지에 해당하는 상품들을 계산
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
-
+  const itemsToShow: Product[] = realItems
+    ? realItems.slice(startIndex, endIndex)
+    : [];
   return (
     <>
       <Layout>
@@ -86,7 +88,11 @@ function Liked() {
               <p className="flex items-center h-[40px] ">찜한 상품</p>
             </div>
             <div className="flex items-end justify-center">
-              <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
+              <Items
+                itemsToShow={itemsToShow}
+                itemsPerPage={itemsPerPage}
+                allItems={realItems}
+              />
             </div>
           </div>
         </div>
@@ -101,5 +107,3 @@ function Liked() {
     </>
   );
 }
-
-export default Liked;

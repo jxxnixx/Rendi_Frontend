@@ -174,7 +174,11 @@ const ProductPage = () => {
           setActiveCate={setActiveCate}
         />
         <div className="flex justify-center py-8 mobile:py-3">
-          <Items itemsPerPage={16} itemsToShow={itemsToShow} />
+          <Items
+            itemsPerPage={16}
+            itemsToShow={itemsToShow}
+            allItems={dummyData}
+          />
         </div>
         <div className="flex justify-center py-1">
           {/* Pagination 컴포넌트에 현재 페이지와 총 페이지 수, 페이지 변경 함수를 전달 */}

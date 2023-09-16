@@ -79,6 +79,9 @@ export default function Circle({ icon, direction }: cProps) {
     }
   };
 
+  const router = useRouter();
+  const isMainPage = router.asPath.includes("/main");
+
   return (
     <div
       className={`flex items-center ${
@@ -94,24 +97,41 @@ export default function Circle({ icon, direction }: cProps) {
             : "w-[45px] h-[45px]"
         } mb-[10px] rounded-full bg-[#FAD5D5] bg-opacity-80 hover:bg-[#FAD5D5]`}
       >
+        {isMainPage ? (
+          <Link
+            href={{
+              pathname: "/main/categories/[id]",
+              query: { id: icon.toLowerCase() },
+            }}
+          >
+            <div className="text-[#666]">{getComponent()}</div>
+          </Link>
+        ) : (
+          <Link href={`/${icon.toLowerCase()}`} className="text-[#666]">
+            {getComponent()}
+          </Link>
+        )}
+      </button>
+      {isMainPage ? (
         <Link
           href={{
-            pathname: "/categories/[id]",
+            pathname: "/main/categories/[id]",
             query: { id: icon.toLowerCase() },
           }}
-          legacyBehavior
         >
-          <a className="text-[#666]">{getComponent()}</a>
+          <div
+            className={` ${
+              direction === "hori"
+                ? "text-[14px] mobile:text-[12px] "
+                : "text-[15px] ml-[10px] mb-[10px] "
+            }`}
+          >
+            {getKeyword()}
+          </div>
         </Link>
-      </button>
-      <Link
-        href={{
-          pathname: "/categories/[id]",
-          query: { id: icon.toLowerCase() },
-        }}
-        legacyBehavior
-      >
-        <a
+      ) : (
+        <Link
+          href={`/${icon.toLowerCase()}`}
           className={` ${
             direction === "hori"
               ? "text-[14px] mobile:text-[12px] "
@@ -119,8 +139,8 @@ export default function Circle({ icon, direction }: cProps) {
           }`}
         >
           {getKeyword()}
-        </a>
-      </Link>
+        </Link>
+      )}
     </div>
   );
 }

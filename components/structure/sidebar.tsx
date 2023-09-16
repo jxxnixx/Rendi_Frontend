@@ -94,7 +94,9 @@ const Navigation = ({ onItemClick }: any) => {
     "Mgoods",
   ];
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  const [loginState, setLoginState] = useState(false); // 로그인유무로 닉네임 출력할지 로그인하라는 메세지 출력할지 결정
+
+  const router = useRouter();
+  const isMainPage = router.asPath.includes("/main");
 
   useEffect(() => {
     const fetchAndSetDefaultValues = async () => {
@@ -102,7 +104,7 @@ const Navigation = ({ onItemClick }: any) => {
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
 
-        if (accessToken && !userInfo.nickname) {
+        if (accessToken) {
           const viewInfoResponse = await usersApi.viewInfos(accessToken);
           console.log(viewInfoResponse);
           console.log(userInfo.nickname);
@@ -120,12 +122,10 @@ const Navigation = ({ onItemClick }: any) => {
 
             setUserInfo(updatedUserInfoData);
             console.log(updatedUserInfoData);
-
-            setLoginState(true);
           }
         } else {
           console.log("error!");
-          setLoginState(false); // 로그인 상태가 아닐때는 ""님이아니고 로그인하라는 메세지 출력
+          // 로그인 상태가 아닐때는 ""님이아니고 로그인하라는 메세지 출력
         }
       } catch (error) {
         console.log("회원정보 조회 오류");
@@ -135,7 +135,6 @@ const Navigation = ({ onItemClick }: any) => {
     fetchAndSetDefaultValues();
   }, []);
 
-  const router = useRouter();
   const handleLogout = () => {
     // 로그아웃 버튼 클릭 시 실행되는 함수
     localStorage.removeItem("accessToken"); // accessToken 삭제
@@ -158,7 +157,7 @@ const Navigation = ({ onItemClick }: any) => {
         <div></div>
         {/* 프로필 들어갈 영역 */}
         <div className="flex justify-center">
-          <Link href={loginState ? "/main/mypage" : "/auth/login"}>
+          <Link href={isMainPage ? "/main/mypage" : "/auth/login"}>
             <div
               className="w-100vw h-[45px] flex-col m-5"
               onClick={onItemClick}
@@ -168,7 +167,9 @@ const Navigation = ({ onItemClick }: any) => {
                 <MyPage size={20} />
               </div>
               <div className="m-2">
-                {loginState ? `${name} 님 ` : "로그인이 필요합니다."}
+                {isMainPage
+                  ? `${userInfo.nickname} 님 `
+                  : "로그인이 필요합니다."}
               </div>
             </div>
           </Link>
@@ -190,7 +191,7 @@ const Navigation = ({ onItemClick }: any) => {
             </li>
           ))}
         </div>
-        <div className="">
+        <div>
           <div className="flex m-2 justify-center">Categories</div>
         </div>
         <div className=" ">
@@ -205,8 +206,8 @@ const Navigation = ({ onItemClick }: any) => {
             </div>
           </li>
         </div>
-        {loginState && (
-          <div className="">
+        {isMainPage && (
+          <div>
             <div
               className="flex m-2 justify-center cursor-pointer font"
               onClick={() => {

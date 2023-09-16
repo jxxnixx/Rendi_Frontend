@@ -86,7 +86,6 @@ export default function Best() {
           />
         </div>
         <div className="flex justify-center py-1">
-          {" "}
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

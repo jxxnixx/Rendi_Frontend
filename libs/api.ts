@@ -472,7 +472,7 @@ export const itemsApi = {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      if (response.status === 200) {
+      if (response) {
         return {
           success: true,
           response: response.data,
@@ -685,19 +685,43 @@ export const itemsApi = {
       }
     } catch (error) {}
   },
+};
 
+export const marketApi = {
+  // 마켓 브랜드 리스트
   allBrands: async () => {
     try {
       const response = await api.get("/brand/all");
       if (response) {
         return { success: true, response: response.data, error: null };
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   },
 
-  brandDetails: async (brandName: string) => {
+  // 마켓 상세페이지 (로그인)
+  brandDetailsForUsers: async (brandName: string, accessToken: string) => {
     try {
-      const response = await api.get("/brand/details", {});
-    } catch (error) {}
+      const response = await api.get("/brand/details", {
+        params: { brandName },
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  // 마켓 상세페이지 (비로그인 )
+  brandDetailsForGuests: async (brandName: string) => {
+    try {
+      const response = await api.get("/brand/guest/details", {
+        params: { brandName },
+      });
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   },
 };

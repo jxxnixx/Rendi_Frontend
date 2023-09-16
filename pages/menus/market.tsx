@@ -3,9 +3,10 @@ import Items from "@/components/product/items";
 import Pagination from "@/components/structure/pagination";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
+import { marketApi } from "@/libs/api";
 
 export default function Market() {
   const [activeCate, setActiveCate] = useState("전체");
@@ -26,6 +27,20 @@ export default function Market() {
   const endIndex = startIndex + itemsPerPage;
   const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
 
+  const fetchMarketList = async () => {
+    try {
+      const allMarketBrandsResponse: any = await marketApi.allBrands();
+
+      console.log(allMarketBrandsResponse);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMarketList();
+  }, []);
+
   return (
     <Layout>
       <Head>
@@ -43,9 +58,7 @@ export default function Market() {
         />
         <div>
           <div className="pt-4 mobile:pt-4">
-            <div className="flex w-full relative justify-center pt-1.5 pb-8 mobile:py-2">
-              <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
-            </div>
+            <div className="flex w-full relative justify-center pt-1.5 pb-8 mobile:py-2"></div>
           </div>
         </div>
         <div className="flex justify-center py-1">
