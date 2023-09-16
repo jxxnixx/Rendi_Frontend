@@ -27,6 +27,7 @@ const Home: NextPage = () => {
   }, []);
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [realItems, setRealItems] = useState<any>();
 
   useEffect(() => {
     const fetchAndSetDefaultValues = async () => {
@@ -64,11 +65,12 @@ const Home: NextPage = () => {
 
     const fetchNewProducts = async () => {
       try {
-        const bestProResponse: any = await itemsApi.todayProducts(
+        const todayProResponse: any = await itemsApi.todayProducts(
           userInfo.interests,
           accessToken
         );
-        console.log("best 상품 목록 : ", bestProResponse);
+        console.log("today 상품 목록 : ", todayProResponse.response.response);
+        setRealItems(todayProResponse.response.response);
       } catch (error) {}
     };
 
@@ -108,7 +110,7 @@ const Home: NextPage = () => {
                 </Link>
               </div>
               <div className="flex justify-center ">
-                <Items itemsPerPage={12} />
+                <Items itemsPerPage={12} allItems={realItems} />
               </div>
             </div>
           </div>

@@ -11,23 +11,9 @@ import { itemsApi } from "@/libs/api";
 export default function New() {
   const [activeCate, setActiveCate] = useState<any>(null);
 
-  console.log(activeCate);
-  // 전체 아이템의 개수와 총 페이지 수 계산
-  const totalItems = dummyData.length;
-  const itemsPerPage = 16;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
   // 현재 페이지 상태값 추가
   const [currentPage, setCurrentPage] = useState(1);
-
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
-
-  // 현재 페이지에 해당하는 상품들을 계산
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
+  const [realItems, setRealItems] = useState<any>();
 
   const fetchNewProducts = async () => {
     try {
@@ -39,12 +25,33 @@ export default function New() {
         activeCate
       );
       console.log("new 상품 목록 : ", newProResponse);
+      console.log(newProResponse.response.response);
+      setRealItems(newProResponse.response.response);
     } catch (error) {}
   };
 
   useEffect(() => {
     fetchNewProducts();
   }, [activeCate]);
+
+  // 전체 아이템의 개수와 총 페이지 수 계산
+  let totalItems = 0;
+  if (realItems) {
+    totalItems = realItems.length;
+  }
+  const itemsPerPage = 16;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // 현재 페이지에 해당하는 상품들을 계산
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToShow: Product[] = realItems
+    ? realItems.slice(startIndex, endIndex)
+    : [];
 
   return (
     <Layout>
@@ -59,7 +66,11 @@ export default function New() {
           setActiveCate={setActiveCate}
         />
         <div className="flex justify-center py-8 mobile:py-3">
-          <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
+          <Items
+            itemsToShow={itemsToShow}
+            itemsPerPage={itemsPerPage}
+            allItems={realItems}
+          />
         </div>
         <div className="flex justify-center py-1">
           {" "}
