@@ -9,7 +9,7 @@ export default function Trend() {
       <Head>
         <title>Trend</title>
       </Head>
-      <div className="relative mt-[136px] h-full flex w-full flex-col text-lg font-medium ">
+      <div className="relative mt-[136px] h-full flex w-full flex-col text-lg font-medium  mobile:mt-[85px]">
         {/* <div className="text-4xl mt-[100px] font-bold text-center"> */}
         <div className="flex justify-center items-center">
           <img

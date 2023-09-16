@@ -137,7 +137,7 @@ const Item = ({
   const brandInfoMap: BrandInfo[] = [
     { brandId: 1, brandName: "CIDER" },
     { brandId: 2, brandName: "아뜨랑스" },
-    { brandId: 3, brandName: "에잇세컨즈" },
+    { brandId: 3, brandName: "8 세컨즈" },
     { brandId: 4, brandName: "섹시콩" },
     { brandId: 5, brandName: "레트로문" },
     { brandId: 6, brandName: "유니클로" },
@@ -147,7 +147,7 @@ const Item = ({
     { brandId: 10, brandName: "IT MICHAA" },
     { brandId: 11, brandName: "e.b.m" },
     { brandId: 12, brandName: "젝시믹스" },
-    { brandId: 13, brandName: "자라" },
+    { brandId: 13, brandName: "ZARA" },
     { brandId: 14, brandName: "로즐리" },
     { brandId: 15, brandName: "피오나" },
     { brandId: 16, brandName: "디오스피스" },
