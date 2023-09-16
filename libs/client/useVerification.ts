@@ -23,6 +23,13 @@ export async function onEmailVerification(
   inputEmailValue: string
 ) {
   try {
+    const EmailCheckResponse: any = await usersApi.emailcheck(inputEmailValue);
+    console.log(EmailCheckResponse);
+    if (EmailCheckResponse?.success === false) {
+      alert("사용할 수 없는 이메일입니다.");
+      return false;
+    }
+
     const EmailVeriResponse = await usersApi.emailVerification({
       nickname: inputNameValue,
       email: inputEmailValue,

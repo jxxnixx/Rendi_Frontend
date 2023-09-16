@@ -20,6 +20,7 @@ export default function ProfileBtn() {
       email: "",
       birth: "",
       phonenum: "",
+      interests: [],
     }); // userInfoState 상태 초기화 //추가
     router.push("/"); // 페이지 이동
   };

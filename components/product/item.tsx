@@ -156,7 +156,8 @@ const Item = ({
   // 브랜드 ID를 브랜드 이름으로 매핑하는 함수
   const getBrandName = (brandId: any): string => {
     const brandInfo = brandInfoMap.find((info) => info.brandId === brandId);
-    return brandInfo ? brandInfo.brandName : "알 수 없음";
+
+    return brandInfo ? brandInfo.brandName : "CIDER";
   };
 
   return (

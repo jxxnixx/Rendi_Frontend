@@ -21,20 +21,17 @@ function LogIn() {
   });
 
   const [loginError, setLoginError] = useState<string>("");
-  // const [login, setLogin] = useRecoilState(isLoggedInState);
-  // const [logUsername, setLogUsername] = useRecoilState(loginState);
   const router = useRouter();
-
-  // const loginMutation = useMutation(
-  //   (data: ALogInProps) => usersApi.login(data) // usersApi.login 사용
-  // );
-  // useMutation의 첫 번째 매개변수 : 비동기 작업을 수행하는 콜백 함수
 
   // 로컬 스토리지에서 저장된 아이디 가져오기
   const [rememberCheck, setRememberCheck] = useState<boolean>(true);
   // 아이디 입력 필드의 기본값을 저장하기 위한 상태 변수
   const [inputValue, setInputValue] = useState<string>("");
 
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    router.push("/main");
+  }
   useEffect(() => {
     // Check if localStorage is available (for server-side rendering)
     if (typeof window !== "undefined" && window.localStorage) {
