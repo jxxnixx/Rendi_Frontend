@@ -27,7 +27,7 @@ export default function Prodlist({ products }: ProdlistProps) {
     category: "카테고리",
     subcategory: ["서브카테고리"],
     color: ["색상"],
-    price: { min: 0, max: 500000 },
+    price: { min: 0, max: 1000000 },
   });
 
   const handleShowPopup = () => {
@@ -84,7 +84,7 @@ export default function Prodlist({ products }: ProdlistProps) {
                 category: "카테고리",
                 subcategory: ["서브카테고리"],
                 color: ["색상"],
-                price: { min: 0, max: 500000 },
+                price: { min: 0, max: 1000000 },
               });
             }}
           />
