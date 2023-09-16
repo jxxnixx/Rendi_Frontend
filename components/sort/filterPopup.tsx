@@ -37,7 +37,7 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
     category: "",
     subcategory: [],
     color: [],
-    price: { min: 0, max: 500000 },
+    price: { min: 0, max: 1000000 },
     // size: "",
     // brand: "",
   });
@@ -73,14 +73,14 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
       category: "",
       subcategory: [],
       color: [],
-      price: { min: 0, max: 500000 },
+      price: { min: 0, max: 1000000 },
       //   size: "",
       //   brand: "",
     });
     onResetFilters();
   };
 
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000]);
   const handlePriceChange = (value: [number, number]) => {
     setPriceRange(value);
   };
@@ -265,7 +265,7 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
             defaultValue={priceRange}
             onChange={handlePriceChange}
             min={0}
-            max={500000}
+            max={1000000}
           />
 
           {/* <button

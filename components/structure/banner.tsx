@@ -18,7 +18,15 @@ export default function Banner() {
       >
         <div className="flex justify-center items-center">
           <img
-            src={screen === "mobile" ? "banner_mobile.png" : "banner.png"}
+            src="banner1.png"
+            // src={screen === "mobile" ? "banner_mobile.png" : "banner.png"}
+            className="w-[1040px] h-[362px] mobile:w-full mobile:h-[226px] object-cover"
+          />
+        </div>
+        <div className="flex justify-center items-center">
+          <img
+            // src={screen === "mobile" ? "banner_mobile.png" : "banner.png"}
+            src="banner2.png"
             className="w-[1040px] h-[362px] mobile:w-full mobile:h-[226px] object-cover"
           />
         </div>
