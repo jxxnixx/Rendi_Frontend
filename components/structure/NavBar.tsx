@@ -13,7 +13,7 @@ export default function NavBar() {
             { href: "/", text: "Today" },
             { href: "/menus/best", text: "Best" },
             { href: "/menus/new", text: "New" },
-            { href: "/menus/marketList", text: "Market" },
+            { href: "/menus/market", text: "Market" },
             { href: "/menus/trend", text: "Trend" },
             { href: "/menus/all", text: "All" },
           ].map(({ href, text }) => (
@@ -44,7 +44,7 @@ export default function NavBar() {
             { href: "/main", text: "Today" },
             { href: "/main/menus/best", text: "Best" },
             { href: "/main/menus/new", text: "New" },
-            { href: "/main/menus/marketList", text: "Market" },
+            { href: "/main/menus/market", text: "Market" },
             { href: "/main/menus/trend", text: "Trend" },
             { href: "/main/menus/all", text: "All" },
           ].map(({ href, text }) => (

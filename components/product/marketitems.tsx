@@ -28,7 +28,7 @@ export default function MarketItems({ itemsPerPage, itemsToShow }: ItemsProps) {
           className={`flex relative justify-between items-start ${
             screen === "mobile"
               ? "w-full px-[16px] py-[3px] mb-[5px]"
-              : "w-[1040px] px-[25px] py-[5px] mb-[10px]"
+              : "w-[1040px] px-[25px] py-[5px] mb-[0px]"
           } `}
         >
           {rowItems.map((item: Product) => (
