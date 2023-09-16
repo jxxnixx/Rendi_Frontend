@@ -6,6 +6,7 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
+import MarketItems from "../../../components/product/marketitems";
 
 export default function MarketList() {
   const [activeCate, setActiveCate] = useState("전체");
@@ -35,11 +36,11 @@ export default function MarketList() {
         <div className="mt-[135px] mobile:mt-[80px] w-full h-[400px] mobile:h-[250px] bg-[#FFE9EC]"></div>{" "}
       </div> */}
       <div className="flex justify-center">
-        <div className="flex justify-center items-end font-bold mt-[135px] mobile:mt-[80px] w-[1040px] h-[50px] mobile:h-[250px]  ">
+        <div className="flex justify-center items-end font-bold mt-[135px] mobile:items-center mobile:mt-[105px] w-[1040px] h-[50px] mobile:h-[50px]   ">
           마켓 모아보기
         </div>
       </div>
-      <div className="flex w-full flex-col text-lg font-medium ">
+      <div className="flex w-full flex-col text-lg font-medium  ">
         {/* <ProdBar
           category={"default"}
           activeCate={activeCate}
@@ -48,7 +49,11 @@ export default function MarketList() {
         <div>
           <div className="pt-[15px] mobile:pt-4">
             <div className="flex w-full relative justify-center pt-1.5 pb-8 mobile:py-2">
-              <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
+              {/* <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} /> */}
+              <MarketItems
+                itemsToShow={itemsToShow}
+                itemsPerPage={itemsPerPage}
+              />
             </div>
           </div>
         </div>
