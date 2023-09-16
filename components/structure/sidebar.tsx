@@ -92,46 +92,48 @@ const Navigation = ({ onItemClick }: any) => {
     "Shoes",
     "Bag",
     "Mgoods",
-    "ETC",
   ];
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  const [loginState, setLoginState] = useState(true); // 로그인유무로 닉네임 출력할지 로그인하라는 메세지 출력할지 결정
+  const [loginState, setLoginState] = useState(false); // 로그인유무로 닉네임 출력할지 로그인하라는 메세지 출력할지 결정
 
-  // useEffect(() => {
-  //   const fetchAndSetDefaultValues = async () => {
-  //     try {
-  //       const accessToken = localStorage.getItem("accessToken");
-  //       console.log(accessToken);
+  useEffect(() => {
+    const fetchAndSetDefaultValues = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
 
-  //       if (accessToken && !userInfo.nickname) {
-  //         const viewInfoResponse = await usersApi.viewInfos(accessToken);
-  //         console.log(viewInfoResponse);
-  //         console.log(userInfo.nickname);
+        if (accessToken && !userInfo.nickname) {
+          const viewInfoResponse = await usersApi.viewInfos(accessToken);
+          console.log(viewInfoResponse);
+          console.log(userInfo.nickname);
 
-  //         if (viewInfoResponse?.success) {
-  //           console.log("회원정보 조회 성공!");
-  //           console.log(viewInfoResponse.response.response.nickname);
-  //           const updatedUserInfoData: UserInfoState = {
-  //             ...userInfo,
-  //             nickname: viewInfoResponse.response.response.nickname,
-  //           };
+          if (viewInfoResponse?.success) {
+            console.log("회원정보 조회 성공!");
 
-  //           setUserInfo(updatedUserInfoData);
-  //           console.log(updatedUserInfoData);
-  //         }
-  //       } else if (accessToken && userInfo.nickname) {
-  //         console.log("userInfo 이미 존재:", userInfo.nickname);
-  //       } else {
-  //         console.log("accessToken이 없습니다.");
-  //         setLoginState(false); // 로그인 상태가 아닐때는 ""님이아니고 로그인하라는 메세지 출력
-  //       }
-  //     } catch (error) {
-  //       console.log("회원정보 조회 오류");
-  //     }
-  //   };
+            const name = viewInfoResponse.response.response.nickname;
+            console.log(name);
 
-  //   fetchAndSetDefaultValues();
-  // }, []);
+            const updatedUserInfoData: UserInfoState = {
+              ...userInfo,
+              nickname: viewInfoResponse.response.response.nickname,
+            };
+
+            setUserInfo(updatedUserInfoData);
+            console.log(updatedUserInfoData);
+
+            setLoginState(true);
+          }
+        } else {
+          console.log("error!");
+          setLoginState(false); // 로그인 상태가 아닐때는 ""님이아니고 로그인하라는 메세지 출력
+        }
+      } catch (error) {
+        console.log("회원정보 조회 오류");
+      }
+    };
+
+    fetchAndSetDefaultValues();
+  }, []);
 
   const router = useRouter();
   const handleLogout = () => {
@@ -144,6 +146,7 @@ const Navigation = ({ onItemClick }: any) => {
       email: "",
       birth: "",
       phonenum: "",
+      interests: [],
     }); // userInfoState 상태 초기화 //추가
     router.push("/"); // 페이지 이동
   };
@@ -165,24 +168,18 @@ const Navigation = ({ onItemClick }: any) => {
                 <MyPage size={20} />
               </div>
               <div className="m-2">
-                {loginState
-                  ? `${userInfo.nickname} 님 `
-                  : "로그인이 필요합니다."}
+                {loginState ? `${name} 님 ` : "로그인이 필요합니다."}
               </div>
             </div>
           </Link>
         </div>
 
-        <div className="">
+        <div>
           <div className="flex m-2 justify-center">Pages</div>
         </div>
-        <div className=" ">
+        <div>
           {navigationItems.map((item, index) => (
-            <li
-              key={index}
-              className="h-[30px] mt-3 ml-5
-       "
-            >
+            <li key={index} className="h-[30px] mt-3 ml-5">
               <Link
                 href={item.path}
                 onClick={onItemClick}

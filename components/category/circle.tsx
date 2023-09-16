@@ -13,7 +13,6 @@ import {
   Shoes,
   Bag,
   Mgoods,
-  ETC,
 } from "../icons";
 
 interface cProps {
@@ -22,8 +21,6 @@ interface cProps {
 }
 
 export default function Circle({ icon, direction }: cProps) {
-  const router = useRouter();
-
   const getComponent = () => {
     switch (icon) {
       case "Top":
@@ -48,8 +45,6 @@ export default function Circle({ icon, direction }: cProps) {
         return <Bag />;
       case "Mgoods":
         return <Mgoods />;
-      case "ETC":
-        return <ETC />;
       default:
         return null;
     }

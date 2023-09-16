@@ -250,6 +250,18 @@ export const usersApi = {
     }
   },
 
+  emailcheck: async (email: string) => {
+    try {
+      const response = await api.post("/member/email-check", {
+        email,
+      });
+
+      console.log(response.data);
+    } catch (error: any) {
+      console.log("이메일 중복 확인 오류");
+    }
+  },
+
   // 소셜 회원가입
   socialSignup: async ({
     provider,
@@ -365,7 +377,7 @@ export const usersApi = {
           "Content-Type": "application/json",
         },
       });
-      if (response.data.success) {
+      if (response) {
         return {
           success: true,
           response: response.data,

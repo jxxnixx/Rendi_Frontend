@@ -19,23 +19,23 @@ function Taste() {
   const [signUpData, setSignUpData] = useRecoilState(signUpState);
   const router = useRouter();
 
-  const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);
+  const [selectedItem, setSelectedItem] = useState<string[]>([]);
 
   const handleItemSelection = (itemId: string) => {
-    if (selectedItemIds.includes(itemId)) {
-      setSelectedItemIds(selectedItemIds.filter((id) => id !== itemId));
+    if (selectedItem.includes(itemId)) {
+      setSelectedItem(selectedItem.filter((id) => id !== itemId));
     } else {
-      setSelectedItemIds([...selectedItemIds, itemId]);
+      setSelectedItem([...selectedItem, itemId]);
     }
   };
 
-  const isSubmitEnabled = selectedItemIds.length >= 3;
+  const isSubmitEnabled = selectedItem.length >= 3;
 
   const handleClick = async () => {
     // interests 업데이트
     const updatedProfile = {
       ...signUpData.profile,
-      interests: selectedItemIds,
+      interests: selectedItem,
     };
 
     const { profile, ...restOfSignUpData } = signUpData;

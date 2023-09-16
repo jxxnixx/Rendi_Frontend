@@ -127,6 +127,41 @@ const Item = ({
     router.push(item.href);
   };
 
+<<<<<<< Updated upstream
+=======
+  // 브랜드 정보를 담고 있는 인터페이스
+  interface BrandInfo {
+    brandId: number;
+    brandName: string;
+  }
+
+  // 브랜드 정보 매핑
+  const brandInfoMap: BrandInfo[] = [
+    { brandId: 1, brandName: "CIDER" },
+    { brandId: 2, brandName: "아뜨랑스" },
+    { brandId: 3, brandName: "에잇세컨즈" },
+    { brandId: 4, brandName: "섹시콩" },
+    { brandId: 5, brandName: "레트로문" },
+    { brandId: 6, brandName: "유니클로" },
+    { brandId: 7, brandName: "악녀일기" },
+    { brandId: 8, brandName: "고고싱" },
+    { brandId: 9, brandName: "비비안웨스트우드" },
+    { brandId: 10, brandName: "IT MICHAA" },
+    { brandId: 11, brandName: "e.b.m" },
+    { brandId: 12, brandName: "젝시믹스" },
+    { brandId: 13, brandName: "자라" },
+    { brandId: 14, brandName: "로즐리" },
+    { brandId: 15, brandName: "피오나" },
+    { brandId: 16, brandName: "디오스피스" },
+  ];
+
+  // 브랜드 ID를 브랜드 이름으로 매핑하는 함수
+  const getBrandName = (brandId: any): string => {
+    const brandInfo = brandInfoMap.find((info) => info.brandId === brandId);
+    return brandInfo ? brandInfo.brandName : "CIDER";
+  };
+
+>>>>>>> Stashed changes
   return (
     <div
       className={`relative mb-[10px] ${

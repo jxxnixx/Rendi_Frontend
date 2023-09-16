@@ -18,7 +18,7 @@ type LastClickTimes = { [productId: number]: number | null };
 export default function Items({
   itemsPerPage,
   itemsToShow,
-  allItems = dummyData,
+  allItems = [],
 }: ItemsProps) {
   const router = useRouter();
   const screen = useScreenSize();

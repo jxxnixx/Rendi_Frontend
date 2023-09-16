@@ -21,53 +21,58 @@ function Mypage() {
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const recentViewedItems = useRecoilValue(recentViewedItemsState);
-  // useEffect(() => {
-  //   const fetchAndSetDefaultValues = async () => {
-  //     try {
-  //       const accessToken = localStorage.getItem("accessToken");
-  //       console.log(accessToken);
+  const [realItems, setRealItems] = useState<any>();
 
-  //       if (accessToken) {
-  //         const viewInfoResponse = await usersApi.viewInfos(accessToken);
-  //         console.log(viewInfoResponse);
+  useEffect(() => {
+    const fetchAndSetDefaultValues = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
 
-  //         if (viewInfoResponse?.success) {
-  //           console.log("회원정보 조회 성공!");
+        if (accessToken) {
+          const viewInfoResponse = await usersApi.viewInfos(accessToken);
+          console.log(viewInfoResponse);
 
-  //           const updatedUserInfoData: UserInfoState = {
-  //             username: viewInfoResponse.response.response.username,
-  //             nickname: viewInfoResponse.response.response.nickname,
-  //             email: viewInfoResponse.response.response.email,
-  //             birth: viewInfoResponse.response.response.birth,
-  //             phonenum: viewInfoResponse.response.response.phone,
-  //           };
+          if (viewInfoResponse?.success) {
+            console.log("회원정보 조회 성공!");
 
-  //           // 먼저 회원정보 업데이트
-  //           setUserInfo(updatedUserInfoData);
-  //           console.log(updatedUserInfoData);
+            const updatedUserInfoData: UserInfoState = {
+              username: viewInfoResponse.response.response.username,
+              nickname: viewInfoResponse.response.response.nickname,
+              email: viewInfoResponse.response.response.email,
+              birth: viewInfoResponse.response.response.birth,
+              phonenum: viewInfoResponse.response.response.phone,
+              interests: viewInfoResponse.response.response.interests,
+            };
 
-  //           // 회원정보가 업데이트되면 아래의 최근 본 상품 관련 코드를 실행
-  //           console.log(recentViewedItems);
-  //           console.log(accessToken);
+            // 먼저 회원정보 업데이트
+            setUserInfo(updatedUserInfoData);
+            console.log(updatedUserInfoData);
 
-  //           if (accessToken) {
-  //             const recentResponse = await itemsApi.recentView(
-  //               recentViewedItems,
-  //               accessToken
-  //             );
-  //             console.log(recentResponse);
-  //           }
-  //         }
-  //       } else {
-  //         console.log("accessToken이 없습니다.");
-  //       }
-  //     } catch (error) {
-  //       console.log("회원정보 조회 오류");
-  //     }
-  //   };
+            // 회원정보가 업데이트되면 아래의 최근 본 상품 관련 코드를 실행
+            console.log(recentViewedItems);
+            console.log(accessToken);
 
-  //   fetchAndSetDefaultValues();
-  // }, []);
+            if (accessToken) {
+              const recentResponse: any = await itemsApi.recentView(
+                recentViewedItems,
+                accessToken
+              );
+              console.log(recentResponse);
+              console.log(recentResponse.response.response);
+              setRealItems(recentResponse.response.response);
+            }
+          }
+        } else {
+          console.log("accessToken이 없습니다.");
+        }
+      } catch (error) {
+        console.log("회원정보 조회 오류");
+      }
+    };
+
+    fetchAndSetDefaultValues();
+  }, []);
 
   return (
     <>
@@ -112,7 +117,7 @@ function Mypage() {
               <p className="flex items-center h-[40px] ">최근 본 상품</p>
             </div>
             <div className="flex items-end justify-center">
-              <Items itemsPerPage={8} />
+              <Items itemsPerPage={8} allItems={realItems} />
             </div>
           </div>
         </div>

@@ -257,26 +257,6 @@ export function Mgoods() {
   );
 }
 
-export function ETC() {
-  return (
-    <svg
-      viewBox="0 0 30 30"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMidYMid meet"
-      className={`m-auto w-[30px] h-[30px]`}
-    >
-      <path
-        d="M17.7775 2.5L6.83301 15.2444C6.74705 15.3455 6.69182 15.469 6.67387 15.6005C6.65592 15.7319 6.67598 15.8657 6.7317 15.9861C6.78741 16.1065 6.87644 16.2084 6.98825 16.2798C7.10007 16.3512 7.22998 16.389 7.36264 16.3889H12.2219V27.5L23.1663 14.7556C23.2522 14.6546 23.3074 14.5313 23.3254 14.4C23.3434 14.2687 23.3235 14.1351 23.268 14.0147C23.2126 13.8944 23.1238 13.7925 23.0123 13.721C22.9007 13.6494 22.7711 13.6113 22.6386 13.6111H17.7775V2.5Z"
-        stroke="black"
-        strokeWidth={1}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export function Camera() {
   return (
     <svg
