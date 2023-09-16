@@ -48,7 +48,7 @@ const Home: NextPage = () => {
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
 
-        if (accessToken && !userInfo.nickname) {
+        if (accessToken) {
           const viewInfoResponse = await usersApi.viewInfos(accessToken);
           console.log(viewInfoResponse);
           console.log(userInfo.nickname);
@@ -67,8 +67,6 @@ const Home: NextPage = () => {
             setUserInfo(updatedUserInfoData);
             console.log(updatedUserInfoData);
           }
-        } else if (accessToken && userInfo.nickname) {
-          console.log("userInfo 이미 존재:", userInfo.nickname);
         } else {
           console.log("accessToken이 없습니다.");
         }
