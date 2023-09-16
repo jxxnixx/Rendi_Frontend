@@ -20,14 +20,20 @@ interface ItemProps {
 const MarketItem = ({ item }: ItemProps) => {
   const screen = useScreenSize();
 
-  // const handleItemClick = () => {
-  //   router.push(item.href);
-  // };
+  const isMainPage = router.asPath.includes("/main"); // "main"이 포함되어 있는지 여부 확인
+
+  const getPathname = () => {
+    if (isMainPage) {
+      return "/main/menus/marketList/[id]";
+    } else {
+      return "/menus/marketList/[id]";
+    }
+  };
 
   return (
     <Link
       href={{
-        pathname: "/main/menus/marketList/[id]",
+        pathname: getPathname(),
         query: { id: item.brandId },
       }}
     >
