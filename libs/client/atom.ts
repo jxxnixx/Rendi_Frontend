@@ -35,6 +35,7 @@ export interface UserInfoState {
   email: string;
   birth: string;
   phonenum: string;
+  interests: string[];
 }
 
 // 찐 회원가입용 atom. taste 페이지에서 회원가입 post 시 사용
@@ -140,6 +141,7 @@ export const userInfoState = atom<UserInfoState>({
     email: "",
     birth: "",
     phonenum: "",
+    interests: [],
   },
   effects_UNSTABLE: [persistAtom],
 });

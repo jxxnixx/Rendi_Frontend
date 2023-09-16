@@ -26,20 +26,6 @@ const Home: NextPage = () => {
     }
   }, []);
 
-  const fetchNewProducts = async () => {
-    try {
-      const bestProResponse: any = await itemsApi.todayProducts(
-        [1, 2, 3], // interests 받아오는 걸로 수정
-        accessToken
-      );
-      console.log("best 상품 목록 : ", bestProResponse);
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    fetchNewProducts();
-  }, []);
-
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   useEffect(() => {
@@ -62,6 +48,7 @@ const Home: NextPage = () => {
               email: viewInfoResponse.response.response.email,
               birth: viewInfoResponse.response.response.birth,
               phonenum: viewInfoResponse.response.response.phone,
+              interests: viewInfoResponse.response.response.interests,
             };
 
             setUserInfo(updatedUserInfoData);
@@ -75,7 +62,18 @@ const Home: NextPage = () => {
       }
     };
 
+    const fetchNewProducts = async () => {
+      try {
+        const bestProResponse: any = await itemsApi.todayProducts(
+          userInfo.interests,
+          accessToken
+        );
+        console.log("best 상품 목록 : ", bestProResponse);
+      } catch (error) {}
+    };
+
     fetchAndSetDefaultValues();
+    fetchNewProducts();
   }, []);
 
   return (
