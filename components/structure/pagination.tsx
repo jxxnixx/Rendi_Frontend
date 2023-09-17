@@ -28,6 +28,7 @@ const CustomPagination = ({
           "& .MuiPaginationItem-root": {
             backgroundColor: "transparent",
             color: "#000000",
+            fontSize: "17px",
             "&:hover": {
               backgroundColor: "transparent",
               color: "#FC435A",
