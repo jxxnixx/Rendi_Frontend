@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Select, Button } from "antd";
 import FilterPopup from "./filterPopup";
 import { set } from "react-hook-form";
@@ -38,6 +38,22 @@ export default function Prodlist({ products }: ProdlistProps) {
     setShowPopup(false);
   };
 
+  const popupRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handlePopupOutsideClick = (e: MouseEvent) => {
+      // 팝업 외부를 클릭하면 팝업을 닫습니다.
+      if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
+        handleClosePopup();
+      }
+    };
+    document.addEventListener("mousedown", handlePopupOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePopupOutsideClick);
+    };
+  }, []);
+
   return (
     <div className="gap-[30px]">
       <div className="flex gap-[10px]">
@@ -70,24 +86,26 @@ export default function Prodlist({ products }: ProdlistProps) {
 
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center z-20">
-          <FilterPopup
-            onApplyFilters={(filters) => {
-              console.log("Applied filters:", filters);
-              setSortResult(filters);
-              handleClosePopup(); // 필터 적용 후 팝업 숨기기
-            }}
-            onResetFilters={() => {
-              console.log("Reset filters");
-              handleClosePopup(); // 필터 초기화 후 팝업 숨기기
-              setSortResult({
-                sortOrder: "정렬순",
-                category: "카테고리",
-                subcategory: ["서브카테고리"],
-                color: ["색상"],
-                price: { min: 0, max: 1000000 },
-              });
-            }}
-          />
+          <div ref={popupRef}>
+            <FilterPopup
+              onApplyFilters={(filters) => {
+                console.log("Applied filters:", filters);
+                setSortResult(filters);
+                handleClosePopup(); // 필터 적용 후 팝업 숨기기
+              }}
+              onResetFilters={() => {
+                console.log("Reset filters");
+                handleClosePopup(); // 필터 초기화 후 팝업 숨기기
+                setSortResult({
+                  sortOrder: "정렬순",
+                  category: "카테고리",
+                  subcategory: ["서브카테고리"],
+                  color: ["색상"],
+                  price: { min: 0, max: 1000000 },
+                });
+              }}
+            />
+          </div>
         </div>
       )}
 
