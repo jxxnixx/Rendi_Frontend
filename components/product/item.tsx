@@ -37,7 +37,7 @@ const Item = ({
   updateLastClickTime,
 }: ItemProps) => {
   // 이전에 좋아요를 눌렀는지 여부를 상태로 관리
-  const [isLiked, setIsLiked] = useState(item.wishYN === "Y");
+  const [isLiked, setIsLiked] = useState(item.wishYN);
   const [isCenterHeartShown, setIsCenterHeartShown] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const [recentViewedItems, setRecentViewedItems] = useRecoilState(
@@ -97,6 +97,18 @@ const Item = ({
 
         // setIsLiked(updatedWishYN === "Y"); // 상태를 업데이트
         console.log(updatedItem);
+
+        // 상품을 찜 목록에서 삭제
+        if (updatedWishYN === "N") {
+          setRealItems((prevItems) =>
+            prevItems.filter(
+              (prevItem) => prevItem.productId !== updatedItem.productId
+            )
+          );
+        } else {
+          // 찜 목록에 다시 추가
+          setRealItems((prevItems) => [...prevItems, updatedItem]);
+        }
       } catch (error) {
         console.log("찜하기 업데이트 에러", error);
       }

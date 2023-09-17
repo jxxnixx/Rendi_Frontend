@@ -9,6 +9,9 @@ export default function Mymenus() {
   const getMenuButtonClass = (targetPath: string): string => {
     const baseClasses =
       "flex-grow-0 flex-shrink-0 text-[20] text-center text-black hover:text-mc";
+    if (targetPath === "") {
+      targetPath = "/main/mypage";
+    }
 
     if (currentPath.endsWith(targetPath)) {
       return `${baseClasses} text-mc`;
@@ -28,6 +31,9 @@ export default function Mymenus() {
       </div>
       {/* 버튼 */}
       <div className="flex justify-center items-center mt-[0px] opacity-90 gap-[100px] bg-white mobile:gap-[20px]">
+        <Link href="/main/mypage" passHref>
+          <button className={getMenuButtonClass("")}>최근 본 상품</button>
+        </Link>
         <Link href="/main/mypage/liked" passHref>
           <button className={getMenuButtonClass("liked")}>찜한 상품</button>
         </Link>

@@ -9,10 +9,11 @@ import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import Mymenus from "@/components/structure/mymenus";
 import { itemsApi } from "@/libs/api";
+import { useRouter } from "next/router";
 
 export default function Liked() {
   const [accessToken, setAccessToken] = useState<any>(null);
-
+  const router = useRouter();
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedAccessToken: string | null =
@@ -32,9 +33,15 @@ export default function Liked() {
       console.log(accessToken);
       const getWishresponse: any = await itemsApi.getWish(accessToken);
 
-      console.log(getWishresponse);
+      // 받아온 찜한 상품 목록을 가공하여 wishYN을 true로 설정
+      const updatedRealItems = getWishresponse.response.response.map(
+        (item: any) => ({
+          ...item,
+          wishYN: true,
+        })
+      );
 
-      setRealItems(getWishresponse.response.response);
+      setRealItems(updatedRealItems);
     } catch (error) {
       console.error(error);
     }
@@ -64,6 +71,7 @@ export default function Liked() {
   const itemsToShow: Product[] = realItems
     ? realItems.slice(startIndex, endIndex)
     : [];
+
   return (
     <>
       <Layout>
@@ -74,15 +82,14 @@ export default function Liked() {
         <div className="flex justify-center  mt-[10px] ">
           <Line />
         </div>
-        {/* 최근본상품 */}
         <div className="flex justify-center">
-          <div className="flex-row  w-[1040px] h-[1234px] mt-[5px]">
+          <div className="flex-row  w-[1040px] min-h-[500px] h-full mt-[5px] mobile:min-h-[300px]">
             <div className="flex text-[12pt] font-medium  text-black">
               <div className="flex ml-[10px] mr-[5px] items-center h-[40px]">
                 <HeartIcon
                   className={`w-7 h-7 transition duration-200 z-10`}
-                  fill={"none"}
-                  stroke={"#666666"}
+                  fill={"#FC435A"}
+                  stroke={"none"}
                 />
               </div>
               <p className="flex items-center h-[40px] ">찜한 상품</p>
