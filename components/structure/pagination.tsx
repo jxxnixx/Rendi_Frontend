@@ -26,13 +26,20 @@ const CustomPagination = ({
         color="primary"
         onChange={(event, page) => handlePageChange(page)}
         sx={{
+          // "& .Mui-selected": {
+          //   backgroundColor: "transparent", // bg-color 투명
+          //   color: "#FC435A",
+          // },
+          // "& .MuiPaginationItem-root:hover": {
+          //   backgroundColor: "transparent", // hover 시 bg-color 투명
+          //   color: "#FC435A",
+          // },
           "& .Mui-selected": {
-            backgroundColor: "transparent", // bg-color 투명
+            backgroundColor: "transparent",
             color: "#FC435A",
-          },
-          "& .MuiPaginationItem-root:hover": {
-            backgroundColor: "transparent", // hover 시 bg-color 투명
-            color: "#FC435A",
+            "&:hover": {
+              backgroundColor: "transparent",
+            },
           },
         }}
       />
