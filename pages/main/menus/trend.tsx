@@ -72,14 +72,14 @@ export default function Trend() {
             className="w-[1040px] h-full object-cover"
           />
         </div>
-        <div className="flex justify-center items-center">
+        {/* <div className="flex justify-center items-center">
           <Link href="https://www.ssfshop.com/special/87096/view?brndShopId=8SBSS&brandShopNo=BDMA07A01&utag=ref_tpl:111702$ref_cnr:22443$ref_br:8SBSS$set:3$dpos:1 ">
             <img
               src="https://img.ssfshop.com/display/html/DSP_CTGRY/20230911/PC_215537_con13_scroll.png"
               className="w-[1040px] h-full object-cover"
             />
           </Link>
-        </div>
+        </div> */}
 
         {/* </div> */}
       </div>

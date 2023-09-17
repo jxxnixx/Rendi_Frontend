@@ -88,10 +88,10 @@ export default function Circle({ icon, direction }: cProps) {
 
   return (
     <div
-      className={`flex items-center ${
+      className={`flex items-center   ${
         direction === "hori"
           ? "hover:text-[#FC435A] flex-col m-[17.5px] mobile:m-1.5"
-          : "w-[350px] h-[50px] justify-start my-[15px] mx-[10px]"
+          : "w-[350px] h-[50px] justify-start items-center my-[15px] ml-0"
       } `}
     >
       <button

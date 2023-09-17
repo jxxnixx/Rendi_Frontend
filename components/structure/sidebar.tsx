@@ -151,17 +151,14 @@ const Navigation = ({ onItemClick }: any) => {
   };
 
   return (
-    <ul className="absolute mt-5">
-      <div className="divide-y divide-solid">
+    <ul className="absolute  mt-5 ">
+      <div className="divide-y divide-solid w-[100vw]">
         {/* 첫번째 구분선 */}
-        <div></div>
+        <div className=" "></div>
         {/* 프로필 들어갈 영역 */}
-        <div className="flex justify-center">
+        <div className="flex justify-center  ">
           <Link href={isMainPage ? "/main/mypage" : "/auth/login"}>
-            <div
-              className="w-100vw h-[45px] flex-col m-5"
-              onClick={onItemClick}
-            >
+            <div className=" h-[45px] flex-col m-5" onClick={onItemClick}>
               <div className="flex justify-center align-center">
                 {/* <UserOutlined/> */}
                 <MyPage size={20} />
@@ -180,7 +177,7 @@ const Navigation = ({ onItemClick }: any) => {
         </div>
         <div>
           {navigationItems.map((item, index) => (
-            <li key={index} className="h-[30px] mt-3 ml-5">
+            <li key={index} className="h-[30px] mt-3 ml-6">
               <Link
                 href={item.path}
                 onClick={onItemClick}
@@ -197,7 +194,7 @@ const Navigation = ({ onItemClick }: any) => {
         <div className=" ">
           <li>
             <div
-              className="flex flex-col items-center ml-2"
+              className="flex flex-col items-start justify-center ml-4"
               onClick={onItemClick}
             >
               {icons.map((icon, index) => (
