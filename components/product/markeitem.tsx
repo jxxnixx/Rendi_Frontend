@@ -34,7 +34,7 @@ const MarketItem = ({ item }: ItemProps) => {
       <Link
         href={{
           pathname: getPathname(),
-          query: { id: item.brandId },
+          query: { id: item.title },
         }}
       >
         <div

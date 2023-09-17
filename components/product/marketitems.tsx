@@ -13,7 +13,7 @@ interface ItemsProps {
 export default function MarketItems({ itemsPerPage, itemsToShow }: ItemsProps) {
   const router = useRouter();
   const screen = useScreenSize();
-  const allItems: Product[] = dummyData;
+  const allItems: any = dummyData;
   const itemsToDisplay = itemsToShow || allItems.slice(0, itemsPerPage);
 
   const renderItems = () => {

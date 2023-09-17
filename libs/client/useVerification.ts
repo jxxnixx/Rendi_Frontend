@@ -24,36 +24,38 @@ export async function onEmailVerification(
 ) {
   try {
     const EmailCheckResponse: any = await usersApi.emailcheck(inputEmailValue);
+
     console.log(EmailCheckResponse);
-    if (EmailCheckResponse?.success === false) {
-      alert("사용할 수 없는 이메일입니다.");
-      return false;
-    }
 
-    const EmailVeriResponse = await usersApi.emailVerification({
-      nickname: inputNameValue,
-      email: inputEmailValue,
-    });
-
-    console.log(EmailVeriResponse);
-
-    if (EmailVeriResponse) {
-      const responseData = EmailVeriResponse.response;
-      const regex = /인증코드: ([a-zA-Z0-9]+)/;
-      const match = responseData.message.match(regex);
-
-      console.log(match);
-
-      if (match) {
-        const backendVeriCode = match[1];
-        console.log("받은 인증코드:", backendVeriCode);
-
-        return backendVeriCode;
-      }
-    } else {
+    if (EmailCheckResponse.success === false) {
       alert("다른 이메일을 입력해주세요.");
-      console.log("이메일 인증 요청 실패:", EmailVeriResponse.error);
       return false;
+    } else {
+      const EmailVeriResponse = await usersApi.emailVerification({
+        nickname: inputNameValue,
+        email: inputEmailValue,
+      });
+
+      console.log(EmailVeriResponse);
+
+      if (EmailVeriResponse) {
+        const responseData = EmailVeriResponse.response;
+        const regex = /인증코드: ([a-zA-Z0-9]+)/;
+        const match = responseData.message.match(regex);
+
+        console.log(match);
+
+        if (match) {
+          const backendVeriCode = match[1];
+          console.log("받은 인증코드:", backendVeriCode);
+
+          return backendVeriCode;
+        }
+      } else {
+        alert("다른 이메일을 입력해주세요.");
+        console.log("이메일 인증 요청 실패:", EmailVeriResponse.error);
+        return false;
+      }
     }
   } catch (error) {
     console.log("이메일 인증 오류: ", error);
