@@ -8,11 +8,29 @@ import Items from "@/components/product/items";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useScreenSize } from "@/libs/client/useScreen";
+import { itemsApi } from "@/libs/api";
+import { Product } from "@/components/product/DataTypes";
 
 const Home: NextPage = () => {
   const router = useRouter();
 
+  const [realItems, setRealItems] = useState<any>();
+  const [activeCate, setActiveCate] = useState<any>(null);
+
+  const fetchNewProducts = async () => {
+    try {
+      const newProResponse: any = await itemsApi.newProductsForGuests(
+        activeCate
+      );
+      console.log("new 상품 목록 : ", newProResponse);
+      console.log(newProResponse.response.response);
+      setRealItems(newProResponse.response.response);
+    } catch (error) {}
+  };
+
   useEffect(() => {
+    fetchNewProducts();
+
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       router.push("/main");
@@ -51,7 +69,7 @@ const Home: NextPage = () => {
                 </Link>
               </div>
               <div className="flex justify-center ">
-                <Items itemsPerPage={12} />
+                <Items itemsPerPage={12} allItems={realItems} />
               </div>
             </div>
           </div>

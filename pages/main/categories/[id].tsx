@@ -7,8 +7,6 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
-import skirtDummyData from "@/components/product/skirtDummyData.json";
-import miniSkirtDummyData from "@/components/product/miniSkirtDummyData.json";
 
 interface Category {
   cate: string;
@@ -135,9 +133,9 @@ const ProductPage = () => {
   // 상품 데이터를 가져올 때, 카테고리에 따라 다른 데이터를 사용
   let dataToUse;
   if (id === "skirt" && activeCate === "전체") {
-    dataToUse = skirtDummyData;
+    // dataToUse = skirtDummyData;
   } else if (id === "skirt" && activeCate === "미니스커트") {
-    dataToUse = miniSkirtDummyData;
+    //dataToUse = miniSkirtDummyData;
   } else {
     dataToUse = dummyData;
   }

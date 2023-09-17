@@ -256,10 +256,19 @@ export const usersApi = {
       const response = await api.post("/member/email-check", {
         email,
       });
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
 
       console.log(response.data);
     } catch (error: any) {
-      console.log("이메일 중복 확인 오류");
+      return {
+        success: false,
+      };
     }
   },
 
@@ -714,7 +723,7 @@ export const marketApi = {
   },
 
   // 마켓 상세페이지 (비로그인 )
-  brandDetailsForGuests: async (brandName: string) => {
+  brandDetailsForGuests: async (brandName: any) => {
     try {
       const response = await api.get("/brand/guest/details", {
         params: { brandName },

@@ -29,53 +29,52 @@ const Home: NextPage = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [realItems, setRealItems] = useState<any>();
 
+  const fetchAndSetDefaultValues = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      console.log(accessToken);
+
+      if (accessToken) {
+        const viewInfoResponse: any = await usersApi.viewInfos(accessToken);
+        console.log(viewInfoResponse);
+
+        if (viewInfoResponse?.success) {
+          console.log("회원정보 조회 성공!");
+
+          const updatedUserInfoData: UserInfoState = {
+            username: viewInfoResponse.response.response.username,
+            nickname: viewInfoResponse.response.response.nickname,
+            email: viewInfoResponse.response.response.email,
+            birth: viewInfoResponse.response.response.birth,
+            phonenum: viewInfoResponse.response.response.phone,
+            interests: viewInfoResponse.response.response.interests,
+          };
+
+          setUserInfo(updatedUserInfoData);
+          console.log(updatedUserInfoData);
+
+          if (accessToken) {
+            const todayProResponse: any = await itemsApi.todayProducts(
+              userInfo.interests,
+              accessToken
+            );
+            console.log(
+              "today 상품 목록 : ",
+              todayProResponse.response.response
+            );
+            setRealItems(todayProResponse.response.response);
+          }
+        }
+      } else {
+        console.log("accessToken이 없습니다.");
+      }
+    } catch (error) {
+      console.log("회원정보 조회 오류");
+    }
+  };
+
   useEffect(() => {
-    // const fetchAndSetDefaultValues = async () => {
-    //   try {
-    //     const accessToken = localStorage.getItem("accessToken");
-    //     console.log(accessToken);
-
-    //     if (accessToken) {
-    //       const viewInfoResponse: any = await usersApi.viewInfos(accessToken);
-    //       console.log(viewInfoResponse);
-
-    //       if (viewInfoResponse) {
-    //         console.log("회원정보 조회 성공!");
-
-    //         console.log(viewInfoResponse.response.response.nickname);
-    //         const updatedUserInfoData: UserInfoState = {
-    //           username: viewInfoResponse.response.response.username,
-    //           nickname: viewInfoResponse.response.response.nickname,
-    //           email: viewInfoResponse.response.response.email,
-    //           birth: viewInfoResponse.response.response.birth,
-    //           phonenum: viewInfoResponse.response.response.phone,
-    //           interests: viewInfoResponse.response.response.interests,
-    //         };
-
-    //         setUserInfo(updatedUserInfoData);
-    //         console.log(updatedUserInfoData);
-    //       }
-    //     } else {
-    //       console.log("accessToken이 없습니다.");
-    //     }
-    //   } catch (error) {
-    //     console.log("회원정보 조회 오류");
-    //   }
-    // };
-
-    const fetchNewProducts = async () => {
-      try {
-        const todayProResponse: any = await itemsApi.todayProducts(
-          userInfo.interests,
-          accessToken
-        );
-        console.log("today 상품 목록 : ", todayProResponse.response.response);
-        setRealItems(todayProResponse.response.response);
-      } catch (error) {}
-    };
-
-    //fetchAndSetDefaultValues();
-    fetchNewProducts();
+    fetchAndSetDefaultValues();
   }, []);
 
   return (

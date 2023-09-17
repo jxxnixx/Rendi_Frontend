@@ -7,7 +7,6 @@ import dummyData from "@/components/product/dummyData.json";
 import MarketItems from "../../components/product/marketitems";
 
 export default function Market() {
-  const [activeCate, setActiveCate] = useState("전체");
   // 전체 아이템의 개수와 총 페이지 수 계산
   const totalItems = dummyData.length;
   const itemsPerPage = 16;
@@ -23,7 +22,7 @@ export default function Market() {
   // 현재 페이지에 해당하는 상품들을 계산
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
+  const itemsToShow: any = dummyData.slice(startIndex, endIndex);
 
   return (
     <Layout>
