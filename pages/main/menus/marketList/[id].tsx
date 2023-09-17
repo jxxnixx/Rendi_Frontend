@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
@@ -7,25 +7,72 @@ import Items from "@/components/product/items";
 import Pagination from "@/components/structure/pagination";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
+import { marketApi } from "@/libs/api";
 
 export default function BrandPage() {
-  const router = useRouter();
-  const { id } = router.query; // 이 부분에서 동적 경로의 값인 brandId를 가져옵니다.
+  const [accessToken, setAccessToken] = useState<string>(" ");
 
-  const [activeCate, setActiveCate] = useState("전체");
-  const totalItems = dummyData.length;
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedAccessToken: string | null =
+        localStorage.getItem("accessToken");
+      if (storedAccessToken) {
+        setAccessToken(storedAccessToken);
+      }
+    }
+  }, []);
+
+  const router = useRouter();
+  const { id }: any = router.query; // 이 부분에서 동적 경로의 값인 brandId를 가져옵니다.
+
+  const [activeCate, setActiveCate] = useState<any>(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [realItems, setRealItems] = useState<any>();
+
+  const fetchMarketProducts = async () => {
+    console.log(id);
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      console.log(accessToken);
+
+      if (accessToken) {
+        const newProResponse: any = await marketApi.brandDetailsForUsers(
+          id,
+          accessToken
+        );
+        console.log("마켓 상품 목록 : ", newProResponse);
+
+        console.log(newProResponse.response.response);
+        setRealItems(newProResponse.response.response);
+      } else {
+        console.log("accessToken이 없습니다.");
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchMarketProducts();
+  }, []);
+
+  // 전체 아이템의 개수와 총 페이지 수 계산
+  let totalItems = 0;
+  if (realItems) {
+    totalItems = realItems.length;
+  }
   const itemsPerPage = 16;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
+  // 현재 페이지에 해당하는 상품들을 계산
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
-
+  const itemsToShow: Product[] = realItems
+    ? realItems.slice(startIndex, endIndex)
+    : [];
   return (
     <Layout>
       <Head>
@@ -43,7 +90,11 @@ export default function BrandPage() {
         <div>
           <div className="pt-4 mobile:pt-4">
             <div className="flex w-full relative justify-center pt-1.5 pb-8 mobile:py-2">
-              <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
+              <Items
+                itemsToShow={itemsToShow}
+                itemsPerPage={itemsPerPage}
+                allItems={realItems}
+              />
             </div>
           </div>
         </div>

@@ -37,7 +37,7 @@ const Item = ({
   updateLastClickTime,
 }: ItemProps) => {
   // 이전에 좋아요를 눌렀는지 여부를 상태로 관리
-  const [isLiked, setIsLiked] = useState(item.wishYN);
+  const [isLiked, setIsLiked] = useState<any>(item.wishYN);
   const [isCenterHeartShown, setIsCenterHeartShown] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const [recentViewedItems, setRecentViewedItems] = useRecoilState(

@@ -23,7 +23,7 @@ export default function Market() {
   // 현재 페이지에 해당하는 상품들을 계산
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
+  const itemsToShow: any = dummyData.slice(startIndex, endIndex);
 
   return (
     <Layout>

@@ -753,10 +753,10 @@ export const marketApi = {
   },
 
   // 마켓 상세페이지 (로그인)
-  brandDetailsForUsers: async (brandName: string, accessToken: string) => {
+  brandDetailsForUsers: async (brandName: any, accessToken: string) => {
     try {
       const response = await api.get("/brand/details", {
-        params: { brandName },
+        params: { brandName: brandName },
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       console.log(response);
@@ -769,8 +769,9 @@ export const marketApi = {
   brandDetailsForGuests: async (brandName: any) => {
     try {
       const response = await api.get("/brand/guest/details", {
-        params: { brandName },
+        params: { brandName: brandName },
       });
+
       console.log(response);
     } catch (error) {
       console.error(error);

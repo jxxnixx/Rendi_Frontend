@@ -14,10 +14,11 @@ interface ItemProps {
     title: string;
     imgUrls: string[];
     href: string;
+    excelName: string;
   };
 }
 
-const MarketItem = ({ item }: ItemProps) => {
+const MarketItem = ({ item }: any) => {
   const screen = useScreenSize();
   const isMainPage = router.asPath.includes("/main"); // "main"이 포함되어 있는지 여부 확인
 
@@ -28,13 +29,13 @@ const MarketItem = ({ item }: ItemProps) => {
       return "/menus/marketList/[id]";
     }
   };
-  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <div className="mt-[5px] transition-transform transform hover:scale-105 focus:outline-none focus:ring-0 mobile:mt-1">
       <Link
         href={{
           pathname: getPathname(),
-          query: { id: item.title },
+          query: { id: item.excelName },
         }}
       >
         <div
@@ -50,7 +51,7 @@ const MarketItem = ({ item }: ItemProps) => {
           >
             <Carousel autoplay>
               {item.imgUrls &&
-                item.imgUrls.map((url, index) => (
+                item.imgUrls.map((url: any, index: any) => (
                   <div key={index}>
                     <img
                       className={`${
