@@ -65,7 +65,7 @@ function FindPW() {
           <title>Find-pw</title>
         </Head>
 
-        <div className=" mt-[104px] flex w-full h-[1500px] flex-col bg-white text-lg font-medium mobile:h-[900px]">
+        <div className=" mt-[104px] flex w-full h-[1000px] flex-col bg-white text-lg font-medium mobile:h-[900px]">
           <div className="flex justify-center items-center">
             <form
               onSubmit={handleSubmit(submitForm)}

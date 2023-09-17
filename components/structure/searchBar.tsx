@@ -28,25 +28,13 @@ export default function SearchBar() {
 
   const [popularKeywords, setPopularKeywords] = useState<APopularSearchProps[]>(
     //[]
-    [
-      // 더미 데이터 예시
-      { keyword: "검색어1", searchCount: 10 },
-      { keyword: "검색어dd2", searchCount: 8 },
-      { keyword: "검색어3", searchCount: 15 },
-      { keyword: "검색어4", searchCount: 20 },
-      { keyword: "검색어5", searchCount: 30 },
-      { keyword: "검색어6", searchCount: 40 },
-      { keyword: "검색어7", searchCount: 50 },
-      { keyword: "검색어8", searchCount: 60 },
-      { keyword: "검색어dddd9", searchCount: 70 },
-      { keyword: "검색어10", searchCount: 80 },
-    ]
+    []
   );
   // 순위를 붙이기 위한 popularKeywords 배열 정리, 순위를 붙여서 rankedPopularKeywords에 저장
   const rankedPopularKeywords = popularKeywords
     .slice(0, 10) // 최대 10개까지만 표시
     .sort((a, b) => b.searchCount - a.searchCount)
-    .map((item, index) => ({ ...item, rank: index + 1, padding: "0px 10px" })); // rank를 순위로 설정
+    .map((item, index) => ({ ...item, rank: index + 1 })); // rank를 순위로 설정
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -58,6 +46,7 @@ export default function SearchBar() {
     }
   }, []);
 
+  console.log(rankedPopularKeywords);
   const [recentSearchHistory, setRecentSearchHistory] = useRecoilState(
     recentSearchHistoryState
   );
@@ -85,6 +74,18 @@ export default function SearchBar() {
       updatedHistory.splice(indexToDelete, 1);
       return updatedHistory;
     });
+  };
+
+  const handlePopular = async (accessToken: string) => {
+    try {
+      const popularResponse: any = await itemsApi.popularSearch(accessToken);
+      if (popularResponse.response) {
+        setPopularKeywords(popularResponse.response.response.slice(0, 10)); // 최대 10개만 저장
+      }
+      console.log(popularResponse);
+    } catch (error) {
+      console.log("인기 검색어 받아오기 오류!", error);
+    }
   };
 
   useEffect(() => {
@@ -120,6 +121,14 @@ export default function SearchBar() {
   // 클릭된 button 구별, 관리
   const handleTabClick = (tab: string) => {
     setShowContent(tab);
+
+    if (isMainPage) {
+      if (tab === "recent") {
+      } else if (tab === "popular") {
+        handlePopular(accessToken);
+      }
+    } else {
+    }
   };
 
   // 닫기 button
@@ -547,18 +556,18 @@ export default function SearchBar() {
                       rankedPopularKeywords.map((item, index) => (
                         <div
                           key={index}
-                          className="flex flex-row items-center h-[50px] w-1/2 ml-[40%]  overflow-hidden  "
+                          className="flex flex-row items-center h-[50px] w-1/2 ml-[45%]  overflow-hidden  "
                         >
-                          <div className="justify-center items-center  ">
-                            {item.rank}.
+                          <div className="mr-1 justify-center items-center  ">
+                            {item.rank}.{" "}
                           </div>
-                          <div>
-                            {item.keyword} ({item.searchCount}회 검색){" "}
-                          </div>
+                          <div> {item.keyword}</div>
                         </div>
                       ))
                     ) : (
-                      "인기 검색어 로딩 중.."
+                      <div className="h-[350px] flex justify-center items-center">
+                        인기 검색어 로딩 중..
+                      </div>
                     )}
                   </div>
                 </div>
