@@ -4,7 +4,7 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
-import MarketItems from "../../components/product/marketitems";
+import MarketItems from "../../../components/product/marketitems";
 
 export default function Market() {
   const [activeCate, setActiveCate] = useState("전체");
