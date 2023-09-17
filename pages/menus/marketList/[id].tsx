@@ -77,11 +77,11 @@ export default function BrandPage() {
         <div> {id}</div>
       </div>
       <div className="flex w-full flex-col text-lg font-medium">
-        <ProdBar
+        {/* <ProdBar
           category={"default"}
           activeCate={activeCate}
           setActiveCate={setActiveCate}
-        />
+        /> */}
         <div>
           <div className="pt-4 mobile:pt-4">
             <div className="flex w-full relative justify-center pt-1.5 pb-8 mobile:py-2">
