@@ -24,19 +24,7 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
 
   const [popularKeywords, setPopularKeywords] = useState<APopularSearchProps[]>(
     //[]
-    [
-      // 더미 데이터 예시
-      { keyword: "검색어1", searchCount: 10 },
-      { keyword: "검색어2", searchCount: 8 },
-      { keyword: "검색어3", searchCount: 15 },
-      { keyword: "검색어4", searchCount: 20 },
-      { keyword: "검색어5", searchCount: 30 },
-      { keyword: "검색어6", searchCount: 40 },
-      { keyword: "검색어7", searchCount: 50 },
-      { keyword: "검색어8", searchCount: 60 },
-      { keyword: "검색어9", searchCount: 70 },
-      { keyword: "검색어10", searchCount: 80 },
-    ]
+    []
   );
   // 순위를 붙이기 위한 popularKeywords 배열 정리, 순위를 붙여서 rankedPopularKeywords에 저장
   const rankedPopularKeywords = popularKeywords
@@ -44,15 +32,6 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
     .sort((a, b) => b.searchCount - a.searchCount)
     .map((item, index) => ({ ...item, rank: index + 1 })); // rank를 순위로 설정
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedAccessToken: string | null =
-        localStorage.getItem("accessToken");
-      if (storedAccessToken) {
-        setAccessToken(storedAccessToken);
-      }
-    }
-  }, []);
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedAccessToken: string | null =
@@ -82,12 +61,19 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
   const handleSubmitForUsers = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // 빈 문자열 또는 공백 문자열인 경우 처리하지 않고 반환
+    if (!searchValue.trim()) {
+      return;
+    }
     // 기존 최근 검색어와 중복을 제거한 후 새로운 검색어 추가
     setRecentSearchHistory((prevHistory) => {
       const updatedHistory = [
         searchValue,
         ...prevHistory.filter((item) => item !== searchValue),
       ];
+      if (updatedHistory.length > MAX_RECENT_SEARCHES) {
+        updatedHistory.pop(); // 오래된 검색어부터 삭제
+      }
       return updatedHistory;
     });
 
@@ -132,9 +118,12 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
     } else {
     }
   };
+
   const handleSubmitForGuestsBtnClick = () => {
     alert("로그인이 필요한 서비스입니다.");
   };
+
+  const MAX_RECENT_SEARCHES = 7; // 최근 검색어 최대 개수
 
   const handleDeleteRecentSearch = (indexToDelete: any) => {
     setRecentSearchHistory((prevHistory) => {
@@ -178,7 +167,7 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
           </div>
           {/* 최근 검색어와 인기 검색어 */}
           <div className="m-auto">
-            <div className="w-screen h-[570px] relative">
+            <div className="w-screen h-[400px]  h-[400px] relative">
               <div
                 className={`w-screen h-12 absolute ${
                   showContent === "recent" ? "left-[0px]" : "right-[0px]"
@@ -222,12 +211,12 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
                   <path d="M0 0L500 0" stroke="black" strokeOpacity="0.5" />
                 </svg>
 
-                <div className="w-screen h-12 absolute left-0 top-0">
-                  <div className="flex flex-row text-sm font-medium text-center text-black content-center">
+                <div className="w-screen h-12 absolute left-0 top-0 ">
+                  <div className="flex flex-row text-sm font-medium text-center text-black content-center  bg-[#ffffff]">
                     <button
                       type="button"
                       id="recent"
-                      className={`w-1/2 h-12 items-center justify-center content-center ${
+                      className={`z-50 w-1/2 h-12 items-center justify-center content-center ${
                         showContent === "recent"
                           ? "text-[#FC435A] border-b-2 border-[#FC435A]"
                           : ""
@@ -239,7 +228,7 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
                     <button
                       type="button"
                       id="popular"
-                      className={`w-1/2 h-12 items-center justify-center content-center ${
+                      className={`z-50 w-1/2 h-12 items-center justify-center content-center ${
                         showContent === "popular"
                           ? "text-[#FC435A] border-b-2 border-[#FC435A]"
                           : ""
@@ -251,10 +240,10 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
                   </div>
                 </div>
               </div>
-              <div className="w-screen h-[500px] top-12 relative left-0 right-0 overflow-hidden justify-center items-center m-auto">
+              <div className="w-screen h-[400px]  top-12  left-0 right-0 overflow-hidden justify-center items-center m-auto">
                 <div
                   id="content"
-                  className="w-1/2 h-[500px] text-sm font-medium justify-center items-center text-center text-black m-auto mt-20"
+                  className="w-1/2 h-[400px]  text-sm font-medium flex justify-center items-center text-center text-black m-auto mt-20"
                 >
                   {showContent === "recent"
                     ? "최근 검색한 기록이 없습니다."
@@ -294,7 +283,7 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
           </div>
           {/* 최근 검색어와 인기 검색어 */}
           <div className="m-auto">
-            <div className="w-screen h-[570px] relative">
+            <div className="w-screen  h-[400px] relative">
               <div
                 className={`w-screen h-12 absolute ${
                   showContent === "recent" ? "left-[0px]" : "right-[0px]"
@@ -338,12 +327,12 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
                   <path d="M0 0L500 0" stroke="black" strokeOpacity="0.5" />
                 </svg>
 
-                <div className="w-screen h-12 absolute left-0 top-0">
-                  <div className="flex flex-row text-sm font-medium text-center text-black content-center">
+                <div className="w-screen  h-12 absolute left-0 top-0 z-100">
+                  <div className="flex flex-row text-sm font-medium z-100 text-center text-black content-center">
                     <button
                       type="button"
                       id="recent"
-                      className={`w-1/2 h-12 items-center justify-center content-center ${
+                      className={`w-1/2 h-12 items-center justify-center content-center z-100 bg-[#ffffff] ${
                         showContent === "recent"
                           ? "text-[#FC435A] border-b-2 border-[#FC435A]"
                           : ""
@@ -355,7 +344,7 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
                     <button
                       type="button"
                       id="popular"
-                      className={`w-1/2 h-12 items-center justify-center content-center ${
+                      className={`w-1/2 h-12 items-center justify-center content-center z-100 bg-[#ffffff] ${
                         showContent === "popular"
                           ? "text-[#FC435A] border-b-2 border-[#FC435A]"
                           : ""
@@ -367,44 +356,52 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
                   </div>
                 </div>
               </div>
-              <div className="w-screen h-[500px] top-[120px] left-0 right-0 overflow-hidden justify-center items-center ">
+              <div className=" w-screen overflow-y-auto h-[500px] top-[170px] left-0 right-0 overflow-hidden justify-center items-center ">
                 <div
                   id="content"
-                  className="w-screen h-[500px] text-sm font-medium justify-center items-center text-center text-black m-auto mt-[47px] p-[3px] "
+                  className="w-screen h-[520px]  text-sm font-medium justify-center items-center text-center text-black m-auto mt-[47px] p-[3px] "
                 >
-                  {showContent === "recent"
-                    ? recentSearchHistory.length > 0
-                      ? recentSearchHistory.map((item, index) => (
-                          <div
-                            className="flex flex-row items-center justify-between w-[95%] h-[30px] m-[10px] border-black"
-                            key={index}
-                          >
-                            <div>{item}</div>
-                            <div
-                              className="flex items-center"
-                              onClick={() => handleDeleteRecentSearch(index)}
-                            >
-                              <CloseOutlined />
-                              {/* <CloseSquareOutlined /> */}
-                            </div>
-                          </div>
-                        ))
-                      : "최근 검색한 기록이 없습니다."
-                    : rankedPopularKeywords.length > 0
-                    ? rankedPopularKeywords.map((item, index) => (
+                  {showContent === "recent" ? (
+                    recentSearchHistory.length > 0 ? (
+                      recentSearchHistory.map((item, index) => (
                         <div
-                          className="flex flex-row items-center justify-center w-[95%] h-[30px] m-[10px] border-black"
+                          className="flex flex-row items-center justify-between w-[95%] h-[30px] m-[20px] border-black"
                           key={index}
                         >
-                          {item.rank}. {item.keyword} ({item.searchCount}회
-                          검색)
+                          <div>{item}</div>
+                          <div
+                            className="flex items-center mr-5"
+                            onClick={() => handleDeleteRecentSearch(index)}
+                          >
+                            <CloseOutlined />
+                            {/* <CloseSquareOutlined /> */}
+                          </div>
                         </div>
                       ))
-                    : "인기 검색어 로딩 중.."}
+                    ) : (
+                      <div className="flex flex-row items-center justify-center w-[95%] h-[200px] m-[10px] border-black">
+                        최근 검색한 기록이 없습니다.
+                      </div>
+                    )
+                  ) : rankedPopularKeywords.length > 0 ? (
+                    rankedPopularKeywords.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-row items-center h-[50px] w-1/2 ml-[40%]  overflow-hidden  "
+                      >
+                        <div className="justify-center items-center mr-1 ">
+                          {item.rank}.
+                        </div>
+                        <div>{item.keyword}</div>
+                      </div>
+                    ))
+                  ) : (
+                    "인기 검색어 로딩 중.."
+                  )}
                 </div>
               </div>
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center mt-[100px]">
               <SubmitBtn type="submit" text={"검색"} />
             </div>
           </div>
