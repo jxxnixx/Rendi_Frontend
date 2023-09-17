@@ -694,6 +694,49 @@ export const itemsApi = {
       }
     } catch (error) {}
   },
+
+  // 카테고리별 조회 (비로그인)
+  categoriesForGuests: async ({ parentsName, childName }: any) => {
+    try {
+      const response = await api.get("/products/today", {
+        params: { parentsName, childName },
+      });
+      console.log(response);
+
+      if (response) {
+        console.log("카테고리별 불러오기 성공");
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
+    } catch (error) {
+      console.log("카테고리별 불러오기 오류:", error);
+    }
+  },
+
+  // 카테고리별 조회 (로그인)
+  categoriesForUsers: async ({ parentsName, childName, accessToken }: any) => {
+    try {
+      const response = await api.get("/products/category", {
+        params: { parentsName, childName },
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      console.log(response);
+
+      if (response) {
+        console.log("카테고리별 불러오기 성공");
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
+    } catch (error) {
+      console.log("카테고리별 불러오기 오류:", error);
+    }
+  },
 };
 
 export const marketApi = {
