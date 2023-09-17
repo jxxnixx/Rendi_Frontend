@@ -162,7 +162,7 @@ const Item = ({
 
   return (
     <div
-      className={`relative mb-[10px] ${
+      className={` transition-transform transform hover:scale-105 focus:outline-none focus:ring-0 mt-1 relative mb-[10px] ${
         screen === "mobile" ? "w-[162px] h-[271px]" : "w-[222px] h-[361px]"
       }`}
     >

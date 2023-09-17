@@ -32,13 +32,13 @@ export default function Market() {
       </Head>
 
       <div className="flex justify-center">
-        <div className="flex justify-center items-end font-bold mt-[135px] mobile:items-center mobile:mt-[105px] w-[1040px] h-[50px] mobile:h-[50px]   ">
+        <div className="flex justify-center items-end font-bold mt-[135px] mobile:items-center mobile:mt-[100px] w-[1040px] h-[50px] mobile:h-[50px]  text-lg">
           전체 마켓 보기
         </div>
       </div>
       <div className="flex w-full flex-col text-lg font-medium  ">
         <div>
-          <div className="pt-[15px] mobile:pt-4">
+          <div className="pt-[15px] mobile:pt-0">
             <div className="flex w-full relative justify-center pt-1.5 pb-8 mobile:py-2">
               {/* <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} /> */}
               <MarketItems

@@ -25,7 +25,7 @@ export default function TItem({ item, onItemSelect }: TItemProps) {
     <>
       <div
         onClick={handleClick}
-        className={`flex flex-col align-center justify-center mb-[80px] top-[35px] ${
+        className={` transition-transform transform hover:scale-105 focus:outline-none focus:ring-0 mt-1 flex flex-col align-center justify-center mb-[80px] top-[35px] ${
           screen === "mobile"
             ? "w-[120px]  h-[150px] mt-[45px] mb-[1px] "
             : "w-[200px] h-[200px] "
@@ -33,7 +33,7 @@ export default function TItem({ item, onItemSelect }: TItemProps) {
         // 클릭 이벤트를 처리하는 핸들러를 추가합니다.
       >
         {item.imgUrls && (
-          <div className="flex items-center justify-center">
+          <div className="cursor-pointer flex items-center justify-center">
             {item.imgUrls.map((url, index) => (
               <img
                 key={index}

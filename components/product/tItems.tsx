@@ -46,7 +46,7 @@ export default function TItems({ onItemSelect }: TItemsProps) {
 
   return (
     <>
-      <div className="w-[1040px] h-[980px]  overflow-hidden  mobile:w-full mobile: h-[1050px]">
+      <div className="w-[1040px] h-[980px]  overflow-hidden  mobile:w-full mobile:h-[1050px]">
         {renderItems()}
       </div>
     </>
