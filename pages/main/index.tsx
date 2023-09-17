@@ -3,7 +3,7 @@ import Banner from "@/components/structure/banner";
 import Layout from "@/layouts/layout";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import Items from "@/components/product/items";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
@@ -34,6 +34,21 @@ const Home: NextPage = () => {
       const accessToken = localStorage.getItem("accessToken");
       console.log(accessToken);
 
+      if (!accessToken) {
+        // accessToken이 없다면 로그인 페이지로 리다이렉트
+        router.push("/login");
+        return;
+      }
+
+      let viewInfoResponse: any = await usersApi.viewInfos(accessToken);
+      console.log(viewInfoResponse);
+
+      if (!viewInfoResponse?.success) {
+        // 회원 정보 조회에 실패한 경우 처리
+        console.log("회원정보 조회 실패");
+        return;
+      }
+
       if (accessToken) {
         const viewInfoResponse: any = await usersApi.viewInfos(accessToken);
         console.log(viewInfoResponse);
@@ -53,26 +68,31 @@ const Home: NextPage = () => {
           setUserInfo(updatedUserInfoData);
           console.log(updatedUserInfoData);
 
-          if (accessToken) {
-            const todayProResponse: any = await itemsApi.todayProducts(
-              userInfo.interests,
+          let todayProResponse: any = await itemsApi.todayProducts(
+            updatedUserInfoData.interests,
+            accessToken
+          );
+
+          while (
+            !todayProResponse.response.response ||
+            todayProResponse.response.response.length === 0
+          ) {
+            console.log("상품 목록이 빈 배열입니다. 재시도...");
+            await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기
+            todayProResponse = await itemsApi.todayProducts(
+              updatedUserInfoData.interests,
               accessToken
             );
-            console.log(
-              "today 상품 목록 : ",
-              todayProResponse.response.response
-            );
-            setRealItems(todayProResponse.response.response);
           }
+
+          console.log("today 상품 목록 : ", todayProResponse.response.response);
+          setRealItems(todayProResponse.response.response);
         }
-      } else {
-        console.log("accessToken이 없습니다.");
       }
     } catch (error) {
       console.log("회원정보 조회 오류");
     }
   };
-
   useEffect(() => {
     fetchAndSetDefaultValues();
   }, []);
