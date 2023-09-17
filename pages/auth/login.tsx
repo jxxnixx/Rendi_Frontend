@@ -9,6 +9,8 @@ import { Google, KakaoTalk, LoginLine, Naver } from "@/components/icons";
 import { useLayoutEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { getCookie, setCookie } from "@/libs/client/cookies";
+import { userInfoState, UserInfoState } from "@/libs/client/atom";
+import { useRecoilState } from "recoil";
 
 function LogIn() {
   const {
@@ -45,6 +47,44 @@ function LogIn() {
     }
   }, []);
 
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
+  const fetchAndSetDefaultValues = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      console.log(accessToken);
+
+      if (!accessToken) {
+        // accessToken이 없다면 로그인 페이지로 리다이렉트
+        router.push("/auth/login");
+        return;
+      }
+
+      if (accessToken) {
+        const viewInfoResponse: any = await usersApi.viewInfos(accessToken);
+        console.log(viewInfoResponse);
+
+        if (viewInfoResponse?.success) {
+          console.log("회원정보 조회 성공!");
+
+          const updatedUserInfoData: UserInfoState = {
+            username: viewInfoResponse.response.response.username,
+            nickname: viewInfoResponse.response.response.nickname,
+            email: viewInfoResponse.response.response.email,
+            birth: viewInfoResponse.response.response.birth,
+            phonenum: viewInfoResponse.response.response.phone,
+            interests: viewInfoResponse.response.response.interests,
+          };
+
+          setUserInfo(updatedUserInfoData);
+          console.log(updatedUserInfoData);
+        }
+      }
+    } catch (error) {
+      console.log("회원정보 조회 오류");
+    }
+  };
+
   const submitForm: SubmitHandler<ALogInProps> = async (data: ALogInProps) => {
     try {
       // 기존 로그인 시 아이디 저장 체크된 경우, 아이디 input에 빈문자열 전달되는 상황 -> 아이디 필드 값을 업데이트
@@ -79,6 +119,9 @@ function LogIn() {
         localStorage.setItem("accessToken", accessToken);
         setCookie("refreshToken", refreshToken);
         setCookie("accessToken", accessToken);
+
+        fetchAndSetDefaultValues();
+        console.log(userInfo);
 
         // 페이지 이동
         // 예시: 메인 페이지로 이동

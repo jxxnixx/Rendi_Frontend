@@ -14,72 +14,23 @@ import { UserInfoState, userInfoState } from "@/libs/client/atom";
 import { usersApi } from "@/libs/api";
 
 const Home: NextPage = () => {
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const userInfo = useRecoilValue(userInfoState);
   const [realItems, setRealItems] = useState<any>();
 
   const fetchAndSetDefaultValues = async () => {
+    console.log(userInfo);
     try {
-      const accessToken = localStorage.getItem("accessToken");
+      const accessToken: any = localStorage.getItem("accessToken");
       console.log(accessToken);
 
-      if (!accessToken) {
-        // accessToken이 없다면 로그인 페이지로 리다이렉트
-        router.push("/login");
-        return;
-      }
+      const todayProResponse: any = await itemsApi.todayProducts(
+        userInfo.interests,
+        accessToken
+      );
 
-      let viewInfoResponse: any = await usersApi.viewInfos(accessToken);
-      console.log(viewInfoResponse);
-
-      if (!viewInfoResponse?.success) {
-        // 회원 정보 조회에 실패한 경우 처리
-        console.log("회원정보 조회 실패");
-        return;
-      }
-
-      if (accessToken) {
-        const viewInfoResponse: any = await usersApi.viewInfos(accessToken);
-        console.log(viewInfoResponse);
-
-        if (viewInfoResponse?.success) {
-          console.log("회원정보 조회 성공!");
-
-          const updatedUserInfoData: UserInfoState = {
-            username: viewInfoResponse.response.response.username,
-            nickname: viewInfoResponse.response.response.nickname,
-            email: viewInfoResponse.response.response.email,
-            birth: viewInfoResponse.response.response.birth,
-            phonenum: viewInfoResponse.response.response.phone,
-            interests: viewInfoResponse.response.response.interests,
-          };
-
-          setUserInfo(updatedUserInfoData);
-          console.log(updatedUserInfoData);
-
-          let todayProResponse: any = await itemsApi.todayProducts(
-            updatedUserInfoData.interests,
-            accessToken
-          );
-
-          while (
-            !todayProResponse.response.response ||
-            todayProResponse.response.response.length === 0
-          ) {
-            console.log("상품 목록이 빈 배열입니다. 재시도...");
-            await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기
-            todayProResponse = await itemsApi.todayProducts(
-              updatedUserInfoData.interests,
-              accessToken
-            );
-          }
-
-          console.log("today 상품 목록 : ", todayProResponse.response.response);
-          setRealItems(todayProResponse.response.response);
-        }
-      }
-    } catch (error) {
-      console.log("회원정보 조회 오류");
-    }
+      console.log("today 상품 목록 : ", todayProResponse.response.response);
+      setRealItems(todayProResponse.response.response);
+    } catch {}
   };
 
   useLayoutEffect(() => {
