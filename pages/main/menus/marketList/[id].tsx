@@ -17,6 +17,8 @@ export default function BrandPage() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [realItems, setRealItems] = useState<any>();
+  const [realURL, setRealURL] = useState<any>();
+  const [realIcon, setRealIcon] = useState<any>();
 
   const fetchMarketProducts = async () => {
     console.log(id);
@@ -25,14 +27,16 @@ export default function BrandPage() {
       console.log(accessToken);
 
       if (accessToken) {
-        const newProResponse: any = await marketApi.brandDetailsForUsers(
+        const marketProResponse: any = await marketApi.brandDetailsForUsers(
           id,
           accessToken
         );
-        console.log("마켓 상품 목록 : ", newProResponse);
+        console.log("마켓 상품 목록 : ", marketProResponse);
 
-        console.log(newProResponse.response.response.responseList);
-        setRealItems(newProResponse.response.response.responseList);
+        console.log(marketProResponse.response.response.responseList);
+        setRealItems(marketProResponse.response.response.responseList);
+        setRealURL(marketProResponse.response.response.brandBannerUrl);
+        setRealIcon(marketProResponse.response.response.brandIconUrl);
       } else {
         console.log("accessToken이 없습니다.");
       }
@@ -70,14 +74,25 @@ export default function BrandPage() {
         <title>Market</title>
       </Head>
       <div className="flex justify-center">
-        <div className="mt-[135px] mobile:mt-[80px] w-full h-[400px] mobile:h-[250px] bg-[#FFE9EC]"></div>{" "}
+        <img
+          className="mt-[135px] mobile:mt-[80px] w-full bg-[#FFE9EC]"
+          src={realURL}
+        ></img>
       </div>
+      <div className="flex flex-column justify-center ">
+        <img
+          className={" h-[50px] mb-[10px] rounded-full"}
+          src={realIcon}
+        ></img>
+        <div> {id}</div>
+      </div>
+
       <div className="flex w-full flex-col text-lg font-medium">
-        <ProdBar
+        {/* <ProdBar
           category={"default"}
           activeCate={activeCate}
           setActiveCate={setActiveCate}
-        />
+        /> */}
         <div>
           <div className="pt-4 mobile:pt-4">
             <div className="flex w-full relative justify-center pt-1.5 pb-8 mobile:py-2">
