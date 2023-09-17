@@ -15,17 +15,21 @@ export default function BrandPage() {
   const [activeCate, setActiveCate] = useState<any>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [realItems, setRealItems] = useState<any>(null);
+  const [realItems, setRealItems] = useState<any>();
+  const [realURL, setRealURL] = useState<any>();
+  const [realIcon, setRealIcon] = useState<any>();
 
   const fetchMarketProducts = async () => {
     console.log(id);
 
     try {
-      const newProResponse: any = await marketApi.brandDetailsForGuests(id);
-      console.log("마켓 상품 목록 : ", newProResponse);
+      const marketProResponse: any = await marketApi.brandDetailsForGuests(id);
+      console.log("마켓 상품 목록 : ", marketProResponse);
 
-      console.log(newProResponse.response.response.responseList);
-      setRealItems(newProResponse.response.response.responseList);
+      console.log(marketProResponse.response.response.responseList);
+      setRealItems(marketProResponse.response.response.responseList);
+      setRealURL(marketProResponse.response.response.brandBannerUrl);
+      setRealIcon(marketProResponse.response.response.brandIconUrl);
     } catch (error) {
       ("마켓별 불러오기 실패!");
     }
@@ -60,7 +64,17 @@ export default function BrandPage() {
         <title>Market</title>
       </Head>
       <div className="flex justify-center">
-        <div className="mt-[135px] mobile:mt-[80px] w-full h-[400px] mobile:h-[250px] bg-[#FFE9EC]"></div>{" "}
+        <img
+          className="mt-[135px] mobile:mt-[80px] w-full bg-[#FFE9EC]"
+          src={realURL}
+        ></img>
+      </div>
+      <div className="flex flex-column justify-center ">
+        <img
+          className={" h-[50px] mb-[10px] rounded-full"}
+          src={realIcon}
+        ></img>
+        <div> {id}</div>
       </div>
       <div className="flex w-full flex-col text-lg font-medium">
         <ProdBar
