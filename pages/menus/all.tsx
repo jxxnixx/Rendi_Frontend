@@ -9,17 +9,38 @@ import { useRouter } from "next/router";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import { useScreenSize } from "@/libs/client/useScreen";
+import { itemsApi } from "@/libs/api";
 
 export default function All() {
-  const router = useRouter();
+  const screen = useScreenSize();
 
-  // 전체 아이템의 개수와 총 페이지 수 계산
-  const totalItems = dummyData.length;
-  const itemsPerPage = 16;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const [activeCate, setActiveCate] = useState<any>(null);
 
   // 현재 페이지 상태값 추가
   const [currentPage, setCurrentPage] = useState(1);
+  const [realItems, setRealItems] = useState<any>();
+
+  const fetchNewProducts = async () => {
+    try {
+      const allProResponse: any = await itemsApi.allProductsForGuests();
+      console.log("상품 전체 : ", allProResponse);
+      setRealItems(allProResponse.response.response);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchNewProducts();
+  }, [activeCate]);
+
+  console.log(realItems);
+
+  // 전체 아이템의 개수와 총 페이지 수 계산
+  let totalItems = 0;
+  if (realItems) {
+    totalItems = realItems.length;
+  }
+  const itemsPerPage = 16;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -28,8 +49,9 @@ export default function All() {
   // 현재 페이지에 해당하는 상품들을 계산
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
-  const screen = useScreenSize();
+  const itemsToShow: Product[] = realItems
+    ? realItems.slice(startIndex, endIndex)
+    : [];
 
   return (
     <Layout>
@@ -73,7 +95,11 @@ export default function All() {
       /> */}
       <div className="flex flex-col items-center justify-center">
         {/* Items 컴포넌트에 itemsPerPage를 전달 */}
-        <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
+        <Items
+          itemsToShow={itemsToShow}
+          itemsPerPage={itemsPerPage}
+          allItems={realItems}
+        />
         {/* Pagination 컴포넌트에 현재 페이지와 총 페이지 수, 페이지 변경 함수를 전달 */}
         <Pagination
           currentPage={currentPage}

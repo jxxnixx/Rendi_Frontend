@@ -678,23 +678,6 @@ export const itemsApi = {
     }
   },
 
-  allProducts: async (accessToken: string) => {
-    try {
-      const response = await api.get("/products/all", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      if (response.status === 200) {
-        return {
-          success: true,
-          response: response.data,
-          error: null,
-        };
-      }
-    } catch (error) {}
-  },
-
   // 카테고리별 조회 (비로그인)
   categoriesForGuests: async (parentName: any, childName: any) => {
     try {
@@ -740,6 +723,36 @@ export const itemsApi = {
     } catch (error) {
       console.log("카테고리별 불러오기 오류:", error);
     }
+  },
+
+  allProductsForGuests: async () => {
+    try {
+      const response = await api.get("/products/all");
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
+    } catch (error) {}
+  },
+
+  allProductsForUsers: async (accessToken: string) => {
+    try {
+      const response = await api.get("/products/all", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (response.status === 200) {
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
+    } catch (error) {}
   },
 };
 
