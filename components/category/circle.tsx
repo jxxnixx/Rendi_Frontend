@@ -112,7 +112,10 @@ export default function Circle({ icon, direction }: cProps) {
           </Link>
         ) : (
           <Link
-            href={`/categories/${icon.toLowerCase()}`}
+            href={{
+              pathname: "/categories/[id]",
+              query: { id: icon.toLowerCase() },
+            }}
             className="text-[#666]"
           >
             {getComponent(icon)}
@@ -138,7 +141,10 @@ export default function Circle({ icon, direction }: cProps) {
         </Link>
       ) : (
         <Link
-          href={`/categories/${icon.toLowerCase()}`}
+          href={{
+            pathname: "/categories/[id]",
+            query: { id: icon.toLowerCase() },
+          }}
           className={` ${
             direction === "hori"
               ? "text-[14px] mobile:text-[12px] "

@@ -31,7 +31,7 @@ const ProductPage = () => {
 
   const parentsCate: string = `${getKeyword(id)}`;
 
-  const [activeCate, setActiveCate] = useState<any>("전체");
+  const [activeCate, setActiveCate] = useState<any>(null);
 
   // 현재 페이지 상태값 추가
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,12 +46,12 @@ const ProductPage = () => {
 
       if (accessToken) {
         console.log(parentsCate, activeCate, accessToken);
-        const cateProResponse: any = await itemsApi.categoriesForUsers({
+        const cateProResponse: any = await itemsApi.categoriesForUsers(
           parentsCate,
           activeCate,
-          accessToken,
-        });
-        console.log("best 상품 목록 : ", cateProResponse);
+          accessToken
+        );
+        console.log("카테고리 상품 목록 : ", cateProResponse);
         setRealItems(cateProResponse.response.response);
       } else {
         console.log("accessToken이 없습니다.");

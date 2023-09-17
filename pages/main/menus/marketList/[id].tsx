@@ -10,18 +10,6 @@ import dummyData from "@/components/product/dummyData.json";
 import { marketApi } from "@/libs/api";
 
 export default function BrandPage() {
-  const [accessToken, setAccessToken] = useState<string>(" ");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedAccessToken: string | null =
-        localStorage.getItem("accessToken");
-      if (storedAccessToken) {
-        setAccessToken(storedAccessToken);
-      }
-    }
-  }, []);
-
   const router = useRouter();
   const { id }: any = router.query; // 이 부분에서 동적 경로의 값인 brandId를 가져옵니다.
 
@@ -73,6 +61,7 @@ export default function BrandPage() {
   const itemsToShow: Product[] = realItems
     ? realItems.slice(startIndex, endIndex)
     : [];
+
   return (
     <Layout>
       <Head>

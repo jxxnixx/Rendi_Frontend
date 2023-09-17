@@ -696,10 +696,10 @@ export const itemsApi = {
   },
 
   // 카테고리별 조회 (비로그인)
-  categoriesForGuests: async ({ parentsName, childName }: any) => {
+  categoriesForGuests: async ({ parentName, childName }: any) => {
     try {
       const response = await api.get("/products/today", {
-        params: { parentsName, childName },
+        params: { parentName, childName },
       });
       console.log(response);
 
@@ -717,10 +717,14 @@ export const itemsApi = {
   },
 
   // 카테고리별 조회 (로그인)
-  categoriesForUsers: async ({ parentsName, childName, accessToken }: any) => {
+  categoriesForUsers: async (
+    parentName: any,
+    childName: any,
+    accessToken: any
+  ) => {
     try {
       const response = await api.get("/products/category", {
-        params: { parentsName, childName },
+        params: { parentName, childName },
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       console.log(response);

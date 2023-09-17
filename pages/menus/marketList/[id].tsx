@@ -18,6 +18,8 @@ export default function BrandPage() {
   const [realItems, setRealItems] = useState<any>();
 
   const fetchMarketProducts = async () => {
+    console.log(id);
+
     try {
       const newProResponse: any = await marketApi.brandDetailsForGuests(id);
       console.log("마켓 상품 목록 : ", newProResponse);
