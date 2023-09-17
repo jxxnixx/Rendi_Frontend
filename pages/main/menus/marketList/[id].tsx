@@ -31,12 +31,14 @@ export default function BrandPage() {
         );
         console.log("마켓 상품 목록 : ", newProResponse);
 
-        console.log(newProResponse.response.response);
-        setRealItems(newProResponse.response.response);
+        console.log(newProResponse.response.response.responseList);
+        setRealItems(newProResponse.response.response.responseList);
       } else {
         console.log("accessToken이 없습니다.");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log("마켓별 불러오기 실패!");
+    }
   };
 
   useEffect(() => {

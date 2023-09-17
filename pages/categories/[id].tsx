@@ -19,7 +19,7 @@ const ProductPage = () => {
 
   const parentsCate: string = `${getKeyword(id)}`;
 
-  const [activeCate, setActiveCate] = useState<any>("전체");
+  const [activeCate, setActiveCate] = useState<any>(null);
 
   // 현재 페이지 상태값 추가
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,10 +30,10 @@ const ProductPage = () => {
   const fetchCategories = async () => {
     try {
       console.log(parentsCate, activeCate);
-      const cateProResponse: any = await itemsApi.categoriesForGuests({
+      const cateProResponse: any = await itemsApi.categoriesForGuests(
         parentsCate,
-        activeCate,
-      });
+        activeCate
+      );
 
       console.log("best 상품 목록 : ", cateProResponse);
       setRealItems(cateProResponse.response.response);

@@ -15,7 +15,7 @@ export default function BrandPage() {
   const [activeCate, setActiveCate] = useState<any>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [realItems, setRealItems] = useState<any>();
+  const [realItems, setRealItems] = useState<any>(null);
 
   const fetchMarketProducts = async () => {
     console.log(id);
@@ -24,9 +24,11 @@ export default function BrandPage() {
       const newProResponse: any = await marketApi.brandDetailsForGuests(id);
       console.log("마켓 상품 목록 : ", newProResponse);
 
-      console.log(newProResponse.response.response);
-      setRealItems(newProResponse.response.response);
-    } catch (error) {}
+      console.log(newProResponse.response.response.responseList);
+      setRealItems(newProResponse.response.response.responseList);
+    } catch (error) {
+      ("마켓별 불러오기 실패!");
+    }
   };
 
   useEffect(() => {

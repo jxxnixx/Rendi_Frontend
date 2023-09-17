@@ -696,9 +696,9 @@ export const itemsApi = {
   },
 
   // 카테고리별 조회 (비로그인)
-  categoriesForGuests: async ({ parentName, childName }: any) => {
+  categoriesForGuests: async (parentName: any, childName: any) => {
     try {
-      const response = await api.get("/products/today", {
+      const response = await api.get("/products/guest/category", {
         params: { parentName, childName },
       });
       console.log(response);
@@ -760,9 +760,17 @@ export const marketApi = {
   brandDetailsForUsers: async (brandName: any, accessToken: string) => {
     try {
       const response = await api.get("/brand/details", {
-        params: { brandName: brandName },
+        params: { brandName },
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+      if (response) {
+        console.log("카테고리별 불러오기 성공");
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -773,8 +781,16 @@ export const marketApi = {
   brandDetailsForGuests: async (brandName: any) => {
     try {
       const response = await api.get("/brand/guest/details", {
-        params: { brandName: brandName },
+        params: { brandName },
       });
+      if (response) {
+        console.log("카테고리별 불러오기 성공");
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
 
       console.log(response);
     } catch (error) {
