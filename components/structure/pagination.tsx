@@ -27,7 +27,7 @@ const CustomPagination = ({
         onChange={(event, page) => handlePageChange(page)}
         sx={{
           "& .Mui-selected": {
-            backgroundColor: "white", // bg-color 투명
+            backgroundColor: "transparent", // bg-color 투명
             color: "#FC435A",
           },
           "& .MuiPaginationItem-root:hover": {
