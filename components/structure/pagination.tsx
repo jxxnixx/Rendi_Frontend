@@ -23,9 +23,21 @@ const CustomPagination = ({
       <Pagination
         count={totalPages}
         page={currentPage}
-        color="primary"
         onChange={(event, page) => handlePageChange(page)}
         sx={{
+          "& .MuiPaginationItem-root": {
+            backgroundColor: "transparent",
+            color: "#000000",
+            "&:hover": {
+              backgroundColor: "transparent",
+              color: "#FC435A",
+            },
+            "&.Mui-selected": {
+              color: "#FC435A",
+            },
+          },
+
+          ///
           // "& .Mui-selected": {
           //   backgroundColor: "transparent", // bg-color 투명
           //   color: "#FC435A",
@@ -34,13 +46,14 @@ const CustomPagination = ({
           //   backgroundColor: "transparent", // hover 시 bg-color 투명
           //   color: "#FC435A",
           // },
-          "& .Mui-selected": {
-            backgroundColor: "transparent",
-            color: "#FC435A",
-            "&:hover": {
-              backgroundColor: "transparent",
-            },
-          },
+          ////
+          // "& .Mui-selected": {
+          //   backgroundColor: "transparent",
+          //   color: "#FC435A",
+          //   "&:hover": {
+          //     backgroundColor: "transparent",
+          //   },
+          // },
         }}
       />
     </Stack>
