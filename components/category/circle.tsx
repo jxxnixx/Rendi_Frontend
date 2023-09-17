@@ -20,64 +20,68 @@ interface cProps {
   direction: "hori" | "vert";
 }
 
-export default function Circle({ icon, direction }: cProps) {
-  const getComponent = () => {
-    switch (icon) {
-      case "Top":
-        return <Top />;
-      case "Outer":
-        return <Outer />;
-      case "Dress":
-        return <Dress />;
-      case "Pants":
-        return <Pants />;
-      case "Skirt":
-        return <Skirt />;
-      case "Training":
-        return <Training />;
-      case "Inner":
-        return <Inner />;
-      case "Swimsuit":
-        return <Swimsuit />;
-      case "Shoes":
-        return <Shoes />;
-      case "Bag":
-        return <Bag />;
-      case "Mgoods":
-        return <Mgoods />;
-      default:
-        return null;
-    }
-  };
+export const getComponent = (icon: any) => {
+  switch (icon) {
+    case "Top":
+      return <Top />;
+    case "Outer":
+      return <Outer />;
+    case "Dress":
+      return <Dress />;
+    case "Pants":
+      return <Pants />;
+    case "Skirt":
+      return <Skirt />;
+    case "Training":
+      return <Training />;
+    case "Inner":
+      return <Inner />;
+    case "Swimsuit":
+      return <Swimsuit />;
+    case "Shoes":
+      return <Shoes />;
+    case "Bag":
+      return <Bag />;
+    case "Mgoods":
+      return <Mgoods />;
+    default:
+      return null;
+  }
+};
 
-  const getKeyword = () => {
-    switch (icon) {
-      case "Top":
-        return "상의";
-      case "Outer":
-        return "아우터";
-      case "Dress":
-        return "원피스";
-      case "Pants":
-        return "팬츠";
-      case "Skirt":
-        return "스커트";
-      case "Training":
-        return "트레이닝";
-      case "Inner":
-        return "이너웨어";
-      case "Swimsuit":
-        return "수영복";
-      case "Shoes":
-        return "슈즈";
-      case "Bag":
-        return "가방";
-      case "Mgoods":
-        return "패션잡화";
-      default:
-        return null;
-    }
-  };
+export const getKeyword = (icon: any) => {
+  switch (icon.toLowerCase()) {
+    case "top":
+      return "상의";
+    case "outer":
+      return "아우터";
+    case "dress":
+      return "원피스";
+    case "pants":
+      return "팬츠";
+    case "skirt":
+      return "스커트";
+    case "training":
+      return "트레이닝";
+    case "inner":
+      return "이너웨어";
+    case "swimsuit":
+      return "수영복";
+    case "shoes":
+      return "슈즈";
+    case "bag":
+      return "가방";
+    case "mgoods":
+      return "패션잡화";
+    default:
+      return null;
+  }
+};
+
+export default function Circle({ icon, direction }: cProps) {
+  getComponent(icon);
+
+  getKeyword(icon);
 
   const router = useRouter();
   const isMainPage = router.asPath.includes("/main");
@@ -104,11 +108,14 @@ export default function Circle({ icon, direction }: cProps) {
               query: { id: icon.toLowerCase() },
             }}
           >
-            <div className="text-[#666]">{getComponent()}</div>
+            <div className="text-[#666]">{getComponent(icon)}</div>
           </Link>
         ) : (
-          <Link href={`/${icon.toLowerCase()}`} className="text-[#666]">
-            {getComponent()}
+          <Link
+            href={`/categories/${icon.toLowerCase()}`}
+            className="text-[#666]"
+          >
+            {getComponent(icon)}
           </Link>
         )}
       </button>
@@ -126,19 +133,19 @@ export default function Circle({ icon, direction }: cProps) {
                 : "text-[15px] ml-[10px] mb-[10px] "
             }`}
           >
-            {getKeyword()}
+            {getKeyword(icon)}
           </div>
         </Link>
       ) : (
         <Link
-          href={`/${icon.toLowerCase()}`}
+          href={`/categories/${icon.toLowerCase()}`}
           className={` ${
             direction === "hori"
               ? "text-[14px] mobile:text-[12px] "
               : "text-[15px] ml-[10px] mb-[10px] "
           }`}
         >
-          {getKeyword()}
+          {getKeyword(icon)}
         </Link>
       )}
     </div>
