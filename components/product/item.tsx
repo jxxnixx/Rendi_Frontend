@@ -97,18 +97,6 @@ const Item = ({
 
         // setIsLiked(updatedWishYN === "Y"); // 상태를 업데이트
         console.log(updatedItem);
-
-        // 상품을 찜 목록에서 삭제
-        if (updatedWishYN === "N") {
-          setRealItems((prevItems) =>
-            prevItems.filter(
-              (prevItem) => prevItem.productId !== updatedItem.productId
-            )
-          );
-        } else {
-          // 찜 목록에 다시 추가
-          setRealItems((prevItems) => [...prevItems, updatedItem]);
-        }
       } catch (error) {
         console.log("찜하기 업데이트 에러", error);
       }
@@ -211,7 +199,7 @@ const Item = ({
             isLiked ? "text-red-500" : ""
           }`}
           fill={isLiked ? "#FC435A" : "none"}
-          stroke={isLiked ? "none" : "#666666"}
+          stroke={isLiked ? "#ffffff" : "#666666"}
         />
       </button>
 

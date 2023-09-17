@@ -1,5 +1,6 @@
 [
   {
+    "excelName": "CIDER",
     "brandId": "cider",
     "title": "CIDER",
     "imgUrls": [
@@ -9,6 +10,7 @@
     ]
   },
   {
+    "excelName": "에잇세컨즈",
     "brandId": "8seconds",
     "title": "8 세컨즈",
     "imgUrls": [
@@ -18,6 +20,7 @@
     ]
   },
   {
+    "excelName": "IT MICHAA",
     "brandId": "it-michaa",
     "title": "IT MICHAA",
     "imgUrls": [
@@ -27,6 +30,7 @@
     ]
   },
   {
+    "excelName": "ZARA",
     "brandId": "zara",
     "title": "ZARA",
     "imgUrls": [
@@ -36,6 +40,7 @@
     ]
   },
   {
+    "excelName": "로즐리",
     "brandId": "rozley",
     "title": "로즐리",
     "imgUrls": [
@@ -45,6 +50,7 @@
     ]
   },
   {
+    "excelName": "E.B.M",
     "brandId": "ebm",
     "title": "E.B.M",
     "imgUrls": [
@@ -54,6 +60,7 @@
     ]
   },
   {
+    "excelName": "비비안웨스트우드",
     "brandId": "viviennewestwood",
     "title": "비비안 웨스트우드",
     "imgUrls": [
@@ -63,6 +70,7 @@
     ]
   },
   {
+    "excelName": "젝시믹스",
     "brandId": "xexymix",
     "title": "젝시믹스",
     "imgUrls": [
@@ -72,6 +80,7 @@
     ]
   },
   {
+    "excelName": "유니클로",
     "brandId": "uniqlo",
     "title": "유니클로",
     "imgUrls": [
@@ -81,6 +90,7 @@
     ]
   },
   {
+    "excelName": "레트로문",
     "brandId": "retro-moon",
     "title": "레트로문",
     "imgUrls": [
@@ -90,6 +100,7 @@
     ]
   },
   {
+    "excelName": "디오스피스",
     "brandId": "dauspice",
     "title": "디오스피스",
     "imgUrls": [
@@ -99,6 +110,7 @@
     ]
   },
   {
+    "excelName": "피오나",
     "brandId": "myfiona",
     "title": "피오나",
     "imgUrls": [
@@ -109,6 +121,7 @@
   },
 
   {
+    "excelName": "아뜨랑스",
     "brandId": "atimg",
     "title": "아뜨랑스",
     "imgUrls": [
@@ -119,6 +132,7 @@
   },
 
   {
+    "excelName": "악녀일기",
     "brandId": "baddiary",
     "title": "악녀일기",
     "imgUrls": [
@@ -128,6 +142,7 @@
     ]
   },
   {
+    "excelName": "섹시콩",
     "brandId": "sexykong",
     "title": "섹시콩",
     "imgUrls": [
@@ -137,6 +152,7 @@
     ]
   },
   {
+    "excelName": "고고싱",
     "brandId": "ggsing",
     "title": "고고싱",
     "imgUrls": [
