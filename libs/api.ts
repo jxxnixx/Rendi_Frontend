@@ -727,7 +727,7 @@ export const itemsApi = {
 
   allProductsForGuests: async () => {
     try {
-      const response = await api.get("/products/all");
+      const response = await api.get("/products/guest/all");
       if (response.status === 200) {
         return {
           success: true,
