@@ -4,7 +4,7 @@ import Pagination from "@/components/structure/pagination";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import skirtDummyData from "@/components/product/skirtDummyData.json";
@@ -40,7 +40,7 @@ const ProductPage = () => {
     } catch (error) {}
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchCategories();
   }, [activeCate]);
 

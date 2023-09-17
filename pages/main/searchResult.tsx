@@ -4,7 +4,7 @@ import Prodlist from "@/components/sort/prodlist";
 import Pagination from "@/components/structure/pagination";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
@@ -13,7 +13,7 @@ import { useScreenSize } from "@/libs/client/useScreen";
 export default function SearchResult() {
   const router = useRouter();
   const { search, image } = router.query;
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log("검색어:", search);
     console.log("이미지:", image);
   }, [router.query]);

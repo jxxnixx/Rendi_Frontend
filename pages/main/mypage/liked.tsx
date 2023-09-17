@@ -4,7 +4,7 @@ import Link from "next/link";
 import { HeartIcon, Line } from "@/components/icons";
 import Pagination from "@/components/structure/pagination";
 import Items from "@/components/product/items";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import Mymenus from "@/components/structure/mymenus";
@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 export default function Liked() {
   const [accessToken, setAccessToken] = useState<any>(null);
   const router = useRouter();
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window !== "undefined") {
       const storedAccessToken: string | null =
         localStorage.getItem("accessToken");
@@ -47,7 +47,7 @@ export default function Liked() {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getWishList();
   }, []);
 

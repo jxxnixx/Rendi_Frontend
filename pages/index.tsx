@@ -5,7 +5,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Items from "@/components/product/items";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import Link from "next/link";
 import { useScreenSize } from "@/libs/client/useScreen";
 import { itemsApi } from "@/libs/api";
@@ -28,7 +28,7 @@ const Home: NextPage = () => {
     } catch (error) {}
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchNewProducts();
 
     const accessToken = localStorage.getItem("accessToken");

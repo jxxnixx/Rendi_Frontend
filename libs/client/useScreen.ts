@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 
 export function useScreenSize() {
   const [screen, setScreen] = useState("laptop");
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 640) {
         setScreen("mobile");
@@ -26,7 +26,7 @@ export function useScreenSize() {
 export function useScreenWidth() {
   const [screenWidth, setScreenWidth] = useState(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };

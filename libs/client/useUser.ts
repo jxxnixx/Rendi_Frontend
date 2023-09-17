@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import useSWR from "swr";
 
 interface IProps {
@@ -20,7 +20,7 @@ export const useUser = ({ isPrivate = false }: IProps) => {
   const { data, error, mutate } = useSWR<IUser>("/member/information/");
   const router = useRouter();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (data && data.token && data.profile && !isPrivate) {
       router.back();
     }

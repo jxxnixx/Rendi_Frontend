@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
@@ -35,7 +35,7 @@ export default function BrandPage() {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchMarketProducts();
   }, []);
 

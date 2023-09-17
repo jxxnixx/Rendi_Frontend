@@ -3,14 +3,14 @@ import Items from "@/components/product/items";
 import Pagination from "@/components/structure/pagination";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import { itemsApi } from "@/libs/api";
 
 export default function Best() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window !== "undefined") {
       const storedAccessToken: string | null =
         localStorage.getItem("accessToken");
@@ -42,7 +42,7 @@ export default function Best() {
     } catch (error) {}
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchNewProducts();
   }, [activeCate]);
 

@@ -6,7 +6,7 @@ import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
 import { Google, KakaoTalk, LoginLine, Naver } from "@/components/icons";
-import { useEffect, useState, useRef } from "react";
+import { useLayoutEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { getCookie, setCookie } from "@/libs/client/cookies";
 
@@ -21,18 +21,21 @@ function LogIn() {
   });
 
   const [loginError, setLoginError] = useState<string>("");
+  // const [login, setLogin] = useRecoilState(isLoggedInState);
+  // const [logUsername, setLogUsername] = useRecoilState(loginState);
   const router = useRouter();
+
+  // const loginMutation = useMutation(
+  //   (data: ALogInProps) => usersApi.login(data) // usersApi.login 사용
+  // );
+  // useMutation의 첫 번째 매개변수 : 비동기 작업을 수행하는 콜백 함수
 
   // 로컬 스토리지에서 저장된 아이디 가져오기
   const [rememberCheck, setRememberCheck] = useState<boolean>(true);
   // 아이디 입력 필드의 기본값을 저장하기 위한 상태 변수
   const [inputValue, setInputValue] = useState<string>("");
 
-  const token = localStorage.getItem("accessToken");
-  if (token) {
-    router.push("/main");
-  }
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Check if localStorage is available (for server-side rendering)
     if (typeof window !== "undefined" && window.localStorage) {
       // Now you can safely use localStorage
@@ -75,6 +78,7 @@ function LogIn() {
         // refreshToken 저장 위치 고려..!
         localStorage.setItem("accessToken", accessToken);
         setCookie("refreshToken", refreshToken);
+        setCookie("accessToken", accessToken);
 
         // 페이지 이동
         // 예시: 메인 페이지로 이동

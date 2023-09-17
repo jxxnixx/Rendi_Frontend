@@ -4,7 +4,7 @@ import Prodlist from "@/components/sort/prodlist";
 import Pagination from "@/components/structure/pagination";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
@@ -28,7 +28,7 @@ export default function All() {
     } catch (error) {}
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchNewProducts();
   }, [activeCate]);
 

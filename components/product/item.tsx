@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, memo } from "react";
+import React, { useState, useRef, useLayoutEffect, memo } from "react";
 import { HeartIcon } from "../icons";
 import { Carousel } from "antd";
 import router from "next/router";
@@ -49,7 +49,7 @@ const Item = ({
 
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window !== "undefined") {
       const storedAccessToken: string | null =
         localStorage.getItem("accessToken");
@@ -59,7 +59,7 @@ const Item = ({
     }
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isCenterHeartShown) {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);

@@ -1,5 +1,5 @@
 import { useScreenWidth } from "@/libs/client/useScreen";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 export default function BrLine() {
   const screenWidth = useScreenWidth();

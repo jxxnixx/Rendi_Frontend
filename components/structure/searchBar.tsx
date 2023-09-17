@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import { Camera, Search } from "../icons";
 import { Button, Upload } from "antd";
 import { useRouter } from "next/router";
@@ -36,7 +36,7 @@ export default function SearchBar() {
     .sort((a, b) => b.searchCount - a.searchCount)
     .map((item, index) => ({ ...item, rank: index + 1 })); // rank를 순위로 설정
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window !== "undefined") {
       const storedAccessToken: string | null =
         localStorage.getItem("accessToken");
@@ -88,7 +88,7 @@ export default function SearchBar() {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // 검색창 외부 클릭 시 사각형 사라지게 설정
     const handleClickOutside = (event: MouseEvent) => {
       if (

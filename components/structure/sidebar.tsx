@@ -9,7 +9,7 @@ import {
   userInfoState,
 } from "@/libs/client/atom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 // Sidebar animation variants
@@ -98,7 +98,7 @@ const Navigation = ({ onItemClick }: any) => {
   const router = useRouter();
   const isMainPage = router.asPath.includes("/main");
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchAndSetDefaultValues = async () => {
       try {
         const accessToken = localStorage.getItem("accessToken");

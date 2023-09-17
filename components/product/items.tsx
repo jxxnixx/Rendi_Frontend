@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import Item from "./item";
 import dummyData from "./dummyData.json";
 import { Product } from "@/components/product/DataTypes";
@@ -66,7 +66,7 @@ export default function Items({
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const startInterval = () => {
       const newIntervalId = setInterval(() => {
         sendClickCountsToBackend();

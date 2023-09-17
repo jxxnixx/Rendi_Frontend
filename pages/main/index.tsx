@@ -1,11 +1,11 @@
 import HoriCategory from "@/components/category/horiCategory";
 import Banner from "@/components/structure/banner";
 import Layout from "@/layouts/layout";
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import router, { useRouter } from "next/router";
 import Items from "@/components/product/items";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import Link from "next/link";
 import { useScreenSize } from "@/libs/client/useScreen";
 import { itemsApi } from "@/libs/api";
@@ -14,18 +14,6 @@ import { UserInfoState, userInfoState } from "@/libs/client/atom";
 import { usersApi } from "@/libs/api";
 
 const Home: NextPage = () => {
-  const [accessToken, setAccessToken] = useState<string>(" ");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedAccessToken: string | null =
-        localStorage.getItem("accessToken");
-      if (storedAccessToken) {
-        setAccessToken(storedAccessToken);
-      }
-    }
-  }, []);
-
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [realItems, setRealItems] = useState<any>();
 
@@ -93,7 +81,8 @@ const Home: NextPage = () => {
       console.log("회원정보 조회 오류");
     }
   };
-  useEffect(() => {
+
+  useLayoutEffect(() => {
     fetchAndSetDefaultValues();
   }, []);
 
@@ -138,5 +127,53 @@ const Home: NextPage = () => {
     </Layout>
   );
 };
+
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   try {
+//     // 클라이언트 측에서 요청을 보낼 때 쿠키에 저장된 액세스 토큰을 읽어옴
+//     const accessToken: any = context.req.cookies.accessGToken;
+
+//     if (!accessToken) {
+//       // accessToken이 없다면 로그인 페이지로 리다이렉트
+//       return {
+//         redirect: {
+//           destination: "/auth/login",
+//           permanent: false,
+//         },
+//       };
+//     }
+//     console.log(accessToken);
+
+//     if (accessToken) {
+//       const viewInfoResponse: any = await usersApi.viewInfos(accessToken);
+//       console.log(viewInfoResponse);
+
+//       if (!viewInfoResponse) {
+//         return {
+//           props: { message: "viewinfo false" },
+//         };
+//       } else {
+//         const todayProResponse: any = await itemsApi.todayProducts(
+//           viewInfoResponse.response.response.interests,
+//           accessToken
+//         );
+
+//         const realItems: any = todayProResponse.response.response;
+//         return {
+//           props: { realItems },
+//         };
+//       }
+//     }
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//     return {
+//       props: { message: `Next.js is awesome` },
+//     };
+//   } finally {
+//     return {
+//       props: { message: `finally` },
+//     };
+//   }
+// };
 
 export default Home;

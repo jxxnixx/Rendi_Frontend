@@ -5,7 +5,7 @@ import Layout from "@/layouts/layout";
 import Head from "next/head";
 import Link from "next/link";
 import { Segmented } from "antd";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { SignUpState, signUpInputState, signUpState } from "@/libs/client/atom";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
@@ -45,11 +45,11 @@ function Signup() {
 
   const router = useRouter();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIdCheck(false);
   }, [signUpInputValue.username]); // username 값이 변경될 때 실행
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCodeCheck(false);
   }, [signUpInputValue.authCode]); // authCode 값이 변경될 때 실행
 
@@ -71,12 +71,12 @@ function Signup() {
     }));
     setStatePhoneAgree(e.target.checked ? "Y" : "N");
   };
-  useEffect(() => {
+  useLayoutEffect(() => {
     // emailAgreeYn이 변경될 때의 동작을 여기에 추가
     console.log("emailAgreeYn changed:", stateEmailAgree);
   }, [stateEmailAgree]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // phoneAgreeYn이 변경될 때의 동작을 여기에 추가
     console.log("phoneAgreeYn changed:", statePhoneAgree);
   }, [statePhoneAgree]);

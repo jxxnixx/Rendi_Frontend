@@ -4,7 +4,7 @@ import Pagination from "@/components/structure/pagination";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import { Categories } from "@/components/category/categories";
@@ -14,7 +14,7 @@ import { getKeyword } from "@/components/category/circle";
 const ProductPage = () => {
   const [accessToken, setAccessToken] = useState<string>(" ");
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window !== "undefined") {
       const storedAccessToken: string | null =
         localStorage.getItem("accessToken");
@@ -59,7 +59,7 @@ const ProductPage = () => {
     } catch (error) {}
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchCategories();
   }, [activeCate]);
 

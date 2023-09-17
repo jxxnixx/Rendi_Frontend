@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, memo } from "react";
+import React, { useState, useRef, useLayoutEffect, memo } from "react";
 import { HeartIcon } from "../icons";
 
 interface marketProps {
@@ -10,7 +10,7 @@ const Market = ({ market }: marketProps) => {
   const [isCenterHeartShown, setIsCenterHeartShown] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isCenterHeartShown) {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);

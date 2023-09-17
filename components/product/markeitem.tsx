@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, memo } from "react";
+import React, { useState, useRef, useLayoutEffect, memo } from "react";
 import { HeartIcon } from "../icons";
 import { Carousel } from "antd";
 import router from "next/router";

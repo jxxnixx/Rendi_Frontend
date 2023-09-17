@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import dummyData from "./dummyData.json";
 import { Product } from "@/components/product/DataTypes";
 import { useRouter } from "next/router";

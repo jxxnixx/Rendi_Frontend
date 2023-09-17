@@ -44,6 +44,7 @@ export default function Market() {
               <MarketItems
                 itemsToShow={itemsToShow}
                 itemsPerPage={itemsPerPage}
+                key={itemsToShow}
               />
             </div>
           </div>

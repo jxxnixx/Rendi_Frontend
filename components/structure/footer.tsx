@@ -1,7 +1,7 @@
 import { useScreenSize, useScreenWidth } from "@/libs/client/useScreen";
 import { Line } from "../icons";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import BrLine from "./brLine";
 import logo from "../../public/logo.png";
 import Image from "next/image";

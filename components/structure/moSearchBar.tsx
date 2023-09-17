@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { LeftOutlined, CloseOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { APopularSearchProps, itemsApi } from "@/libs/api";
@@ -32,7 +32,7 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
     .sort((a, b) => b.searchCount - a.searchCount)
     .map((item, index) => ({ ...item, rank: index + 1 })); // rank를 순위로 설정
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window !== "undefined") {
       const storedAccessToken: string | null =
         localStorage.getItem("accessToken");

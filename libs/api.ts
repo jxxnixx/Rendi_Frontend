@@ -3,7 +3,7 @@ import axios, {
   AxiosResponse,
   CancelTokenSource,
 } from "axios";
-import { getCookie, setCookie } from "./client/cookies";
+import { getCookie, setCookie, setGCookie } from "./client/cookies";
 
 export interface ASignUpProps {
   username: string;
@@ -146,6 +146,7 @@ api.interceptors.response.use(
 
           localStorage.setItem("accessToken", newAccessToken);
           setCookie("refreshToken", newRefreshToken);
+          setGCookie("accessGToken", newAccessToken);
 
           api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
 

@@ -10,7 +10,7 @@ import {
 } from "@/libs/client/atom";
 import { useRecoilState } from "recoil";
 import { AEditInfosProps, usersApi } from "@/libs/api";
-import { useEffect, useState } from "react"; //
+import { useLayoutEffect, useState } from "react"; //
 import router, { useRouter } from "next/router"; //
 
 export interface IEditInfosProps extends UserInputState {
@@ -33,7 +33,7 @@ function Edit() {
     useRecoilState(editInfoInputState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // userInfo에서 초기 값 설정
     setValue("username", userInfo.username);
     setValue("profile.nickname", userInfo.nickname);

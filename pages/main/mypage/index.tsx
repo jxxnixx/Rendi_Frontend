@@ -4,7 +4,7 @@ import Link from "next/link";
 import { MyPage, Next, ShoppingBag } from "@/components/icons";
 import Items from "@/components/product/items";
 import { itemsApi, usersApi } from "@/libs/api";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
   UserInfoState,
@@ -70,7 +70,7 @@ function Mypage() {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchAndSetDefaultValues();
   }, []);
 
