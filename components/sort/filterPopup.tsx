@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Select, Slider } from "antd";
-import { categories } from "@/pages/categories/[id]";
+import { Categories } from "../category/categories";
 
 interface FilterPopupProps {
   onApplyFilters: (filters: Filters) => void;
@@ -213,11 +213,11 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
       {/* 하위 카테고리 표시 */}
       {choicedCategory !== "전체" &&
         choicedCategory !== "기타" &&
-        categories[choicedCategory] && (
+        Categories[choicedCategory] && (
           <div className="filter-section mb-4">
             <p className="font-bold">하위 카테고리</p>
             <div className="filter-options flex flex-wrap">
-              {categories[choicedCategory].map((subCategory) => (
+              {Categories[choicedCategory].map((subCategory) => (
                 <button
                   key={subCategory.cate}
                   className={`filter-option px-4 py-2 border rounded mr-2 mb-2 ${
