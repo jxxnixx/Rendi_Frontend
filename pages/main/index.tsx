@@ -53,43 +53,41 @@ const Home: NextPage = () => {
         const viewInfoResponse: any = await usersApi.viewInfos(accessToken);
         console.log(viewInfoResponse);
 
-        // if (viewInfoResponse?.success) {
-        console.log("회원정보 조회 성공!");
+        if (viewInfoResponse?.success) {
+          console.log("회원정보 조회 성공!");
 
-        const updatedUserInfoData: UserInfoState = {
-          username: viewInfoResponse.response.response.username,
-          nickname: viewInfoResponse.response.response.nickname,
-          email: viewInfoResponse.response.response.email,
-          birth: viewInfoResponse.response.response.birth,
-          phonenum: viewInfoResponse.response.response.phone,
-          interests: viewInfoResponse.response.response.interests,
-        };
+          const updatedUserInfoData: UserInfoState = {
+            username: viewInfoResponse.response.response.username,
+            nickname: viewInfoResponse.response.response.nickname,
+            email: viewInfoResponse.response.response.email,
+            birth: viewInfoResponse.response.response.birth,
+            phonenum: viewInfoResponse.response.response.phone,
+            interests: viewInfoResponse.response.response.interests,
+          };
 
-        setUserInfo(updatedUserInfoData);
-        console.log(updatedUserInfoData);
+          setUserInfo(updatedUserInfoData);
+          console.log(updatedUserInfoData);
 
-        let todayProResponse: any = await itemsApi.todayProducts(
-          userInfo.interests,
-          // updatedUserInfoData.interests,
-          accessToken
-        );
+          let todayProResponse: any = await itemsApi.todayProducts(
+            updatedUserInfoData.interests,
+            accessToken
+          );
 
-        // while (
-        //   !todayProResponse.response.response ||
-        //   todayProResponse.response.response.length === 0
-        // ) {
-        //   console.log("상품 목록이 빈 배열입니다. 재시도...");
-        //   await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기
-        //   todayProResponse = await itemsApi.todayProducts(
-        //     // updatedUserInfoData.interests,
-        //     userInfo.interests,
-        //     accessToken
-        //   );
-        // }
+          while (
+            !todayProResponse.response.response ||
+            todayProResponse.response.response.length === 0
+          ) {
+            console.log("상품 목록이 빈 배열입니다. 재시도...");
+            await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기
+            todayProResponse = await itemsApi.todayProducts(
+              updatedUserInfoData.interests,
+              accessToken
+            );
+          }
 
-        console.log("today 상품 목록 : ", todayProResponse.response.response);
-        setRealItems(todayProResponse.response.response);
-        // }
+          console.log("today 상품 목록 : ", todayProResponse.response.response);
+          setRealItems(todayProResponse.response.response);
+        }
       }
     } catch (error) {
       console.log("회원정보 조회 오류");
