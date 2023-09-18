@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 interface Category {
   cate: string;
@@ -41,14 +41,23 @@ export default function ProdBar({
     categories = category as Category[];
   }
 
+  // 페이지 로드 시 "전체" 카테고리를 선택
+  useEffect(() => {
+    if (!activeCate) {
+      setActiveCate("전체");
+    }
+  }, []); // 빈 배열을 두어 한 번만 실행되도록 설정
+
   return (
     <nav className="relative h-[60px] mobile:h-[40px] text-[#666] bg-white py-[11px] flex shadow-md space-x-[60px] mobile:space-x-[10px] items-center justify-center mobile:justify-start mobile:pl-4 mobile:overflow-scroll mobile:scrollbar-hide">
       {categories.map(({ cate }) => (
         <button
           key={cate}
           onClick={() => handleButtonClick(cate)}
-          className={` ${
-            activeCate === cate ? "text-black" : ""
+          className={`${
+            activeCate === cate || (!activeCate && cate === "전체")
+              ? "text-black"
+              : ""
           } hover:text-black`}
         >
           <p className="mobile:text-[9pt] mobile:m-1 overflow-x-auto whitespace-nowrap">
