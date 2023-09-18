@@ -130,7 +130,8 @@ function LogIn() {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center items-center mt-[100px] h-screen mobile:mt-[150px] mobile:h-[600px]">
+        <div className="flex flex-col justify-center items-center mt-[60px] h-screen mobile:mt-[150px] mobile:h-[600px]">
+          {/* 여기 원래 mt-100px */}
           <form
             className=" flex flex-col justify-center items-center gap-1 p-0 w-[590px] h-[890px] mobile:w-[390px] mobile:h-[930px]"
             onSubmit={handleSubmit(submitForm)}
@@ -190,7 +191,7 @@ function LogIn() {
                 className="flex justify-center items-center h-screen"
               />
             </div>
-            <div className="mt-[20px] mobile:mt-[15px]">
+            {/* <div className="mt-[20px] mobile:mt-[15px]">
               <LoginLine />
             </div>
 
@@ -200,9 +201,10 @@ function LogIn() {
                   <KakaoTalk />
                 </div>
                 카카오 로그인
-              </button>
-              {/* <div className="mobile:flex mobile:my-3"> */}
-              {/* <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a] mobile:w-[155px] ">
+              </button> */}
+
+            {/* <div className="mobile:flex mobile:my-3"> */}
+            {/* <button className="flex items-center justify-center flex-row w-[186px] h-[46px] mr-[15px] p-5 rounded-[15px] bg-[#03c75a] mobile:w-[155px] ">
                 <div className="mr-[10px]">
                   <Naver />
                 </div>
@@ -214,8 +216,8 @@ function LogIn() {
                 </div>
                 구글 로그인
               </button> */}
-              {/* </div> */}
-            </div>
+            {/* </div> */}
+            {/* </div> */}
 
             <div className="mt-[40px] bg-white text-gray-600 text-[11pt] text-base">
               Rendi가 처음이신가요?

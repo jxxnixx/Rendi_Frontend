@@ -362,14 +362,14 @@ export default function SearchBar() {
             </div>
           )}
           {/* 버튼 두개 위치 수정 */}
-          <button
+          {/* <button
             type="button"
             className="absolute inset-y-0 right-[45px] top-[11px] flex items-center justify-center w-[25px] h-[25px] p-0 bg-transparent focus:ring-0 focus:outline-none text-gray-500 dark:text-gray-400
           "
             onClick={handleCameraClick}
           >
-            <Camera />
-          </button>
+          <Camera />
+          </button> */}
 
           <button
             type="submit"
