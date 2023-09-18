@@ -26,6 +26,7 @@ const CustomPagination = ({
         color="primary"
         onChange={(event, page) => handlePageChange(page)}
         sx={{
+<<<<<<< HEAD
           "& .Mui-selected": {
             backgroundColor: "transparent", // bg-color 투명
             color: "#FC435A",
@@ -33,6 +34,22 @@ const CustomPagination = ({
           "& .MuiPaginationItem-root:hover": {
             backgroundColor: "transparent", // hover 시 bg-color 투명
             color: "#FC435A",
+=======
+          // "& .Mui-selected": {
+          //   backgroundColor: "transparent", // bg-color 투명
+          //   color: "#FC435A",
+          // },
+          // "& .MuiPaginationItem-root:hover": {
+          //   backgroundColor: "transparent", // hover 시 bg-color 투명
+          //   color: "#FC435A",
+          // },
+          "& .Mui-selected": {
+            backgroundColor: "transparent",
+            color: "#FC435A",
+            "&:hover": {
+              backgroundColor: "transparent",
+            },
+>>>>>>> parent of e016bed (pagination css error 해결중)
           },
         }}
       />
