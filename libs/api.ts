@@ -707,11 +707,12 @@ export const itemsApi = {
     try {
       const response = await api.get("/products/category", {
         params: {
-          parentName,
+          parentName: parentName === "원피스" ? "원피스/세트" : parentName,
           childName: childName === "전체" ? null : childName,
         },
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+      console.log(childName);
       console.log(response);
 
       if (response) {
@@ -755,6 +756,25 @@ export const itemsApi = {
         };
       }
     } catch (error) {}
+  },
+
+  // 키워드 검색
+  keywordSearch: async (keywordName: any) => {
+    try {
+      const response = await api.get("/products/guest/search/keyword", {
+        params: { keywordName },
+      });
+      if (response) {
+        console.log("키워드 검색 성공");
+        return {
+          success: true,
+          response: response.data,
+          error: null,
+        };
+      }
+    } catch (error) {
+      console.log("키워드 검색 오류:", error);
+    }
   },
 };
 

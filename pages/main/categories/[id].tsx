@@ -46,6 +46,7 @@ const ProductPage = () => {
 
       if (accessToken) {
         console.log(parentsCate, activeCate, accessToken);
+
         const cateProResponse: any = await itemsApi.categoriesForUsers(
           parentsCate,
           activeCate,

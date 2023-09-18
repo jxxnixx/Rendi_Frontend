@@ -58,7 +58,7 @@ export const getKeyword = (icon: any) => {
     case "dress":
       return "원피스";
     case "pants":
-      return "팬츠";
+      return "바지";
     case "skirt":
       return "스커트";
     case "training":

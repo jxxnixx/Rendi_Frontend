@@ -13,6 +13,7 @@ import { useScreenSize } from "@/libs/client/useScreen";
 export default function SearchResult() {
   const router = useRouter();
   const { search, image } = router.query;
+
   useLayoutEffect(() => {
     console.log("검색어:", search);
     console.log("이미지:", image);
