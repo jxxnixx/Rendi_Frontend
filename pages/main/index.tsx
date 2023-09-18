@@ -74,18 +74,18 @@ const Home: NextPage = () => {
           accessToken
         );
 
-        while (
-          !todayProResponse.response.response ||
-          todayProResponse.response.response.length === 0
-        ) {
-          console.log("상품 목록이 빈 배열입니다. 재시도...");
-          await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기
-          todayProResponse = await itemsApi.todayProducts(
-            // updatedUserInfoData.interests,
-            userInfo.interests,
-            accessToken
-          );
-        }
+        // while (
+        //   !todayProResponse.response.response ||
+        //   todayProResponse.response.response.length === 0
+        // ) {
+        //   console.log("상품 목록이 빈 배열입니다. 재시도...");
+        //   await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기
+        //   todayProResponse = await itemsApi.todayProducts(
+        //     // updatedUserInfoData.interests,
+        //     userInfo.interests,
+        //     accessToken
+        //   );
+        // }
 
         console.log("today 상품 목록 : ", todayProResponse.response.response);
         setRealItems(todayProResponse.response.response);
