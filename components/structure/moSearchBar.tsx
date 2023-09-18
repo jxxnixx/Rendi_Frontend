@@ -396,7 +396,9 @@ export default function MoSearchBar({ onClose }: MoSearchBarProps) {
                       </div>
                     ))
                   ) : (
-                    "인기 검색어 로딩 중.."
+                    <div className="flex flex-row items-center justify-center w-[95%] h-[400px] m-[10px] border-black">
+                      인기 검색어 로딩 중..
+                    </div>
                   )}
                 </div>
               </div>
