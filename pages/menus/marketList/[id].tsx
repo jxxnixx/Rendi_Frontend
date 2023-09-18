@@ -6,6 +6,7 @@ import ProdBar from "@/components/menu/prodBar";
 import Items from "@/components/product/items";
 import Pagination from "@/components/structure/pagination";
 import { Product } from "@/components/product/DataTypes";
+import dummyData from "@/components/product/dummyData.json";
 import { marketApi } from "@/libs/api";
 
 export default function BrandPage() {
@@ -21,17 +22,26 @@ export default function BrandPage() {
 
   const fetchMarketProducts = async () => {
     console.log(id);
-
     try {
-      const marketProResponse: any = await marketApi.brandDetailsForGuests(id);
-      console.log("마켓 상품 목록 : ", marketProResponse);
+      const accessToken = localStorage.getItem("accessToken");
+      console.log(accessToken);
 
-      console.log(marketProResponse.response.response.responseList);
-      setRealItems(marketProResponse.response.response.responseList);
-      setRealURL(marketProResponse.response.response.brandBannerUrl);
-      setRealIcon(marketProResponse.response.response.brandIconUrl);
+      if (accessToken) {
+        const marketProResponse: any = await marketApi.brandDetailsForUsers(
+          id,
+          accessToken
+        );
+        console.log("마켓 상품 목록 : ", marketProResponse);
+
+        console.log(marketProResponse.response.response.responseList);
+        setRealItems(marketProResponse.response.response.responseList);
+        setRealURL(marketProResponse.response.response.brandBannerUrl);
+        setRealIcon(marketProResponse.response.response.brandIconUrl);
+      } else {
+        console.log("accessToken이 없습니다.");
+      }
     } catch (error) {
-      ("마켓별 불러오기 실패!");
+      console.log("마켓별 불러오기 실패!");
     }
   };
 
@@ -65,17 +75,19 @@ export default function BrandPage() {
       </Head>
       <div className="flex justify-center">
         <img
-          className="mt-[135px] mobile:mt-[80px] w-full bg-[#FFE9EC]"
+          className="mt-[135px] mobile:mt-[85px] w-[1040px] mobile:w-full "
           src={realURL}
         ></img>
       </div>
-      <div className="flex flex-column justify-center ">
-        <img
-          className={" h-[50px] mb-[10px] rounded-full"}
+      {/* <div className="flex flex-column justify-center "> */}
+      <div className="flex h-[50px]  justify-center items-center text-[14pt] mt-3 font-bold">
+        {/* <img
+          className={" w-[70px] mb-[10px] mr-5 rounded-full "}
           src={realIcon}
-        ></img>
+        ></img> */}
         <div> {id}</div>
       </div>
+
       <div className="flex w-full flex-col text-lg font-medium">
         {/* <ProdBar
           category={"default"}
@@ -83,7 +95,7 @@ export default function BrandPage() {
           setActiveCate={setActiveCate}
         /> */}
         <div>
-          <div className="pt-4 mobile:pt-4">
+          <div className="pt-0 mobile:pt-4">
             <div className="flex w-full relative justify-center pt-1.5 pb-8 mobile:py-2">
               <Items
                 itemsToShow={itemsToShow}
