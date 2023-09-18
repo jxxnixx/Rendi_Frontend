@@ -25,7 +25,7 @@ export default function New() {
         activeCate
       );
       console.log("new 상품 목록 : ", newProResponse);
-      console.log(newProResponse.response.response);
+
       setRealItems(newProResponse.response.response);
     } catch (error) {}
   };

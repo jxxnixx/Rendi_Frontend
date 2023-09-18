@@ -33,7 +33,6 @@ export default function BrandPage() {
         );
         console.log("마켓 상품 목록 : ", marketProResponse);
 
-        console.log(marketProResponse.response.response.responseList);
         setRealItems(marketProResponse.response.response.responseList);
         setRealURL(marketProResponse.response.response.brandBannerUrl);
         setRealIcon(marketProResponse.response.response.brandIconUrl);

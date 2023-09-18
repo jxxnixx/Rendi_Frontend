@@ -37,7 +37,7 @@ export default function Best() {
         accessToken
       );
       console.log("best 상품 목록 : ", bestProResponse);
-      console.log(bestProResponse.response.response);
+
       setRealItems(bestProResponse.response.response);
     } catch (error) {}
   };
@@ -45,8 +45,6 @@ export default function Best() {
   useLayoutEffect(() => {
     fetchNewProducts();
   }, [activeCate]);
-
-  console.log(realItems);
 
   // 전체 아이템의 개수와 총 페이지 수 계산
   let totalItems = 0;

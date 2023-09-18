@@ -25,7 +25,6 @@ export default function ProdBar({
     { cate: "트레이닝" },
     { cate: "이너웨어" },
     { cate: "수영복" },
-    { cate: "신발" },
     { cate: "가방" },
     { cate: "패션잡화" },
   ];

@@ -42,8 +42,6 @@ export default function All() {
     fetchNewProducts();
   }, [activeCate]);
 
-  console.log(realItems);
-
   // 전체 아이템의 개수와 총 페이지 수 계산
   let totalItems = 0;
   if (realItems) {
