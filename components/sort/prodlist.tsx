@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Select, Button } from "antd";
 import FilterPopup from "./filterPopup";
 import { set } from "react-hook-form";
+import { getKeyword } from "../category/circle";
 
 const handleChange = (value: string) => {
   console.log(`selected ${value}`);
@@ -17,9 +18,10 @@ interface Product {
 }
 interface ProdlistProps {
   products: Product[]; // 상품 목록 배열
+  onSendData?: (product: Product) => void;
 }
 
-export default function Prodlist({ products }: ProdlistProps) {
+export default function Prodlist({ products, onSendData }: ProdlistProps) {
   const [showPopup, setShowPopup] = useState(false);
 
   const [sortResult, setSortResult] = useState({
@@ -53,6 +55,12 @@ export default function Prodlist({ products }: ProdlistProps) {
       document.removeEventListener("mousedown", handlePopupOutsideClick);
     };
   }, []);
+
+  const sendDataToParent = (product: Product) => {
+    if (onSendData) {
+      onSendData(product);
+    }
+  };
 
   return (
     <div className="gap-[30px]">
@@ -90,8 +98,22 @@ export default function Prodlist({ products }: ProdlistProps) {
             <FilterPopup
               onApplyFilters={(filters) => {
                 console.log("Applied filters:", filters);
+
+                // 필터 값을 가공하여 상위 컴포넌트로 전달
+                const filteredData: any = {
+                  // productIds: products.map((product) => product.id),
+                  sortName: filters.sortOrder,
+                  parentCategory: getKeyword(filters.category),
+                  childCategory: filters.subcategory.join(", "),
+                  colourName: filters.color.join(", "),
+                  minPrice: filters.price.min,
+                  maxPrice: filters.price.max,
+                };
+
                 setSortResult(filters);
                 handleClosePopup(); // 필터 적용 후 팝업 숨기기
+                sendDataToParent(filteredData); // 상위 컴포넌트로 필터된 데이터 전달
+                localStorage.setItem("filteredData", filteredData);
               }}
               onResetFilters={() => {
                 console.log("Reset filters");

@@ -145,3 +145,16 @@ export const userInfoState = atom<UserInfoState>({
   },
   effects_UNSTABLE: [persistAtom],
 });
+
+export const searchFiltersState = atom<any>({
+  key: "searchFiltersState",
+  default: {
+    productIds: [],
+    sortName: "",
+    parentCategory: "",
+    childCategory: "",
+    colourName: "",
+    minPrice: 0,
+    maxPrice: 50000,
+  },
+});

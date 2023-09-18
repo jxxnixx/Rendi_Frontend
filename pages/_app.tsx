@@ -13,14 +13,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <SWRConfig>
-        <QueryClientProvider client={queryClient}>
-          <AppLayout>
-            <CookiesProvider>
-              <Component {...pageProps} />
-            </CookiesProvider>
-          </AppLayout>
-          <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-        </QueryClientProvider>
+        <AppLayout>
+          <CookiesProvider>
+            <Component {...pageProps} />
+          </CookiesProvider>
+        </AppLayout>
       </SWRConfig>
     </RecoilRoot>
   );

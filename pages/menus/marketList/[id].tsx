@@ -23,22 +23,12 @@ export default function BrandPage() {
   const fetchMarketProducts = async () => {
     console.log(id);
     try {
-      const accessToken = localStorage.getItem("accessToken");
-      console.log(accessToken);
+      const marketProResponse: any = await marketApi.brandDetailsForGuests(id);
+      console.log("마켓 상품 목록 : ", marketProResponse);
 
-      if (accessToken) {
-        const marketProResponse: any = await marketApi.brandDetailsForUsers(
-          id,
-          accessToken
-        );
-        console.log("마켓 상품 목록 : ", marketProResponse);
-
-        setRealItems(marketProResponse.response.response.responseList);
-        setRealURL(marketProResponse.response.response.brandBannerUrl);
-        setRealIcon(marketProResponse.response.response.brandIconUrl);
-      } else {
-        console.log("accessToken이 없습니다.");
-      }
+      setRealItems(marketProResponse.response.response.responseList);
+      setRealURL(marketProResponse.response.response.brandBannerUrl);
+      setRealIcon(marketProResponse.response.response.brandIconUrl);
     } catch (error) {
       console.log("마켓별 불러오기 실패!");
     }

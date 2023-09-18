@@ -4,21 +4,30 @@ import Prodlist from "@/components/sort/prodlist";
 import Pagination from "@/components/structure/pagination";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import { useScreenSize } from "@/libs/client/useScreen";
 import { itemsApi } from "@/libs/api";
+import { useRecoilValue } from "recoil";
+import { searchFiltersState } from "@/libs/client/atom";
 
 export default function All() {
   const screen = useScreenSize();
+  const [filteredData, setFilteredData] = useState<any>(null);
+
+  // 필터링된 데이터를 받아올 함수
+  const handleFilteredData = (data: any) => {
+    setFilteredData(data);
+    console.log(data);
+  };
 
   const [activeCate, setActiveCate] = useState<any>(null);
 
   // 현재 페이지 상태값 추가
   const [currentPage, setCurrentPage] = useState(1);
-  const [realItems, setRealItems] = useState<any>();
+  const [realItems, setRealItems] = useState<Product[]>([]);
 
   const fetchNewProducts = async () => {
     try {
@@ -28,6 +37,7 @@ export default function All() {
       if (accessToken) {
         console.log(accessToken);
         const allProResponse: any = await itemsApi.allProductsForUsers(
+          filteredData,
           accessToken
         );
         console.log("상품 전체 : ", allProResponse);
@@ -40,7 +50,7 @@ export default function All() {
 
   useLayoutEffect(() => {
     fetchNewProducts();
-  }, [activeCate]);
+  }, [filteredData]);
 
   // 전체 아이템의 개수와 총 페이지 수 계산
   let totalItems = 0;
@@ -90,7 +100,7 @@ export default function All() {
             </p>
           </div>
           <div className="overflow-x-auto scrollbar-hide flex w-[1040px] h-[60px] items-center mobile:w-full mobile:ml-[15px] mobile:h-[50px]  mobile:mr-[25px]">
-            <Prodlist products={[]} />
+            <Prodlist products={[]} onSendData={handleFilteredData} />
           </div>
           <div className="flex justify-center">
             <Line />

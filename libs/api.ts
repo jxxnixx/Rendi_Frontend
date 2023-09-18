@@ -74,6 +74,15 @@ export interface ARecentProps {
   accessToken: string;
 }
 
+interface FilteredProduct {
+  sortName?: string;
+  parentCategory?: string;
+  childCategory?: string;
+  colourName?: string;
+  minPrice?: number;
+  maxPrice?: number;
+}
+
 export const API_URL = "/";
 
 export const api = axios.create({
@@ -681,7 +690,10 @@ export const itemsApi = {
   categoriesForGuests: async (parentName: any, childName: any) => {
     try {
       const response = await api.get("/products/guest/category", {
-        params: { parentName, childName },
+        params: {
+          parentName: parentName === "원피스" ? "원피스/세트" : parentName,
+          childName: childName === "전체" ? null : childName,
+        },
       });
       if (response) {
         console.log("카테고리별 불러오기 성공");
@@ -726,9 +738,12 @@ export const itemsApi = {
     }
   },
 
-  allProductsForGuests: async () => {
+  // 전체 상품 (비로그인)
+  allProductsForGuests: async (filteredParams: FilteredProduct) => {
     try {
-      const response = await api.get("/products/guest/all");
+      const response = await api.get("/products/guest/all", {
+        params: filteredParams,
+      });
       if (response.status === 200) {
         return {
           success: true,
@@ -739,9 +754,14 @@ export const itemsApi = {
     } catch (error) {}
   },
 
-  allProductsForUsers: async (accessToken: string) => {
+  // 전체 상품 (로그인)
+  allProductsForUsers: async (
+    filteredParams: FilteredProduct,
+    accessToken: string
+  ) => {
     try {
       const response = await api.get("/products/all", {
+        params: filteredParams,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

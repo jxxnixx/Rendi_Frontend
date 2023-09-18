@@ -13,6 +13,13 @@ import { itemsApi } from "@/libs/api";
 
 export default function All() {
   const screen = useScreenSize();
+  const [filteredData, setFilteredData] = useState<any>(null);
+
+  // 필터링된 데이터를 받아올 함수
+  const handleFilteredData = (data: any) => {
+    setFilteredData(data);
+    console.log(data);
+  };
 
   const [activeCate, setActiveCate] = useState<any>(null);
 
@@ -22,7 +29,9 @@ export default function All() {
 
   const fetchNewProducts = async () => {
     try {
-      const allProResponse: any = await itemsApi.allProductsForGuests();
+      const allProResponse: any = await itemsApi.allProductsForGuests(
+        filteredData
+      );
       console.log("상품 전체 : ", allProResponse);
       setRealItems(allProResponse.response.response);
     } catch (error) {}
@@ -30,7 +39,7 @@ export default function All() {
 
   useLayoutEffect(() => {
     fetchNewProducts();
-  }, [activeCate]);
+  }, [filteredData]);
 
   // 전체 아이템의 개수와 총 페이지 수 계산
   let totalItems = 0;
@@ -80,7 +89,7 @@ export default function All() {
             </p>
           </div>
           <div className="overflow-x-auto scrollbar-hide flex w-[1040px] h-[60px] items-center mobile:w-full mobile:ml-[15px] mobile:h-[50px]  mobile:mr-[25px]">
-            <Prodlist products={[]} />
+            <Prodlist products={[]} onSendData={handleFilteredData} />
           </div>
           <div className="flex justify-center">
             <Line />
