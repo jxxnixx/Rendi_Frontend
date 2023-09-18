@@ -5,9 +5,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import router, { useRouter } from "next/router";
 import Items from "@/components/product/items";
-
-import React, { useEffect, useLayoutEffect, useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useScreenSize } from "@/libs/client/useScreen";
 import { itemsApi } from "@/libs/api";
@@ -38,9 +36,16 @@ const Home: NextPage = () => {
 
       if (!accessToken) {
         // accessToken이 없다면 로그인 페이지로 리다이렉트
+        router.push("/login");
+        return;
+      }
 
-        router.push("/auth/login");
+      let viewInfoResponse: any = await usersApi.viewInfos(accessToken);
+      console.log(viewInfoResponse);
 
+      if (!viewInfoResponse?.success) {
+        // 회원 정보 조회에 실패한 경우 처리
+        console.log("회원정보 조회 실패");
         return;
       }
 
@@ -63,14 +68,11 @@ const Home: NextPage = () => {
           setUserInfo(updatedUserInfoData);
           console.log(updatedUserInfoData);
 
-
           const todayProResponse: any = await itemsApi.todayProducts(
-
-          let todayProResponse: any = await itemsApi.todayProducts(
-
             updatedUserInfoData.interests,
             accessToken
           );
+
           console.log("today 상품 목록 : ", todayProResponse.response.response);
           setRealItems(todayProResponse.response.response);
         }
