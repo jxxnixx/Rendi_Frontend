@@ -56,17 +56,17 @@ const Home: NextPage = () => {
         // if (viewInfoResponse?.success) {
         console.log("회원정보 조회 성공!");
 
-        // const updatedUserInfoData: UserInfoState = {
-        //   username: viewInfoResponse.response.response.username,
-        //   nickname: viewInfoResponse.response.response.nickname,
-        //   email: viewInfoResponse.response.response.email,
-        //   birth: viewInfoResponse.response.response.birth,
-        //   phonenum: viewInfoResponse.response.response.phone,
-        //   interests: viewInfoResponse.response.response.interests,
-        // };
+        const updatedUserInfoData: UserInfoState = {
+          username: viewInfoResponse.response.response.username,
+          nickname: viewInfoResponse.response.response.nickname,
+          email: viewInfoResponse.response.response.email,
+          birth: viewInfoResponse.response.response.birth,
+          phonenum: viewInfoResponse.response.response.phone,
+          interests: viewInfoResponse.response.response.interests,
+        };
 
-        // setUserInfo(updatedUserInfoData);
-        // console.log(updatedUserInfoData);
+        setUserInfo(updatedUserInfoData);
+        console.log(updatedUserInfoData);
 
         let todayProResponse: any = await itemsApi.todayProducts(
           userInfo.interests,

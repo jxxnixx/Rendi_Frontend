@@ -75,7 +75,7 @@ export default function BrandPage() {
       </Head>
       <div className="flex justify-center">
         <img
-          className="mt-[135px] mobile:mt-[80px] w-[1040px]"
+          className="mt-[135px] mobile:mt-[85px] w-[1040px] mobile:w-full "
           src={realURL}
         ></img>
       </div>
