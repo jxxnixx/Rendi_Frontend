@@ -75,12 +75,12 @@ export default function BrandPage() {
       </Head>
       <div className="flex justify-center">
         <img
-          className="mt-[135px] mobile:mt-[80px] w-[1040px]"
+          className="mt-[135px] mobile:mt-[85px] w-[1040px] mobile:w-full "
           src={realURL}
         ></img>
       </div>
       {/* <div className="flex flex-column justify-center "> */}
-      <div className="flex h-[50px]  justify-center items-center text-[14pt] mt-3 font-bold">
+      <div className="flex h-[50px]  justify-center items-center text-[14pt] mt-3 font-bold mobile:mt-3 mobile:h-[30px[-]">
         {/* <img
           className={" w-[70px] mb-[10px] mr-5 rounded-full "}
           src={realIcon}
@@ -95,7 +95,7 @@ export default function BrandPage() {
           setActiveCate={setActiveCate}
         /> */}
         <div>
-          <div className="pt-0 mobile:pt-4">
+          <div className="pt-0 mobile:pt-0">
             <div className="flex w-full relative justify-center pt-1.5 pb-8 mobile:py-2">
               <Items
                 itemsToShow={itemsToShow}

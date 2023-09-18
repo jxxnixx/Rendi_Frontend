@@ -685,8 +685,6 @@ export const itemsApi = {
       const response = await api.get("/products/guest/category", {
         params: { parentName, childName },
       });
-      console.log(response);
-
       if (response) {
         console.log("카테고리별 불러오기 성공");
         return {
@@ -708,7 +706,10 @@ export const itemsApi = {
   ) => {
     try {
       const response = await api.get("/products/category", {
-        params: { parentName, childName },
+        params: {
+          parentName,
+          childName: childName === "전체" ? null : childName,
+        },
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       console.log(response);
