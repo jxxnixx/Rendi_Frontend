@@ -9,23 +9,36 @@ import { useRouter } from "next/router";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import { useScreenSize } from "@/libs/client/useScreen";
+import { itemsApi } from "@/libs/api";
 
 export default function SearchResult() {
   const router = useRouter();
   const { search, image } = router.query;
 
+  const fetchAndSetDefaultValues = async () => {
+    const searchResponse = await itemsApi.keywordSearch(search);
+
+    console.log(searchResponse?.response.response[0].responseList);
+    setRealItems(searchResponse?.response.response[0].responseList);
+  };
+
   useLayoutEffect(() => {
     console.log("검색어:", search);
     console.log("이미지:", image);
-  }, [router.query]);
 
-  // 전체 아이템의 개수와 총 페이지 수 계산
-  const totalItems = dummyData.length;
-  const itemsPerPage = 16;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+    fetchAndSetDefaultValues();
+  }, [router.query]);
 
   // 현재 페이지 상태값 추가
   const [currentPage, setCurrentPage] = useState(1);
+  const [realItems, setRealItems] = useState<any>();
+  // 전체 아이템의 개수와 총 페이지 수 계산
+  let totalItems = 0;
+  if (realItems) {
+    totalItems = realItems.length;
+  }
+  const itemsPerPage = 16;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -34,7 +47,10 @@ export default function SearchResult() {
   // 현재 페이지에 해당하는 상품들을 계산
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const itemsToShow: Product[] = dummyData.slice(startIndex, endIndex);
+  const itemsToShow: Product[] = realItems
+    ? realItems.slice(startIndex, endIndex)
+    : [];
+
   const screen = useScreenSize();
 
   return (
@@ -83,7 +99,11 @@ export default function SearchResult() {
       /> */}
       <div className="flex flex-col items-center justify-center">
         {/* Items 컴포넌트에 itemsPerPage를 전달 */}
-        <Items itemsToShow={itemsToShow} itemsPerPage={itemsPerPage} />
+        <Items
+          itemsToShow={itemsToShow}
+          itemsPerPage={itemsPerPage}
+          allItems={realItems}
+        />
         {/* Pagination 컴포넌트에 현재 페이지와 총 페이지 수, 페이지 변경 함수를 전달 */}
         <Pagination
           currentPage={currentPage}

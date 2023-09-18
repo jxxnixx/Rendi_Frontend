@@ -184,10 +184,6 @@ export default function SearchBar() {
         );
         console.log(saveResponse); // 응답 데이터 출력
 
-        const searchResponse = await itemsApi.keywordSearch(searchValue);
-
-        console.log(searchResponse);
-
         // 성공적으로 검색어를 저장한 후, 다음 동작을 수행할 수 있음
         router.push(
           `/main/searchResult?search=${searchValue}&image=${imageValue}`
