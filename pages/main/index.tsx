@@ -5,7 +5,7 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import router, { useRouter } from "next/router";
 import Items from "@/components/product/items";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Link from "next/link";
 import { useScreenSize } from "@/libs/client/useScreen";
 import { itemsApi } from "@/libs/api";
@@ -14,26 +14,65 @@ import { UserInfoState, userInfoState } from "@/libs/client/atom";
 import { usersApi } from "@/libs/api";
 
 const Home: NextPage = () => {
-  const userInfo = useRecoilValue(userInfoState);
+  const [accessToken, setAccessToken] = useState<string>(" ");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedAccessToken: string | null =
+        localStorage.getItem("accessToken");
+      if (storedAccessToken) {
+        setAccessToken(storedAccessToken);
+      }
+    }
+  }, []);
+
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [realItems, setRealItems] = useState<any>();
 
   const fetchAndSetDefaultValues = async () => {
-    console.log(userInfo);
     try {
-      const accessToken: any = localStorage.getItem("accessToken");
+      const accessToken = localStorage.getItem("accessToken");
       console.log(accessToken);
 
-      const todayProResponse: any = await itemsApi.todayProducts(
-        userInfo.interests,
-        accessToken
-      );
+      if (!accessToken) {
+        // accessToken이 없다면 로그인 페이지로 리다이렉트
+        router.push("/auth/login");
+        return;
+      }
 
-      console.log("today 상품 목록 : ", todayProResponse.response.response);
-      setRealItems(todayProResponse.response.response);
-    } catch {}
+      if (accessToken) {
+        const viewInfoResponse: any = await usersApi.viewInfos(accessToken);
+        console.log(viewInfoResponse);
+
+        if (viewInfoResponse?.success) {
+          console.log("회원정보 조회 성공!");
+
+          const updatedUserInfoData: UserInfoState = {
+            username: viewInfoResponse.response.response.username,
+            nickname: viewInfoResponse.response.response.nickname,
+            email: viewInfoResponse.response.response.email,
+            birth: viewInfoResponse.response.response.birth,
+            phonenum: viewInfoResponse.response.response.phone,
+            interests: viewInfoResponse.response.response.interests,
+          };
+
+          setUserInfo(updatedUserInfoData);
+          console.log(updatedUserInfoData);
+
+          const todayProResponse: any = await itemsApi.todayProducts(
+            updatedUserInfoData.interests,
+            accessToken
+          );
+
+          console.log("today 상품 목록 : ", todayProResponse.response.response);
+          setRealItems(todayProResponse.response.response);
+        }
+      }
+    } catch (error) {
+      console.log("회원정보 조회 오류");
+    }
   };
-
-  useLayoutEffect(() => {
+  useEffect(() => {
     fetchAndSetDefaultValues();
   }, []);
 
@@ -57,7 +96,7 @@ const Home: NextPage = () => {
           <div className="flex justify-center  ">
             <div className="flex-row w-[1040px] mobile:w-full">
               <div className="flex justify-between text-[12pt] font-medium text-[#666666] border-t border-solid border-gray-200">
-                <p className="ml-[30px] mt-[8px] mobile:ml-[20px] mobile:mt-[7px]">
+                <p className="ml-[30px] mt-[8px] mobile:ml-[20px] mobile:mt-[8px]">
                   회원님을 위한 추천 상품
                 </p>
                 {/* 
