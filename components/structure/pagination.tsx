@@ -34,7 +34,6 @@ const CustomPagination = ({
             },
             "&.Mui-selected": {
               color: "#FC435A",
-              backgroundColor: "transparent",
             },
           },
 
@@ -46,6 +45,14 @@ const CustomPagination = ({
           // "& .MuiPaginationItem-root:hover": {
           //   backgroundColor: "transparent", // hover 시 bg-color 투명
           //   color: "#FC435A",
+          // },
+          ////
+          // "& .Mui-selected": {
+          //   backgroundColor: "transparent",
+          //   color: "#FC435A",
+          //   "&:hover": {
+          //     backgroundColor: "transparent",
+          //   },
           // },
         }}
       />
