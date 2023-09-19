@@ -373,7 +373,7 @@ export default function SearchBar() {
 
           <button
             type="submit"
-            className="absolute inset-y-0 right-[15px] top-[11px] flex items-center justify-center w-[25px] h-[24px] p-0 bg-transparent focus:ring-0 focus:outline-none text-gray-500 dark:text-gray-400"
+            className="absolute inset-y-0 right-[20px] top-[11px] flex items-center justify-center w-[25px] h-[24px] p-0 bg-transparent focus:ring-0 focus:outline-none text-gray-500 dark:text-gray-400"
           >
             <Search />
           </button>
