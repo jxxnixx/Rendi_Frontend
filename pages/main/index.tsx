@@ -36,7 +36,7 @@ const Home: NextPage = () => {
 
       if (!accessToken) {
         // accessToken이 없다면 로그인 페이지로 리다이렉트
-        router.push("/login");
+        router.push("/auth/login");
         return;
       }
 
