@@ -18,14 +18,15 @@ const sidebarVariants: Variants = {
     x: 0,
     width: "100vw",
     transition: {
-      duration: 0.2,
+      duration: 2,
+      delay: 2,
     },
   },
   closed: {
     x: "-100%",
     width: 0,
     transition: {
-      duration: 0.2,
+      duration: 2,
       delay: 0.2,
     },
   },

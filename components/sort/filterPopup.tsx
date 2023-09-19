@@ -130,20 +130,20 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
   //   { value: "priceLowToHigh", label: "낮은 가격순" },
   //   { value: "priceHighToLow", label: "높은 가격순" },
   // ];
-  // const categoryList = [
-  //   { value: "all", label: "전체" },
-  //   { value: "top", label: "상의" },
-  //   { value: "outer", label: "아우터" },
-  //   { value: "dress", label: "원피스/세트" },
-  //   { value: "pants", label: "바지" },
-  //   { value: "skirt", label: "스커트" },
-  //   { value: "training", label: "트레이닝" },
-  //   { value: "inner", label: "이너웨어" },
-  //   { value: "swimsuit", label: "수영복" },
-  //   { value: "shoes", label: "신발" },
-  //   { value: "bag", label: "가방" },
-  //   { value: "mgoods", label: "패션잡화" },
-  // ];
+  const categoryList = [
+    { value: "all", label: "전체" },
+    { value: "top", label: "상의" },
+    { value: "outer", label: "아우터" },
+    { value: "dress", label: "원피스/세트" },
+    { value: "pants", label: "바지" },
+    { value: "skirt", label: "스커트" },
+    { value: "training", label: "트레이닝" },
+    { value: "inner", label: "이너웨어" },
+    { value: "swimsuit", label: "수영복" },
+    { value: "shoes", label: "신발" },
+    { value: "bag", label: "가방" },
+    { value: "mgoods", label: "패션잡화" },
+  ];
 
   // const colorList = [
   //   { value: "white", label: "화이트" },
@@ -172,24 +172,24 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
   const showList = [
     { value: "추천순", label: "추천순" },
     { value: "인기순", label: "인기순" },
-    { value: "낮은 가격순", label: "낮은 가격순" },
-    { value: "높은 가격순", label: "높은 가격순" },
+    { value: "낮은가격순", label: "낮은가격순" },
+    { value: "높은가격순", label: "높은가격순" },
   ];
 
-  const categoryList = [
-    { value: "전체", label: "전체" },
-    { value: "상의", label: "상의" },
-    { value: "아우터", label: "아우터" },
-    { value: "원피스/세트", label: "원피스/세트" },
-    { value: "바지", label: "바지" },
-    { value: "스커트", label: "스커트" },
-    { value: "트레이닝", label: "트레이닝" },
-    { value: "이너웨어", label: "이너웨어" },
-    { value: "수영복", label: "수영복" },
-    { value: "신발", label: "신발" },
-    { value: "가방", label: "가방" },
-    { value: "패션잡화", label: "패션잡화" },
-  ];
+  // const categoryList = [
+  //   { value: "전체", label: "전체" },
+  //   { value: "상의", label: "상의" },
+  //   { value: "아우터", label: "아우터" },
+  //   { value: "원피스/세트", label: "원피스/세트" },
+  //   { value: "바지", label: "바지" },
+  //   { value: "스커트", label: "스커트" },
+  //   { value: "트레이닝", label: "트레이닝" },
+  //   { value: "이너웨어", label: "이너웨어" },
+  //   { value: "수영복", label: "수영복" },
+  //   { value: "신발", label: "신발" },
+  //   { value: "가방", label: "가방" },
+  //   { value: "패션잡화", label: "패션잡화" },
+  // ];
 
   const colorList = [
     { value: "화이트", label: "화이트" },
@@ -214,6 +214,7 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
     { value: "골드", label: "골드" },
     { value: "기타", label: "기타" },
   ];
+
   return (
     <div className=" popup-container p-4 bg-white border rounded shadow-md mobile:h-[850px] mobile:overflow-auto  mobile:scrollbar-hide">
       <div className="text-xl font-bold mb-4">필터</div>
