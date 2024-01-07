@@ -8,7 +8,7 @@ import React, { useLayoutEffect, useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import { Categories } from "@/components/category/categories";
-import { itemsApi } from "@/libs/api";
+import itemsApi from "@/libs/api/itemsApi";
 import { getKeyword } from "@/components/category/circle";
 
 const ProductPage = () => {

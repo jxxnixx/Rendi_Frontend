@@ -2,7 +2,7 @@ import { motion, useCycle, Variants } from "framer-motion";
 import Link from "next/link";
 import Circle from "../category/circle";
 import { MyPage } from "../icons";
-import { usersApi } from "@/libs/api";
+import usersApi from "@/libs/api/usersApi";
 import {
   UserInfoState,
   recentViewedItemsState,

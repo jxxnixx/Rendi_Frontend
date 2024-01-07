@@ -7,7 +7,8 @@ import Layout from "@/layouts/layout";
 import Head from "next/head";
 import { useState } from "react";
 import { signUpState, SignUpState } from "@/libs/client/atom";
-import { ASignUpProps, usersApi } from "@/libs/api";
+import usersApi from "@/libs/api/usersApi";
+import { ASignUpProps } from "@/libs/api/apiProps";
 
 interface ITasteForm {
   interests: string[];

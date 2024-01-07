@@ -1,6 +1,5 @@
 import { AtomEffect, atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
-import { ASignUpProps } from "../api";
 
 export interface SignUpState {
   username: string;

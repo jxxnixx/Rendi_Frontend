@@ -8,7 +8,7 @@ import Items from "@/components/product/items";
 import React, { useLayoutEffect, useState } from "react";
 import Link from "next/link";
 import { useScreenSize } from "@/libs/client/useScreen";
-import { itemsApi } from "@/libs/api";
+import itemsApi from "@/libs/api/itemsApi";
 import { Product } from "@/components/product/DataTypes";
 
 const Home: NextPage = () => {

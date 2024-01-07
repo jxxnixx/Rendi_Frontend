@@ -3,9 +3,10 @@ import SubmitBtn from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
 import Layout from "@/layouts/layout";
 import Head from "next/head";
-import { AFindIDProps, usersApi } from "@/libs/api";
+import usersApi from "@/libs/api/usersApi";
 import { useRecoilState } from "recoil";
 import { UserInputState, findIDInputState } from "@/libs/client/atom";
+import { AFindIDProps } from "@/libs/api/apiProps";
 
 function FindID() {
   const {

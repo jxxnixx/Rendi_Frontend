@@ -9,7 +9,7 @@ import {
   editInfoInputState,
 } from "@/libs/client/atom";
 import { useRecoilState } from "recoil";
-import { AEditInfosProps, usersApi } from "@/libs/api";
+import usersApi from "@/libs/api/usersApi";
 import { useLayoutEffect, useState } from "react"; //
 import router, { useRouter } from "next/router"; //
 

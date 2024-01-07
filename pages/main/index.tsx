@@ -8,10 +8,10 @@ import Items from "@/components/product/items";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useScreenSize } from "@/libs/client/useScreen";
-import { itemsApi } from "@/libs/api";
+import itemsApi from "@/libs/api/itemsApi";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { UserInfoState, userInfoState } from "@/libs/client/atom";
-import { usersApi } from "@/libs/api";
+import usersApi from "@/libs/api/usersApi";
 
 const Home: NextPage = () => {
   const [accessToken, setAccessToken] = useState<string>(" ");
@@ -81,8 +81,23 @@ const Home: NextPage = () => {
       console.log("회원정보 조회 오류");
     }
   };
+
+  const [activeCate, setActiveCate] = useState<any>(null);
+
+  const fetchNewProducts = async () => {
+    try {
+      const newProResponse: any = await itemsApi.newProductsForGuests(
+        activeCate
+      );
+      console.log("new 상품 목록 : ", newProResponse);
+      console.log(newProResponse.response.response);
+      setRealItems(newProResponse.response.response);
+    } catch (error) {}
+  };
+
   useEffect(() => {
-    fetchAndSetDefaultValues();
+    // fetchAndSetDefaultValues();
+    fetchNewProducts();
   }, []);
 
   return (

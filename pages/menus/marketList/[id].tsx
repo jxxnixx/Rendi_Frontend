@@ -7,7 +7,7 @@ import Items from "@/components/product/items";
 import Pagination from "@/components/structure/pagination";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
-import { marketApi } from "@/libs/api";
+import marketApi from "@/libs/api/marketApi";
 
 export default function BrandPage() {
   const router = useRouter();

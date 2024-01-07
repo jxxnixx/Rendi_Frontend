@@ -1,4 +1,4 @@
-import { usersApi } from "../api";
+import usersApi from "../api/usersApi";
 
 // 사용자 이름 중복 확인
 export async function onUsernameVerification(inputIDValue: string) {

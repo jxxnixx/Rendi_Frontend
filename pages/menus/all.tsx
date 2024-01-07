@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import { useScreenSize } from "@/libs/client/useScreen";
-import { itemsApi } from "@/libs/api";
+import itemsApi from "@/libs/api/itemsApi";
 
 export default function All() {
   const screen = useScreenSize();

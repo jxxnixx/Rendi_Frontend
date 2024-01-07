@@ -3,7 +3,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { MyPage, Next, ShoppingBag } from "@/components/icons";
 import Items from "@/components/product/items";
-import { itemsApi, usersApi } from "@/libs/api";
+import itemsApi from "@/libs/api/itemsApi";
+import usersApi from "@/libs/api/usersApi";
 import { useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {

@@ -8,7 +8,7 @@ import React, { useLayoutEffect, useState } from "react";
 import { Product } from "@/components/product/DataTypes";
 import dummyData from "@/components/product/dummyData.json";
 import Mymenus from "@/components/structure/mymenus";
-import { itemsApi } from "@/libs/api";
+import itemsApi from "@/libs/api/itemsApi";
 import { useRouter } from "next/router";
 
 export default function Liked() {

@@ -5,7 +5,7 @@ import Layout from "@/layouts/layout";
 import Head from "next/head";
 import React, { useLayoutEffect, useState } from "react";
 import { Product } from "@/components/product/DataTypes";
-import { itemsApi } from "@/libs/api";
+import itemsApi from "@/libs/api/itemsApi";
 
 export default function Best() {
   const [accessToken, setAccessToken] = useState<string | null>(null);

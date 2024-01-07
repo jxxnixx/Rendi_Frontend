@@ -2,10 +2,11 @@ import React, { useState, useRef, useLayoutEffect } from "react";
 import { Camera, Search } from "../icons";
 import { Button, Upload } from "antd";
 import { useRouter } from "next/router";
-import { APopularSearchProps, itemsApi } from "@/libs/api";
+import itemsApi from "@/libs/api/itemsApi";
 import { useRecoilState } from "recoil";
 import { recentSearchHistoryState } from "@/libs/client/atom";
 import { CloseOutlined, CloseSquareOutlined } from "@ant-design/icons";
+import { APopularSearchProps } from "@/libs/api/apiProps";
 
 function SearchItem({ keyword, onDelete }: any) {
   return (

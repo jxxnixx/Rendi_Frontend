@@ -1,12 +1,13 @@
 import React, { useLayoutEffect, useState } from "react";
 import { LeftOutlined, CloseOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
-import { APopularSearchProps, itemsApi } from "@/libs/api";
+import itemsApi from "@/libs/api/itemsApi";
 import { useRecoilState } from "recoil";
 import { recentSearchHistoryState } from "@/libs/client/atom";
 import { Camera, Search } from "../icons";
 import SubmitBtn from "../function/submitBtn";
 import { useScreenSize, useScreenWidth } from "@/libs/client/useScreen";
+import { APopularSearchProps } from "@/libs/api/apiProps";
 
 interface MoSearchBarProps {
   onClose: () => void; // 팝업 닫기 핸들러

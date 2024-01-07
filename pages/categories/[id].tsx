@@ -10,7 +10,7 @@ import dummyData from "@/components/product/dummyData.json";
 import skirtDummyData from "@/components/product/skirtDummyData.json";
 import miniSkirtDummyData from "@/components/product/miniSkirtDummyData.json";
 import { Categories } from "@/components/category/categories";
-import { itemsApi } from "@/libs/api";
+import itemsApi from "@/libs/api/itemsApi";
 import { getKeyword } from "@/components/category/circle";
 
 const ProductPage = () => {

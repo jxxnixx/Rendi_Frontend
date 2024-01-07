@@ -2,7 +2,7 @@ import React, { useState, useRef, useLayoutEffect, memo } from "react";
 import { HeartIcon } from "../icons";
 import { Carousel } from "antd";
 import router from "next/router";
-import { itemsApi } from "@/libs/api";
+import itemsApi from "@/libs/itemsApi";
 import { useScreenSize } from "@/libs/client/useScreen";
 import { useRecoilState } from "recoil";
 import { recentViewedItemsState } from "@/libs/client/atom";

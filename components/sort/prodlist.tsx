@@ -16,6 +16,7 @@ interface Product {
   price: number;
   popularity: number;
 }
+
 interface ProdlistProps {
   products: Product[]; // 상품 목록 배열
   onSendData?: (product: Product) => void;

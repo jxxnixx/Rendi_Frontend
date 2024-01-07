@@ -4,7 +4,7 @@ import dummyData from "./dummyData.json";
 import { Product } from "@/components/product/DataTypes";
 import { useRouter } from "next/router";
 import { useScreenSize } from "@/libs/client/useScreen";
-import { itemsApi } from "@/libs/api";
+import itemsApi from "@/libs/api/itemsApi";
 
 interface ItemsProps {
   itemsPerPage: number;

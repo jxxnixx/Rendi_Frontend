@@ -10,8 +10,9 @@ import { SignUpState, signUpState } from "@/libs/client/atom";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { useMutation } from "@tanstack/react-query";
-import { AEditInfosProps, usersApi } from "@/libs/api";
+import usersApi from "@/libs/api/usersApi";
 import { getCookie } from "@/libs/client/cookies";
+import { AEditInfosProps } from "@/libs/api/apiProps";
 
 function View() {
   const {

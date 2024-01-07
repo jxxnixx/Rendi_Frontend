@@ -1,4 +1,4 @@
-import { ALogInProps, usersApi } from "@/libs/api";
+import usersApi from "@/libs/api/usersApi";
 import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
 import SubmitBtn from "@/components/function/submitBtn";
 import Input from "@/components/function/input";
@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { getCookie, setCookie } from "@/libs/client/cookies";
 import { userInfoState, UserInfoState } from "@/libs/client/atom";
 import { useRecoilState } from "recoil";
+import { ALogInProps } from "@/libs/api/apiProps";
 
 function LogIn() {
   const {
